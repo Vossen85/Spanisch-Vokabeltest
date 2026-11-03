@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Spanisch – Vokabeltest</title>
 <style>
 :root{--bg:#f5f6f8;--card:#fff;--text:#17191c;--muted:#6d7278;--line:#d9dde3;--accent:#22262b;--good:#176b3a;--bad:#a12622}
@@ -26,7 +29,7 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;
 <body><main>
 <section id="start" class="card">
 <h1>Spanisch – Vokabeltest</h1>
-<p class="muted">Deutsche Vorgabe → vollständige spanische Übersetzung selbst eingeben.</p>
+<p class="muted">Deutsche Vorgabe → vollständige spanische Übersetzung selbst eingeben.</p><p class="muted small"><strong>Version 0.4</strong></p>
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:20px">
     <label>
       <strong>Name</strong><br>
@@ -49,7 +52,7 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;
 <section id="test" class="card hidden">
 <div class="counter"><span id="counter"></span><span id="unitLabel"></span></div>
 <div class="progress-line"><div class="progress-bar" id="progressBar"></div></div>
-<div class="prompt" id="vocabPrompt"></div>
+<div class="muted small" style="margin-top:24px">Übersetze ins Spanische:</div><div class="prompt" id="vocabPrompt" style="min-height:46px"></div>
 <input id="answer" class="answer" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Spanische Übersetzung eingeben">
 <div class="chars"><button data-char="á">á</button><button data-char="é">é</button><button data-char="í">í</button><button data-char="ó">ó</button><button data-char="ú">ú</button><button data-char="ü">ü</button><button data-char="ñ">ñ</button><button data-char="¿">¿</button><button data-char="¡">¡</button></div>
 <div class="actions"><button type="button" id="nextBtn">Antwort bestätigen</button></div>
