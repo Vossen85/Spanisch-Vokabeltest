@@ -24,12 +24,20 @@ input.answer{width:100%;font-size:24px;padding:16px;border:2px solid #bfc5cc;bor
 .score{font-size:56px;font-weight:800;margin:8px 0 0}.grade{font-size:30px;font-weight:750;margin:4px 0 18px}
 table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:13px;color:var(--muted)}.bad{color:var(--bad);font-weight:650}.good{color:var(--good);font-weight:650}
 @media(max-width:600px){.card{padding:18px;border-radius:14px}main{padding:16px 10px 40px}table{font-size:14px}}
+.question-row{border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;background:#fff}
+.question-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
+.question-number{font-size:14px;color:var(--muted);font-weight:700}
+.question-word{font-size:22px;font-weight:750;line-height:1.25}
+.question-unit{font-size:13px;color:var(--muted);white-space:nowrap}
+.question-row input.answer{font-size:20px;padding:12px}
+.question-row.answered{border-color:#9aa1aa}
+.sticky-actions{position:sticky;bottom:0;background:linear-gradient(to top,var(--bg) 70%,rgba(245,246,248,0));padding-top:18px}
 </style>
 </head>
 <body><main>
 <section id="start" class="card">
 <h1>Spanisch – Vokabeltest</h1>
-<p class="muted">Deutsche Vorgabe → vollständige spanische Übersetzung selbst eingeben.</p><p class="muted small"><strong>Version 0.4</strong></p>
+<p class="muted">Deutsche Vorgabe → vollständige spanische Übersetzung selbst eingeben.</p><p class="muted small"><strong>Version 0.5</strong></p>
 <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:20px">
     <label>
       <strong>Name</strong><br>
@@ -50,13 +58,16 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;
 </section>
 
 <section id="test" class="card hidden">
-<div class="counter"><span id="counter"></span><span id="unitLabel"></span></div>
-<div class="progress-line"><div class="progress-bar" id="progressBar"></div></div>
-<div class="muted small" style="margin-top:24px">Übersetze ins Spanische:</div><div class="prompt" id="vocabPrompt" style="min-height:46px"></div>
-<input id="answer" class="answer" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Spanische Übersetzung eingeben">
-<div class="chars"><button data-char="á">á</button><button data-char="é">é</button><button data-char="í">í</button><button data-char="ó">ó</button><button data-char="ú">ú</button><button data-char="ü">ü</button><button data-char="ñ">ñ</button><button data-char="¿">¿</button><button data-char="¡">¡</button></div>
-<div class="actions"><button type="button" id="nextBtn">Antwort bestätigen</button></div>
-<p class="muted small">Während des Tests wird nicht angezeigt, ob die Antwort richtig war.</p>
+  <div class="counter" style="position:sticky;top:0;background:white;padding:8px 0;z-index:5">
+    <span id="answeredCounter">0 von 100 beantwortet</span>
+    <span id="selectedUnitsLabel"></span>
+  </div>
+  <div class="progress-line"><div class="progress-bar" id="progressBar"></div></div>
+  <p class="muted small">Du kannst die Aufgaben in beliebiger Reihenfolge bearbeiten und Antworten jederzeit ändern. Bewertet wird erst nach der endgültigen Abgabe.</p>
+  <div id="allQuestions"></div>
+  <div class="actions" style="margin-top:28px">
+    <button type="button" id="submitAllBtn">Test endgültig abgeben</button>
+  </div>
 </section>
 
 <section id="result" class="card hidden">
@@ -76,40 +87,88 @@ function buildPool(units){const map=new Map();for(const item of RAW){if(!units.i
 function shuffle(a){const arr=[...a];for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
 function selectedUnits(){return [...document.querySelectorAll("#unitGrid input:checked")].map(x=>Number(x.value))}
 function startTest(){
-    studentNameValue=document.getElementById("studentName").value.trim();
-    studentClassValue=document.getElementById("studentClass").value.trim();
-    if(!studentNameValue){alert("Bitte deinen Namen eingeben.");document.getElementById("studentName").focus();return}
-    const units=selectedUnits();
-    if(!units.length){alert("Bitte mindestens eine Unidad auswählen.");return}
-    const pool=buildPool(units);
-    testItems=shuffle(pool).slice(0,Math.min(100,pool.length));
-    index=0;results=[];
-    document.getElementById("start").classList.add("hidden");
-    document.getElementById("result").classList.add("hidden");
-    document.getElementById("test").classList.remove("hidden");
-    showItem();
+  studentNameValue=document.getElementById("studentName").value.trim();
+  studentClassValue=document.getElementById("studentClass").value.trim();
+  if(!studentNameValue){
+    alert("Bitte deinen Namen eingeben.");
+    document.getElementById("studentName").focus();
+    return;
   }
-function showItem(){
-    const item=testItems[index];
-    document.getElementById("counter").textContent="Aufgabe "+(index+1)+" von "+testItems.length;
-    document.getElementById("unitLabel").textContent="Unidad "+item.units.join("/");
-    document.getElementById("progressBar").style.width=((index/testItems.length)*100)+"%";
-    document.getElementById("vocabPrompt").textContent=item.de;
-    const answerInput=document.getElementById("answer");
-    answerInput.value="";
-    answerInput.focus();
-    document.getElementById("nextBtn").textContent=index===testItems.length-1?"Test abschließen":"Antwort bestätigen";
+  const units=selectedUnits();
+  if(!units.length){
+    alert("Bitte mindestens eine Unidad auswählen.");
+    return;
   }
-function submitAnswer(){
-    const answerInput=document.getElementById("answer");
-    const typedRaw=answerInput.value.trim();
-    if(!typedRaw){alert("Bitte eine Antwort eingeben.");answerInput.focus();return}
-    const item=testItems[index];
-    const correct=item.answers.includes(normalize(typedRaw));
-    results.push({...item,typed:typedRaw,correct});
-    index++;
-    if(index>=testItems.length)finish();else showItem();
-  }
+  const pool=buildPool(units);
+  testItems=shuffle(pool).slice(0,Math.min(100,pool.length));
+  results=[];
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("test").classList.remove("hidden");
+  document.getElementById("selectedUnitsLabel").textContent="Unidad "+units.join(", ");
+  renderAllQuestions();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderAllQuestions(){
+  const box=document.getElementById("allQuestions");
+  box.innerHTML=testItems.map((item,i)=>`
+    <div class="question-row" id="qrow-${i}">
+      <div class="question-top">
+        <div>
+          <div class="question-number">Aufgabe ${i+1}</div>
+          <div class="question-word">${esc(item.de)}</div>
+        </div>
+        <div class="question-unit">Unidad ${item.units.join("/")}</div>
+      </div>
+      <input
+        id="answer-${i}"
+        class="answer"
+        data-index="${i}"
+        autocomplete="off"
+        autocapitalize="none"
+        spellcheck="false"
+        placeholder="Spanische Übersetzung eingeben"
+      >
+    </div>
+  `).join("");
+
+  document.querySelectorAll("#allQuestions input.answer").forEach(input=>{
+    input.addEventListener("input",updateAnsweredCount);
+  });
+  updateAnsweredCount();
+}
+
+function updateAnsweredCount(){
+  const inputs=[...document.querySelectorAll("#allQuestions input.answer")];
+  const answered=inputs.filter(x=>x.value.trim()!=="").length;
+  document.getElementById("answeredCounter").textContent=answered+" von "+inputs.length+" beantwortet";
+  document.getElementById("progressBar").style.width=(inputs.length?answered/inputs.length*100:0)+"%";
+  inputs.forEach(x=>{
+    const row=document.getElementById("qrow-"+x.dataset.index);
+    if(row) row.classList.toggle("answered",x.value.trim()!=="");
+  });
+}
+
+function submitAll(){
+  const inputs=[...document.querySelectorAll("#allQuestions input.answer")];
+  const unanswered=inputs.filter(x=>x.value.trim()==="").length;
+  const message=unanswered
+    ? "Es sind noch "+unanswered+" Aufgaben unbeantwortet. Trotzdem endgültig abgeben?"
+    : "Möchtest du den Test jetzt endgültig abgeben? Danach können die Antworten nicht mehr geändert werden.";
+  if(!confirm(message)) return;
+
+  results=testItems.map((item,i)=>{
+    const typedRaw=document.getElementById("answer-"+i).value.trim();
+    return {
+      ...item,
+      typed:typedRaw,
+      correct:typedRaw!=="" && item.answers.includes(normalize(typedRaw))
+    };
+  });
+  finish();
+}
+
 function gradeFor(p){if(p>=90)return"1";if(p>=80)return"2";if(p>=65)return"3";if(p>=50)return"4";if(p>=30)return"5";return"6"}
 function esc(s){return String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
 function finish(){
@@ -129,7 +188,7 @@ function finish(){
     window.scrollTo({top:0,behavior:"smooth"});
   }
 document.getElementById("startBtn").onclick=startTest;
-document.getElementById("nextBtn").onclick=submitAnswer;
+document.getElementById("submitAllBtn").onclick=submitAll;
 document.getElementById("restartBtn").onclick=()=>{
   document.getElementById("result").classList.add("hidden");
   document.getElementById("start").classList.remove("hidden");
@@ -137,14 +196,4 @@ document.getElementById("restartBtn").onclick=()=>{
 };
 document.getElementById("allBtn").onclick=()=>document.querySelectorAll("#unitGrid input").forEach(x=>x.checked=true);
 document.getElementById("noneBtn").onclick=()=>document.querySelectorAll("#unitGrid input").forEach(x=>x.checked=false);
-document.getElementById("answer").addEventListener("keydown",e=>{
-  if(e.key==="Enter"){e.preventDefault();submitAnswer()}
-});
-document.querySelectorAll("[data-char]").forEach(b=>b.onclick=()=>{
-  const answerInput=document.getElementById("answer");
-  const ch=b.dataset.char,s=answerInput.selectionStart??answerInput.value.length,e=answerInput.selectionEnd??answerInput.value.length;
-  answerInput.value=answerInput.value.slice(0,s)+ch+answerInput.value.slice(e);
-  answerInput.focus();
-  answerInput.setSelectionRange(s+ch.length,s+ch.length);
-});
 </script></body></html>
