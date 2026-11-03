@@ -37,9 +37,9 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;
       <input id="studentClass" class="answer" style="font-size:18px;padding:12px;margin-top:6px" placeholder="z. B. EF Spanisch">
     </label>
   </div>
-  <h2>Bereiche auswählen</h2>
+  <h2>Vokabelbereiche auswählen</h2><p class="muted">Wähle mindestens eine Unidad. Du kannst auch mehrere Unidades kombinieren.</p>
 <div class="grid" id="unitGrid">
-<label class="unit"><input type="checkbox" value="1" checked><span><strong>Unidad 1</strong><br><span class="muted small">182 Einträge</span></span></label><label class="unit"><input type="checkbox" value="2" checked><span><strong>Unidad 2</strong><br><span class="muted small">143 Einträge</span></span></label><label class="unit"><input type="checkbox" value="3" checked><span><strong>Unidad 3</strong><br><span class="muted small">160 Einträge</span></span></label><label class="unit"><input type="checkbox" value="4" checked><span><strong>Unidad 4</strong><br><span class="muted small">148 Einträge</span></span></label><label class="unit"><input type="checkbox" value="5" checked><span><strong>Unidad 5</strong><br><span class="muted small">175 Einträge</span></span></label><label class="unit"><input type="checkbox" value="6" checked><span><strong>Unidad 6</strong><br><span class="muted small">132 Einträge</span></span></label><label class="unit"><input type="checkbox" value="7" checked><span><strong>Unidad 7</strong><br><span class="muted small">143 Einträge</span></span></label>
+<label class="unit"><input type="checkbox" value="1"><span><strong>Unidad 1</strong><br><span class="muted small">182 Einträge</span></span></label><label class="unit"><input type="checkbox" value="2"><span><strong>Unidad 2</strong><br><span class="muted small">143 Einträge</span></span></label><label class="unit"><input type="checkbox" value="3"><span><strong>Unidad 3</strong><br><span class="muted small">160 Einträge</span></span></label><label class="unit"><input type="checkbox" value="4"><span><strong>Unidad 4</strong><br><span class="muted small">148 Einträge</span></span></label><label class="unit"><input type="checkbox" value="5"><span><strong>Unidad 5</strong><br><span class="muted small">175 Einträge</span></span></label><label class="unit"><input type="checkbox" value="6"><span><strong>Unidad 6</strong><br><span class="muted small">132 Einträge</span></span></label><label class="unit"><input type="checkbox" value="7"><span><strong>Unidad 7</strong><br><span class="muted small">143 Einträge</span></span></label>
 </div>
 <div class="actions"><button type="button" id="allBtn" class="secondary">Alle auswählen</button><button type="button" id="noneBtn" class="secondary">Auswahl löschen</button></div>
 <div class="note"><strong>Testumfang:</strong> 100 zufällige, unterschiedliche Vorgaben aus den gewählten Bereichen (bei weniger als 100 werden alle verwendet).<br><strong>Bewertung:</strong> Groß-/Kleinschreibung und Satzzeichen am Rand werden ignoriert. <strong>Akzente und Artikel zählen.</strong></div>
@@ -49,7 +49,7 @@ table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;
 <section id="test" class="card hidden">
 <div class="counter"><span id="counter"></span><span id="unitLabel"></span></div>
 <div class="progress-line"><div class="progress-bar" id="progressBar"></div></div>
-<div class="prompt" id="prompt"></div>
+<div class="prompt" id="vocabPrompt"></div>
 <input id="answer" class="answer" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Spanische Übersetzung eingeben">
 <div class="chars"><button data-char="á">á</button><button data-char="é">é</button><button data-char="í">í</button><button data-char="ó">ó</button><button data-char="ú">ú</button><button data-char="ü">ü</button><button data-char="ñ">ñ</button><button data-char="¿">¿</button><button data-char="¡">¡</button></div>
 <div class="actions"><button type="button" id="nextBtn">Antwort bestätigen</button></div>
@@ -76,14 +76,72 @@ function startTest(){
     studentNameValue=document.getElementById("studentName").value.trim();
     studentClassValue=document.getElementById("studentClass").value.trim();
     if(!studentNameValue){alert("Bitte deinen Namen eingeben.");document.getElementById("studentName").focus();return}
-    const units=selectedUnits();if(!units.length){alert("Bitte mindestens eine Unidad auswählen.");return}const pool=buildPool(units);testItems=shuffle(pool).slice(0,Math.min(100,pool.length));index=0;results=[];start.classList.add("hidden");result.classList.add("hidden");test.classList.remove("hidden");showItem()}
-function showItem(){const item=testItems[index];counter.textContent="Aufgabe "+(index+1)+" von "+testItems.length;unitLabel.textContent="Unidad "+item.units.join("/");progressBar.style.width=((index/testItems.length)*100)+"%";prompt.textContent=item.de;answer.value="";answer.focus();nextBtn.textContent=index===testItems.length-1?"Test abschließen":"Antwort bestätigen"}
-function submitAnswer(){const typedRaw=answer.value.trim();if(!typedRaw){alert("Bitte eine Antwort eingeben.");answer.focus();return}const item=testItems[index];const correct=item.answers.includes(normalize(typedRaw));results.push({...item,typed:typedRaw,correct});index++;if(index>=testItems.length)finish();else showItem()}
+    const units=selectedUnits();
+    if(!units.length){alert("Bitte mindestens eine Unidad auswählen.");return}
+    const pool=buildPool(units);
+    testItems=shuffle(pool).slice(0,Math.min(100,pool.length));
+    index=0;results=[];
+    document.getElementById("start").classList.add("hidden");
+    document.getElementById("result").classList.add("hidden");
+    document.getElementById("test").classList.remove("hidden");
+    showItem();
+  }
+function showItem(){
+    const item=testItems[index];
+    document.getElementById("counter").textContent="Aufgabe "+(index+1)+" von "+testItems.length;
+    document.getElementById("unitLabel").textContent="Unidad "+item.units.join("/");
+    document.getElementById("progressBar").style.width=((index/testItems.length)*100)+"%";
+    document.getElementById("vocabPrompt").textContent=item.de;
+    const answerInput=document.getElementById("answer");
+    answerInput.value="";
+    answerInput.focus();
+    document.getElementById("nextBtn").textContent=index===testItems.length-1?"Test abschließen":"Antwort bestätigen";
+  }
+function submitAnswer(){
+    const answerInput=document.getElementById("answer");
+    const typedRaw=answerInput.value.trim();
+    if(!typedRaw){alert("Bitte eine Antwort eingeben.");answerInput.focus();return}
+    const item=testItems[index];
+    const correct=item.answers.includes(normalize(typedRaw));
+    results.push({...item,typed:typedRaw,correct});
+    index++;
+    if(index>=testItems.length)finish();else showItem();
+  }
 function gradeFor(p){if(p>=90)return"1";if(p>=80)return"2";if(p>=65)return"3";if(p>=50)return"4";if(p>=30)return"5";return"6"}
 function esc(s){return String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
-function finish(){test.classList.add("hidden");result.classList.remove("hidden");const c=results.filter(x=>x.correct).length,p=Math.round((c/results.length)*1000)/10;score.textContent=p+" %";grade.textContent="Note: "+gradeFor(p);summary.textContent=studentNameValue+(studentClassValue?" · "+studentClassValue:"")+" — "+c+" von "+results.length+" Antworten richtig.";const wrong=results.filter(x=>!x.correct);mistakes.innerHTML=!wrong.length?'<p class="good">Alle Antworten waren richtig.</p>':'<table><thead><tr><th>Vorgabe</th><th>Deine Antwort</th><th>Hinterlegte Lösung</th></tr></thead><tbody>'+wrong.map(x=>'<tr><td>'+esc(x.de)+'</td><td class="bad">'+esc(x.typed)+'</td><td class="good">'+esc(x.display.join(" / "))+'</td></tr>').join("")+'</tbody></table>';scrollTo({top:0,behavior:"smooth"})}
-startBtn.onclick=startTest;nextBtn.onclick=submitAnswer;restartBtn.onclick=()=>{result.classList.add("hidden");start.classList.remove("hidden");scrollTo({top:0,behavior:"smooth"})};
-allBtn.onclick=()=>document.querySelectorAll("#unitGrid input").forEach(x=>x.checked=true);noneBtn.onclick=()=>document.querySelectorAll("#unitGrid input").forEach(x=>x.checked=false);
-answer.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();submitAnswer()}});
-document.querySelectorAll("[data-char]").forEach(b=>b.onclick=()=>{const ch=b.dataset.char,s=answer.selectionStart??answer.value.length,e=answer.selectionEnd??answer.value.length;answer.value=answer.value.slice(0,s)+ch+answer.value.slice(e);answer.focus();answer.setSelectionRange(s+ch.length,s+ch.length)});
+function finish(){
+    document.getElementById("test").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
+    const cnum=results.filter(x=>x.correct).length;
+    const p=Math.round((cnum/results.length)*1000)/10;
+    document.getElementById("score").textContent=p+" %";
+    document.getElementById("grade").textContent="Note: "+gradeFor(p);
+    document.getElementById("summary").textContent=studentNameValue+(studentClassValue?" · "+studentClassValue:"")+" — "+cnum+" von "+results.length+" Antworten richtig.";
+    const wrong=results.filter(x=>!x.correct);
+    document.getElementById("mistakes").innerHTML=!wrong.length
+      ? '<p class="good">Alle Antworten waren richtig.</p>'
+      : '<table><thead><tr><th>Vorgabe</th><th>Deine Antwort</th><th>Hinterlegte Lösung</th></tr></thead><tbody>'
+        +wrong.map(x=>'<tr><td>'+esc(x.de)+'</td><td class="bad">'+esc(x.typed)+'</td><td class="good">'+esc(x.display.join(" / "))+'</td></tr>').join("")
+        +'</tbody></table>';
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+document.getElementById("startBtn").onclick=startTest;
+document.getElementById("nextBtn").onclick=submitAnswer;
+document.getElementById("restartBtn").onclick=()=>{
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("start").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+document.getElementById("allBtn").onclick=()=>document.querySelectorAll("#unitGrid input").forEach(x=>x.checked=true);
+document.getElementById("noneBtn").onclick=()=>document.querySelectorAll("#unitGrid input").forEach(x=>x.checked=false);
+document.getElementById("answer").addEventListener("keydown",e=>{
+  if(e.key==="Enter"){e.preventDefault();submitAnswer()}
+});
+document.querySelectorAll("[data-char]").forEach(b=>b.onclick=()=>{
+  const answerInput=document.getElementById("answer");
+  const ch=b.dataset.char,s=answerInput.selectionStart??answerInput.value.length,e=answerInput.selectionEnd??answerInput.value.length;
+  answerInput.value=answerInput.value.slice(0,s)+ch+answerInput.value.slice(e);
+  answerInput.focus();
+  answerInput.setSelectionRange(s+ch.length,s+ch.length);
+});answer.focus();answer.setSelectionRange(s+ch.length,s+ch.length)});
 </script></body></html>
