@@ -20,6 +20,14 @@
     .tiny{font-size:.9rem}
     .card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
     .hidden{display:none!important}
+    .auth-intro{text-align:center;max-width:680px;margin:0 auto 18px}
+    .auth-intro h2{font-size:1.55rem;margin-bottom:8px}
+    .auth-choice{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+    .auth-choice-card{border:1px solid #cbd5e1;border-radius:16px;padding:20px;background:#fafafa;cursor:pointer;text-align:left}
+    .auth-choice-card:hover{border-color:#94a3b8;background:#f8fafc}
+    .auth-choice-card strong{display:block;font-size:1.08rem;margin-bottom:6px}
+    .auth-form-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px}
+    .backAuthBtn{background:transparent;color:#475569;padding:7px 0}
     .topline{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
     .nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
     button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer}
@@ -90,7 +98,7 @@
     .summarypill{background:#f1f5f9;border-radius:999px;padding:7px 11px;font-weight:750}
     .empty{padding:18px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;text-align:center}
     @media(max-width:760px){
-      body{padding:12px}.row,.qrgrid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      body{padding:12px}.row,.qrgrid,.auth-choice{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
       table{font-size:.9rem}th,td{padding:8px 5px}
     }
   </style>
@@ -101,19 +109,55 @@
   <div class="sub">Lehrerbereich</div>
 
   <section id="authCard" class="card">
-    <h2>Lehrerzugang</h2>
-    <p class="tiny">Neue Lehrkräfte können sich registrieren. Der Zugang wird erst nach Freigabe aktiviert.</p>
-    <label for="displayName">Name (nur bei Registrierung)</label>
-    <input id="displayName" type="text" autocomplete="name">
-    <label for="email">E-Mail-Adresse</label>
-    <input id="email" type="email" autocomplete="email">
-    <label for="password">Passwort</label>
-    <input id="password" type="password" autocomplete="current-password" minlength="8">
-    <div class="actions">
-      <button id="loginBtn" class="primary">Anmelden</button>
-      <button id="signupBtn" class="secondary">Neu registrieren</button>
+    <div id="authChoice">
+      <div class="auth-intro">
+        <h2>Lehrerzugang</h2>
+        <p class="tiny">Melde dich mit deinem bestehenden Lehreraccount an oder registriere dich neu.</p>
+      </div>
+      <div class="auth-choice">
+        <button id="showLoginBtn" type="button" class="auth-choice-card">
+          <strong>Anmelden</strong>
+          <span class="tiny">Ich habe bereits einen freigeschalteten Lehreraccount.</span>
+        </button>
+        <button id="showSignupBtn" type="button" class="auth-choice-card">
+          <strong>Neu registrieren</strong>
+          <span class="tiny">Ich möchte erstmals einen Lehrerzugang beantragen.</span>
+        </button>
+      </div>
     </div>
-    <div id="authMsg" class="msg"></div>
+
+    <div id="loginForm" class="hidden">
+      <div class="auth-form-head">
+        <h2>Anmelden</h2>
+        <button type="button" class="backAuthBtn" data-auth-back>← Zurück</button>
+      </div>
+      <label for="loginEmail">E-Mail-Adresse</label>
+      <input id="loginEmail" type="email" autocomplete="email">
+      <label for="loginPassword">Passwort</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" minlength="8">
+      <div class="actions">
+        <button id="loginBtn" class="primary">Anmelden</button>
+      </div>
+      <div id="loginMsg" class="msg"></div>
+    </div>
+
+    <div id="signupForm" class="hidden">
+      <div class="auth-form-head">
+        <h2>Neu registrieren</h2>
+        <button type="button" class="backAuthBtn" data-auth-back>← Zurück</button>
+      </div>
+      <p class="tiny">Nach der Registrierung muss der Zugang von einer Administratorin oder einem Administrator freigegeben werden.</p>
+      <label for="displayName">Name</label>
+      <input id="displayName" type="text" autocomplete="name">
+      <label for="signupEmail">E-Mail-Adresse</label>
+      <input id="signupEmail" type="email" autocomplete="email">
+      <label for="signupPassword">Passwort</label>
+      <input id="signupPassword" type="password" autocomplete="new-password" minlength="8">
+      <div class="actions">
+        <button id="signupBtn" class="primary">Registrierung absenden</button>
+      </div>
+      <div id="signupMsg" class="msg"></div>
+    </div>
   </section>
 
   <section id="pendingCard" class="card hidden">
@@ -253,6 +297,7 @@
       $("authCard").classList.remove("hidden");
       $("pendingCard").classList.add("hidden");
       $("teacherArea").classList.add("hidden");
+      showAuthMode(null);
       return;
     }
     const {data:profile,error}=await supabase.from("teacher_profiles")
@@ -260,7 +305,8 @@
     if(error){
       $("authCard").classList.remove("hidden");
       $("teacherArea").classList.add("hidden");
-      showMsg($("authMsg"),"Der Lehrerzugang konnte nicht geladen werden.","err");
+      showAuthMode("login");
+      showMsg($("loginMsg"),"Der Lehrerzugang konnte nicht geladen werden.","err");
       return;
     }
     $("authCard").classList.add("hidden");
@@ -661,30 +707,46 @@
     }
   }
 
+  function showAuthMode(mode){
+    $("authChoice").classList.toggle("hidden",Boolean(mode));
+    $("loginForm").classList.toggle("hidden",mode!=="login");
+    $("signupForm").classList.toggle("hidden",mode!=="signup");
+    hideMsg($("loginMsg"));
+    hideMsg($("signupMsg"));
+  }
+
+  $("showLoginBtn").addEventListener("click",()=>showAuthMode("login"));
+  $("showSignupBtn").addEventListener("click",()=>showAuthMode("signup"));
+  document.querySelectorAll("[data-auth-back]").forEach(btn=>btn.addEventListener("click",()=>showAuthMode(null)));
+
   $("loginBtn").addEventListener("click",async()=>{
-    hideMsg($("authMsg"));
-    const email=$("email").value.trim(),password=$("password").value;
-    if(!email||!password){showMsg($("authMsg"),"Bitte E-Mail-Adresse und Passwort eingeben.","err");return}
+    hideMsg($("loginMsg"));
+    const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+    if(!email||!password){showMsg($("loginMsg"),"Bitte E-Mail-Adresse und Passwort eingeben.","err");return}
     $("loginBtn").disabled=true;
     const {error}=await supabase.auth.signInWithPassword({email,password});
     $("loginBtn").disabled=false;
-    if(error){showMsg($("authMsg"),"Anmeldung fehlgeschlagen: "+error.message,"err");return}
+    if(error){showMsg($("loginMsg"),"Anmeldung fehlgeschlagen: "+error.message,"err");return}
     await refreshUI();
   });
 
   $("signupBtn").addEventListener("click",async()=>{
-    hideMsg($("authMsg"));
-    const displayName=$("displayName").value.trim(),email=$("email").value.trim(),password=$("password").value;
-    if(!displayName||!email||password.length<8){showMsg($("authMsg"),"Bitte Name, E-Mail und ein Passwort mit mindestens 8 Zeichen eingeben.","err");return}
+    hideMsg($("signupMsg"));
+    const displayName=$("displayName").value.trim(),email=$("signupEmail").value.trim(),password=$("signupPassword").value;
+    if(!displayName||!email||password.length<8){showMsg($("signupMsg"),"Bitte Name, E-Mail und ein Passwort mit mindestens 8 Zeichen eingeben.","err");return}
     $("signupBtn").disabled=true;
     const {data,error}=await supabase.auth.signUp({email,password,options:{
       data:{display_name:displayName},
       emailRedirectTo:new URL("lehrer.html",window.location.href).toString()
     }});
     $("signupBtn").disabled=false;
-    if(error){showMsg($("authMsg"),"Registrierung fehlgeschlagen: "+error.message,"err");return}
+    if(error){showMsg($("signupMsg"),"Registrierung fehlgeschlagen: "+error.message,"err");return}
     if(data.session){await refreshUI()}
-    else showMsg($("authMsg"),"Registrierung erfolgreich. Bitte bestätige ggf. die E-Mail und melde dich danach an.","ok");
+    else{
+      $("signupForm").querySelectorAll("input").forEach(input=>input.disabled=true);
+      $("signupBtn").classList.add("hidden");
+      showMsg($("signupMsg"),"Registrierung erfolgreich. Bitte bestätige ggf. deine E-Mail-Adresse. Danach kannst du dich anmelden; der Lehrerzugang wird erst nach Freigabe aktiviert.","ok");
+    }
   });
 
   async function logout(){await supabase.auth.signOut();await refreshUI()}
