@@ -11,51 +11,87 @@
   <style>
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
     *{box-sizing:border-box}
-    body{margin:0;padding:24px}
-    .wrap{max-width:960px;margin:0 auto}
-    h1{margin:0 0 6px;font-size:2rem}
-    h2{margin-top:0}
-    .sub{color:#64748b;margin-bottom:24px}
-    .card{background:white;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:20px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
-    label{display:block;font-weight:700;margin:14px 0 6px}
-    input,button{font:inherit}
-    input[type="email"],input[type="password"],input[type="text"],input[type="number"],input[type="date"]{
-      width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:white
-    }
-    button{border:0;border-radius:10px;padding:12px 16px;font-weight:750;cursor:pointer}
-    .primary{background:#2563eb;color:white}
+    body{margin:0;padding:22px}
+    .wrap{max-width:1080px;margin:0 auto}
+    h1{margin:0 0 4px;font-size:2rem}
+    h2{margin:0 0 8px}
+    h3{margin:0 0 6px}
+    .sub,.muted,.tiny{color:#64748b}
+    .tiny{font-size:.9rem}
+    .card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+    .hidden{display:none!important}
+    .topline{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+    button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .primary{background:#2563eb;color:#fff}
     .secondary{background:#e2e8f0;color:#172033}
-    .danger{background:#fee2e2;color:#991b1b}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-    .msg{padding:12px 14px;border-radius:10px;margin-top:14px;display:none}
+    .nav button.active{background:#172033;color:#fff}
+    .goodbtn{background:#dcfce7;color:#166534}
+    .badbtn{background:#fee2e2;color:#991b1b}
+    .autobtn{background:#e2e8f0;color:#334155}
+    label{display:block;font-weight:700;margin:14px 0 6px}
+    input,select{font:inherit}
+    input[type="email"],input[type="password"],input[type="text"],input[type="number"],input[type="date"]{
+      width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff
+    }
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .units{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-top:8px}
+    .unit{border:1px solid #cbd5e1;border-radius:12px;padding:12px;background:#fafafa}
+    .unit label{margin:0;display:flex;gap:9px;align-items:center;font-weight:650}
+    .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    .msg{padding:11px 13px;border-radius:10px;margin-top:12px;display:none}
     .msg.show{display:block}
     .info{background:#eff6ff;color:#1e40af}
     .ok{background:#ecfdf5;color:#166534}
     .err{background:#fef2f2;color:#991b1b}
-    .units{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px}
-    .unit{border:1px solid #cbd5e1;border-radius:12px;padding:12px;background:#fafafa}
-    .unit label{margin:0;display:flex;gap:9px;align-items:center;font-weight:650}
-    .hidden{display:none!important}
-    .result-grid{display:grid;grid-template-columns:minmax(220px,280px) 1fr;gap:24px;align-items:start}
-    #qr{background:white;padding:12px;border-radius:12px;display:inline-block}
-    .linkbox{word-break:break-all;background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:10px;margin-top:8px}
-    .meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
-    .meta div{background:#f8fafc;border-radius:10px;padding:10px}
-    .tiny{font-size:.9rem;color:#64748b}
-    @media(max-width:680px){body{padding:14px}.row,.result-grid,.meta{grid-template-columns:1fr}}
+    .folders{display:grid;gap:13px}
+    .folder{border:1px solid #dbe2ea;border-radius:14px;padding:15px;background:#fff}
+    .folder-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+    .folder-title{font-size:1.05rem;font-weight:850}
+    .folder-meta{font-size:.9rem;color:#64748b;margin-top:4px}
+    .badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+    .badge{background:#f1f5f9;border-radius:999px;padding:5px 9px;font-size:.84rem;font-weight:700}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:14px 0}
+    .stat{background:#f8fafc;border-radius:11px;padding:10px}
+    .stat strong{display:block;font-size:1.1rem}
+    .test-detail{border-top:1px solid #e2e8f0;margin-top:14px;padding-top:14px}
+    .qrgrid{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+    .qrbox{display:inline-block;background:#fff;padding:10px;border:1px solid #e2e8f0;border-radius:12px}
+    .linkbox{word-break:break-all;background:#f8fafc;border:1px solid #e2e8f0;padding:11px;border-radius:10px;margin-top:7px}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+    th{font-size:.87rem;color:#475569}
+    .score{font-weight:850}
+    .student-group{border:1px solid #dbe2ea;border-radius:14px;padding:15px;background:#fff;margin-bottom:12px}
+    .detail-panel{margin-top:14px;border-top:1px solid #e2e8f0;padding-top:14px}
+    .answer-card{border:1px solid #dbe2ea;border-radius:12px;padding:13px;margin:9px 0;background:#fafafa}
+    .answer-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .answer-prompt{font-weight:800}
+    .answer-text{margin:8px 0}
+    .answer-solution{font-size:.9rem;color:#475569}
+    .correct{color:#166534;font-weight:800}
+    .wrong{color:#991b1b;font-weight:800}
+    .manual{color:#7c3aed;font-weight:800}
+    .summarybar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+    .summarypill{background:#f1f5f9;border-radius:999px;padding:7px 11px;font-weight:750}
+    .empty{padding:18px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;text-align:center}
+    @media(max-width:760px){
+      body{padding:12px}.row,.qrgrid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      table{font-size:.9rem}th,td{padding:8px 5px}
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Spanisch-Tests</h1>
-  <div class="sub">Lehrerbereich · Test erstellen und später Ergebnisse verwalten</div>
+  <div class="sub">Lehrerbereich</div>
 
   <section id="authCard" class="card">
     <h2>Lehrerzugang</h2>
     <p class="tiny">Neue Lehrkräfte können sich registrieren. Der Zugang wird erst nach Freigabe aktiviert.</p>
     <label for="displayName">Name (nur bei Registrierung)</label>
-    <input id="displayName" type="text" autocomplete="name" placeholder="z. B. Christine Vossen">
+    <input id="displayName" type="text" autocomplete="name">
     <label for="email">E-Mail-Adresse</label>
     <input id="email" type="email" autocomplete="email">
     <label for="password">Passwort</label>
@@ -69,72 +105,97 @@
 
   <section id="pendingCard" class="card hidden">
     <h2>Zugang wartet auf Freigabe</h2>
-    <p>Dein Lehreraccount ist angelegt, aber noch nicht freigeschaltet. Nach der Freigabe kannst du hier Tests erstellen.</p>
-    <div class="actions"><button id="logoutPendingBtn" class="secondary">Abmelden</button></div>
+    <p>Dein Lehreraccount ist angelegt, aber noch nicht freigeschaltet.</p>
+    <button id="logoutPendingBtn" class="secondary">Abmelden</button>
   </section>
 
   <section id="teacherArea" class="hidden">
-    <section class="card">
-      <div style="display:flex;justify-content:space-between;gap:16px;align-items:start;flex-wrap:wrap">
-        <div>
-          <h2 style="margin-bottom:4px">Test erstellen</h2>
-          <div id="welcome" class="tiny"></div>
+    <div class="topline">
+      <div>
+        <strong id="welcome"></strong>
+        <div class="tiny">Gemeinsames Material · eigene Tests und Ergebnisse</div>
+      </div>
+      <button id="logoutBtn" class="secondary">Abmelden</button>
+    </div>
+
+    <div class="nav">
+      <button class="navBtn secondary" data-view="tests">Meine Tests</button>
+      <button class="navBtn secondary" data-view="students">Nach Schülern</button>
+      <button class="navBtn secondary" data-view="create">Test erstellen</button>
+    </div>
+
+    <section id="view-create" class="view hidden">
+      <div class="card">
+        <h2>Test erstellen</h2>
+        <label>Unidades auswählen</label>
+        <div id="unitsBox" class="units"></div>
+
+        <div class="row">
+          <div>
+            <label for="questionCount">Anzahl der Vokabeln</label>
+            <input id="questionCount" type="number" min="1" max="500">
+          </div>
+          <div>
+            <label for="durationMinutes">Bearbeitungszeit in Minuten</label>
+            <input id="durationMinutes" type="number" min="1" max="300">
+          </div>
         </div>
-        <button id="logoutBtn" class="secondary">Abmelden</button>
+
+        <div class="row">
+          <div>
+            <label for="testDate">Datum</label>
+            <input id="testDate" type="date">
+          </div>
+          <div>
+            <label for="testTitle">Titel (optional)</label>
+            <input id="testTitle" type="text" placeholder="z. B. Q2 Quartal 2 Test 1">
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="createTestBtn" class="primary">Test erstellen</button>
+        </div>
+        <div id="createMsg" class="msg"></div>
       </div>
 
-      <label>Unidades auswählen</label>
-      <div id="unitsBox" class="units"></div>
-
-      <div class="row">
-        <div>
-          <label for="questionCount">Anzahl der Vokabeln</label>
-          <input id="questionCount" type="number" min="1" max="500" placeholder="z. B. 50">
-        </div>
-        <div>
-          <label for="durationMinutes">Bearbeitungszeit in Minuten</label>
-          <input id="durationMinutes" type="number" min="1" max="300" placeholder="z. B. 20">
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
-          <label for="testDate">Datum</label>
-          <input id="testDate" type="date">
-        </div>
-        <div>
-          <label for="testTitle">Titel (optional)</label>
-          <input id="testTitle" type="text" placeholder="z. B. Vokabeltest Unidad 3">
+      <div id="newTestCard" class="card hidden">
+        <h2>Test wurde erstellt</h2>
+        <div class="qrgrid">
+          <div><div id="newQr" class="qrbox"></div></div>
+          <div>
+            <div id="newTestSummary"></div>
+            <strong>Schülerlink</strong>
+            <div id="newStudentLink" class="linkbox"></div>
+            <div class="actions"><button id="copyNewLinkBtn" class="secondary">Link kopieren</button></div>
+          </div>
         </div>
       </div>
-
-      <div class="actions">
-        <button id="createTestBtn" class="primary">Test erstellen</button>
-      </div>
-      <div id="createMsg" class="msg"></div>
     </section>
 
-    <section id="resultCard" class="card hidden">
-      <h2>Test wurde erstellt</h2>
-      <div class="result-grid">
-        <div>
-          <div id="qr"></div>
-          <p class="tiny">Zum Öffnen mit Tablet oder Smartphone scannen.</p>
-        </div>
-        <div>
-          <div class="meta">
-            <div><strong>Datum</strong><br><span id="resDate"></span></div>
-            <div><strong>Zeit</strong><br><span id="resDuration"></span></div>
-            <div><strong>Vokabeln</strong><br><span id="resCount"></span></div>
-            <div><strong>Unidades</strong><br><span id="resUnits"></span></div>
+    <section id="view-tests" class="view">
+      <div class="card">
+        <div class="topline">
+          <div>
+            <h2>Meine Tests</h2>
+            <div class="tiny">Jeder Test ist wie ein Ordner. Öffne ihn für QR-Code und Auswertung.</div>
           </div>
-          <strong>Schülerlink</strong>
-          <div id="studentLink" class="linkbox"></div>
-          <div class="actions">
-            <button id="copyLinkBtn" class="secondary">Link kopieren</button>
-          </div>
-          <p class="tiny">Die Schülerseite wird im nächsten Schritt angeschlossen. Der Test selbst ist bereits fest in Supabase gespeichert.</p>
+          <button id="refreshTestsBtn" class="secondary">Aktualisieren</button>
         </div>
+        <div id="testsMsg" class="msg"></div>
+        <div id="testsList" class="folders"></div>
+      </div>
+    </section>
+
+    <section id="view-students" class="view hidden">
+      <div class="card">
+        <div class="topline">
+          <div>
+            <h2>Nach Schülern</h2>
+            <div class="tiny">Alle Testabgaben einer Schülernummer zusammengefasst.</div>
+          </div>
+          <button id="refreshStudentsBtn" class="secondary">Aktualisieren</button>
+        </div>
+        <div id="studentsList"></div>
       </div>
     </section>
   </section>
@@ -146,207 +207,393 @@
   const SUPABASE_URL = "https://jzolxrqrrljwpmjbdxmo.supabase.co";
   const SUPABASE_KEY = "sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
   const $ = id => document.getElementById(id);
-  const authCard = $("authCard");
-  const pendingCard = $("pendingCard");
-  const teacherArea = $("teacherArea");
 
-  function showMsg(el, text, type="info"){
-    el.textContent = text;
-    el.className = "msg show " + type;
+  let testsCache = [];
+  let submissionsCache = [];
+  let testUnitsCache = [];
+  let currentView = "tests";
+  let currentOpenTest = null;
+  let currentOpenSubmission = null;
+
+  function showMsg(el,text,type="info"){el.textContent=text;el.className="msg show "+type}
+  function hideMsg(el){el.textContent="";el.className="msg"}
+  function fmtDate(iso){if(!iso)return"";const [y,m,d]=iso.slice(0,10).split("-");return d+"."+m+"."+y}
+  function fmtTime(iso){if(!iso)return"—";return new Date(iso).toLocaleString("de-DE",{dateStyle:"short",timeStyle:"short"})}
+  function n(v){return Number(v||0)}
+  function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
+  function studentUrl(code){const u=new URL("test.html",window.location.href);u.searchParams.set("code",code);return u.toString()}
+
+  function setView(name){
+    currentView=name;
+    document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));
+    $("view-"+name).classList.remove("hidden");
+    document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+    if(name==="tests") loadDashboard();
+    if(name==="students") loadDashboard();
   }
-  function hideMsg(el){ el.className = "msg"; el.textContent = ""; }
 
   async function refreshUI(){
-    const { data: { session } } = await supabase.auth.getSession();
+    const {data:{session}}=await supabase.auth.getSession();
     if(!session){
-      authCard.classList.remove("hidden");
-      pendingCard.classList.add("hidden");
-      teacherArea.classList.add("hidden");
+      $("authCard").classList.remove("hidden");
+      $("pendingCard").classList.add("hidden");
+      $("teacherArea").classList.add("hidden");
       return;
     }
-
-    const { data: profile, error } = await supabase
-      .from("teacher_profiles")
-      .select("display_name,approved,role")
-      .eq("user_id", session.user.id)
-      .maybeSingle();
-
+    const {data:profile,error}=await supabase.from("teacher_profiles")
+      .select("display_name,approved,role").eq("user_id",session.user.id).maybeSingle();
     if(error){
-      authCard.classList.remove("hidden");
-      teacherArea.classList.add("hidden");
-      showMsg($("authMsg"), "Der Lehrerzugang konnte nicht geladen werden.", "err");
+      $("authCard").classList.remove("hidden");
+      $("teacherArea").classList.add("hidden");
+      showMsg($("authMsg"),"Der Lehrerzugang konnte nicht geladen werden.","err");
       return;
     }
-
-    authCard.classList.add("hidden");
+    $("authCard").classList.add("hidden");
     if(!profile?.approved){
-      pendingCard.classList.remove("hidden");
-      teacherArea.classList.add("hidden");
+      $("pendingCard").classList.remove("hidden");
+      $("teacherArea").classList.add("hidden");
       return;
     }
-
-    pendingCard.classList.add("hidden");
-    teacherArea.classList.remove("hidden");
-    $("welcome").textContent = "Angemeldet als " + (profile.display_name || session.user.email);
+    $("pendingCard").classList.add("hidden");
+    $("teacherArea").classList.remove("hidden");
+    $("welcome").textContent="Angemeldet als "+(profile.display_name||session.user.email);
     await loadUnits();
+    setView(currentView);
   }
 
   async function loadUnits(){
-    const { data, error } = await supabase
-      .from("units")
-      .select("unit_key,title,sort_order")
-      .order("sort_order");
-
-    if(error){
-      showMsg($("createMsg"), "Die Unidades konnten nicht geladen werden.", "err");
-      return;
-    }
-
-    $("unitsBox").innerHTML = "";
-    for(const u of data || []){
-      const box = document.createElement("div");
-      box.className = "unit";
-      box.innerHTML = '<label><input type="checkbox" name="unit" value="' +
-        u.unit_key.replaceAll('"','&quot;') + '"> ' + (u.title || ("Unidad " + u.unit_key)) + '</label>';
+    const {data,error}=await supabase.from("units").select("unit_key,title,sort_order").order("sort_order");
+    if(error){showMsg($("createMsg"),"Die Unidades konnten nicht geladen werden.","err");return}
+    $("unitsBox").innerHTML="";
+    for(const u of data||[]){
+      const box=document.createElement("div");
+      box.className="unit";
+      box.innerHTML='<label><input type="checkbox" name="unit" value="'+esc(u.unit_key)+'"> '+esc(u.title||("Unidad "+u.unit_key))+'</label>';
       $("unitsBox").appendChild(box);
     }
   }
 
-  $("loginBtn").addEventListener("click", async () => {
-    hideMsg($("authMsg"));
-    const email = $("email").value.trim();
-    const password = $("password").value;
-    if(!email || !password){
-      showMsg($("authMsg"), "Bitte E-Mail-Adresse und Passwort eingeben.", "err");
-      return;
-    }
-    $("loginBtn").disabled = true;
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    $("loginBtn").disabled = false;
-    if(error){
-      showMsg($("authMsg"), "Anmeldung fehlgeschlagen: " + error.message, "err");
-      return;
-    }
-    await refreshUI();
-  });
+  async function loadDashboard(){
+    hideMsg($("testsMsg"));
+    const {data:tests,error:testErr}=await supabase.from("tests")
+      .select("id,public_code,title,test_date,question_count,duration_minutes,status,created_at")
+      .order("created_at",{ascending:false});
+    if(testErr){showMsg($("testsMsg"),"Tests konnten nicht geladen werden.","err");return}
+    testsCache=tests||[];
 
-  $("signupBtn").addEventListener("click", async () => {
-    hideMsg($("authMsg"));
-    const displayName = $("displayName").value.trim();
-    const email = $("email").value.trim();
-    const password = $("password").value;
-    if(!displayName || !email || password.length < 8){
-      showMsg($("authMsg"), "Für die Registrierung bitte Name, E-Mail-Adresse und ein Passwort mit mindestens 8 Zeichen eingeben.", "err");
-      return;
+    if(!testsCache.length){
+      submissionsCache=[];testUnitsCache=[];
+      renderTests();renderStudents();return;
     }
-    $("signupBtn").disabled = true;
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { display_name: displayName },
-        emailRedirectTo: new URL("lehrer.html", window.location.href).toString()
-      }
-    });
-    $("signupBtn").disabled = false;
-    if(error){
-      showMsg($("authMsg"), "Registrierung fehlgeschlagen: " + error.message, "err");
-      return;
-    }
-    if(data.session){
-      showMsg($("authMsg"), "Registrierung erfolgreich. Der Zugang wartet jetzt auf Freigabe.", "ok");
-      await refreshUI();
-    } else {
-      showMsg($("authMsg"), "Registrierung erfolgreich. Bitte bestätige zunächst die E-Mail, falls Supabase dir eine Bestätigung geschickt hat. Danach hier anmelden.", "ok");
-    }
-  });
-
-  async function logout(){
-    await supabase.auth.signOut();
-    await refreshUI();
+    const ids=testsCache.map(t=>t.id);
+    const [{data:subs,error:subErr},{data:tus,error:tuErr}]=await Promise.all([
+      supabase.from("submissions")
+        .select("id,test_id,student_code,started_at,deadline_at,submitted_at,status,raw_points,max_points,percent,grade_text,upper_school_points,auto_submitted")
+        .in("test_id",ids)
+        .order("created_at",{ascending:false}),
+      supabase.from("test_units")
+        .select("test_id,unit_id,units(unit_key,title)")
+        .in("test_id",ids)
+    ]);
+    if(subErr){showMsg($("testsMsg"),"Ergebnisse konnten nicht geladen werden.","err");return}
+    submissionsCache=subs||[];
+    testUnitsCache=tuErr?[]:(tus||[]);
+    renderTests();
+    renderStudents();
   }
-  $("logoutBtn").addEventListener("click", logout);
-  $("logoutPendingBtn").addEventListener("click", logout);
 
-  $("createTestBtn").addEventListener("click", async () => {
-    hideMsg($("createMsg"));
-    $("resultCard").classList.add("hidden");
+  function unitsForTest(testId){
+    return testUnitsCache.filter(x=>x.test_id===testId).map(x=>x.units?.title||("Unidad "+x.units?.unit_key)).filter(Boolean);
+  }
 
-    const unitKeys = [...document.querySelectorAll('input[name="unit"]:checked')].map(x => x.value);
-    const questionCount = Number($("questionCount").value);
-    const durationMinutes = Number($("durationMinutes").value);
-    const testDate = $("testDate").value;
-    const title = $("testTitle").value.trim();
+  function testStats(testId){
+    const all=submissionsCache.filter(s=>s.test_id===testId);
+    const submitted=all.filter(s=>s.status==="submitted");
+    const avg=submitted.length?submitted.reduce((a,s)=>a+n(s.percent),0)/submitted.length:null;
+    const avgOp=submitted.length?submitted.reduce((a,s)=>a+n(s.upper_school_points),0)/submitted.length:null;
+    return {all,submitted,avg,avgOp};
+  }
 
-    if(!unitKeys.length){
-      showMsg($("createMsg"), "Bitte mindestens eine Unidad auswählen.", "err");
-      return;
-    }
-    if(!Number.isInteger(questionCount) || questionCount < 1){
-      showMsg($("createMsg"), "Bitte die Anzahl der Vokabeln eingeben.", "err");
-      return;
-    }
-    if(!Number.isInteger(durationMinutes) || durationMinutes < 1){
-      showMsg($("createMsg"), "Bitte die Bearbeitungszeit eingeben.", "err");
-      return;
-    }
-    if(!testDate){
-      showMsg($("createMsg"), "Bitte das Testdatum auswählen.", "err");
+  function renderTests(){
+    const root=$("testsList");
+    root.innerHTML="";
+    if(!testsCache.length){
+      root.innerHTML='<div class="empty">Noch keine Tests vorhanden.</div>';
       return;
     }
 
-    $("createTestBtn").disabled = true;
-    $("createTestBtn").textContent = "Test wird erstellt …";
+    for(const t of testsCache){
+      const st=testStats(t.id);
+      const units=unitsForTest(t.id);
+      const folder=document.createElement("div");
+      folder.className="folder";
+      folder.dataset.testId=t.id;
+      folder.innerHTML=
+        '<div class="folder-head"><div>'+
+          '<div class="folder-title">'+esc(t.title||"Vokabeltest")+'</div>'+
+          '<div class="folder-meta">'+fmtDate(t.test_date)+' · '+t.question_count+' Vokabeln · '+t.duration_minutes+' Minuten</div>'+
+          '<div class="badges">'+
+            (units.length?units.map(u=>'<span class="badge">'+esc(u)+'</span>').join(""):'')+
+            '<span class="badge">'+st.submitted.length+' Abgaben</span>'+
+          '</div>'+
+        '</div><div class="actions" style="margin-top:0">'+
+          '<button class="secondary openFolderBtn">Öffnen</button>'+
+        '</div></div>'+
+        '<div class="stats">'+
+          '<div class="stat"><span class="tiny">Abgaben</span><strong>'+st.submitted.length+'</strong></div>'+
+          '<div class="stat"><span class="tiny">Ø Prozent</span><strong>'+(st.avg===null?"—":st.avg.toFixed(1)+" %")+'</strong></div>'+
+          '<div class="stat"><span class="tiny">Ø Oberstufenpunkte</span><strong>'+(st.avgOp===null?"—":st.avgOp.toFixed(1))+'</strong></div>'+
+          '<div class="stat"><span class="tiny">Status</span><strong>'+(t.status==="open"?"offen":esc(t.status))+'</strong></div>'+
+        '</div>'+
+        '<div class="test-detail hidden"></div>';
 
-    const { data, error } = await supabase.functions.invoke("create-test", {
-      body: { unitKeys, questionCount, durationMinutes, testDate, title }
+      folder.querySelector(".openFolderBtn").addEventListener("click",()=>toggleTestFolder(t,folder));
+      root.appendChild(folder);
+    }
+  }
+
+  function toggleTestFolder(t,folder){
+    const panel=folder.querySelector(".test-detail");
+    const btn=folder.querySelector(".openFolderBtn");
+    if(!panel.classList.contains("hidden")){
+      panel.classList.add("hidden");btn.textContent="Öffnen";return;
+    }
+    currentOpenTest=t.id;
+    btn.textContent="Schließen";
+    panel.classList.remove("hidden");
+    renderTestFolder(t,panel);
+  }
+
+  function renderTestFolder(t,panel){
+    const subs=submissionsCache.filter(s=>s.test_id===t.id);
+    const submitted=subs.filter(s=>s.status==="submitted");
+    const url=studentUrl(t.public_code);
+    panel.innerHTML=
+      '<div class="qrgrid">'+
+        '<div><div class="qrbox qr-target"></div></div>'+
+        '<div>'+
+          '<h3>'+esc(t.title||"Vokabeltest")+'</h3>'+
+          '<div class="tiny">Testcode: '+esc(t.public_code)+'</div>'+
+          '<div class="linkbox">'+esc(url)+'</div>'+
+          '<div class="actions"><button class="secondary copyFolderLink">Link kopieren</button></div>'+
+        '</div>'+
+      '</div>'+
+      '<h3 style="margin-top:20px">Auswertung</h3>'+
+      (submitted.length?submissionTable(submitted,t):'<div class="empty">Noch keine abgegebenen Tests.</div>')+
+      '<div class="submission-detail"></div>';
+
+    new QRCode(panel.querySelector(".qr-target"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
+    panel.querySelector(".copyFolderLink").addEventListener("click",async e=>{
+      await navigator.clipboard.writeText(url);e.currentTarget.textContent="Kopiert ✓";
+      setTimeout(()=>e.currentTarget.textContent="Link kopieren",1300);
     });
+    panel.querySelectorAll(".openSubmissionBtn").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const sid=btn.dataset.submissionId;
+        const sub=submissionsCache.find(s=>s.id===sid);
+        openSubmissionDetail(sub,t,panel.querySelector(".submission-detail"));
+      });
+    });
+  }
 
-    $("createTestBtn").disabled = false;
-    $("createTestBtn").textContent = "Test erstellen";
+  function submissionTable(subs,t){
+    const sorted=[...subs].sort((a,b)=>String(a.student_code).localeCompare(String(b.student_code),undefined,{numeric:true}));
+    return '<div style="overflow-x:auto"><table><thead><tr>'+
+      '<th>Schülernr.</th><th>Punkte</th><th>%</th><th>Note</th><th>OP</th><th>Abgabe</th><th></th>'+
+      '</tr></thead><tbody>'+
+      sorted.map(s=>'<tr>'+
+        '<td><strong>'+esc(s.student_code)+'</strong></td>'+
+        '<td class="score">'+n(s.raw_points)+' / '+n(s.max_points)+'</td>'+
+        '<td>'+n(s.percent).toFixed(1)+' %</td>'+
+        '<td>'+esc(s.grade_text||"—")+'</td>'+
+        '<td><strong>'+n(s.upper_school_points)+'</strong></td>'+
+        '<td>'+fmtTime(s.submitted_at)+'</td>'+
+        '<td><button class="secondary openSubmissionBtn" data-submission-id="'+esc(s.id)+'">Details / Nachkorrektur</button></td>'+
+      '</tr>').join("")+
+      '</tbody></table></div>';
+  }
 
-    if(error){
-      let message = "Der Test konnte nicht erstellt werden.";
-      try {
-        const body = await error.context?.json();
-        if(body?.error) message = body.error;
-      } catch {}
-      showMsg($("createMsg"), message, "err");
+  async function openSubmissionDetail(sub,t,root){
+    if(!sub)return;
+    currentOpenSubmission=sub.id;
+    root.innerHTML='<p class="tiny">Antworten werden geladen …</p>';
+    const {data,error}=await supabase.from("answers")
+      .select("id,question_id,response_text,auto_correct,auto_points,teacher_points,teacher_comment,test_questions(position,source_snapshot,accepted_answers_snapshot)")
+      .eq("submission_id",sub.id);
+    if(error){root.innerHTML='<div class="msg show err">Antworten konnten nicht geladen werden.</div>';return}
+    const answers=(data||[]).sort((a,b)=>n(a.test_questions?.position)-n(b.test_questions?.position));
+    const adjusted=answers.filter(a=>a.teacher_points!==null&&a.teacher_points!==undefined).length;
+
+    root.className="submission-detail detail-panel";
+    root.innerHTML=
+      '<div class="topline"><div><h3>Schüler '+esc(sub.student_code)+'</h3>'+
+      '<div class="tiny">'+esc(t.title||"Vokabeltest")+' · abgegeben '+fmtTime(sub.submitted_at)+'</div></div>'+
+      '<button class="secondary closeDetailBtn">Details schließen</button></div>'+
+      '<div class="summarybar">'+
+        '<span class="summarypill summaryPoints">'+n(sub.raw_points)+' / '+n(sub.max_points)+' Punkte</span>'+
+        '<span class="summarypill summaryPercent">'+n(sub.percent).toFixed(1)+' %</span>'+
+        '<span class="summarypill summaryGrade">Note '+esc(sub.grade_text||"—")+'</span>'+
+        '<span class="summarypill summaryOP">'+n(sub.upper_school_points)+' OP</span>'+
+        (adjusted?'<span class="summarypill manual">'+adjusted+' manuell nachkorrigiert</span>':'')+
+      '</div>'+
+      '<div class="answersRoot"></div>';
+
+    root.querySelector(".closeDetailBtn").addEventListener("click",()=>{root.innerHTML="";root.className="submission-detail"});
+    const ar=root.querySelector(".answersRoot");
+    for(const a of answers){
+      const q=a.test_questions||{};
+      const effective=a.teacher_points===null||a.teacher_points===undefined?n(a.auto_points):n(a.teacher_points);
+      const mode=a.teacher_points===null||a.teacher_points===undefined?"auto":(n(a.teacher_points)===1?"correct":"wrong");
+      const card=document.createElement("div");
+      card.className="answer-card";
+      const solutions=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot.join(" / "):"";
+      card.innerHTML=
+        '<div class="answer-head"><div><div class="tiny">Aufgabe '+esc(q.position||"")+'</div>'+
+        '<div class="answer-prompt">'+esc(q.source_snapshot||"")+'</div></div>'+
+        '<div class="'+(effective===1?"correct":"wrong")+'">'+(effective===1?"richtig":"falsch")+'</div></div>'+
+        '<div class="answer-text"><strong>Antwort:</strong> '+esc(a.response_text||"—")+'</div>'+
+        '<div class="answer-solution"><strong>Hinterlegte Lösung:</strong> '+esc(solutions)+'</div>'+
+        '<div class="actions">'+
+          '<button class="autobtn adjustBtn" data-mode="auto">Automatik'+(mode==="auto"?" ✓":"")+'</button>'+
+          '<button class="goodbtn adjustBtn" data-mode="correct">Als richtig werten'+(mode==="correct"?" ✓":"")+'</button>'+
+          '<button class="badbtn adjustBtn" data-mode="wrong">Als falsch werten'+(mode==="wrong"?" ✓":"")+'</button>'+
+        '</div>';
+      card.querySelectorAll(".adjustBtn").forEach(btn=>btn.addEventListener("click",()=>adjustAnswer(a.id,btn.dataset.mode,sub,t,root)));
+      ar.appendChild(card);
+    }
+  }
+
+  async function adjustAnswer(answerId,mode,sub,t,root){
+    root.querySelectorAll("button").forEach(b=>b.disabled=true);
+    const {data,error}=await supabase.functions.invoke("teacher-results",{body:{action:"adjust-answer",answerId,mode}});
+    root.querySelectorAll("button").forEach(b=>b.disabled=false);
+    if(error||data?.error){
+      alert(data?.error||"Nachkorrektur konnte nicht gespeichert werden.");
       return;
     }
-    if(data?.error){
-      showMsg($("createMsg"), data.error, "err");
+    if(data?.summary){
+      sub.raw_points=data.summary.rawPoints;
+      sub.max_points=data.summary.maxPoints;
+      sub.percent=data.summary.percent;
+      sub.grade_text=data.summary.gradeText;
+      sub.upper_school_points=data.summary.upperSchoolPoints;
+      const cached=submissionsCache.find(x=>x.id===sub.id);
+      if(cached)Object.assign(cached,sub);
+    }
+    await openSubmissionDetail(sub,t,root);
+    renderTests();
+    renderStudents();
+  }
+
+  function renderStudents(){
+    const root=$("studentsList");
+    const submitted=submissionsCache.filter(s=>s.status==="submitted");
+    if(!submitted.length){
+      root.innerHTML='<div class="empty">Noch keine abgegebenen Tests.</div>';
       return;
     }
+    const groups=new Map();
+    for(const s of submitted){
+      if(!groups.has(s.student_code))groups.set(s.student_code,[]);
+      groups.get(s.student_code).push(s);
+    }
+    const codes=[...groups.keys()].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}));
+    root.innerHTML="";
+    for(const code of codes){
+      const rows=groups.get(code);
+      const avg=rows.reduce((a,s)=>a+n(s.percent),0)/rows.length;
+      const avgOp=rows.reduce((a,s)=>a+n(s.upper_school_points),0)/rows.length;
+      const box=document.createElement("div");
+      box.className="student-group";
+      box.innerHTML=
+        '<div class="folder-head"><div><div class="folder-title">Schüler '+esc(code)+'</div>'+
+        '<div class="folder-meta">'+rows.length+' Test'+(rows.length===1?"":"s")+'</div></div>'+
+        '<div class="badges"><span class="badge">Ø '+avg.toFixed(1)+' %</span><span class="badge">Ø '+avgOp.toFixed(1)+' OP</span></div></div>'+
+        '<div style="overflow-x:auto"><table><thead><tr><th>Test</th><th>Datum</th><th>Punkte</th><th>%</th><th>Note</th><th>OP</th></tr></thead><tbody>'+
+        rows.sort((a,b)=>new Date(b.submitted_at)-new Date(a.submitted_at)).map(s=>{
+          const t=testsCache.find(x=>x.id===s.test_id);
+          return '<tr><td>'+esc(t?.title||"Vokabeltest")+'</td><td>'+fmtDate(t?.test_date)+'</td>'+
+          '<td>'+n(s.raw_points)+' / '+n(s.max_points)+'</td><td>'+n(s.percent).toFixed(1)+' %</td>'+
+          '<td>'+esc(s.grade_text||"—")+'</td><td><strong>'+n(s.upper_school_points)+'</strong></td></tr>';
+        }).join("")+
+        '</tbody></table></div>';
+      root.appendChild(box);
+    }
+  }
 
-    const url = new URL("test.html", window.location.href);
-    url.searchParams.set("code", data.publicCode);
-    const studentUrl = url.toString();
-
-    $("resDate").textContent = data.testDate;
-    $("resDuration").textContent = data.durationMinutes + " Minuten";
-    $("resCount").textContent = data.questionCount;
-    $("resUnits").textContent = data.unitKeys.map(x => "Unidad " + x).join(", ");
-    $("studentLink").textContent = studentUrl;
-
-    $("qr").innerHTML = "";
-    new QRCode($("qr"), { text: studentUrl, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
-
-    $("resultCard").classList.remove("hidden");
-    $("resultCard").scrollIntoView({ behavior:"smooth", block:"start" });
-    showMsg($("createMsg"), "Der Test ist fest gespeichert.", "ok");
+  $("loginBtn").addEventListener("click",async()=>{
+    hideMsg($("authMsg"));
+    const email=$("email").value.trim(),password=$("password").value;
+    if(!email||!password){showMsg($("authMsg"),"Bitte E-Mail-Adresse und Passwort eingeben.","err");return}
+    $("loginBtn").disabled=true;
+    const {error}=await supabase.auth.signInWithPassword({email,password});
+    $("loginBtn").disabled=false;
+    if(error){showMsg($("authMsg"),"Anmeldung fehlgeschlagen: "+error.message,"err");return}
+    await refreshUI();
   });
 
-  $("copyLinkBtn").addEventListener("click", async () => {
-    const text = $("studentLink").textContent;
-    await navigator.clipboard.writeText(text);
-    $("copyLinkBtn").textContent = "Kopiert ✓";
-    setTimeout(() => $("copyLinkBtn").textContent = "Link kopieren", 1500);
+  $("signupBtn").addEventListener("click",async()=>{
+    hideMsg($("authMsg"));
+    const displayName=$("displayName").value.trim(),email=$("email").value.trim(),password=$("password").value;
+    if(!displayName||!email||password.length<8){showMsg($("authMsg"),"Bitte Name, E-Mail und ein Passwort mit mindestens 8 Zeichen eingeben.","err");return}
+    $("signupBtn").disabled=true;
+    const {data,error}=await supabase.auth.signUp({email,password,options:{
+      data:{display_name:displayName},
+      emailRedirectTo:new URL("lehrer.html",window.location.href).toString()
+    }});
+    $("signupBtn").disabled=false;
+    if(error){showMsg($("authMsg"),"Registrierung fehlgeschlagen: "+error.message,"err");return}
+    if(data.session){await refreshUI()}
+    else showMsg($("authMsg"),"Registrierung erfolgreich. Bitte bestätige ggf. die E-Mail und melde dich danach an.","ok");
   });
 
-  supabase.auth.onAuthStateChange(() => setTimeout(refreshUI, 0));
+  async function logout(){await supabase.auth.signOut();await refreshUI()}
+  $("logoutBtn").addEventListener("click",logout);
+  $("logoutPendingBtn").addEventListener("click",logout);
+
+  document.querySelectorAll(".navBtn").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
+  $("refreshTestsBtn").addEventListener("click",loadDashboard);
+  $("refreshStudentsBtn").addEventListener("click",loadDashboard);
+
+  $("createTestBtn").addEventListener("click",async()=>{
+    hideMsg($("createMsg"));$("newTestCard").classList.add("hidden");
+    const unitKeys=[...document.querySelectorAll('input[name="unit"]:checked')].map(x=>x.value);
+    const questionCount=Number($("questionCount").value);
+    const durationMinutes=Number($("durationMinutes").value);
+    const testDate=$("testDate").value;
+    const title=$("testTitle").value.trim();
+    if(!unitKeys.length){showMsg($("createMsg"),"Bitte mindestens eine Unidad auswählen.","err");return}
+    if(!Number.isInteger(questionCount)||questionCount<1){showMsg($("createMsg"),"Bitte die Anzahl der Vokabeln eingeben.","err");return}
+    if(!Number.isInteger(durationMinutes)||durationMinutes<1){showMsg($("createMsg"),"Bitte die Bearbeitungszeit eingeben.","err");return}
+    if(!testDate){showMsg($("createMsg"),"Bitte das Testdatum auswählen.","err");return}
+
+    $("createTestBtn").disabled=true;$("createTestBtn").textContent="Test wird erstellt …";
+    const {data,error}=await supabase.functions.invoke("create-test",{body:{unitKeys,questionCount,durationMinutes,testDate,title}});
+    $("createTestBtn").disabled=false;$("createTestBtn").textContent="Test erstellen";
+    if(error||data?.error){
+      let message=data?.error||"Der Test konnte nicht erstellt werden.";
+      try{const b=await error?.context?.json();if(b?.error)message=b.error}catch{}
+      showMsg($("createMsg"),message,"err");return;
+    }
+
+    const url=studentUrl(data.publicCode);
+    $("newStudentLink").textContent=url;
+    $("newTestSummary").innerHTML='<p><strong>'+esc(data.title||"Vokabeltest")+'</strong><br>'+fmtDate(data.testDate)+' · '+data.questionCount+' Vokabeln · '+data.durationMinutes+' Minuten</p>';
+    $("newQr").innerHTML="";
+    new QRCode($("newQr"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
+    $("newTestCard").classList.remove("hidden");
+    showMsg($("createMsg"),"Der Test ist gespeichert.","ok");
+    await loadDashboard();
+  });
+
+  $("copyNewLinkBtn").addEventListener("click",async()=>{
+    await navigator.clipboard.writeText($("newStudentLink").textContent);
+    $("copyNewLinkBtn").textContent="Kopiert ✓";
+    setTimeout(()=>$("copyNewLinkBtn").textContent="Link kopieren",1300);
+  });
+
+  supabase.auth.onAuthStateChange(()=>setTimeout(refreshUI,0));
   refreshUI();
 </script>
 </body>
