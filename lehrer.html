@@ -592,8 +592,23 @@
       margin:{left:14,right:14}
     });
 
-    const safeTitle=(t.title||"Vokabeltest").replace(/[^a-zA-Z0-9äöüÄÖÜß_-]+/g,"_");
-    doc.save("Korrektur_Schueler_"+sub.student_code+"_"+safeTitle+".pdf");
+    const blob=doc.output("blob");
+    const blobUrl=URL.createObjectURL(blob);
+    const newTab=window.open(blobUrl,"_blank");
+    if(!newTab){
+      const a=document.createElement("a");
+      a.href=blobUrl;
+      a.target="_blank";
+      a.rel="noopener";
+      a.textContent="PDF jetzt öffnen";
+      a.style.display="inline-block";
+      a.style.marginTop="12px";
+      a.style.fontWeight="700";
+      a.style.color="#2563eb";
+      document.body.appendChild(a);
+      a.click();
+    }
+    setTimeout(()=>URL.revokeObjectURL(blobUrl),60000);
   }
 
   async function adjustAnswer(answerId,mode,sub,t,root){
