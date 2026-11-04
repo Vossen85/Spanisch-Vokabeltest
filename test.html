@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Spanisch – Vokabeltest</title>
+  <style>
+    :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}
+    body{margin:0;padding:20px}
+    .wrap{max-width:980px;margin:0 auto}
+    .card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+    h1{margin:0 0 5px;font-size:2rem}
+    h2{margin-top:0}
+    .sub,.tiny{color:#64748b}
+    .tiny{font-size:.9rem}
+    .hidden{display:none!important}
+    label{display:block;font-weight:750;margin:14px 0 7px}
+    input,button{font:inherit}
+    input[type=text]{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff}
+    button{border:0;border-radius:10px;padding:12px 16px;font-weight:750;cursor:pointer}
+    .primary{background:#2563eb;color:white}
+    .secondary{background:#e2e8f0;color:#172033}
+    .msg{padding:12px 14px;border-radius:10px;margin-top:14px;display:none}
+    .msg.show{display:block}
+    .info{background:#eff6ff;color:#1e40af}
+    .ok{background:#ecfdf5;color:#166534}
+    .err{background:#fef2f2;color:#991b1b}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.96);backdrop-filter:blur(8px);padding:10px 0}
+    .topbar-inner{background:#fff;border:1px solid #dbe2ea;border-radius:14px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px;box-shadow:0 3px 14px rgba(15,23,42,.07)}
+    .timer{font-size:1.3rem;font-weight:850;font-variant-numeric:tabular-nums}
+    .timer.warn{color:#b45309}
+    .timer.danger{color:#b91c1c}
+    .progress{font-weight:700}
+    .chars{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+    .chars button{padding:8px 11px;background:#eef2f7;color:#172033}
+    .question{border:1px solid #dbe2ea;border-radius:14px;padding:16px;margin:12px 0;background:white}
+    .qnum{font-size:.85rem;color:#64748b;font-weight:700;margin-bottom:5px}
+    .prompt{font-size:1.12rem;font-weight:800;margin-bottom:10px}
+    .question input{font-size:1rem}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+    .summary div{background:#f8fafc;padding:11px;border-radius:10px}
+    @media(max-width:650px){
+      body{padding:12px}.card{padding:16px}.topbar-inner{align-items:flex-start;flex-direction:column;gap:6px}.summary{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section id="loadingCard" class="card">
+    <h1>Spanisch – Vokabeltest</h1>
+    <p>Test wird geladen …</p>
+  </section>
+
+  <section id="startCard" class="card hidden">
+    <h1 id="startTitle">Vokabeltest</h1>
+    <p class="sub">Deutsche Vorgabe → vollständige spanische Übersetzung</p>
+    <div class="summary">
+      <div><strong>Datum</strong><br><span id="startDate"></span></div>
+      <div><strong>Aufgaben</strong><br><span id="startCount"></span></div>
+      <div><strong>Zeit</strong><br><span id="startDuration"></span></div>
+    </div>
+    <label for="studentCode">Deine persönliche Schülernummer</label>
+    <input id="studentCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="12" autocomplete="off" placeholder="z. B. 17">
+    <p class="tiny">Mit dem Klick auf „Test starten“ beginnt deine Bearbeitungszeit.</p>
+    <button id="startBtn" class="primary">Test starten</button>
+    <div id="startMsg" class="msg"></div>
+  </section>
+
+  <section id="testArea" class="hidden">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div>
+          <strong id="testTitle">Vokabeltest</strong>
+          <div class="tiny" id="saveState">Noch nicht gespeichert</div>
+        </div>
+        <div class="progress"><span id="answeredCount">0</span> / <span id="totalCount">0</span> beantwortet</div>
+        <div id="timer" class="timer">00:00</div>
+      </div>
+      <div class="chars" id="chars">
+        <button type="button">á</button><button type="button">é</button><button type="button">í</button>
+        <button type="button">ó</button><button type="button">ú</button><button type="button">ü</button>
+        <button type="button">ñ</button><button type="button">¿</button><button type="button">¡</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <p class="tiny">Du kannst die Aufgaben in beliebiger Reihenfolge bearbeiten und Antworten bis zur Abgabe ändern. Die Eingaben werden automatisch zwischengespeichert.</p>
+      <div id="questions"></div>
+      <div class="actions">
+        <button id="submitBtn" class="primary">Test endgültig abgeben</button>
+      </div>
+      <div id="testMsg" class="msg"></div>
+    </section>
+  </section>
+
+  <section id="doneCard" class="card hidden">
+    <h1>Test abgegeben ✓</h1>
+    <p>Deine Antworten wurden gespeichert und abgegeben.</p>
+    <p class="tiny">Die Auswertung erhält deine Lehrkraft. Auf dieser Seite werden keine Lösungen oder Ergebnisse angezeigt.</p>
+  </section>
+
+  <section id="errorCard" class="card hidden">
+    <h1>Test nicht verfügbar</h1>
+    <p id="errorText"></p>
+  </section>
+</div>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const SUPABASE_URL = "https://jzolxrqrrljwpmjbdxmo.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const $ = id => document.getElementById(id);
+  const code = new URLSearchParams(location.search).get("code")?.trim().toUpperCase() || "";
+
+  let accessToken = "";
+  let deadlineAt = null;
+  let questions = [];
+  let timerHandle = null;
+  let autosaveHandle = null;
+  let debounceHandle = null;
+  let lastFocusedInput = null;
+  let submitting = false;
+
+  function storageKey(studentCode){ return "spanisch-test:" + code + ":" + studentCode; }
+
+  function showMsg(el, text, type="info"){
+    el.textContent = text;
+    el.className = "msg show " + type;
+  }
+  function hideMsg(el){ el.textContent=""; el.className="msg"; }
+
+  function formatDate(iso){
+    if(!iso) return "";
+    const [y,m,d]=iso.split("-");
+    return [d,m,y].join(".");
+  }
+
+  async function api(body){
+    const { data, error } = await supabase.functions.invoke("student-test", { body });
+    if(error){
+      let msg = "Verbindung zum Testserver fehlgeschlagen.";
+      try{
+        const b = await error.context?.json();
+        if(b?.error) msg = b.error;
+      }catch{}
+      throw new Error(msg);
+    }
+    if(data?.error) throw new Error(data.error);
+    return data;
+  }
+
+  function fail(text){
+    $("loadingCard").classList.add("hidden");
+    $("startCard").classList.add("hidden");
+    $("testArea").classList.add("hidden");
+    $("doneCard").classList.add("hidden");
+    $("errorText").textContent = text;
+    $("errorCard").classList.remove("hidden");
+  }
+
+  async function loadInfo(){
+    if(!code){ fail("Der Testlink ist unvollständig."); return; }
+    try{
+      const data = await api({ action:"info", code });
+      $("loadingCard").classList.add("hidden");
+      $("startTitle").textContent = data.test.title;
+      $("startDate").textContent = formatDate(data.test.testDate);
+      $("startCount").textContent = data.test.questionCount;
+      $("startDuration").textContent = data.test.durationMinutes + " Minuten";
+      $("startCard").classList.remove("hidden");
+    }catch(err){
+      fail(err.message);
+    }
+  }
+
+  function collectAnswers(){
+    return questions.map(q => ({
+      questionId: q.id,
+      responseText: $("answer-" + q.id)?.value || ""
+    }));
+  }
+
+  function updateAnswered(){
+    const n = questions.filter(q => ($("answer-" + q.id)?.value || "").trim() !== "").length;
+    $("answeredCount").textContent = n;
+  }
+
+  function renderTest(data){
+    accessToken = data.accessToken;
+    deadlineAt = new Date(data.deadlineAt);
+    questions = data.questions || [];
+
+    $("startCard").classList.add("hidden");
+    $("doneCard").classList.add("hidden");
+    $("testArea").classList.remove("hidden");
+    $("testTitle").textContent = data.test.title;
+    $("totalCount").textContent = questions.length;
+
+    const savedMap = new Map((data.savedAnswers || []).map(a => [String(a.question_id), a.response_text || ""]));
+    $("questions").innerHTML = "";
+    for(const q of questions){
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML =
+        '<div class="qnum">Aufgabe ' + q.position + ' von ' + questions.length + '</div>' +
+        '<div class="prompt"></div>' +
+        '<input id="answer-' + q.id + '" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="text" placeholder="Spanische Übersetzung eingeben">';
+      div.querySelector(".prompt").textContent = q.source_snapshot;
+      const inp = div.querySelector("input");
+      inp.value = savedMap.get(String(q.id)) || "";
+      inp.addEventListener("focus", () => lastFocusedInput = inp);
+      inp.addEventListener("input", () => {
+        updateAnswered();
+        $("saveState").textContent = "Änderung noch nicht gespeichert …";
+        clearTimeout(debounceHandle);
+        debounceHandle = setTimeout(() => save(false), 1200);
+      });
+      $("questions").appendChild(div);
+    }
+
+    updateAnswered();
+    startTimer();
+    if(autosaveHandle) clearInterval(autosaveHandle);
+    autosaveHandle = setInterval(() => save(false), 8000);
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  async function startTest(){
+    hideMsg($("startMsg"));
+    const studentCode = $("studentCode").value.trim();
+    if(!/^\d{1,12}$/.test(studentCode)){
+      showMsg($("startMsg"), "Bitte deine persönliche Schülernummer eingeben.", "err");
+      return;
+    }
+
+    $("startBtn").disabled = true;
+    $("startBtn").textContent = "Test wird gestartet …";
+    try{
+      const existingToken = localStorage.getItem(storageKey(studentCode)) || "";
+      const data = await api({ action:"start", code, studentCode, accessToken:existingToken });
+      if(data.submitted){
+        $("startCard").classList.add("hidden");
+        $("doneCard").classList.remove("hidden");
+        return;
+      }
+      localStorage.setItem(storageKey(studentCode), data.accessToken);
+      renderTest(data);
+    }catch(err){
+      showMsg($("startMsg"), err.message, "err");
+    }finally{
+      $("startBtn").disabled = false;
+      $("startBtn").textContent = "Test starten";
+    }
+  }
+
+  async function save(force){
+    if(!accessToken || submitting) return;
+    try{
+      const data = await api({ action:"save", accessToken, answers:collectAnswers() });
+      if(data.submitted){
+        showDone();
+        return;
+      }
+      $("saveState").textContent = "Gespeichert";
+    }catch(err){
+      $("saveState").textContent = "Speichern gerade nicht möglich – lokale Eingaben bleiben erhalten";
+      if(force) throw err;
+    }
+  }
+
+  function startTimer(){
+    if(timerHandle) clearInterval(timerHandle);
+    const tick = async () => {
+      const ms = deadlineAt.getTime() - Date.now();
+      if(ms <= 0){
+        $("timer").textContent = "00:00";
+        $("timer").className = "timer danger";
+        clearInterval(timerHandle);
+        await submitTest(true);
+        return;
+      }
+      const totalSeconds = Math.ceil(ms / 1000);
+      const min = Math.floor(totalSeconds / 60);
+      const sec = totalSeconds % 60;
+      $("timer").textContent = String(min).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+      $("timer").className = "timer" + (totalSeconds <= 60 ? " danger" : totalSeconds <= 300 ? " warn" : "");
+    };
+    tick();
+    timerHandle = setInterval(tick,1000);
+  }
+
+  function showDone(){
+    submitting = false;
+    if(timerHandle) clearInterval(timerHandle);
+    if(autosaveHandle) clearInterval(autosaveHandle);
+    $("testArea").classList.add("hidden");
+    $("startCard").classList.add("hidden");
+    $("doneCard").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  async function submitTest(auto){
+    if(submitting || !accessToken) return;
+    if(!auto){
+      const unanswered = questions.filter(q => ($("answer-" + q.id)?.value || "").trim() === "").length;
+      const message = unanswered
+        ? "Es sind noch " + unanswered + " Aufgaben unbeantwortet. Trotzdem endgültig abgeben?"
+        : "Möchtest du den Test jetzt endgültig abgeben? Danach können die Antworten nicht mehr geändert werden.";
+      if(!confirm(message)) return;
+    }
+
+    submitting = true;
+    $("submitBtn").disabled = true;
+    $("submitBtn").textContent = auto ? "Zeit abgelaufen – Test wird abgegeben …" : "Test wird abgegeben …";
+    showMsg($("testMsg"), auto ? "Die Bearbeitungszeit ist abgelaufen. Deine Antworten werden automatisch abgegeben." : "Antworten werden abgegeben …", "info");
+    try{
+      const data = await api({ action:"submit", accessToken, answers:collectAnswers(), auto });
+      if(data.submitted) showDone();
+    }catch(err){
+      submitting = false;
+      $("submitBtn").disabled = false;
+      $("submitBtn").textContent = "Test endgültig abgeben";
+      showMsg($("testMsg"), err.message + " Bitte Internetverbindung prüfen und erneut versuchen.", "err");
+    }
+  }
+
+  $("startBtn").addEventListener("click", startTest);
+  $("submitBtn").addEventListener("click", () => submitTest(false));
+
+  $("chars").addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if(!btn || !lastFocusedInput) return;
+    const ch = btn.textContent;
+    const start = lastFocusedInput.selectionStart ?? lastFocusedInput.value.length;
+    const end = lastFocusedInput.selectionEnd ?? start;
+    lastFocusedInput.setRangeText(ch,start,end,"end");
+    lastFocusedInput.dispatchEvent(new Event("input",{bubbles:true}));
+    lastFocusedInput.focus();
+  });
+
+  window.addEventListener("beforeunload", () => {
+    if(accessToken && !submitting){
+      try{
+        const payload = JSON.stringify({ action:"save", accessToken, answers:collectAnswers() });
+        navigator.sendBeacon(
+          SUPABASE_URL + "/functions/v1/student-test",
+          new Blob([payload],{type:"application/json"})
+        );
+      }catch{}
+    }
+  });
+
+  loadInfo();
+</script>
+</body>
+</html>
