@@ -463,7 +463,7 @@
     return '<div style="overflow-x:auto"><table><thead><tr>'+
       '<th>Schülernr.</th><th>Punkte</th><th>%</th><th>Note</th><th>OP</th><th>Abgabe</th><th></th>'+
       '</tr></thead><tbody>'+
-      sorted.map(s=>'<tr>'+
+      sorted.map(s=>'<tr data-submission-id="'+esc(s.id)+'">'+
         '<td><strong>'+esc(s.student_code)+'</strong></td>'+
         '<td class="score">'+n(s.raw_points)+' / '+n(s.max_points)+'</td>'+
         '<td>'+n(s.percent).toFixed(1)+' %</td>'+
@@ -629,8 +629,18 @@
       if(cached)Object.assign(cached,sub);
     }
     await openSubmissionDetail(sub,t,root);
-    renderTests();
-    renderStudents();
+    updateVisibleSubmissionRow(sub);
+  }
+
+  function updateVisibleSubmissionRow(sub){
+    const row=document.querySelector('tr[data-submission-id="'+CSS.escape(String(sub.id))+'"]');
+    if(!row) return;
+    const cells=row.querySelectorAll("td");
+    if(cells.length<7) return;
+    cells[1].innerHTML='<span class="score">'+n(sub.raw_points)+' / '+n(sub.max_points)+'</span>';
+    cells[2].textContent=n(sub.percent).toFixed(1)+' %';
+    cells[3].textContent=sub.grade_text||"—";
+    cells[4].innerHTML='<strong>'+n(sub.upper_school_points)+'</strong>';
   }
 
   function renderStudents(){
