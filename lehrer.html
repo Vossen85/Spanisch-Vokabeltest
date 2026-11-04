@@ -36,9 +36,17 @@
       width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff
     }
     .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .units{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-top:8px}
-    .unit{border:1px solid #cbd5e1;border-radius:12px;padding:12px;background:#fafafa}
-    .unit label{margin:0;display:flex;gap:9px;align-items:center;font-weight:650}
+    .units{display:grid;gap:10px;margin-top:10px}
+    .unit-group{border:1px solid #cbd5e1;border-radius:14px;background:#fafafa;overflow:hidden}
+    .unit-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px}
+    .unit-main-label{margin:0;display:flex;gap:10px;align-items:center;font-weight:800;cursor:pointer}
+    .unit-main-label input,.subfolder-row input{width:19px;height:19px;flex:0 0 auto}
+    .unit-title-wrap{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+    .unit-selection-count{font-size:.82rem;color:#64748b;font-weight:650}
+    .unit-toggle{padding:8px 10px;background:#e2e8f0;color:#334155;font-size:.88rem;white-space:nowrap}
+    .unit-children{border-top:1px solid #e2e8f0;padding:8px 14px 12px 42px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:6px 16px;background:#fff}
+    .subfolder-row{margin:0;display:flex;gap:9px;align-items:center;padding:7px 5px;font-weight:600;cursor:pointer;border-radius:8px}
+    .subfolder-row:hover{background:#f8fafc}
     .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
     .msg{padding:11px 13px;border-radius:10px;margin-top:12px;display:none}
     .msg.show{display:block}
@@ -132,7 +140,8 @@
     <section id="view-create" class="view hidden">
       <div class="card">
         <h2>Test erstellen</h2>
-        <label>Unidades auswählen</label>
+        <label>Vokabelbereiche auswählen</label>
+        <div class="tiny">Du kannst eine ganze Unidad auswählen oder sie aufklappen und nur einzelne Unterordner anklicken.</div>
         <div id="unitsBox" class="units"></div>
 
         <div class="row">
@@ -267,15 +276,64 @@
     setView(currentView);
   }
 
+  function updateUnitSelectionState(group){
+    const master=group.querySelector(".unit-master");
+    const children=[...group.querySelectorAll(".folder-check")];
+    const checked=children.filter(x=>x.checked).length;
+    master.indeterminate=checked>0 && checked<children.length;
+    master.checked=children.length>0 && checked===children.length;
+    const counter=group.querySelector(".unit-selection-count");
+    counter.textContent=checked===0
+      ? children.length+" Unterordner"
+      : checked+"/"+children.length+" gewählt";
+  }
+
   async function loadUnits(){
-    const {data,error}=await supabase.from("units").select("unit_key,title,sort_order").order("sort_order");
-    if(error){showMsg($("createMsg"),"Die Unidades konnten nicht geladen werden.","err");return}
+    const [{data:units,error:unitError},{data:folders,error:folderError}]=await Promise.all([
+      supabase.from("units").select("id,unit_key,title,sort_order").order("sort_order"),
+      supabase.from("vocab_folders").select("id,unit_id,title,sort_order").order("unit_id").order("sort_order")
+    ]);
+    if(unitError||folderError){
+      showMsg($("createMsg"),"Die Vokabelbereiche konnten nicht geladen werden.","err");
+      return;
+    }
+
     $("unitsBox").innerHTML="";
-    for(const u of data||[]){
-      const box=document.createElement("div");
-      box.className="unit";
-      box.innerHTML='<label><input type="checkbox" name="unit" value="'+esc(u.unit_key)+'"> '+esc(u.title||("Unidad "+u.unit_key))+'</label>';
-      $("unitsBox").appendChild(box);
+    for(const u of units||[]){
+      const childFolders=(folders||[]).filter(f=>String(f.unit_id)===String(u.id));
+      const group=document.createElement("div");
+      group.className="unit-group";
+      group.dataset.unitKey=u.unit_key;
+      group.innerHTML=
+        '<div class="unit-head">'+
+          '<label class="unit-main-label">'+
+            '<input type="checkbox" class="unit-master" value="'+esc(u.unit_key)+'">'+
+            '<span class="unit-title-wrap"><span>'+esc(u.title||("Unidad "+u.unit_key))+'</span>'+
+            '<span class="unit-selection-count">'+childFolders.length+' Unterordner</span></span>'+
+          '</label>'+
+          '<button type="button" class="unit-toggle">Unterordner anzeigen ▾</button>'+
+        '</div>'+
+        '<div class="unit-children hidden">'+
+          childFolders.map(f=>'<label class="subfolder-row"><input type="checkbox" class="folder-check" data-unit="'+esc(u.unit_key)+'" value="'+f.id+'"> <span>'+esc(f.title)+'</span></label>').join("")+
+        '</div>';
+
+      const master=group.querySelector(".unit-master");
+      const children=[...group.querySelectorAll(".folder-check")];
+      const childBox=group.querySelector(".unit-children");
+      const toggle=group.querySelector(".unit-toggle");
+
+      master.addEventListener("change",()=>{
+        children.forEach(x=>x.checked=master.checked);
+        master.indeterminate=false;
+        updateUnitSelectionState(group);
+      });
+      children.forEach(x=>x.addEventListener("change",()=>updateUnitSelectionState(group)));
+      toggle.addEventListener("click",()=>{
+        const hidden=childBox.classList.toggle("hidden");
+        toggle.textContent=hidden?"Unterordner anzeigen ▾":"Unterordner ausblenden ▴";
+      });
+
+      $("unitsBox").appendChild(group);
     }
   }
 
@@ -639,18 +697,27 @@
 
   $("createTestBtn").addEventListener("click",async()=>{
     hideMsg($("createMsg"));$("newTestCard").classList.add("hidden");
-    const unitKeys=[...document.querySelectorAll('input[name="unit"]:checked')].map(x=>x.value);
+    const unitKeys=[];
+    const folderIds=[];
+    document.querySelectorAll(".unit-group").forEach(group=>{
+      const master=group.querySelector(".unit-master");
+      if(master.checked && !master.indeterminate){
+        unitKeys.push(master.value);
+      }else{
+        group.querySelectorAll(".folder-check:checked").forEach(x=>folderIds.push(Number(x.value)));
+      }
+    });
     const questionCount=Number($("questionCount").value);
     const durationMinutes=Number($("durationMinutes").value);
     const testDate=$("testDate").value;
     const title=$("testTitle").value.trim();
-    if(!unitKeys.length){showMsg($("createMsg"),"Bitte mindestens eine Unidad auswählen.","err");return}
+    if(!unitKeys.length&&!folderIds.length){showMsg($("createMsg"),"Bitte mindestens eine Unidad oder einen Unterordner auswählen.","err");return}
     if(!Number.isInteger(questionCount)||questionCount<1){showMsg($("createMsg"),"Bitte die Anzahl der Vokabeln eingeben.","err");return}
     if(!Number.isInteger(durationMinutes)||durationMinutes<1){showMsg($("createMsg"),"Bitte die Bearbeitungszeit eingeben.","err");return}
     if(!testDate){showMsg($("createMsg"),"Bitte das Testdatum auswählen.","err");return}
 
     $("createTestBtn").disabled=true;$("createTestBtn").textContent="Test wird erstellt …";
-    const {data,error}=await supabase.functions.invoke("create-test",{body:{unitKeys,questionCount,durationMinutes,testDate,title}});
+    const {data,error}=await supabase.functions.invoke("create-test",{body:{unitKeys,folderIds,questionCount,durationMinutes,testDate,title}});
     $("createTestBtn").disabled=false;$("createTestBtn").textContent="Test erstellen";
     if(error||data?.error){
       let message=data?.error||"Der Test konnte nicht erstellt werden.";
