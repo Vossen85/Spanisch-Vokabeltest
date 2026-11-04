@@ -46,6 +46,11 @@
     .ok{background:#ecfdf5;color:#166534}
     .err{background:#fef2f2;color:#991b1b}
     .folders{display:grid;gap:13px}
+    .date-folder{border:1px solid #cbd5e1;border-radius:16px;background:#f8fafc;overflow:hidden}
+    .date-folder-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:14px 16px;cursor:pointer;background:#f1f5f9}
+    .date-folder-title{font-size:1.05rem;font-weight:850}
+    .date-folder-count{font-size:.9rem;color:#64748b}
+    .date-tests{display:grid;gap:12px;padding:14px}
     .folder{border:1px solid #dbe2ea;border-radius:14px;padding:15px;background:#fff}
     .folder-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
     .folder-title{font-size:1.05rem;font-weight:850}
@@ -323,34 +328,73 @@
       return;
     }
 
+    const groups=new Map();
     for(const t of testsCache){
-      const st=testStats(t.id);
-      const units=unitsForTest(t.id);
-      const folder=document.createElement("div");
-      folder.className="folder";
-      folder.dataset.testId=t.id;
-      folder.innerHTML=
-        '<div class="folder-head"><div>'+
-          '<div class="folder-title">'+esc(t.title||"Vokabeltest")+'</div>'+
-          '<div class="folder-meta">'+fmtDate(t.test_date)+' · '+t.question_count+' Vokabeln · '+t.duration_minutes+' Minuten</div>'+
-          '<div class="badges">'+
-            (units.length?units.map(u=>'<span class="badge">'+esc(u)+'</span>').join(""):'')+
-            '<span class="badge">'+st.submitted.length+' Abgaben</span>'+
-          '</div>'+
-        '</div><div class="actions" style="margin-top:0">'+
-          '<button class="secondary openFolderBtn">Öffnen</button>'+
-        '</div></div>'+
-        '<div class="stats">'+
-          '<div class="stat"><span class="tiny">Abgaben</span><strong>'+st.submitted.length+'</strong></div>'+
-          '<div class="stat"><span class="tiny">Ø Prozent</span><strong>'+(st.avg===null?"—":st.avg.toFixed(1)+" %")+'</strong></div>'+
-          '<div class="stat"><span class="tiny">Ø Oberstufenpunkte</span><strong>'+(st.avgOp===null?"—":st.avgOp.toFixed(1))+'</strong></div>'+
-          '<div class="stat"><span class="tiny">Status</span><strong>'+(t.status==="open"?"offen":esc(t.status))+'</strong></div>'+
-        '</div>'+
-        '<div class="test-detail hidden"></div>';
-
-      folder.querySelector(".openFolderBtn").addEventListener("click",()=>toggleTestFolder(t,folder));
-      root.appendChild(folder);
+      const key=t.test_date||"ohne-datum";
+      if(!groups.has(key))groups.set(key,[]);
+      groups.get(key).push(t);
     }
+
+    const dates=[...groups.keys()].sort((a,b)=>{
+      if(a==="ohne-datum")return 1;
+      if(b==="ohne-datum")return -1;
+      return b.localeCompare(a);
+    });
+
+    dates.forEach((dateKey,dateIndex)=>{
+      const tests=[...groups.get(dateKey)].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+      const dateFolder=document.createElement("div");
+      dateFolder.className="date-folder";
+      dateFolder.innerHTML=
+        '<div class="date-folder-head">'+
+          '<div><div class="date-folder-title">'+(dateKey==="ohne-datum"?"Ohne Datum":fmtDate(dateKey))+'</div>'+
+          '<div class="date-folder-count">'+tests.length+' Test'+(tests.length===1?"":"s")+'</div></div>'+
+          '<button class="secondary toggleDateBtn">'+(dateIndex===0?"Zuklappen":"Aufklappen")+'</button>'+
+        '</div>'+
+        '<div class="date-tests'+(dateIndex===0?"":" hidden")+'"></div>';
+
+      const dateTests=dateFolder.querySelector(".date-tests");
+      for(const t of tests){
+        const st=testStats(t.id);
+        const units=unitsForTest(t.id);
+        const folder=document.createElement("div");
+        folder.className="folder";
+        folder.dataset.testId=t.id;
+        folder.innerHTML=
+          '<div class="folder-head"><div>'+
+            '<div class="folder-title">'+esc(t.title||"Vokabeltest")+'</div>'+
+            '<div class="folder-meta">'+t.question_count+' Vokabeln · '+t.duration_minutes+' Minuten</div>'+
+            '<div class="badges">'+
+              (units.length?units.map(u=>'<span class="badge">'+esc(u)+'</span>').join(""):'')+
+              '<span class="badge">'+st.submitted.length+' Abgaben</span>'+
+            '</div>'+
+          '</div><div class="actions" style="margin-top:0">'+
+            '<button class="secondary openFolderBtn">Öffnen</button>'+
+          '</div></div>'+
+          '<div class="stats">'+
+            '<div class="stat"><span class="tiny">Abgaben</span><strong>'+st.submitted.length+'</strong></div>'+
+            '<div class="stat"><span class="tiny">Ø Prozent</span><strong>'+(st.avg===null?"—":st.avg.toFixed(1)+" %")+'</strong></div>'+
+            '<div class="stat"><span class="tiny">Ø Oberstufenpunkte</span><strong>'+(st.avgOp===null?"—":st.avgOp.toFixed(1))+'</strong></div>'+
+            '<div class="stat"><span class="tiny">Status</span><strong>'+(t.status==="open"?"offen":esc(t.status))+'</strong></div>'+
+          '</div>'+
+          '<div class="test-detail hidden"></div>';
+
+        folder.querySelector(".openFolderBtn").addEventListener("click",()=>toggleTestFolder(t,folder));
+        dateTests.appendChild(folder);
+      }
+
+      const toggle=()=>{
+        const isHidden=dateTests.classList.toggle("hidden");
+        dateFolder.querySelector(".toggleDateBtn").textContent=isHidden?"Aufklappen":"Zuklappen";
+      };
+      dateFolder.querySelector(".date-folder-head").addEventListener("click",e=>{
+        if(e.target.closest(".toggleDateBtn"))return;
+        toggle();
+      });
+      dateFolder.querySelector(".toggleDateBtn").addEventListener("click",toggle);
+
+      root.appendChild(dateFolder);
+    });
   }
 
   function toggleTestFolder(t,folder){
