@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Spanisch-Tests – Lehrerbereich</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}
+    body{margin:0;padding:24px}
+    .wrap{max-width:960px;margin:0 auto}
+    h1{margin:0 0 6px;font-size:2rem}
+    h2{margin-top:0}
+    .sub{color:#64748b;margin-bottom:24px}
+    .card{background:white;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:20px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+    label{display:block;font-weight:700;margin:14px 0 6px}
+    input,button{font:inherit}
+    input[type="email"],input[type="password"],input[type="text"],input[type="number"],input[type="date"]{
+      width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:white
+    }
+    button{border:0;border-radius:10px;padding:12px 16px;font-weight:750;cursor:pointer}
+    .primary{background:#2563eb;color:white}
+    .secondary{background:#e2e8f0;color:#172033}
+    .danger{background:#fee2e2;color:#991b1b}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .msg{padding:12px 14px;border-radius:10px;margin-top:14px;display:none}
+    .msg.show{display:block}
+    .info{background:#eff6ff;color:#1e40af}
+    .ok{background:#ecfdf5;color:#166534}
+    .err{background:#fef2f2;color:#991b1b}
+    .units{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px}
+    .unit{border:1px solid #cbd5e1;border-radius:12px;padding:12px;background:#fafafa}
+    .unit label{margin:0;display:flex;gap:9px;align-items:center;font-weight:650}
+    .hidden{display:none!important}
+    .result-grid{display:grid;grid-template-columns:minmax(220px,280px) 1fr;gap:24px;align-items:start}
+    #qr{background:white;padding:12px;border-radius:12px;display:inline-block}
+    .linkbox{word-break:break-all;background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:10px;margin-top:8px}
+    .meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+    .meta div{background:#f8fafc;border-radius:10px;padding:10px}
+    .tiny{font-size:.9rem;color:#64748b}
+    @media(max-width:680px){body{padding:14px}.row,.result-grid,.meta{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Spanisch-Tests</h1>
+  <div class="sub">Lehrerbereich · Test erstellen und später Ergebnisse verwalten</div>
+
+  <section id="authCard" class="card">
+    <h2>Lehrerzugang</h2>
+    <p class="tiny">Neue Lehrkräfte können sich registrieren. Der Zugang wird erst nach Freigabe aktiviert.</p>
+    <label for="displayName">Name (nur bei Registrierung)</label>
+    <input id="displayName" type="text" autocomplete="name" placeholder="z. B. Christine Vossen">
+    <label for="email">E-Mail-Adresse</label>
+    <input id="email" type="email" autocomplete="email">
+    <label for="password">Passwort</label>
+    <input id="password" type="password" autocomplete="current-password" minlength="8">
+    <div class="actions">
+      <button id="loginBtn" class="primary">Anmelden</button>
+      <button id="signupBtn" class="secondary">Neu registrieren</button>
+    </div>
+    <div id="authMsg" class="msg"></div>
+  </section>
+
+  <section id="pendingCard" class="card hidden">
+    <h2>Zugang wartet auf Freigabe</h2>
+    <p>Dein Lehreraccount ist angelegt, aber noch nicht freigeschaltet. Nach der Freigabe kannst du hier Tests erstellen.</p>
+    <div class="actions"><button id="logoutPendingBtn" class="secondary">Abmelden</button></div>
+  </section>
+
+  <section id="teacherArea" class="hidden">
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;gap:16px;align-items:start;flex-wrap:wrap">
+        <div>
+          <h2 style="margin-bottom:4px">Test erstellen</h2>
+          <div id="welcome" class="tiny"></div>
+        </div>
+        <button id="logoutBtn" class="secondary">Abmelden</button>
+      </div>
+
+      <label>Unidades auswählen</label>
+      <div id="unitsBox" class="units"></div>
+
+      <div class="row">
+        <div>
+          <label for="questionCount">Anzahl der Vokabeln</label>
+          <input id="questionCount" type="number" min="1" max="500" placeholder="z. B. 50">
+        </div>
+        <div>
+          <label for="durationMinutes">Bearbeitungszeit in Minuten</label>
+          <input id="durationMinutes" type="number" min="1" max="300" placeholder="z. B. 20">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="testDate">Datum</label>
+          <input id="testDate" type="date">
+        </div>
+        <div>
+          <label for="testTitle">Titel (optional)</label>
+          <input id="testTitle" type="text" placeholder="z. B. Vokabeltest Unidad 3">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="createTestBtn" class="primary">Test erstellen</button>
+      </div>
+      <div id="createMsg" class="msg"></div>
+    </section>
+
+    <section id="resultCard" class="card hidden">
+      <h2>Test wurde erstellt</h2>
+      <div class="result-grid">
+        <div>
+          <div id="qr"></div>
+          <p class="tiny">Zum Öffnen mit Tablet oder Smartphone scannen.</p>
+        </div>
+        <div>
+          <div class="meta">
+            <div><strong>Datum</strong><br><span id="resDate"></span></div>
+            <div><strong>Zeit</strong><br><span id="resDuration"></span></div>
+            <div><strong>Vokabeln</strong><br><span id="resCount"></span></div>
+            <div><strong>Unidades</strong><br><span id="resUnits"></span></div>
+          </div>
+          <strong>Schülerlink</strong>
+          <div id="studentLink" class="linkbox"></div>
+          <div class="actions">
+            <button id="copyLinkBtn" class="secondary">Link kopieren</button>
+          </div>
+          <p class="tiny">Die Schülerseite wird im nächsten Schritt angeschlossen. Der Test selbst ist bereits fest in Supabase gespeichert.</p>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const SUPABASE_URL = "https://jzolxrqrrljwpmjbdxmo.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const $ = id => document.getElementById(id);
+  const authCard = $("authCard");
+  const pendingCard = $("pendingCard");
+  const teacherArea = $("teacherArea");
+
+  function showMsg(el, text, type="info"){
+    el.textContent = text;
+    el.className = "msg show " + type;
+  }
+  function hideMsg(el){ el.className = "msg"; el.textContent = ""; }
+
+  async function refreshUI(){
+    const { data: { session } } = await supabase.auth.getSession();
+    if(!session){
+      authCard.classList.remove("hidden");
+      pendingCard.classList.add("hidden");
+      teacherArea.classList.add("hidden");
+      return;
+    }
+
+    const { data: profile, error } = await supabase
+      .from("teacher_profiles")
+      .select("display_name,approved,role")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
+
+    if(error){
+      authCard.classList.remove("hidden");
+      teacherArea.classList.add("hidden");
+      showMsg($("authMsg"), "Der Lehrerzugang konnte nicht geladen werden.", "err");
+      return;
+    }
+
+    authCard.classList.add("hidden");
+    if(!profile?.approved){
+      pendingCard.classList.remove("hidden");
+      teacherArea.classList.add("hidden");
+      return;
+    }
+
+    pendingCard.classList.add("hidden");
+    teacherArea.classList.remove("hidden");
+    $("welcome").textContent = "Angemeldet als " + (profile.display_name || session.user.email);
+    await loadUnits();
+  }
+
+  async function loadUnits(){
+    const { data, error } = await supabase
+      .from("units")
+      .select("unit_key,title,sort_order")
+      .order("sort_order");
+
+    if(error){
+      showMsg($("createMsg"), "Die Unidades konnten nicht geladen werden.", "err");
+      return;
+    }
+
+    $("unitsBox").innerHTML = "";
+    for(const u of data || []){
+      const box = document.createElement("div");
+      box.className = "unit";
+      box.innerHTML = '<label><input type="checkbox" name="unit" value="' +
+        u.unit_key.replaceAll('"','&quot;') + '"> ' + (u.title || ("Unidad " + u.unit_key)) + '</label>';
+      $("unitsBox").appendChild(box);
+    }
+  }
+
+  $("loginBtn").addEventListener("click", async () => {
+    hideMsg($("authMsg"));
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    if(!email || !password){
+      showMsg($("authMsg"), "Bitte E-Mail-Adresse und Passwort eingeben.", "err");
+      return;
+    }
+    $("loginBtn").disabled = true;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    $("loginBtn").disabled = false;
+    if(error){
+      showMsg($("authMsg"), "Anmeldung fehlgeschlagen: " + error.message, "err");
+      return;
+    }
+    await refreshUI();
+  });
+
+  $("signupBtn").addEventListener("click", async () => {
+    hideMsg($("authMsg"));
+    const displayName = $("displayName").value.trim();
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    if(!displayName || !email || password.length < 8){
+      showMsg($("authMsg"), "Für die Registrierung bitte Name, E-Mail-Adresse und ein Passwort mit mindestens 8 Zeichen eingeben.", "err");
+      return;
+    }
+    $("signupBtn").disabled = true;
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { display_name: displayName } }
+    });
+    $("signupBtn").disabled = false;
+    if(error){
+      showMsg($("authMsg"), "Registrierung fehlgeschlagen: " + error.message, "err");
+      return;
+    }
+    if(data.session){
+      showMsg($("authMsg"), "Registrierung erfolgreich. Der Zugang wartet jetzt auf Freigabe.", "ok");
+      await refreshUI();
+    } else {
+      showMsg($("authMsg"), "Registrierung erfolgreich. Bitte bestätige zunächst die E-Mail, falls Supabase dir eine Bestätigung geschickt hat. Danach hier anmelden.", "ok");
+    }
+  });
+
+  async function logout(){
+    await supabase.auth.signOut();
+    await refreshUI();
+  }
+  $("logoutBtn").addEventListener("click", logout);
+  $("logoutPendingBtn").addEventListener("click", logout);
+
+  $("createTestBtn").addEventListener("click", async () => {
+    hideMsg($("createMsg"));
+    $("resultCard").classList.add("hidden");
+
+    const unitKeys = [...document.querySelectorAll('input[name="unit"]:checked')].map(x => x.value);
+    const questionCount = Number($("questionCount").value);
+    const durationMinutes = Number($("durationMinutes").value);
+    const testDate = $("testDate").value;
+    const title = $("testTitle").value.trim();
+
+    if(!unitKeys.length){
+      showMsg($("createMsg"), "Bitte mindestens eine Unidad auswählen.", "err");
+      return;
+    }
+    if(!Number.isInteger(questionCount) || questionCount < 1){
+      showMsg($("createMsg"), "Bitte die Anzahl der Vokabeln eingeben.", "err");
+      return;
+    }
+    if(!Number.isInteger(durationMinutes) || durationMinutes < 1){
+      showMsg($("createMsg"), "Bitte die Bearbeitungszeit eingeben.", "err");
+      return;
+    }
+    if(!testDate){
+      showMsg($("createMsg"), "Bitte das Testdatum auswählen.", "err");
+      return;
+    }
+
+    $("createTestBtn").disabled = true;
+    $("createTestBtn").textContent = "Test wird erstellt …";
+
+    const { data, error } = await supabase.functions.invoke("create-test", {
+      body: { unitKeys, questionCount, durationMinutes, testDate, title }
+    });
+
+    $("createTestBtn").disabled = false;
+    $("createTestBtn").textContent = "Test erstellen";
+
+    if(error){
+      let message = "Der Test konnte nicht erstellt werden.";
+      try {
+        const body = await error.context?.json();
+        if(body?.error) message = body.error;
+      } catch {}
+      showMsg($("createMsg"), message, "err");
+      return;
+    }
+    if(data?.error){
+      showMsg($("createMsg"), data.error, "err");
+      return;
+    }
+
+    const url = new URL("test.html", window.location.href);
+    url.searchParams.set("code", data.publicCode);
+    const studentUrl = url.toString();
+
+    $("resDate").textContent = data.testDate;
+    $("resDuration").textContent = data.durationMinutes + " Minuten";
+    $("resCount").textContent = data.questionCount;
+    $("resUnits").textContent = data.unitKeys.map(x => "Unidad " + x).join(", ");
+    $("studentLink").textContent = studentUrl;
+
+    $("qr").innerHTML = "";
+    new QRCode($("qr"), { text: studentUrl, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+
+    $("resultCard").classList.remove("hidden");
+    $("resultCard").scrollIntoView({ behavior:"smooth", block:"start" });
+    showMsg($("createMsg"), "Der Test ist fest gespeichert.", "ok");
+  });
+
+  $("copyLinkBtn").addEventListener("click", async () => {
+    const text = $("studentLink").textContent;
+    await navigator.clipboard.writeText(text);
+    $("copyLinkBtn").textContent = "Kopiert ✓";
+    setTimeout(() => $("copyLinkBtn").textContent = "Link kopieren", 1500);
+  });
+
+  supabase.auth.onAuthStateChange(() => setTimeout(refreshUI, 0));
+  refreshUI();
+</script>
+</body>
+</html>
