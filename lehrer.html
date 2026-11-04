@@ -8,6 +8,8 @@
   <meta http-equiv="Expires" content="0">
   <title>Spanisch-Tests – Lehrerbereich</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <style>
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
     *{box-sizing:border-box}
@@ -487,8 +489,11 @@
     root.className="submission-detail detail-panel";
     root.innerHTML=
       '<div class="topline"><div><h3>Schüler '+esc(sub.student_code)+'</h3>'+
-      '<div class="tiny">'+esc(t.title||"Vokabeltest")+' · abgegeben '+fmtTime(sub.submitted_at)+'</div></div>'+
-      '<button class="secondary closeDetailBtn">Details schließen</button></div>'+
+      '<div class="tiny">'+esc(t.title||"Vokabeltest")+' · '+fmtDate(t.test_date)+' · abgegeben '+fmtTime(sub.submitted_at)+'</div></div>'+
+      '<div class="actions" style="margin-top:0">'+
+        '<button class="primary teacherPdfBtn">PDF / Druckversion</button>'+
+        '<button class="secondary closeDetailBtn">Details schließen</button>'+
+      '</div></div>'+
       '<div class="summarybar">'+
         '<span class="summarypill summaryPoints">'+n(sub.raw_points)+' / '+n(sub.max_points)+' Punkte</span>'+
         '<span class="summarypill summaryPercent">'+n(sub.percent).toFixed(1)+' %</span>'+
@@ -499,6 +504,7 @@
       '<div class="answersRoot"></div>';
 
     root.querySelector(".closeDetailBtn").addEventListener("click",()=>{root.innerHTML="";root.className="submission-detail"});
+    root.querySelector(".teacherPdfBtn").addEventListener("click",()=>generateTeacherPdf(sub,t,answers));
     const ar=root.querySelector(".answersRoot");
     for(const a of answers){
       const q=a.test_questions||{};
@@ -526,6 +532,68 @@
       card.querySelectorAll(".adjustBtn").forEach(btn=>btn.addEventListener("click",()=>adjustAnswer(a.id,btn.dataset.mode,sub,t,root)));
       ar.appendChild(card);
     }
+  }
+
+  function generateTeacherPdf(sub,t,answers){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:"mm",format:"a4"});
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(16);
+    doc.text("Korrektur - Spanisch Vokabeltest",14,16);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(10);
+    doc.text("Name: Schüler " + sub.student_code,14,25);
+    doc.text("Datum: " + fmtDate(t.test_date),14,31);
+    doc.text("Test: " + (t.title||"Vokabeltest"),14,37);
+
+    doc.setFont("helvetica","bold");
+    doc.text("Bewertung",14,47);
+    doc.setFont("helvetica","normal");
+    doc.text(
+      n(sub.raw_points) + " / " + n(sub.max_points) + " Punkte   |   " +
+      n(sub.percent).toFixed(1) + " %   |   Note " + (sub.grade_text||"—") +
+      "   |   " + n(sub.upper_school_points) + " Oberstufenpunkte",
+      14,54
+    );
+
+    const note="Bewertungsstand zum Zeitpunkt des Ausdrucks. Manuelle Nachkorrekturen sind berücksichtigt, sofern sie bereits vorgenommen wurden.";
+    const noteLines=doc.splitTextToSize(note,180);
+    doc.setFontSize(9);
+    doc.text(noteLines,14,62);
+
+    const body=answers.map(a=>{
+      const q=a.test_questions||{};
+      const points=a.teacher_points===null||a.teacher_points===undefined?n(a.auto_points):n(a.teacher_points);
+      const solutions=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot.join(" / "):"";
+      return [
+        String(q.position||""),
+        q.source_snapshot||"",
+        a.response_text||"—",
+        solutions,
+        Number(points).toFixed(1).replace(".0","")
+      ];
+    });
+
+    doc.autoTable({
+      startY:62+noteLines.length*4+4,
+      head:[["Nr.","Deutsch","Antwort","Lösung","Punkte"]],
+      body,
+      styles:{font:"helvetica",fontSize:8,cellPadding:2,valign:"top"},
+      headStyles:{fontStyle:"bold"},
+      columnStyles:{
+        0:{cellWidth:10},
+        1:{cellWidth:43},
+        2:{cellWidth:50},
+        3:{cellWidth:55},
+        4:{cellWidth:18,halign:"center"}
+      },
+      margin:{left:14,right:14}
+    });
+
+    const safeTitle=(t.title||"Vokabeltest").replace(/[^a-zA-Z0-9äöüÄÖÜß_-]+/g,"_");
+    doc.save("Korrektur_Schueler_"+sub.student_code+"_"+safeTitle+".pdf");
   }
 
   async function adjustAnswer(answerId,mode,sub,t,root){
