@@ -7,6 +7,8 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Spanisch – Vokabeltest</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <style>
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
     *{box-sizing:border-box}
@@ -35,6 +37,11 @@
     .timer.warn{color:#b45309}
     .timer.danger{color:#b91c1c}
     .progress{font-weight:700}
+    .identity{display:flex;gap:14px;flex-wrap:wrap;margin-top:5px;font-size:.9rem;color:#475569}
+    .identity span{white-space:nowrap}
+    .resultbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+    .resultbox div{background:#f8fafc;border-radius:10px;padding:12px}
+    .resultbox strong{display:block;font-size:1.2rem}
     .chars{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
     .chars button{padding:8px 11px;background:#eef2f7;color:#172033}
     .question{border:1px solid #dbe2ea;border-radius:14px;padding:16px;margin:12px 0;background:white}
@@ -45,7 +52,7 @@
     .summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
     .summary div{background:#f8fafc;padding:11px;border-radius:10px}
     @media(max-width:650px){
-      body{padding:12px}.card{padding:16px}.topbar-inner{align-items:flex-start;flex-direction:column;gap:6px}.summary{grid-template-columns:1fr}
+      body{padding:12px}.card{padding:16px}.topbar-inner{align-items:flex-start;flex-direction:column;gap:6px}.summary,.resultbox{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -76,6 +83,11 @@
       <div class="topbar-inner">
         <div>
           <strong id="testTitle">Vokabeltest</strong>
+          <div class="identity">
+            <span><strong>Name:</strong> <span id="testStudentName"></span></span>
+            <span><strong>Datum:</strong> <span id="testDateLabel"></span></span>
+            <span><strong>Test:</strong> <span id="testNameLabel"></span></span>
+          </div>
           <div class="tiny" id="saveState">Noch nicht gespeichert</div>
         </div>
         <div class="progress"><span id="answeredCount">0</span> / <span id="totalCount">0</span> beantwortet</div>
@@ -100,8 +112,22 @@
 
   <section id="doneCard" class="card hidden">
     <h1>Test abgegeben ✓</h1>
-    <p>Deine Antworten wurden gespeichert und abgegeben.</p>
-    <p class="tiny">Die Auswertung erhält deine Lehrkraft. Auf dieser Seite werden keine Lösungen oder Ergebnisse angezeigt.</p>
+    <p>Deine Antworten wurden gespeichert und automatisch ausgewertet.</p>
+    <div class="identity" style="margin:12px 0 4px">
+      <span><strong>Name:</strong> <span id="doneStudentName"></span></span>
+      <span><strong>Datum:</strong> <span id="doneDate"></span></span>
+      <span><strong>Test:</strong> <span id="doneTestName"></span></span>
+    </div>
+    <div class="resultbox">
+      <div><span class="tiny">Punkte</span><strong id="donePoints">—</strong></div>
+      <div><span class="tiny">Prozent</span><strong id="donePercent">—</strong></div>
+      <div><span class="tiny">Note</span><strong id="doneGrade">—</strong></div>
+      <div><span class="tiny">Oberstufenpunkte</span><strong id="doneOP">—</strong></div>
+    </div>
+    <p class="tiny"><strong>Vorläufige Rückmeldung:</strong> Diese automatische Bewertung kann von der Lehrkraft nachträglich korrigiert werden.</p>
+    <div class="actions">
+      <button id="downloadPdfBtn" class="primary">Vorläufige Korrektur als PDF</button>
+    </div>
   </section>
 
   <section id="errorCard" class="card hidden">
@@ -128,6 +154,9 @@
   let debounceHandle = null;
   let lastFocusedInput = null;
   let submitting = false;
+  let studentCodeCurrent = "";
+  let currentTestMeta = null;
+  let resultData = null;
 
   function storageKey(studentCode){ return "spanisch-test:" + code + ":" + studentCode; }
 
@@ -197,11 +226,16 @@
     accessToken = data.accessToken;
     deadlineAt = new Date(data.deadlineAt);
     questions = data.questions || [];
+    studentCodeCurrent = String(data.studentCode || studentCodeCurrent || "");
+    currentTestMeta = data.test;
 
     $("startCard").classList.add("hidden");
     $("doneCard").classList.add("hidden");
     $("testArea").classList.remove("hidden");
     $("testTitle").textContent = data.test.title;
+    $("testStudentName").textContent = "Schüler " + studentCodeCurrent;
+    $("testDateLabel").textContent = formatDate(data.test.testDate);
+    $("testNameLabel").textContent = data.test.title;
     $("totalCount").textContent = questions.length;
 
     const savedMap = new Map((data.savedAnswers || []).map(a => [String(a.question_id), a.response_text || ""]));
@@ -244,11 +278,11 @@
     $("startBtn").disabled = true;
     $("startBtn").textContent = "Test wird gestartet …";
     try{
+      studentCodeCurrent = studentCode;
       const existingToken = localStorage.getItem(storageKey(studentCode)) || "";
       const data = await api({ action:"start", code, studentCode, accessToken:existingToken });
       if(data.submitted){
-        $("startCard").classList.add("hidden");
-        $("doneCard").classList.remove("hidden");
+        showDone(data.result);
         return;
       }
       localStorage.setItem(storageKey(studentCode), data.accessToken);
@@ -266,7 +300,7 @@
     try{
       const data = await api({ action:"save", accessToken, answers:collectAnswers() });
       if(data.submitted){
-        showDone();
+        showDone(data.result);
         return;
       }
       $("saveState").textContent = "Gespeichert";
@@ -297,14 +331,89 @@
     timerHandle = setInterval(tick,1000);
   }
 
-  function showDone(){
+  function showDone(result){
     submitting = false;
     if(timerHandle) clearInterval(timerHandle);
     if(autosaveHandle) clearInterval(autosaveHandle);
+    resultData = result || resultData;
     $("testArea").classList.add("hidden");
     $("startCard").classList.add("hidden");
     $("doneCard").classList.remove("hidden");
+
+    if(resultData){
+      studentCodeCurrent = String(resultData.studentCode || studentCodeCurrent || "");
+      currentTestMeta = resultData.test || currentTestMeta;
+      $("doneStudentName").textContent = "Schüler " + studentCodeCurrent;
+      $("doneDate").textContent = formatDate(resultData.test?.testDate || "");
+      $("doneTestName").textContent = resultData.test?.title || "Vokabeltest";
+      $("donePoints").textContent = resultData.summary.rawPoints + " / " + resultData.summary.maxPoints;
+      $("donePercent").textContent = Number(resultData.summary.percent).toFixed(1) + " %";
+      $("doneGrade").textContent = resultData.summary.gradeText;
+      $("doneOP").textContent = resultData.summary.upperSchoolPoints;
+      $("downloadPdfBtn").disabled = false;
+    }else{
+      $("downloadPdfBtn").disabled = true;
+    }
     window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function generateStudentPdf(){
+    if(!resultData) return;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:"mm",format:"a4"});
+    const r = resultData;
+    const title = "Vorläufige Korrektur - Spanisch Vokabeltest";
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(16);
+    doc.text(title, 14, 16);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(10);
+    doc.text("Name: Schüler " + r.studentCode, 14, 25);
+    doc.text("Datum: " + formatDate(r.test.testDate), 14, 31);
+    doc.text("Test: " + r.test.title, 14, 37);
+
+    doc.setFont("helvetica","bold");
+    doc.text("Vorläufiges Ergebnis", 14, 47);
+    doc.setFont("helvetica","normal");
+    doc.text(
+      r.summary.rawPoints + " / " + r.summary.maxPoints + " Punkte   |   " +
+      Number(r.summary.percent).toFixed(1) + " %   |   Note " + r.summary.gradeText +
+      "   |   " + r.summary.upperSchoolPoints + " Oberstufenpunkte",
+      14, 54
+    );
+
+    const note = "Hinweis: Dies ist eine vorläufige automatische Auswertung. Die Lehrkraft kann einzelne Antworten nachträglich korrigieren; dadurch können sich Punkte und Note ändern.";
+    const noteLines = doc.splitTextToSize(note, 180);
+    doc.setFontSize(9);
+    doc.text(noteLines, 14, 62);
+
+    const body = (r.corrections || []).map(x => [
+      String(x.position),
+      x.sourceText || "",
+      x.responseText || "—",
+      (x.acceptedAnswers || []).join(" / "),
+      Number(x.points).toFixed(1).replace(".0","")
+    ]);
+
+    doc.autoTable({
+      startY: 62 + noteLines.length * 4 + 4,
+      head: [["Nr.","Deutsch","Eigene Antwort","Lösung","Punkte"]],
+      body,
+      styles:{font:"helvetica",fontSize:8,cellPadding:2,valign:"top"},
+      headStyles:{fontStyle:"bold"},
+      columnStyles:{
+        0:{cellWidth:10},
+        1:{cellWidth:43},
+        2:{cellWidth:50},
+        3:{cellWidth:55},
+        4:{cellWidth:18,halign:"center"}
+      },
+      margin:{left:14,right:14}
+    });
+
+    const safeTitle = (r.test.title || "Vokabeltest").replace(/[^a-zA-Z0-9äöüÄÖÜß_-]+/g,"_");
+    doc.save("Korrektur_Schueler_" + r.studentCode + "_" + safeTitle + ".pdf");
   }
 
   async function submitTest(auto){
@@ -323,7 +432,7 @@
     showMsg($("testMsg"), auto ? "Die Bearbeitungszeit ist abgelaufen. Deine Antworten werden automatisch abgegeben." : "Antworten werden abgegeben …", "info");
     try{
       const data = await api({ action:"submit", accessToken, answers:collectAnswers(), auto });
-      if(data.submitted) showDone();
+      if(data.submitted) showDone(data.result);
     }catch(err){
       submitting = false;
       $("submitBtn").disabled = false;
@@ -334,6 +443,7 @@
 
   $("startBtn").addEventListener("click", startTest);
   $("submitBtn").addEventListener("click", () => submitTest(false));
+  $("downloadPdfBtn").addEventListener("click", generateStudentPdf);
 
   $("chars").addEventListener("click", e => {
     const btn = e.target.closest("button");
