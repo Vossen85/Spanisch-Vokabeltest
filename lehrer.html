@@ -370,6 +370,7 @@
             '</div>'+
           '</div><div class="actions" style="margin-top:0">'+
             '<button class="secondary openFolderBtn">Öffnen</button>'+
+          '<button class="badbtn deleteTestBtn">Löschen</button>'+
           '</div></div>'+
           '<div class="stats">'+
             '<div class="stat"><span class="tiny">Abgaben</span><strong>'+st.submitted.length+'</strong></div>'+
@@ -380,6 +381,7 @@
           '<div class="test-detail hidden"></div>';
 
         folder.querySelector(".openFolderBtn").addEventListener("click",()=>toggleTestFolder(t,folder));
+        folder.querySelector(".deleteTestBtn").addEventListener("click",()=>deleteTest(t));
         dateTests.appendChild(folder);
       }
 
@@ -395,6 +397,19 @@
 
       root.appendChild(dateFolder);
     });
+  }
+
+  async function deleteTest(t){
+    const st=testStats(t.id);
+    const warning='Test „'+(t.title||'Vokabeltest')+'“ vom '+fmtDate(t.test_date)+' endgültig löschen?\n\nDabei werden auch '+st.submitted.length+' abgegebene Test(s) und alle dazugehörigen Ergebnisse gelöscht. Das kann nicht rückgängig gemacht werden.';
+    if(!confirm(warning)) return;
+
+    const {error}=await supabase.from("tests").delete().eq("id",t.id);
+    if(error){
+      alert("Der Test konnte nicht gelöscht werden.");
+      return;
+    }
+    await loadDashboard();
   }
 
   function toggleTestFolder(t,folder){
@@ -488,20 +503,25 @@
     for(const a of answers){
       const q=a.test_questions||{};
       const effective=a.teacher_points===null||a.teacher_points===undefined?n(a.auto_points):n(a.teacher_points);
-      const mode=a.teacher_points===null||a.teacher_points===undefined?"auto":(n(a.teacher_points)===1?"correct":"wrong");
+      const mode=a.teacher_points===null||a.teacher_points===undefined
+        ?"auto"
+        :(n(a.teacher_points)===1?"correct":n(a.teacher_points)===0.5?"half":"wrong");
       const card=document.createElement("div");
       card.className="answer-card";
       const solutions=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot.join(" / "):"";
       card.innerHTML=
         '<div class="answer-head"><div><div class="tiny">Aufgabe '+esc(q.position||"")+'</div>'+
         '<div class="answer-prompt">'+esc(q.source_snapshot||"")+'</div></div>'+
-        '<div class="'+(effective===1?"correct":"wrong")+'">'+(effective===1?"richtig":"falsch")+'</div></div>'+
+        '<div class="'+(effective===1?"correct":effective===0.5?"manual":"wrong")+'">'+
+          (effective===1?"1 Punkt – richtig":effective===0.5?"0,5 Punkt – Akzent/Groß-Kleinschreibung":"0 Punkte – falsch")+
+        '</div></div>'+
         '<div class="answer-text"><strong>Antwort:</strong> '+esc(a.response_text||"—")+'</div>'+
         '<div class="answer-solution"><strong>Hinterlegte Lösung:</strong> '+esc(solutions)+'</div>'+
         '<div class="actions">'+
           '<button class="autobtn adjustBtn" data-mode="auto">Automatik'+(mode==="auto"?" ✓":"")+'</button>'+
-          '<button class="goodbtn adjustBtn" data-mode="correct">Als richtig werten'+(mode==="correct"?" ✓":"")+'</button>'+
-          '<button class="badbtn adjustBtn" data-mode="wrong">Als falsch werten'+(mode==="wrong"?" ✓":"")+'</button>'+
+          '<button class="goodbtn adjustBtn" data-mode="correct">1 Punkt'+(mode==="correct"?" ✓":"")+'</button>'+
+          '<button class="autobtn adjustBtn" data-mode="half">0,5 Punkt'+(mode==="half"?" ✓":"")+'</button>'+
+          '<button class="badbtn adjustBtn" data-mode="wrong">0 Punkte'+(mode==="wrong"?" ✓":"")+'</button>'+
         '</div>';
       card.querySelectorAll(".adjustBtn").forEach(btn=>btn.addEventListener("click",()=>adjustAnswer(a.id,btn.dataset.mode,sub,t,root)));
       ar.appendChild(card);
