@@ -476,7 +476,7 @@
         groups.get(title).push(row);
       }
     }
-    return [...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0],"de"));
+    return [...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0],"de",{numeric:true,sensitivity:"base"}));
   }
 
   function renderVocabPreview(data){
