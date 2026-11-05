@@ -962,14 +962,60 @@
       '</tbody></table></div>';
   }
 
+  function grammarReviewNormalize(value){
+    return String(value??"").normalize("NFC").trim()
+      .replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g,"")
+      .replace(/\s+/g," ");
+  }
+
+  function grammarReviewFold(value){
+    return String(value??"")
+      .replace(/[áÁ]/g,m=>m==="Á"?"A":"a")
+      .replace(/[éÉ]/g,m=>m==="É"?"E":"e")
+      .replace(/[íÍ]/g,m=>m==="Í"?"I":"i")
+      .replace(/[óÓ]/g,m=>m==="Ó"?"O":"o")
+      .replace(/[úÚ]/g,m=>m==="Ú"?"U":"u")
+      .replace(/[üÜ]/g,m=>m==="Ü"?"U":"u")
+      .toLocaleLowerCase("es");
+  }
+
+  function grammarReviewAutoPoint(typed,expected){
+    const t=grammarReviewNormalize(typed);
+    if(!t)return 0;
+    const variants=String(expected??"").split(/\s*\/\s*/).map(grammarReviewNormalize).filter(Boolean);
+    if(variants.includes(t))return 1;
+    const folded=grammarReviewFold(t);
+    return variants.some(v=>grammarReviewFold(v)===folded)?0.5:0;
+  }
+
+  function grammarReviewPointText(p){
+    const v=Number(p)||0;
+    return v===0.5?"0,5":String(v);
+  }
+
+  function grammarReviewMode(adjustments,index){
+    const key=String(index);
+    if(!Object.prototype.hasOwnProperty.call(adjustments,key))return "auto";
+    const value=Number(adjustments[key]);
+    if(value===1)return "correct";
+    if(value===0.5)return "half";
+    return "wrong";
+  }
+
   async function openGrammarSubmissionDetail(sub,t,root){
     if(!sub)return;
+    currentOpenSubmission=sub.id;
     root.innerHTML='<p class="tiny">Antworten werden geladen …</p>';
     const {data,error}=await supabase.from("answers")
-      .select("question_id,response_text,auto_points,teacher_points,test_questions(position,source_snapshot,accepted_answers_snapshot,question_meta)")
+      .select("id,question_id,response_text,auto_points,teacher_points,teacher_adjustments,test_questions(position,source_snapshot,accepted_answers_snapshot,question_meta)")
       .eq("submission_id",sub.id);
     if(error){root.innerHTML='<div class="msg show err">Antworten konnten nicht geladen werden.</div>';return}
     const answers=(data||[]).sort((a,b)=>n(a.test_questions?.position)-n(b.test_questions?.position));
+    const adjustedParts=answers.reduce((sum,a)=>{
+      const x=a.teacher_adjustments;
+      return sum+(x&&typeof x==="object"&&!Array.isArray(x)?Object.keys(x).length:0);
+    },0);
+
     root.className="submission-detail detail-panel";
     root.innerHTML=
       '<div class="topline"><div><h3>Schüler '+esc(sub.student_code)+'</h3>'+
@@ -977,19 +1023,88 @@
       '<button class="secondary closeDetailBtn">Details schließen</button></div>'+
       '<div class="summarybar"><span class="summarypill">'+n(sub.raw_points)+' / '+n(sub.max_points)+' Punkte</span>'+
       '<span class="summarypill">'+n(sub.percent).toFixed(1)+' %</span><span class="summarypill">Note '+esc(sub.grade_text||"—")+'</span>'+
-      '<span class="summarypill">'+n(sub.upper_school_points)+' OP</span></div><div class="answersRoot"></div>';
+      '<span class="summarypill">'+n(sub.upper_school_points)+' OP</span>'+
+      (adjustedParts?'<span class="summarypill">'+adjustedParts+' manuell nachkorrigierte '+(adjustedParts===1?"Teilantwort":"Teilantworten")+'</span>':'')+
+      '</div><div class="tiny" style="margin-bottom:10px">Jede Übersetzung und jede Verbform kann einzeln nachkorrigiert werden. „Automatik“ stellt die automatische Bewertung für diese Teilantwort wieder her.</div>'+
+      '<div class="answersRoot"></div>';
     root.querySelector(".closeDetailBtn").addEventListener("click",()=>{root.innerHTML="";root.className="submission-detail"});
+
     const ar=root.querySelector(".answersRoot");
     for(const a of answers){
-      const q=a.test_questions||{},m=q.question_meta||{},expected=q.accepted_answers_snapshot||[];
+      const q=a.test_questions||{},m=q.question_meta||{},expected=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
       let p={translation:"",forms:[]};try{p=JSON.parse(a.response_text||"{}")}catch{}
-      const card=document.createElement("div");card.className="answer-card";
-      card.innerHTML='<div class="answer-head"><div class="answer-prompt">'+esc(q.position+". "+q.source_snapshot)+'</div><div class="score">'+n(a.teacher_points??a.auto_points)+' / '+expected.length+' P.</div></div>'+
-        '<div class="tiny">'+esc((m.topicGroup||"")+(m.topicTitle?" – "+m.topicTitle:""))+'</div>'+
-        '<div class="answer-text"><strong>Deutsche Bedeutung:</strong> '+esc(p.translation||"—")+' <span class="tiny">· Lösung: '+esc(expected[0]||"")+'</span></div>'+
-        (m.labels||[]).map((lab,i)=>'<div class="answer-text"><strong>'+esc(lab)+':</strong> '+esc(p.forms?.[i]||"—")+' <span class="tiny">· Lösung: '+esc(expected[i+1]||"")+'</span></div>').join("");
+      const adjustments=a.teacher_adjustments&&typeof a.teacher_adjustments==="object"&&!Array.isArray(a.teacher_adjustments)?a.teacher_adjustments:{};
+      const labels=Array.isArray(m.labels)?m.labels:[];
+      const parts=[
+        {label:"Deutsche Bedeutung",typed:p.translation||"",expected:expected[0]||""},
+        ...labels.map((lab,i)=>({label:lab,typed:p.forms?.[i]||"",expected:expected[i+1]||""}))
+      ];
+      const effectivePoints=parts.map((part,index)=>{
+        const auto=grammarReviewAutoPoint(part.typed,part.expected);
+        return Object.prototype.hasOwnProperty.call(adjustments,String(index))?Number(adjustments[String(index)]):auto;
+      });
+      const total=effectivePoints.reduce((sum,pt)=>sum+n(pt),0);
+
+      const card=document.createElement("div");
+      card.className="answer-card";
+      card.innerHTML=
+        '<div class="answer-head"><div><div class="tiny">Aufgabe '+esc(q.position||"")+'</div>'+
+        '<div class="answer-prompt">'+esc(q.source_snapshot||"")+'</div>'+
+        '<div class="tiny">'+esc((m.topicGroup||"")+(m.topicTitle?" – "+m.topicTitle:""))+'</div></div>'+
+        '<div class="score">'+grammarReviewPointText(total)+' / '+expected.length+' P.</div></div>'+
+        '<div class="grammarPartsRoot"></div>';
+
+      const partsRoot=card.querySelector(".grammarPartsRoot");
+      parts.forEach((part,index)=>{
+        const autoPoint=grammarReviewAutoPoint(part.typed,part.expected);
+        const mode=grammarReviewMode(adjustments,index);
+        const effective=effectivePoints[index];
+        const row=document.createElement("div");
+        row.style.cssText="border-top:1px solid #e2e8f0;padding:11px 0 2px;margin-top:10px";
+        row.innerHTML=
+          '<div class="answer-head"><div><strong>'+esc(part.label)+'</strong></div>'+
+          '<div class="'+(effective===1?"correct":effective===0.5?"manual":"wrong")+'">'+grammarReviewPointText(effective)+' / 1 Punkt</div></div>'+
+          '<div class="answer-text"><strong>Antwort:</strong> '+esc(part.typed||"—")+'</div>'+
+          '<div class="answer-solution"><strong>Hinterlegte Lösung:</strong> '+esc(part.expected||"—")+
+          ' <span class="tiny">· Automatik: '+grammarReviewPointText(autoPoint)+' P.</span></div>'+
+          '<div class="actions">'+
+            '<button class="autobtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="auto">Automatik'+(mode==="auto"?" ✓":"")+'</button>'+
+            '<button class="goodbtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="correct">1 Punkt'+(mode==="correct"?" ✓":"")+'</button>'+
+            '<button class="autobtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="half">0,5 Punkt'+(mode==="half"?" ✓":"")+'</button>'+
+            '<button class="badbtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="wrong">0 Punkte'+(mode==="wrong"?" ✓":"")+'</button>'+
+          '</div>';
+        row.querySelectorAll(".grammarAdjustBtn").forEach(btn=>btn.addEventListener("click",()=>
+          adjustGrammarPart(a.id,Number(btn.dataset.partIndex),btn.dataset.mode,sub,t,root)
+        ));
+        partsRoot.appendChild(row);
+      });
       ar.appendChild(card);
     }
+  }
+
+  async function adjustGrammarPart(answerId,partIndex,mode,sub,t,root){
+    root.querySelectorAll("button").forEach(b=>b.disabled=true);
+    const {data,error}=await supabase.functions.invoke("teacher-results",{
+      body:{action:"adjust-grammar-part",answerId,partIndex,mode}
+    });
+    root.querySelectorAll("button").forEach(b=>b.disabled=false);
+    if(error||data?.error){
+      let message=data?.error||"Nachkorrektur konnte nicht gespeichert werden.";
+      try{const b=await error?.context?.json();if(b?.error)message=b.error}catch{}
+      alert(message);
+      return;
+    }
+    if(data?.summary){
+      sub.raw_points=data.summary.rawPoints;
+      sub.max_points=data.summary.maxPoints;
+      sub.percent=data.summary.percent;
+      sub.grade_text=data.summary.gradeText;
+      sub.upper_school_points=data.summary.upperSchoolPoints;
+      const cached=submissionsCache.find(x=>x.id===sub.id);
+      if(cached)Object.assign(cached,sub);
+    }
+    await openGrammarSubmissionDetail(sub,t,root);
+    updateVisibleSubmissionRow(sub);
   }
 
   async function openSubmissionDetail(sub,t,root){
