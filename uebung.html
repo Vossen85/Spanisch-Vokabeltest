@@ -440,21 +440,24 @@
         y=16;
         pageTitle(true);
       };
-      const drawGroupHeader=(title)=>{
-        const titleLines=doc.splitTextToSize(title,contentW-10);
-        const groupHeight=Math.max(10,titleLines.length*5+5);
-        if(y+groupHeight+10>pageH-margin)newPage();
-        doc.setFillColor(226,242,240);
-        doc.roundedRect(margin,y,contentW,groupHeight,2,2,"F");
-        doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(15,88,83);
-        doc.text(titleLines,margin+5,y+6);
-        y+=groupHeight+3;
+      const drawColumnHeader=()=>{
         doc.setFillColor(15,118,110);
         doc.rect(margin,y,contentW,8,"F");
         doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(255,255,255);
         doc.text("Spanisch",spanishX,y+5.3);
         doc.text("Deutsch",germanX,y+5.3);
         y+=8;
+      };
+      const drawGroupHeader=(title)=>{
+        const titleLines=doc.splitTextToSize(title,contentW-10);
+        const groupHeight=Math.max(10,titleLines.length*5+5);
+        if(y+groupHeight+3+8+10>pageH-margin)newPage();
+        doc.setFillColor(226,242,240);
+        doc.roundedRect(margin,y,contentW,groupHeight,2,2,"F");
+        doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(15,88,83);
+        doc.text(titleLines,margin+5,y+6);
+        y+=groupHeight+3;
+        drawColumnHeader();
       };
       pageTitle(false);
       for(const [title,entries] of makeVocabGroups(rows)){
@@ -467,7 +470,7 @@
           const rowHeight=Math.max(9,lineCount*5+4);
           if(y+rowHeight>pageH-margin){
             newPage();
-            drawGroupHeader(title);
+            drawColumnHeader();
             stripe=0;
           }
           doc.setFillColor(stripe%2===0?255:248,stripe%2===0?255:250,stripe%2===0?255:252);
