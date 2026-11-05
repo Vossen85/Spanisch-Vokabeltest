@@ -392,6 +392,7 @@
   let currentOpenTest = null;
   let currentOpenSubmission = null;
   let currentUserRole = "teacher";
+  let grammarCatalog = [];
 
   function showMsg(el,text,type="info"){el.textContent=text;el.className="msg show "+type}
   function hideMsg(el){el.textContent="";el.className="msg"}
@@ -453,6 +454,7 @@
     if(currentView==="admin" && currentUserRole!=="admin") currentView="tests";
     $("welcome").textContent="Angemeldet als "+(profile.display_name||session.user.email);
     await loadUnits();
+    await loadGrammarCatalog();
     setView(currentView);
   }
 
@@ -515,6 +517,227 @@
 
       $("unitsBox").appendChild(group);
     }
+  }
+
+
+  function showCreateMode(mode){
+    const grammar=mode==="grammar";
+    $("vocabCreateForm").classList.toggle("hidden",grammar);
+    $("grammarCreateForm").classList.toggle("hidden",!grammar);
+    $("createVocabModeBtn").classList.toggle("active",!grammar);
+    $("createGrammarModeBtn").classList.toggle("active",grammar);
+    $("newTestCard").classList.add("hidden");
+    $("grammarPlanCard").classList.add("hidden");
+    if(grammar && !$("grammarTestDate").value){
+      $("grammarTestDate").value=new Date().toISOString().slice(0,10);
+    }
+  }
+
+  async function loadGrammarCatalog(){
+    if(grammarCatalog.length)return;
+    try{
+      const res=await fetch(new URL("grammatik-themen.json",window.location.href),{cache:"no-store"});
+      if(!res.ok)throw new Error("Katalog nicht erreichbar");
+      const data=await res.json();
+      grammarCatalog=Array.isArray(data?.topics)?data.topics:[];
+      renderGrammarCatalog();
+    }catch(e){
+      $("grammarTopicsBox").innerHTML='<div class="empty">Die Grammatikbereiche konnten nicht geladen werden.</div>';
+    }
+  }
+
+  function renderGrammarCatalog(){
+    const root=$("grammarTopicsBox");
+    root.innerHTML="";
+    const groups=new Map();
+    for(const topic of grammarCatalog){
+      if(!groups.has(topic.group))groups.set(topic.group,[]);
+      groups.get(topic.group).push(topic);
+    }
+
+    for(const [group,topics] of groups){
+      const block=document.createElement("div");
+      block.className="grammar-group";
+      block.innerHTML='<div class="grammar-group-title">'+esc(group)+'</div><div class="grammar-group-topics"></div>';
+      const holder=block.querySelector(".grammar-group-topics");
+
+      for(const topic of topics){
+        const box=document.createElement("div");
+        box.className="grammar-topic";
+        box.dataset.topicId=topic.id;
+        box.innerHTML=
+          '<div class="grammar-topic-head">'+
+            '<label class="grammar-topic-main">'+
+              '<input type="checkbox" class="grammar-topic-source">'+
+              '<span><span class="grammar-topic-title">'+esc(topic.title)+'</span>'+
+              '<span class="grammar-topic-meta">'+topic.verbs.length+' Verben · <span class="grammar-fixed-count">0 fest ausgewählt</span></span></span>'+
+            '</label>'+
+            '<button type="button" class="grammar-topic-toggle">Verben auswählen ▾</button>'+
+          '</div>'+
+          '<div class="grammar-topic-children hidden">'+
+            '<div class="grammar-verb-tools">'+
+              '<button type="button" class="secondary grammar-all-fixed">Alle fest auswählen</button>'+
+              '<button type="button" class="secondary grammar-clear-fixed">Auswahl löschen</button>'+
+            '</div>'+
+            '<div class="grammar-verb-grid">'+
+              topic.verbs.map(v=>
+                '<label class="grammar-verb-row">'+
+                  '<input type="checkbox" class="grammar-verb-check" data-verb="'+esc(v.verb)+'">'+
+                  '<span>'+esc(v.verb)+'<small>'+esc(v.de)+'</small></span>'+
+                '</label>'
+              ).join("")+
+            '</div>'+
+          '</div>';
+
+        const source=box.querySelector(".grammar-topic-source");
+        const children=box.querySelector(".grammar-topic-children");
+        const toggle=box.querySelector(".grammar-topic-toggle");
+        const verbChecks=[...box.querySelectorAll(".grammar-verb-check")];
+        const fixedCount=box.querySelector(".grammar-fixed-count");
+
+        const refreshTopic=()=>{
+          const n=verbChecks.filter(x=>x.checked).length;
+          fixedCount.textContent=n+" fest ausgewählt";
+          if(n>0)source.checked=true;
+          updateGrammarSummary();
+        };
+
+        source.addEventListener("change",updateGrammarSummary);
+        toggle.addEventListener("click",()=>{
+          const hidden=children.classList.toggle("hidden");
+          toggle.textContent=hidden?"Verben auswählen ▾":"Verben ausblenden ▴";
+        });
+        verbChecks.forEach(x=>x.addEventListener("change",refreshTopic));
+        box.querySelector(".grammar-all-fixed").addEventListener("click",()=>{
+          verbChecks.forEach(x=>x.checked=true);refreshTopic();
+        });
+        box.querySelector(".grammar-clear-fixed").addEventListener("click",()=>{
+          verbChecks.forEach(x=>x.checked=false);refreshTopic();
+        });
+        holder.appendChild(box);
+      }
+      root.appendChild(block);
+    }
+    updateGrammarSummary();
+  }
+
+  function collectGrammarConfig(){
+    const selectedTopics=[];
+    const fixed=[];
+    document.querySelectorAll(".grammar-topic").forEach(box=>{
+      const topicId=box.dataset.topicId;
+      if(box.querySelector(".grammar-topic-source").checked)selectedTopics.push(topicId);
+      box.querySelectorAll(".grammar-verb-check:checked").forEach(input=>{
+        fixed.push({topicId,verb:input.dataset.verb});
+      });
+    });
+    return {selectedTopics,fixed};
+  }
+
+  function updateGrammarSummary(){
+    if(!$("grammarVerbCount"))return;
+    const total=Math.max(0,Number($("grammarVerbCount").value)||0);
+    const {selectedTopics,fixed}=collectGrammarConfig();
+    $("grammarSummaryTopics").textContent=selectedTopics.length;
+    $("grammarSummaryFixed").textContent=fixed.length;
+    $("grammarSummaryRandom").textContent=Math.max(0,total-fixed.length);
+    $("grammarSummaryPoints").textContent=total*7;
+
+    const topicsWithFixed=new Set(fixed.map(x=>x.topicId));
+    const missing=selectedTopics.filter(id=>!topicsWithFixed.has(id)).length;
+    if(!selectedTopics.length){
+      $("grammarSummaryHint").innerHTML="Wähle mindestens einen Grammatikbereich. <strong>Pro Verb sind maximal 7 Punkte möglich:</strong> 1 Übersetzung + 6 Konjugationsformen.";
+    }else if(fixed.length>total){
+      $("grammarSummaryHint").innerHTML='<strong>Zu viele feste Verben:</strong> Du hast '+fixed.length+' Verben festgelegt, aber nur '+total+' Aufgaben vorgesehen.';
+    }else if(fixed.length+missing>total){
+      $("grammarSummaryHint").innerHTML='<strong>Die Verteilung geht so noch nicht auf:</strong> Damit jeder gewählte Bereich mindestens einmal vorkommt, brauchst du mindestens '+(fixed.length+missing)+' Verben.';
+    }else{
+      $("grammarSummaryHint").innerHTML='Die übrigen '+Math.max(0,total-fixed.length)+' Verben werden möglichst gleichmäßig auf die '+selectedTopics.length+' gewählten Bereiche verteilt. <strong>Maximal '+(total*7)+' Punkte.</strong>';
+    }
+  }
+
+  function randomPick(arr){
+    if(!arr.length)return null;
+    const buf=new Uint32Array(1);crypto.getRandomValues(buf);
+    return arr[buf[0]%arr.length];
+  }
+
+  function buildGrammarPlan(total,selectedTopicIds,fixed){
+    const topicMap=new Map(grammarCatalog.map(t=>[t.id,t]));
+    const topics=selectedTopicIds.map(id=>topicMap.get(id)).filter(Boolean);
+    const selected=[];
+    const keys=new Set();
+    const counts=new Map(topics.map(t=>[t.id,0]));
+
+    for(const f of fixed){
+      const topic=topicMap.get(f.topicId);
+      const verb=topic?.verbs?.find(v=>v.verb===f.verb);
+      const key=f.topicId+"::"+f.verb;
+      if(topic&&verb&&!keys.has(key)){
+        keys.add(key);selected.push({topic,verb,fixed:true});
+        counts.set(topic.id,(counts.get(topic.id)||0)+1);
+      }
+    }
+
+    for(const topic of topics){
+      if(selected.length>=total)break;
+      if((counts.get(topic.id)||0)>0)continue;
+      const available=topic.verbs.filter(v=>!keys.has(topic.id+"::"+v.verb));
+      const verb=randomPick(available);
+      if(verb){
+        keys.add(topic.id+"::"+verb.verb);selected.push({topic,verb,fixed:false});
+        counts.set(topic.id,(counts.get(topic.id)||0)+1);
+      }
+    }
+
+    while(selected.length<total){
+      const candidates=topics.map(topic=>({
+        topic,
+        count:counts.get(topic.id)||0,
+        available:topic.verbs.filter(v=>!keys.has(topic.id+"::"+v.verb))
+      })).filter(x=>x.available.length);
+      if(!candidates.length)break;
+      const min=Math.min(...candidates.map(x=>x.count));
+      const balanced=candidates.filter(x=>x.count===min);
+      const chosenTopic=randomPick(balanced);
+      const verb=randomPick(chosenTopic.available);
+      keys.add(chosenTopic.topic.id+"::"+verb.verb);
+      selected.push({topic:chosenTopic.topic,verb,fixed:false});
+      counts.set(chosenTopic.topic.id,(counts.get(chosenTopic.topic.id)||0)+1);
+    }
+    return selected;
+  }
+
+  function renderGrammarPlan(plan,total){
+    const root=$("grammarPlanList");
+    root.innerHTML="";
+    const groups=new Map();
+    for(const item of plan){
+      if(!groups.has(item.topic.id))groups.set(item.topic.id,[]);
+      groups.get(item.topic.id).push(item);
+    }
+    $("grammarPlanSummary").innerHTML=
+      '<div class="summarybar">'+
+        '<span class="summarypill">'+plan.length+' Verben</span>'+
+        '<span class="summarypill">'+(plan.length*7)+' Punkte maximal</span>'+
+        '<span class="summarypill">'+groups.size+' Grammatikbereiche</span>'+
+      '</div>';
+
+    for(const items of groups.values()){
+      const topic=items[0].topic;
+      const group=document.createElement("div");
+      group.className="student-group";
+      group.innerHTML='<div class="folder-title">'+esc(topic.group+" – "+topic.title)+'</div>'+
+        '<div class="badges">'+items.map(i=>
+          '<span class="badge">'+esc(i.verb.verb)+' · '+esc(i.verb.de)+(i.fixed?' · fest':' · automatisch')+'</span>'
+        ).join("")+'</div>';
+      root.appendChild(group);
+    }
+    if(plan.length<total){
+      root.insertAdjacentHTML("beforeend",'<div class="msg show err">Für die Auswahl stehen nur '+plan.length+' unterschiedliche Verb-Aufgaben zur Verfügung.</div>');
+    }
+    $("grammarPlanCard").classList.remove("hidden");
+    $("grammarPlanCard").scrollIntoView({behavior:"smooth",block:"start"});
   }
 
   async function loadDashboard(){
@@ -966,6 +1189,30 @@
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
   $("refreshStudentsBtn").addEventListener("click",loadDashboard);
   $("refreshTeachersBtn").addEventListener("click",loadTeachers);
+  $("createVocabModeBtn").addEventListener("click",()=>showCreateMode("vocab"));
+  $("createGrammarModeBtn").addEventListener("click",()=>showCreateMode("grammar"));
+  $("grammarVerbCount").addEventListener("input",updateGrammarSummary);
+  $("prepareGrammarTestBtn").addEventListener("click",()=>{
+    hideMsg($("grammarCreateMsg"));
+    $("grammarPlanCard").classList.add("hidden");
+    const total=Number($("grammarVerbCount").value);
+    const duration=Number($("grammarDurationMinutes").value);
+    const date=$("grammarTestDate").value;
+    const {selectedTopics,fixed}=collectGrammarConfig();
+    if(!Number.isInteger(total)||total<1){showMsg($("grammarCreateMsg"),"Bitte die Anzahl der Verben eingeben.","err");return}
+    if(!Number.isInteger(duration)||duration<1){showMsg($("grammarCreateMsg"),"Bitte die Bearbeitungszeit eingeben.","err");return}
+    if(!date){showMsg($("grammarCreateMsg"),"Bitte das Testdatum auswählen.","err");return}
+    if(!selectedTopics.length){showMsg($("grammarCreateMsg"),"Bitte mindestens einen Grammatikbereich auswählen.","err");return}
+    if(fixed.length>total){showMsg($("grammarCreateMsg"),"Du hast mehr Verben fest ausgewählt als der Test insgesamt enthalten soll.","err");return}
+    const fixedTopics=new Set(fixed.map(x=>x.topicId));
+    const missing=selectedTopics.filter(id=>!fixedTopics.has(id)).length;
+    if(fixed.length+missing>total){
+      showMsg($("grammarCreateMsg"),"Mit dieser Anzahl können nicht alle gewählten Grammatikbereiche im Test vorkommen. Erhöhe die Anzahl der Verben oder reduziere die Auswahl.","err");return;
+    }
+    const plan=buildGrammarPlan(total,selectedTopics,fixed);
+    renderGrammarPlan(plan,total);
+    showMsg($("grammarCreateMsg"),"Die Zusammenstellung ist geprüft. Im nächsten Schritt wird sie als echter Grammatiktest gespeichert.","ok");
+  });
   $("copyPracticeLinkBtn").addEventListener("click",async()=>{
     const url=practiceUrl();
     try{
