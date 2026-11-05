@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Spanisch – Vokabeltraining</title>
+  <title>Spanisch – Lernen & Testen</title>
   <style>
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
     *{box-sizing:border-box}
@@ -50,15 +50,58 @@
     .answer-line{margin-top:7px}.solution{color:#166534;font-weight:700}.own{color:#991b1b}.half{color:#9a3412}
     .note{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-top:14px;font-size:.92rem}
     a.btn{display:inline-block;text-decoration:none;border-radius:10px;padding:12px 16px;font-weight:750}
+    .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+    .choice-btn{min-height:150px;border-radius:18px;padding:24px;text-align:left;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;font-size:1.25rem;box-shadow:0 8px 22px rgba(15,23,42,.08)}
+    .choice-btn span{font-size:.92rem;font-weight:550;line-height:1.4;opacity:.9}
+    .choice-vocab{background:#2563eb;color:#fff}
+    .choice-grammar{background:#7c3aed;color:#fff}
+    .choice-learn{background:#0f766e;color:#fff}
+    .choice-test{background:#c2410c;color:#fff}
+    .backline{margin-bottom:14px}
+    .backline button{padding:9px 12px;font-size:.92rem}
     @media(max-width:700px){
       body{padding:12px}.card{padding:16px}.row,.resultbox{grid-template-columns:1fr}
       .topbar-inner{align-items:flex-start;flex-direction:column;gap:6px}.children{padding-left:14px;grid-template-columns:1fr}
+      .choice-grid{grid-template-columns:1fr}.choice-btn{min-height:120px}
     }
   </style>
 </head>
 <body>
 <div class="wrap">
-  <section id="setupCard" class="card">
+  <section id="portalCard" class="card">
+    <h1>Spanisch – Lernen & Testen</h1>
+    <p class="sub">Was möchtest du üben?</p>
+    <div class="choice-grid">
+      <button id="openVocabBtn" class="choice-btn choice-vocab" type="button">
+        📚 Vokabeln
+        <span>Vokabelbereiche auswählen und eine Testsimulation durchführen</span>
+      </button>
+      <button id="openGrammarBtn" class="choice-btn choice-grammar" type="button">
+        ✏️ Grammatik
+        <span>Konjugationen lernen oder Grammatiktests bearbeiten</span>
+      </button>
+    </div>
+  </section>
+
+  <section id="grammarChoiceCard" class="card hidden">
+    <div class="backline"><button id="grammarHomeBtn" class="secondary" type="button">← Zurück</button></div>
+    <h1>Grammatik</h1>
+    <p class="sub">Wähle, wie du mit den Verbformen arbeiten möchtest.</p>
+    <div class="choice-grid">
+      <button id="openConjugationsBtn" class="choice-btn choice-learn" type="button">
+        📖 Konjugationen lernen
+        <span>Fertige Verbformen ansehen und ausgewählte Bereiche als PDF speichern</span>
+      </button>
+      <button id="openGrammarTestsBtn" class="choice-btn choice-test" type="button">
+        ✅ Grammatiktests
+        <span>Konjugationen selbst eingeben und überprüfen</span>
+      </button>
+    </div>
+    <div id="grammarChoiceMsg" class="msg"></div>
+  </section>
+
+  <section id="setupCard" class="card hidden">
+    <div class="backline"><button id="vocabHomeBtn" class="secondary" type="button">← Zurück</button></div>
     <h1>Spanisch – Vokabeltraining</h1>
     <p class="sub">Stelle dir selbst eine Testsimulation zusammen und überprüfe deinen Lernstand.</p>
 
@@ -475,6 +518,35 @@
       showSetup();
     }
   }
+
+  function showPortal(){
+    stopTimers();
+    $("portalCard").classList.remove("hidden");
+    $("grammarChoiceCard").classList.add("hidden");
+    $("setupCard").classList.add("hidden");
+    $("testArea").classList.add("hidden");
+    $("doneCard").classList.add("hidden");
+    $("fatalCard").classList.add("hidden");
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  $("openVocabBtn").addEventListener("click",()=>{
+    $("portalCard").classList.add("hidden");
+    $("grammarChoiceCard").classList.add("hidden");
+    $("setupCard").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"instant"});
+  });
+  $("openGrammarBtn").addEventListener("click",()=>{
+    $("portalCard").classList.add("hidden");
+    $("grammarChoiceCard").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"instant"});
+  });
+  $("grammarHomeBtn").addEventListener("click",showPortal);
+  $("vocabHomeBtn").addEventListener("click",showPortal);
+  $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
+  $("openGrammarTestsBtn").addEventListener("click",()=>{
+    showMsg($("grammarChoiceMsg"),"Die Grammatiktests werden als nächster Schritt eingerichtet. Die Konjugationstabellen sind bereits verfügbar.","info");
+  });
 
   $("chars").addEventListener("click",e=>{
     if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;
