@@ -53,6 +53,7 @@
     .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
     .choice-btn{min-height:150px;border-radius:18px;padding:24px;text-align:left;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;font-size:1.25rem;box-shadow:0 8px 22px rgba(15,23,42,.08)}
     .choice-btn span{font-size:.92rem;font-weight:550;line-height:1.4;opacity:.9}
+    .mode-btn[aria-pressed="true"]{outline:3px solid #0f766e;outline-offset:3px}
     .choice-vocab{background:#2563eb;color:#fff}
     .choice-grammar{background:#7c3aed;color:#fff}
     .choice-learn{background:#0f766e;color:#fff}
@@ -103,12 +104,28 @@
   <section id="setupCard" class="card hidden">
     <div class="backline"><button id="vocabHomeBtn" class="secondary" type="button">← Zurück</button></div>
     <h1>Spanisch – Vokabeltraining</h1>
-    <p class="sub">Stelle dir selbst eine Testsimulation zusammen und überprüfe deinen Lernstand.</p>
+    <p class="sub">Wähle zuerst, ob du einen Test machen oder eine Vokabelliste als PDF erstellen möchtest.</p>
+    <div class="choice-grid" style="margin-top:16px">
+      <button id="chooseVocabTestBtn" class="choice-btn choice-test mode-btn" type="button" aria-pressed="true">
+        📝 Testsimulation
+        <span>Wähle deine Vokabelbereiche, Aufgabenanzahl und Bearbeitungszeit.</span>
+      </button>
+      <button id="chooseVocabListBtn" class="choice-btn choice-learn mode-btn" type="button" aria-pressed="false">
+        📄 Vokabelliste als PDF
+        <span>Wähle ganze Unidades oder einzelne Unterordner und lade die Liste herunter.</span>
+      </button>
+    </div>
 
     <h2 style="margin-top:24px">1. Vokabelbereiche auswählen</h2>
     <p class="tiny">Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.</p>
     <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
 
+    <div id="vocabListActions" class="hidden">
+      <div class="actions"><button id="downloadVocabListBtn" class="primary" type="button">Auswahl als PDF herunterladen</button></div>
+      <div id="vocabListMsg" class="msg"></div>
+    </div>
+
+    <div id="testOptions">
     <h2 style="margin-top:26px">2. Test festlegen</h2>
     <div class="row">
       <div>
@@ -129,6 +146,7 @@
       <button id="startBtn" class="primary">Testsimulation starten</button>
     </div>
     <div id="setupMsg" class="msg"></div>
+    </div>
   </section>
 
   <section id="testArea" class="hidden">
@@ -189,6 +207,7 @@
   </section>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script>
   const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
   const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
@@ -204,6 +223,7 @@
   let lastFocusedInput=null;
   let submitting=false;
   let lastConfig=null;
+  let vocabMode="test";
 
   function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
   function hideMsg(el){el.className="msg"}
@@ -270,6 +290,79 @@
         toggle.textContent=children.classList.contains("hidden")?"Unterordner anzeigen ▾":"Unterordner ausblenden ▴";
       });
       $("unitsBox").appendChild(group);
+    }
+  }
+
+
+  function setVocabMode(mode){
+    vocabMode=mode;
+    $("testOptions").classList.toggle("hidden",mode!=="test");
+    $("vocabListActions").classList.toggle("hidden",mode!=="list");
+    $("chooseVocabTestBtn").setAttribute("aria-pressed",String(mode==="test"));
+    $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
+    hideMsg($("setupMsg"));
+    hideMsg($("vocabListMsg"));
+  }
+
+  async function downloadVocabList(){
+    hideMsg($("vocabListMsg"));
+    const selection=collectSelection();
+    if(!selection.unitKeys.length&&!selection.folderIds.length){
+      showMsg($("vocabListMsg"),"Bitte wähle mindestens eine Unidad oder einen Unterordner aus.","err");
+      return;
+    }
+    if(!window.jspdf){
+      showMsg($("vocabListMsg"),"Die PDF-Funktion konnte nicht geladen werden. Bitte lade die Seite neu.","err");
+      return;
+    }
+    const button=$("downloadVocabListBtn");
+    button.disabled=true;
+    button.textContent="Vokabelliste wird erstellt …";
+    try{
+      const data=await api({action:"vocab_list",...selection});
+      const rows=data.vocabulary||[];
+      if(!rows.length){
+        showMsg($("vocabListMsg"),"Für diese Auswahl wurden keine Vokabeln gefunden.","err");
+        return;
+      }
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({unit:"mm",format:"a4"});
+      const margin=14,pageW=210,pageH=297;
+      let y=18;
+      const header=()=>{
+        doc.setFont("helvetica","bold");doc.setFontSize(17);
+        doc.text("Spanisch – Vokabelliste",margin,y);y+=8;
+        doc.setFont("helvetica","normal");doc.setFontSize(9);
+        doc.text(rows.length+" Vokabeln",margin,y);y+=8;
+        doc.setFont("helvetica","bold");doc.setFontSize(9);
+        doc.text("Spanisch",margin,y);doc.text("Deutsch",89,y);doc.text("Ordner",pageW-margin,y,{align:"right"});y+=3;
+        doc.setDrawColor(190);doc.line(margin,y,pageW-margin,y);y+=5;
+      };
+      const nextPage=()=>{doc.addPage();y=18;header();};
+      header();
+      for(const row of rows){
+        const spanish=(row.acceptedAnswers||[]).join(" / ");
+        const german=String(row.sourceText||"");
+        const folders=(row.folderTitles||[]).join(", ")||row.unitTitle||"";
+        const esLines=doc.splitTextToSize(spanish,65);
+        const deLines=doc.splitTextToSize(german,72);
+        const folderLines=doc.splitTextToSize(folders,38);
+        const height=Math.max(esLines.length,deLines.length,folderLines.length)*5+3;
+        if(y+height>pageH-14)nextPage();
+        doc.setFont("helvetica","normal");doc.setFontSize(9);
+        doc.text(esLines,margin,y);
+        doc.text(deLines,89,y);
+        doc.text(folderLines,pageW-margin,y,{align:"right"});
+        y+=height;
+        doc.setDrawColor(230);doc.line(margin,y-2,pageW-margin,y-2);
+      }
+      doc.save("Spanisch_Vokabelliste.pdf");
+      showMsg($("vocabListMsg"),rows.length+" Vokabeln wurden als PDF erstellt.","ok");
+    }catch(error){
+      showMsg($("vocabListMsg"),error.message||"Die Vokabelliste konnte nicht erstellt werden.","err");
+    }finally{
+      button.disabled=false;
+      button.textContent="Auswahl als PDF herunterladen";
     }
   }
 
@@ -542,6 +635,9 @@
     window.scrollTo({top:0,behavior:"instant"});
   });
   $("grammarHomeBtn").addEventListener("click",showPortal);
+  $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
+  $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
+  $("downloadVocabListBtn").addEventListener("click",downloadVocabList);
   $("vocabHomeBtn").addEventListener("click",showPortal);
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
