@@ -159,6 +159,13 @@
     .quarter-head{display:flex;flex-direction:column;align-items:stretch;flex:1;min-width:0}
     .quarter-head>.quarter-label{flex:1}
     .quarter-head>.quarter-toggle{flex:0 0 40px}
+    #createdSolutionPreview{margin-top:14px}
+    #createdSolutionPreview .grammar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}
+    #createdSolutionPreview .verb-card{border:1px solid #dbe2ea;border-radius:10px;padding:10px;background:#fafafa}
+    #createdSolutionPreview .verb-card-head,#createdSolutionPreview .grammar-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid #e2e8f0}
+    #createdSolutionPreview .topic-label{font-size:.8rem;color:#64748b;margin:3px 0}
+    #createdSolutionPreview .row-label{font-size:.86rem;color:#475569}
+    #createdSolutionPreview .answer-text{font-weight:650;text-align:right}
   </style>
 </head>
 <body>
@@ -340,6 +347,14 @@
             <div class="actions"><button id="copyNewLinkBtn" class="secondary">Link kopieren</button></div>
           </div>
         </div>
+        <div class="actions">
+          <button id="printCreatedTestBtn" class="primary" type="button" disabled>Test als PDF speichern / drucken</button>
+          <button id="toggleCreatedSolutionBtn" class="secondary" type="button" aria-expanded="false" disabled>Lösung anzeigen</button>
+          <button id="printCreatedSolutionBtn" class="secondary" type="button" disabled>Lösung als PDF speichern / drucken</button>
+        </div>
+        <p class="tiny">Im Druckdialog kannst du „Als PDF speichern“ oder einen Drucker auswählen.</p>
+        <div id="createdSolutionPreview" class="hidden"></div>
+        <div id="createdDocumentMsg" class="msg"></div>
       </div>
       <div id="grammarPlanCard" class="card hidden">
         <h2>Vorgesehene Testzusammenstellung</h2>
@@ -434,6 +449,7 @@
   let grammarCatalog = [];
   let preparedGrammarPlan = [];
   let preparedGrammarSignature = "";
+  let createdTestDocument = null;
 
   function showMsg(el,text,type="info"){el.textContent=text;el.className="msg show "+type}
   function hideMsg(el){el.textContent="";el.className="msg"}
@@ -661,8 +677,132 @@
     }
   }
 
+  function printQuestionMaxPoints(q,isGrammar){
+    if(!isGrammar)return 1;
+    const meta=q?.question_meta||{};
+    return Number(meta.maxPoints)||1+(Array.isArray(meta.labels)?meta.labels.length:0);
+  }
+
+  function grammarPrintCard(q,solution){
+    const meta=q.question_meta||{};
+    const accepted=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
+    const labels=Array.isArray(meta.labels)?meta.labels:[];
+    const total=printQuestionMaxPoints(q,true);
+    const topic=meta.topicTitle||meta.topicGroup||"";
+    const meaning=solution
+      ? '<span class="answer-text">'+esc(accepted[0]||"")+'</span>'
+      : '<span class="write-line"></span>';
+    let rows='<div class="grammar-row"><span class="row-label">Bedeutung</span>'+meaning+'</div>';
+    labels.forEach((label,index)=>{
+      const answer=solution
+        ? '<span class="answer-text">'+esc(accepted[index+1]||"")+'</span>'
+        : '<span class="write-line"></span>';
+      rows+='<div class="grammar-row"><span class="row-label">'+esc(label)+'</span>'+answer+'</div>';
+    });
+    return '<section class="verb-card">'+
+      '<div class="verb-card-head"><strong>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</strong>'+
+      '<span class="points">'+total+' P.</span></div>'+
+      (topic?'<div class="topic-label">'+esc(topic)+'</div>':'')+rows+'</section>';
+  }
+
+  function createdTestHtml(solution){
+    const item=createdTestDocument;
+    const isGrammar=item.testType==="grammar";
+    const questions=item.questions||[];
+    const maxPoints=questions.reduce((sum,q)=>sum+printQuestionMaxPoints(q,isGrammar),0);
+    const title=esc(item.title||(isGrammar?"Grammatiktest":"Vokabeltest"));
+    let content="";
+    if(isGrammar){
+      content='<div class="grammar-grid">'+questions.map(q=>grammarPrintCard(q,solution)).join("")+'</div>';
+    }else{
+      content='<div class="vocab-grid">'+questions.map(q=>{
+        const answers=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
+        const response=solution
+          ? '<div class="answer-text">'+esc(answers.join(" / "))+'</div>'
+          : '<div class="write-line"></div>';
+        return '<div class="vocab-item"><span class="number">'+esc(q.position)+'.</span><div class="vocab-content">'+
+          '<div class="prompt">'+esc(q.source_snapshot)+'</div>'+response+'</div></div>';
+      }).join("")+'</div>';
+    }
+    const heading=solution?title+' – Lösung':title;
+    const instruction=solution
+      ? 'Lösungsschlüssel · '+maxPoints+' Punkte maximal'
+      : (isGrammar
+          ? 'Trage die deutsche Bedeutung und die geforderten Verbformen ein.'
+          : 'Übersetze die deutschen Vorgaben vollständig ins Spanische.');
+    const identity=solution?'':'<div class="student-fields"><span>Name: __________________________________</span><span>Schülernummer: ______________</span></div>';
+    return '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
+      '<title>'+heading+'</title><style>'+
+      '@page{size:A4 portrait;margin:13mm 12mm 14mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:0;font-size:10pt}'+
+      'h1{font-size:18pt;margin:0 0 4mm}.meta{font-size:9pt;color:#333;margin-bottom:5mm}.intro{font-size:9.5pt;margin:0 0 5mm}'+
+      '.student-fields{display:flex;justify-content:space-between;gap:10mm;font-size:9pt;margin:5mm 0 6mm;padding-bottom:4mm;border-bottom:1px solid #999}'+
+      '.vocab-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:9mm;align-items:start}.vocab-item{display:flex;gap:2mm;break-inside:avoid;border-bottom:1px solid #ddd;padding:2.2mm 0;min-height:13mm}.number{width:7mm;flex:0 0 7mm;font-weight:bold}.vocab-content{min-width:0;flex:1}.prompt{font-weight:600;line-height:1.25}.write-line{height:5.5mm;border-bottom:1px solid #777;margin-top:1.7mm}.answer-text{display:block;line-height:1.3;margin-top:1mm;font-weight:600;overflow-wrap:anywhere}'+
+      '.grammar-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm 5mm;align-items:start}.verb-card{border:1px solid #9ca3af;padding:3mm;border-radius:2mm;break-inside:avoid}.verb-card-head{display:flex;justify-content:space-between;gap:2mm;align-items:baseline;font-size:10pt}.points{font-size:8pt;white-space:nowrap}.topic-label{font-size:7.5pt;color:#555;margin:1mm 0 2mm}.grammar-row{display:grid;grid-template-columns:31mm 1fr;gap:2mm;align-items:end;min-height:6mm;border-top:1px solid #e5e7eb;padding:1mm 0;font-size:8.4pt}.row-label{font-size:7.7pt;color:#333;overflow-wrap:anywhere}.grammar-row .write-line{height:4mm;margin:0}.grammar-row .answer-text{margin:0;font-size:8.1pt}'+
+      '.solution-note{font-size:8.5pt;color:#444;margin:0 0 5mm}@media screen{body{max-width:210mm;margin:18px auto;padding:12mm;box-shadow:0 1px 12px #bbb;background:white}}'+
+      '</style></head><body><h1>'+heading+'</h1>'+
+      '<div class="meta">'+esc(fmtDate(item.testDate))+' · '+esc(item.durationMinutes)+' Minuten · '+questions.length+' '+(isGrammar?"Verb-Aufgaben":"Vokabeln")+' · '+maxPoints+' Punkte maximal</div>'+
+      '<p class="intro">'+instruction+'</p>'+identity+content+
+      (solution?'<p class="solution-note">Die aufgeführten Antworten entsprechen dem gespeicherten Lösungsschlüssel des erstellten Tests.</p>':'')+
+      '<script>window.addEventListener("load",function(){setTimeout(function(){window.focus();window.print()},250)});<\\/script>'+
+      '</body></html>';
+  }
+
+  function openCreatedTestPrint(solution){
+    if(!createdTestDocument?.questions?.length){alert("Die Testaufgaben sind noch nicht geladen.");return}
+    const printWindow=window.open("","_blank");
+    if(!printWindow){alert("Das Druckfenster wurde blockiert. Bitte Pop-ups für diese Seite erlauben und erneut klicken.");return}
+    printWindow.document.open();
+    printWindow.document.write(createdTestHtml(solution));
+    printWindow.document.close();
+  }
+
+  function renderCreatedSolution(){
+    const root=$("createdSolutionPreview"),item=createdTestDocument;
+    if(!item)return;
+    const isGrammar=item.testType==="grammar",questions=item.questions||[];
+    if(isGrammar){
+      root.innerHTML='<div class="grammar-grid">'+questions.map(q=>grammarPrintCard(q,true)).join("")+'</div>';
+    }else{
+      root.innerHTML='<div style="overflow-x:auto"><table><thead><tr><th>Nr.</th><th>Deutsche Vorgabe</th><th>Spanische Lösung(en)</th></tr></thead><tbody>'+
+        questions.map(q=>'<tr><td>'+esc(q.position)+'</td><td>'+esc(q.source_snapshot)+'</td><td><strong>'+esc((q.accepted_answers_snapshot||[]).join(" / "))+'</strong></td></tr>').join("")+
+        '</tbody></table></div>';
+    }
+  }
+
+  async function loadCreatedTestDocument(data,testType){
+    createdTestDocument={testId:data.testId,testType,title:data.title,testDate:data.testDate,durationMinutes:data.durationMinutes,questions:[]};
+    $("createdSolutionPreview").innerHTML="";
+    $("createdSolutionPreview").classList.add("hidden");
+    $("toggleCreatedSolutionBtn").textContent="Lösung anzeigen";
+    $("toggleCreatedSolutionBtn").setAttribute("aria-expanded","false");
+    $("printCreatedTestBtn").disabled=true;
+    $("toggleCreatedSolutionBtn").disabled=true;
+    $("printCreatedSolutionBtn").disabled=true;
+    showMsg($("createdDocumentMsg"),"Testaufgaben und Lösung werden geladen …","info");
+    const {data:questions,error}=await supabase.from("test_questions")
+      .select("position,source_snapshot,accepted_answers_snapshot,question_meta")
+      .eq("test_id",data.testId).order("position");
+    if(error){
+      showMsg($("createdDocumentMsg"),"Der Test wurde erstellt, aber die gespeicherte Aufgabenfassung konnte nicht geladen werden.","err");
+      return;
+    }
+    createdTestDocument.questions=questions||[];
+    if(!createdTestDocument.questions.length){
+      showMsg($("createdDocumentMsg"),"Der Test wurde erstellt, aber es wurden keine Aufgaben für die PDF-Ausgabe gefunden.","err");
+      return;
+    }
+    renderCreatedSolution();
+    $("printCreatedTestBtn").disabled=false;
+    $("toggleCreatedSolutionBtn").disabled=false;
+    $("printCreatedSolutionBtn").disabled=false;
+    showMsg($("createdDocumentMsg"),"Test-PDF und Lösung sind bereit. Im Druckdialog kannst du „Als PDF speichern“ auswählen.","ok");
+  }
+
   function showCreateMode(mode){
     const grammar=mode==="grammar";
+    createdTestDocument=null;
+    $("createdSolutionPreview").innerHTML="";
+    $("createdSolutionPreview").classList.add("hidden");
     $("vocabCreateForm").classList.toggle("hidden",grammar);
     $("grammarCreateForm").classList.toggle("hidden",!grammar);
     $("createVocabModeBtn").classList.toggle("active",!grammar);
@@ -1555,7 +1695,8 @@
     $("newQr").innerHTML="";
     new QRCode($("newQr"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
     $("newTestCard").classList.remove("hidden");
-    showMsg($("grammarPlanMsg"),"Der Grammatiktest ist gespeichert. QR-Code und Schülerlink sind bereit.","ok");
+    await loadCreatedTestDocument(data,"grammar");
+    showMsg($("grammarPlanMsg"),"Der Grammatiktest ist gespeichert. QR-Code, Schülerlink, Test-PDF und Lösung sind bereit.","ok");
     $("newTestCard").scrollIntoView({behavior:"smooth",block:"start"});
     await loadDashboard();
   });
@@ -1618,8 +1759,18 @@
     $("newQr").innerHTML="";
     new QRCode($("newQr"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
     $("newTestCard").classList.remove("hidden");
-    showMsg($("createMsg"),"Der Test ist gespeichert.","ok");
+    await loadCreatedTestDocument(data,"vocab");
+    showMsg($("createMsg"),"Der Test ist gespeichert. Test-PDF und Lösung sind bereit.","ok");
     await loadDashboard();
+  });
+
+  $("printCreatedTestBtn").addEventListener("click",()=>openCreatedTestPrint(false));
+  $("printCreatedSolutionBtn").addEventListener("click",()=>openCreatedTestPrint(true));
+  $("toggleCreatedSolutionBtn").addEventListener("click",()=>{
+    const preview=$("createdSolutionPreview");
+    const hidden=preview.classList.toggle("hidden");
+    $("toggleCreatedSolutionBtn").textContent=hidden?"Lösung anzeigen":"Lösung ausblenden";
+    $("toggleCreatedSolutionBtn").setAttribute("aria-expanded",String(!hidden));
   });
 
   $("copyNewLinkBtn").addEventListener("click",async()=>{
