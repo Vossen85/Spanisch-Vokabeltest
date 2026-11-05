@@ -986,7 +986,7 @@
       const card=document.createElement("div");card.className="answer-card";
       card.innerHTML='<div class="answer-head"><div class="answer-prompt">'+esc(q.position+". "+q.source_snapshot)+'</div><div class="score">'+n(a.teacher_points??a.auto_points)+' / '+expected.length+' P.</div></div>'+
         '<div class="tiny">'+esc((m.topicGroup||"")+(m.topicTitle?" – "+m.topicTitle:""))+'</div>'+
-        '<div class="answer-text"><strong>Spanisches Verb:</strong> '+esc(p.translation||"—")+' <span class="tiny">· Lösung: '+esc(expected[0]||"")+'</span></div>'+
+        '<div class="answer-text"><strong>Deutsche Bedeutung:</strong> '+esc(p.translation||"—")+' <span class="tiny">· Lösung: '+esc(expected[0]||"")+'</span></div>'+
         (m.labels||[]).map((lab,i)=>'<div class="answer-text"><strong>'+esc(lab)+':</strong> '+esc(p.forms?.[i]||"—")+' <span class="tiny">· Lösung: '+esc(expected[i+1]||"")+'</span></div>').join("");
       ar.appendChild(card);
     }
