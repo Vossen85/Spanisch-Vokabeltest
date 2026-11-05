@@ -279,12 +279,12 @@
     for(const courseKey of courseOrder){
       const courseUnits=courses.get(courseKey)||[];
       const course=document.createElement("section");
-      course.className="course-group";
+      course.className="unit-group phase-course";
       course.dataset.courseKey=courseKey;
 
       if(courseKey==="EF"){
         const total=courseUnits.reduce((n,u)=>n+(u.count||0),0);
-        course.innerHTML='<div class="course-head"><button class="course-toggle course-open" type="button" aria-expanded="false" aria-label="EF öffnen">EF ▾</button><span class="count">'+total+' Vokabeln · '+courseUnits.length+' Unidades</span><label class="course-select-label"><input class="course-master" type="checkbox"><span>Alle EF-Unidades auswählen</span></label></div><div class="course-content hidden"></div>';
+        course.innerHTML='<div class="unit-head"><label class="unit-label"><input class="course-master" type="checkbox"><span class="unit-title-wrap"><strong>EF</strong><span class="count">'+total+' Vokabeln · '+courseUnits.length+' Unidades</span></span></label><button class="toggle course-toggle" type="button" aria-expanded="false" aria-label="EF-Unidades anzeigen">Unidades anzeigen ▾</button></div><div class="children course-content hidden"></div>';
         const holder=course.querySelector(".course-content");
         for(const unit of courseUnits){
           holder.appendChild(buildUnitGroup(unit));
@@ -303,9 +303,9 @@
         });
         course.querySelector(".course-toggle").addEventListener("click",e=>{
           const hidden=holder.classList.toggle("hidden");
-          e.currentTarget.textContent=hidden?"EF ▾":"EF ▴";
+          e.currentTarget.textContent=hidden?"Unidades anzeigen ▾":"Unidades ausblenden ▴";
           e.currentTarget.setAttribute("aria-expanded",String(!hidden));
-          e.currentTarget.setAttribute("aria-label",hidden?"EF öffnen":"EF schließen");
+          e.currentTarget.setAttribute("aria-label",hidden?"EF-Unidades anzeigen":"EF-Unidades ausblenden");
         });
       }else{
         const unit=courseUnits[0];
