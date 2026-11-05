@@ -435,9 +435,18 @@
   function makeVocabGroups(rows){
     const groups=new Map();
     for(const row of rows){
-      const folders=(row.folderTitles||[]).length?row.folderTitles:["Ohne Unterordner"];
-      for(const folder of folders){
-        const title=[row.unitTitle,folder].filter(Boolean).join(" · ");
+      const folders=(row.folderGroups||[]).length
+        ? row.folderGroups
+        : (row.folderTitles||[]).map(title=>({title}));
+      const entries=folders.length?folders:[{title:"Ohne Lernordner"}];
+      for(const folder of entries){
+        const folderLabel=[
+          folder.quarterOrder?folder.quarterOrder+". Quartal":null,
+          folder.quarterTitle||null,
+          folder.title||null
+        ].filter(Boolean).join(" · ");
+        const unitLabel=row.unitTitle&&row.unitTitle!==row.courseKey?row.unitTitle:null;
+        const title=[row.courseKey||null,unitLabel,folderLabel].filter(Boolean).join(" · ");
         if(!groups.has(title))groups.set(title,[]);
         groups.get(title).push(row);
       }
@@ -454,7 +463,7 @@
       $("vocabPreview").classList.remove("hidden");
       return;
     }
-    $("vocabPreviewSummary").textContent=rows.length+" Vokabeln · nach Unterordnern geordnet";
+    $("vocabPreviewSummary").textContent=rows.length+" Vokabeln · nach Kursen, Quartalen und Lernordnern geordnet";
     for(const [title,entries] of makeVocabGroups(rows)){
       const section=document.createElement("section");
       section.className="vocab-preview-group";
@@ -523,7 +532,7 @@
         doc.text(continuation?"Spanisch – Vokabelliste (Fortsetzung)":"Spanisch – Vokabelliste",margin,y);
         y+=continuation?7:9;
         doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(100,116,139);
-        doc.text(rows.length+" Vokabeln · nach Unterordnern geordnet",margin,y);
+        doc.text(rows.length+" Vokabeln · nach Kursen, Quartalen und Lernordnern geordnet",margin,y);
         y+=continuation?8:10;
       };
       const newPage=()=>{
