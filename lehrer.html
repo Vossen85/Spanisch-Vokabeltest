@@ -179,6 +179,7 @@
       <button class="navBtn secondary" data-view="tests">Meine Tests</button>
       <button class="navBtn secondary" data-view="students">Nach Schülern</button>
       <button class="navBtn secondary" data-view="create">Test erstellen</button>
+      <button class="navBtn secondary" data-view="practice">Schülerbereich teilen</button>
       <button id="adminNavBtn" class="navBtn secondary hidden" data-view="admin">Kollegen verwalten</button>
     </div>
 
@@ -258,6 +259,25 @@
       </div>
     </section>
 
+    <section id="view-practice" class="view hidden">
+      <div class="card">
+        <h2>Schülerbereich – Vokabeltraining</h2>
+        <p>Dieser QR-Code führt dauerhaft zum eigenständigen Übungsbereich für die Schülerinnen und Schüler.</p>
+        <p class="tiny">Die SuS stellen dort selbst ihre Vokabelbereiche, die Anzahl der Aufgaben und die Bearbeitungszeit zusammen. Der QR-Code ist immer derselbe und kann dauerhaft in Teams, im Klassenraum oder auf Arbeitsblättern verwendet werden.</p>
+        <div class="qrgrid" style="margin-top:18px">
+          <div><div id="practiceQr" class="qrbox"></div></div>
+          <div>
+            <strong>Schülerlink</strong>
+            <div id="practiceLink" class="linkbox"></div>
+            <div class="actions">
+              <button id="copyPracticeLinkBtn" class="secondary">Link kopieren</button>
+              <button id="printPracticeQrBtn" class="secondary">QR-Code drucken</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="view-admin" class="view hidden">
       <div class="card">
         <div class="topline">
@@ -297,6 +317,16 @@
   function n(v){return Number(v||0)}
   function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
   function studentUrl(code){const u=new URL("test.html",window.location.href);u.searchParams.set("code",code);return u.toString()}
+  function practiceUrl(){return new URL("uebung.html",window.location.href).toString()}
+  function renderPracticeShare(){
+    const url=practiceUrl();
+    $("practiceLink").textContent=url;
+    if(!$("practiceQr").dataset.ready){
+      $("practiceQr").innerHTML="";
+      new QRCode($("practiceQr"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
+      $("practiceQr").dataset.ready="1";
+    }
+  }
 
   function setView(name){
     currentView=name;
@@ -305,6 +335,7 @@
     document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
     if(name==="tests") loadDashboard();
     if(name==="students") loadDashboard();
+    if(name==="practice") renderPracticeShare();
     if(name==="admin" && currentUserRole==="admin") loadTeachers();
   }
 
@@ -852,6 +883,27 @@
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
   $("refreshStudentsBtn").addEventListener("click",loadDashboard);
   $("refreshTeachersBtn").addEventListener("click",loadTeachers);
+  $("copyPracticeLinkBtn").addEventListener("click",async()=>{
+    const url=practiceUrl();
+    try{
+      await navigator.clipboard.writeText(url);
+      $("copyPracticeLinkBtn").textContent="Link kopiert ✓";
+      setTimeout(()=>$("copyPracticeLinkBtn").textContent="Link kopieren",1800);
+    }catch{
+      prompt("Schülerlink kopieren:",url);
+    }
+  });
+  $("printPracticeQrBtn").addEventListener("click",()=>{
+    renderPracticeShare();
+    const canvas=$("practiceQr").querySelector("canvas");
+    const img=$("practiceQr").querySelector("img");
+    const src=canvas?.toDataURL("image/png")||img?.src||"";
+    const url=practiceUrl();
+    const w=window.open("","_blank","width=700,height=850");
+    if(!w)return;
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>QR-Code Vokabeltraining</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:40px;color:#172033}img{width:300px;height:300px;margin:24px}.url{font-size:15px;word-break:break-all}.hint{color:#64748b}@media print{button{display:none}}</style></head><body><h1>Spanisch – Vokabeltraining</h1><p class="hint">QR-Code zum eigenständigen Schülerbereich</p><img src="'+src+'" alt="QR-Code"><p class="url">'+url+'</p><button onclick="window.print()">Drucken</button></body></html>');
+    w.document.close();
+  });
 
   $("createTestBtn").addEventListener("click",async()=>{
     hideMsg($("createMsg"));$("newTestCard").classList.add("hidden");
