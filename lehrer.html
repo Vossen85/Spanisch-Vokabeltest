@@ -96,9 +96,32 @@
     .manual{color:#7c3aed;font-weight:800}
     .summarybar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
     .summarypill{background:#f1f5f9;border-radius:999px;padding:7px 11px;font-weight:750}
+    .test-type-switch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 22px}
+    .test-type-btn{border:1px solid #cbd5e1;background:#f8fafc;color:#172033;padding:15px;border-radius:14px}
+    .test-type-btn.active{background:#172033;color:#fff;border-color:#172033}
+    .grammar-groups{display:grid;gap:16px;margin-top:12px}
+    .grammar-group-title{font-size:1.05rem;font-weight:850;margin:4px 0 8px}
+    .grammar-topic{border:1px solid #cbd5e1;border-radius:14px;background:#fafafa;overflow:hidden;margin-bottom:8px}
+    .grammar-topic-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px}
+    .grammar-topic-main{display:flex;gap:10px;align-items:flex-start;margin:0;cursor:pointer;flex:1}
+    .grammar-topic-main input,.grammar-verb-row input{width:19px;height:19px;flex:0 0 auto;margin-top:1px}
+    .grammar-topic-title{font-weight:800}
+    .grammar-topic-meta{font-size:.82rem;color:#64748b;font-weight:650;margin-top:3px}
+    .grammar-topic-toggle{padding:8px 10px;background:#e2e8f0;color:#334155;font-size:.88rem;white-space:nowrap}
+    .grammar-topic-children{border-top:1px solid #e2e8f0;background:#fff;padding:10px 14px 12px 42px}
+    .grammar-verb-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+    .grammar-verb-tools button{padding:7px 9px;font-size:.82rem}
+    .grammar-verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:5px 16px}
+    .grammar-verb-row{display:flex;gap:8px;align-items:flex-start;margin:0;padding:6px 4px;font-weight:600;cursor:pointer;border-radius:8px}
+    .grammar-verb-row:hover{background:#f8fafc}
+    .grammar-verb-row small{display:block;color:#64748b;font-weight:500}
+    .grammar-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:16px 0}
+    .grammar-summary>div{background:#f8fafc;border-radius:11px;padding:11px}
+    .grammar-summary strong{display:block;font-size:1.15rem}
     .empty{padding:18px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;text-align:center}
     @media(max-width:760px){
-      body{padding:12px}.row,.qrgrid,.auth-choice{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      body{padding:12px}.row,.qrgrid,.auth-choice,.test-type-switch{grid-template-columns:1fr}.stats,.grammar-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .grammar-topic-head{align-items:flex-start;flex-direction:column}.grammar-topic-toggle{align-self:flex-start}.grammar-topic-children{padding-left:14px}.grammar-verb-grid{grid-template-columns:1fr}
       table{font-size:.9rem}th,td{padding:8px 5px}
     }
   </style>
@@ -186,36 +209,89 @@
     <section id="view-create" class="view hidden">
       <div class="card">
         <h2>Test erstellen</h2>
-        <label>Vokabelbereiche auswählen</label>
-        <div class="tiny">Du kannst eine ganze Unidad auswählen oder sie aufklappen und nur einzelne Unterordner anklicken.</div>
-        <div id="unitsBox" class="units"></div>
+        <div class="tiny">Wähle zuerst, ob du einen Vokabel- oder Grammatiktest erstellen möchtest.</div>
 
-        <div class="row">
-          <div>
-            <label for="questionCount">Anzahl der Vokabeln</label>
-            <input id="questionCount" type="number" min="1" max="500">
-          </div>
-          <div>
-            <label for="durationMinutes">Bearbeitungszeit in Minuten</label>
-            <input id="durationMinutes" type="number" min="1" max="300">
-          </div>
+        <div class="test-type-switch">
+          <button id="createVocabModeBtn" type="button" class="test-type-btn active">📚 Vokabeltest</button>
+          <button id="createGrammarModeBtn" type="button" class="test-type-btn">✏️ Grammatiktest</button>
         </div>
 
-        <div class="row">
-          <div>
-            <label for="testDate">Datum</label>
-            <input id="testDate" type="date">
+        <div id="vocabCreateForm">
+          <label>Vokabelbereiche auswählen</label>
+          <div class="tiny">Du kannst eine ganze Unidad auswählen oder sie aufklappen und nur einzelne Unterordner anklicken.</div>
+          <div id="unitsBox" class="units"></div>
+
+          <div class="row">
+            <div>
+              <label for="questionCount">Anzahl der Vokabeln</label>
+              <input id="questionCount" type="number" min="1" max="500">
+            </div>
+            <div>
+              <label for="durationMinutes">Bearbeitungszeit in Minuten</label>
+              <input id="durationMinutes" type="number" min="1" max="300">
+            </div>
           </div>
-          <div>
-            <label for="testTitle">Titel (optional)</label>
-            <input id="testTitle" type="text" placeholder="z. B. Q2 Quartal 2 Test 1">
+
+          <div class="row">
+            <div>
+              <label for="testDate">Datum</label>
+              <input id="testDate" type="date">
+            </div>
+            <div>
+              <label for="testTitle">Titel (optional)</label>
+              <input id="testTitle" type="text" placeholder="z. B. Q2 Quartal 2 Test 1">
+            </div>
           </div>
+
+          <div class="actions">
+            <button id="createTestBtn" class="primary">Test erstellen</button>
+          </div>
+          <div id="createMsg" class="msg"></div>
         </div>
 
-        <div class="actions">
-          <button id="createTestBtn" class="primary">Test erstellen</button>
+        <div id="grammarCreateForm" class="hidden">
+          <div class="row">
+            <div>
+              <label for="grammarVerbCount">Anzahl der Verben</label>
+              <input id="grammarVerbCount" type="number" min="1" max="100" value="10">
+            </div>
+            <div>
+              <label for="grammarDurationMinutes">Bearbeitungszeit in Minuten</label>
+              <input id="grammarDurationMinutes" type="number" min="1" max="300" value="20">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="grammarTestDate">Datum</label>
+              <input id="grammarTestDate" type="date">
+            </div>
+            <div>
+              <label for="grammarTestTitle">Titel (optional)</label>
+              <input id="grammarTestTitle" type="text" placeholder="z. B. Grammatiktest Presente und Indefinido">
+            </div>
+          </div>
+
+          <label>Grammatikbereiche auswählen</label>
+          <div class="tiny">Die Verben werden später möglichst gleichmäßig aus den ausgewählten Bereichen gezogen. Über „Verben auswählen“ kannst du einzelne Verben fest in den Test aufnehmen.</div>
+          <div id="grammarTopicsBox" class="grammar-groups"><div class="empty">Grammatikbereiche werden geladen …</div></div>
+
+          <div class="grammar-summary">
+            <div><span class="tiny">Gewählte Bereiche</span><strong id="grammarSummaryTopics">0</strong></div>
+            <div><span class="tiny">Festgelegte Verben</span><strong id="grammarSummaryFixed">0</strong></div>
+            <div><span class="tiny">Automatisch ergänzt</span><strong id="grammarSummaryRandom">10</strong></div>
+            <div><span class="tiny">Maximalpunkte</span><strong id="grammarSummaryPoints">70</strong></div>
+          </div>
+
+          <div id="grammarSummaryHint" class="note">
+            Pro Verb: 1 Punkt für die Übersetzung + 6 Punkte für die Konjugation = 7 Punkte.
+          </div>
+
+          <div class="actions">
+            <button id="prepareGrammarTestBtn" class="primary" type="button">Testzusammenstellung prüfen</button>
+          </div>
+          <div id="grammarCreateMsg" class="msg"></div>
         </div>
-        <div id="createMsg" class="msg"></div>
       </div>
 
       <div id="newTestCard" class="card hidden">
@@ -230,6 +306,13 @@
           </div>
         </div>
       </div>
+      <div id="grammarPlanCard" class="card hidden">
+        <h2>Vorgesehene Testzusammenstellung</h2>
+        <p class="tiny">Noch nicht gespeichert. Hier siehst du zunächst, wie die Auswahl verteilt würde.</p>
+        <div id="grammarPlanSummary"></div>
+        <div id="grammarPlanList"></div>
+      </div>
+
     </section>
 
     <section id="view-tests" class="view">
