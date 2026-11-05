@@ -454,7 +454,7 @@
     return data;
   }
 
-  function makeVocabGroups(rows){
+  function makeVocabGroups(rows,{pdf=false}={}){
     const groups=new Map();
     for(const row of rows){
       const folders=(row.folderGroups||[]).length
@@ -468,7 +468,8 @@
           folder.title||null
         ].filter(Boolean).join(" · ");
         const unitLabel=row.unitTitle&&row.unitTitle!==row.courseKey?row.unitTitle:null;
-        const title=[row.courseKey||null,unitLabel,folderLabel].filter(Boolean).join(" · ");
+        const courseLabel=pdf&&/^Q[12]$/.test(row.courseKey||"")?null:(row.courseKey||null);
+        const title=[courseLabel,unitLabel,folderLabel].filter(Boolean).join(" · ");
         if(!groups.has(title))groups.set(title,[]);
         groups.get(title).push(row);
       }
@@ -571,6 +572,7 @@
       };
       let columnHeaderDrawn=false;
       const drawGroupHeader=(title)=>{
+        doc.setFont("helvetica","bold");doc.setFontSize(10);
         const titleLines=doc.splitTextToSize(title,contentW-10);
         const groupHeight=Math.max(10,titleLines.length*5+5);
         if(y+groupHeight+3+8+10>pageH-margin)newPage();
@@ -585,7 +587,7 @@
         }
       };
       pageTitle(false);
-      for(const [title,entries] of makeVocabGroups(rows)){
+      for(const [title,entries] of makeVocabGroups(rows,{pdf:true})){
         drawGroupHeader(title);
         let stripe=0;
         for(const row of entries){
