@@ -518,15 +518,15 @@
       const courseUnits=courses.get(courseKey)||[];
       const courseFolders=(folders||[]).filter(f=>courseUnits.some(u=>String(u.id)===String(f.unit_id)));
       const course=document.createElement("div");
-      course.className="course-group";
+      course.className="unit-group phase-unit";
       course.dataset.courseKey=courseKey;
 
       if(courseKey==="EF"){
         course.innerHTML=
-          '<div class="course-head"><button type="button" class="course-toggle course-open" aria-expanded="false" aria-label="EF öffnen">EF ▾</button>'+
-          '<span class="unit-selection-count">'+courseUnits.length+' Unidades</span>'+
-          '<label class="course-select-label"><input type="checkbox" class="course-master"><span>Alle EF-Unidades auswählen</span></label></div><div class="course-content hidden"></div>';
-        const holder=course.querySelector(".course-content");
+          '<div class="unit-head"><label class="unit-main-label"><input type="checkbox" class="course-master">'+
+          '<span class="unit-title-wrap"><strong>EF</strong><span class="unit-selection-count">'+courseUnits.length+' Unidades</span></span></label>'+
+          '<button type="button" class="unit-toggle course-toggle" aria-expanded="false" aria-label="EF-Unidades anzeigen">Unidades anzeigen ▾</button></div><div class="unit-children hidden"></div>';
+        const holder=course.querySelector(".unit-children");
         for(const u of courseUnits){
           const childFolders=courseFolders.filter(f=>String(f.unit_id)===String(u.id));
           holder.appendChild(buildUnitGroup(u,childFolders,"EF"));
@@ -545,9 +545,9 @@
         });
         course.querySelector(".course-toggle").addEventListener("click",e=>{
           const hidden=holder.classList.toggle("hidden");
-          e.currentTarget.textContent=hidden?"EF ▾":"EF ▴";
+          e.currentTarget.textContent=hidden?"Unidades anzeigen ▾":"Unidades ausblenden ▴";
           e.currentTarget.setAttribute("aria-expanded",String(!hidden));
-          e.currentTarget.setAttribute("aria-label",hidden?"EF öffnen":"EF schließen");
+          e.currentTarget.setAttribute("aria-label",hidden?"EF-Unidades anzeigen":"EF-Unidades ausblenden");
         });
       }else{
         const u=courseUnits[0];
