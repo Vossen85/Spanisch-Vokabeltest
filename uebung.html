@@ -544,9 +544,7 @@
   $("grammarHomeBtn").addEventListener("click",showPortal);
   $("vocabHomeBtn").addEventListener("click",showPortal);
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
-  $("openGrammarTestsBtn").addEventListener("click",()=>{
-    showMsg($("grammarChoiceMsg"),"Die Grammatiktests werden als nächster Schritt eingerichtet. Die Konjugationstabellen sind bereits verfügbar.","info");
-  });
+  $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
 
   $("chars").addEventListener("click",e=>{
     if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;
