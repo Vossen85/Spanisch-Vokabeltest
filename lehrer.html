@@ -119,6 +119,18 @@
     .grammar-summary>div{background:#f8fafc;border-radius:11px;padding:11px}
     .grammar-summary strong{display:block;font-size:1.15rem}
     .empty{padding:18px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;text-align:center}
+    .course-group{border:1px solid #b8c3d1;border-radius:16px;background:#f8fafc;overflow:hidden;padding:10px;margin:4px 0}
+    .course-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 4px 10px}
+    .course-label{display:flex;align-items:center;gap:11px;margin:0;cursor:pointer;font-size:1.1rem}
+    .course-label input,.quarter-label input{width:19px;height:19px;flex:0 0 auto}
+    .course-content{display:grid;gap:9px}
+    .phase-unit{margin:0}
+    .quarter-block{border:1px solid #dbe2ea;border-radius:12px;background:#fff;padding:9px;margin:7px 0}
+    .quarter-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .quarter-label{display:flex;align-items:center;gap:10px;margin:0;cursor:pointer}
+    .quarter-title{display:block;color:#64748b;font-size:.88rem;font-weight:600;margin-top:2px}
+    .quarter-toggle{padding:7px 9px;background:#e2e8f0;color:#334155;font-size:.82rem;white-space:nowrap}
+    .quarter-children{border-top:1px solid #e2e8f0;margin-top:8px;padding-top:7px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 12px}
     @media(max-width:760px){
       body{padding:12px}.row,.qrgrid,.auth-choice,.test-type-switch{grid-template-columns:1fr}.stats,.grammar-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
       .grammar-topic-head{align-items:flex-start;flex-direction:column}.grammar-topic-toggle{align-self:flex-start}.grammar-topic-children{padding-left:14px}.grammar-verb-grid{grid-template-columns:1fr}
@@ -472,60 +484,156 @@
     master.indeterminate=checked>0 && checked<children.length;
     master.checked=children.length>0 && checked===children.length;
     const counter=group.querySelector(".unit-selection-count");
-    counter.textContent=checked===0
-      ? children.length+" Unterordner"
-      : checked+"/"+children.length+" gewählt";
+    if(counter){
+      counter.textContent=checked===0
+        ? (group.dataset.courseKey==="EF" ? children.length+" Unterordner" : (group.querySelectorAll(".quarter-master").length+" Quartale"))
+        : checked+"/"+children.length+" gewählt";
+    }
   }
 
   async function loadUnits(){
     const [{data:units,error:unitError},{data:folders,error:folderError}]=await Promise.all([
-      supabase.from("units").select("id,unit_key,title,sort_order").order("sort_order"),
-      supabase.from("vocab_folders").select("id,unit_id,title,sort_order").order("unit_id").order("sort_order")
+      supabase.from("units").select("id,unit_key,title,sort_order,course_key").order("sort_order"),
+      supabase.from("vocab_folders").select("id,unit_id,title,sort_order,quarter_title,quarter_order").order("unit_id").order("sort_order")
     ]);
     if(unitError||folderError){
       showMsg($("createMsg"),"Die Vokabelbereiche konnten nicht geladen werden.","err");
       return;
     }
 
-    $("unitsBox").innerHTML="";
+    const root=$("unitsBox");
+    root.innerHTML="";
+    const courses=new Map();
     for(const u of units||[]){
-      const childFolders=(folders||[]).filter(f=>String(f.unit_id)===String(u.id));
+      const key=u.course_key||"EF";
+      if(!courses.has(key))courses.set(key,[]);
+      courses.get(key).push(u);
+    }
+
+    const courseOrder=["EF","Q1","Q2",...courses.keys()].filter((key,index,all)=>courses.has(key)&&all.indexOf(key)===index);
+    for(const courseKey of courseOrder){
+      const courseUnits=courses.get(courseKey)||[];
+      const courseFolders=(folders||[]).filter(f=>courseUnits.some(u=>String(u.id)===String(f.unit_id)));
+      const course=document.createElement("div");
+      course.className="course-group";
+      course.dataset.courseKey=courseKey;
+
+      if(courseKey==="EF"){
+        course.innerHTML=
+          '<div class="course-head"><label class="course-label"><input type="checkbox" class="course-master"><strong>EF</strong><span class="unit-selection-count">'+courseUnits.length+' Unidades</span></label>'+
+          '<button type="button" class="course-toggle">Unidades anzeigen ▾</button></div><div class="course-content hidden"></div>';
+        const holder=course.querySelector(".course-content");
+        for(const u of courseUnits){
+          const childFolders=courseFolders.filter(f=>String(f.unit_id)===String(u.id));
+          holder.appendChild(buildUnitGroup(u,childFolders,"EF"));
+        }
+        const courseMaster=course.querySelector(".course-master");
+        const unitMasters=[...holder.querySelectorAll(".unit-master")];
+        courseMaster.addEventListener("change",()=>{
+          unitMasters.forEach(x=>{x.checked=courseMaster.checked;x.dispatchEvent(new Event("change",{bubbles:true}))});
+          courseMaster.indeterminate=false;
+        });
+        holder.addEventListener("change",()=>{
+          const checked=unitMasters.filter(x=>x.checked&&!x.indeterminate).length;
+          const partial=unitMasters.some(x=>x.checked||x.indeterminate);
+          courseMaster.checked=unitMasters.length>0&&checked===unitMasters.length;
+          courseMaster.indeterminate=partial&&!courseMaster.checked;
+        });
+        course.querySelector(".course-toggle").addEventListener("click",e=>{
+          const hidden=holder.classList.toggle("hidden");
+          e.currentTarget.textContent=hidden?"Unidades anzeigen ▾":"Unidades ausblenden ▴";
+        });
+      }else{
+        const u=courseUnits[0];
+        if(!u)continue;
+        const childFolders=courseFolders.filter(f=>String(f.unit_id)===String(u.id));
+        course.classList.add("unit-group","phase-unit");
+        course.dataset.unitKey=u.unit_key;
+        course.innerHTML=
+          '<div class="unit-head"><label class="unit-main-label"><input type="checkbox" class="unit-master" value="'+esc(u.unit_key)+'">'+
+          '<span class="unit-title-wrap"><strong>'+esc(courseKey)+'</strong><span class="unit-selection-count">'+new Set(childFolders.map(f=>f.quarter_order)).size+' Quartale</span></span></label>'+
+          '<button type="button" class="unit-toggle">Quartale anzeigen ▾</button></div><div class="unit-children hidden"></div>';
+        const childBox=course.querySelector(".unit-children");
+        const quarters=new Map();
+        childFolders.forEach(f=>{
+          const order=Number(f.quarter_order)||0;
+          if(!quarters.has(order))quarters.set(order,[]);
+          quarters.get(order).push(f);
+        });
+        for(const [order,quarterFolders] of [...quarters.entries()].sort((a,b)=>a[0]-b[0])){
+          const title=quarterFolders[0]?.quarter_title||("Quartal "+order);
+          const quarter=document.createElement("section");
+          quarter.className="quarter-block";
+          quarter.innerHTML='<div class="quarter-head"><label class="quarter-label"><input type="checkbox" class="quarter-master"><span><strong>'+esc(order)+'. Quartal</strong><span class="quarter-title">'+esc(title)+'</span></span></label>'+
+            '<button type="button" class="quarter-toggle">Lernordner anzeigen ▾</button></div><div class="quarter-children hidden"></div>';
+          const qchildren=quarter.querySelector(".quarter-children");
+          quarterFolders.sort((a,b)=>a.sort_order-b.sort_order).forEach(f=>{
+            const label=document.createElement("label");
+            label.className="subfolder-row";
+            label.innerHTML='<input type="checkbox" class="folder-check" data-unit="'+esc(u.unit_key)+'" value="'+f.id+'"><span>'+esc(f.title)+'</span>';
+            qchildren.appendChild(label);
+          });
+          const qmaster=quarter.querySelector(".quarter-master");
+          qmaster.addEventListener("change",()=>{
+            qchildren.querySelectorAll(".folder-check").forEach(x=>x.checked=qmaster.checked);
+            updateUnitSelectionState(course);
+          });
+          qchildren.addEventListener("change",()=>updateUnitSelectionState(course));
+          quarter.querySelector(".quarter-toggle").addEventListener("click",e=>{
+            const hidden=qchildren.classList.toggle("hidden");
+            e.currentTarget.textContent=hidden?"Lernordner anzeigen ▾":"Lernordner ausblenden ▴";
+          });
+          childBox.appendChild(quarter);
+        }
+        course.querySelector(".unit-master").addEventListener("change",()=>{
+          course.querySelectorAll(".folder-check").forEach(x=>x.checked=course.querySelector(".unit-master").checked);
+          course.querySelectorAll(".quarter-master").forEach(x=>{x.checked=course.querySelector(".unit-master").checked;x.indeterminate=false});
+          updateUnitSelectionState(course);
+        });
+        course.querySelector(".unit-toggle").addEventListener("click",e=>{
+          const hidden=childBox.classList.toggle("hidden");
+          e.currentTarget.textContent=hidden?"Quartale anzeigen ▾":"Quartale ausblenden ▴";
+        });
+        childBox.addEventListener("change",()=>{
+          for(const block of childBox.querySelectorAll(".quarter-block")){
+            const boxes=[...block.querySelectorAll(".folder-check")],checked=boxes.filter(x=>x.checked).length;
+            const master=block.querySelector(".quarter-master");
+            master.checked=boxes.length>0&&checked===boxes.length;
+            master.indeterminate=checked>0&&checked<boxes.length;
+          }
+          updateUnitSelectionState(course);
+        });
+      }
+      root.appendChild(course);
+    }
+
+    function buildUnitGroup(u,childFolders,courseKey){
       const group=document.createElement("div");
       group.className="unit-group";
       group.dataset.unitKey=u.unit_key;
+      group.dataset.courseKey=courseKey;
       group.innerHTML=
-        '<div class="unit-head">'+
-          '<label class="unit-main-label">'+
-            '<input type="checkbox" class="unit-master" value="'+esc(u.unit_key)+'">'+
-            '<span class="unit-title-wrap"><span>'+esc(u.title||("Unidad "+u.unit_key))+'</span>'+
-            '<span class="unit-selection-count">'+childFolders.length+' Unterordner</span></span>'+
-          '</label>'+
-          '<button type="button" class="unit-toggle">Unterordner anzeigen ▾</button>'+
-        '</div>'+
-        '<div class="unit-children hidden">'+
-          childFolders.map(f=>'<label class="subfolder-row"><input type="checkbox" class="folder-check" data-unit="'+esc(u.unit_key)+'" value="'+f.id+'"> <span>'+esc(f.title)+'</span></label>').join("")+
-        '</div>';
-
+        '<div class="unit-head"><label class="unit-main-label">'+
+        '<input type="checkbox" class="unit-master" value="'+esc(u.unit_key)+'">'+
+        '<span class="unit-title-wrap"><span>'+esc(u.title||("Unidad "+u.unit_key))+'</span><span class="unit-selection-count">'+childFolders.length+' Unterordner</span></span></label>'+
+        '<button type="button" class="unit-toggle">Unterordner anzeigen ▾</button></div>'+
+        '<div class="unit-children hidden">'+childFolders.map(f=>'<label class="subfolder-row"><input type="checkbox" class="folder-check" data-unit="'+esc(u.unit_key)+'" value="'+f.id+'"><span>'+esc(f.title)+'</span></label>').join("")+'</div>';
       const master=group.querySelector(".unit-master");
       const children=[...group.querySelectorAll(".folder-check")];
       const childBox=group.querySelector(".unit-children");
-      const toggle=group.querySelector(".unit-toggle");
-
       master.addEventListener("change",()=>{
         children.forEach(x=>x.checked=master.checked);
         master.indeterminate=false;
         updateUnitSelectionState(group);
       });
       children.forEach(x=>x.addEventListener("change",()=>updateUnitSelectionState(group)));
-      toggle.addEventListener("click",()=>{
+      group.querySelector(".unit-toggle").addEventListener("click",e=>{
         const hidden=childBox.classList.toggle("hidden");
-        toggle.textContent=hidden?"Unterordner anzeigen ▾":"Unterordner ausblenden ▴";
+        e.currentTarget.textContent=hidden?"Unterordner anzeigen ▾":"Unterordner ausblenden ▴";
       });
-
-      $("unitsBox").appendChild(group);
+      return group;
     }
   }
-
 
   function showCreateMode(mode){
     const grammar=mode==="grammar";
