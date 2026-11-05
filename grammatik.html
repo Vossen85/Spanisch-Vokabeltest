@@ -24,18 +24,19 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
 .topic:hover{background:#f1f5f9}.topic input{width:19px;height:19px;margin-top:1px}
 .topic strong{display:block}.topic span{display:block;font-size:.84rem;color:#64748b;margin-top:2px}
 .preview-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.topic-preview{margin-top:24px}
-.topic-title{border-bottom:2px solid #0f766e;padding-bottom:8px;margin-bottom:14px}
-.verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:14px}
-.verb-card{border:1px solid #dbe2ea;border-radius:16px;padding:16px;background:#fff;break-inside:avoid}
-.verb-de{font-size:1.25rem;font-weight:850;margin-bottom:3px}
-.verb-es{color:#475569;font-style:italic;margin-bottom:12px}
-.conj{display:grid;grid-template-columns:minmax(115px,auto) 1fr;gap:5px 12px;font-size:.97rem}
-.conj .person{color:#64748b}.conj .form{font-weight:750}
+.topic-preview{margin-top:28px;max-width:760px}
+.topic-title{border-bottom:1px solid #cbd5e1;padding-bottom:8px;margin-bottom:15px;font-size:1.15rem}
+.verb-grid{display:block}
+.verb-card{border:0;border-radius:0;padding:0 0 18px;background:transparent;break-inside:avoid}
+.verb-de{font-size:1.05rem;font-weight:850;margin-bottom:2px}
+.verb-es{color:#475569;font-size:.92rem;margin-bottom:7px}
+.conj{display:block;font-size:.94rem;padding-left:12px}
+.conj-line{display:grid;grid-template-columns:minmax(145px,auto) 1fr;gap:12px;margin:3px 0}
+.conj .person{color:#64748b}.conj .form{font-weight:700}
 .empty{padding:18px;border-radius:12px;background:#f8fafc;color:#64748b}
 .note{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-top:14px;font-size:.92rem}
 .hidden{display:none!important}
-@media(max-width:650px){body{padding:12px}.card{padding:16px}.topic-grid,.verb-grid{grid-template-columns:1fr}.conj{grid-template-columns:110px 1fr}}
+@media(max-width:650px){body{padding:12px}.card{padding:16px}.topic-grid{grid-template-columns:1fr}.topic-preview{max-width:none}.conj{padding-left:0}.conj-line{grid-template-columns:125px 1fr;gap:8px}}
 @media print{
  body{background:#fff;padding:0}.no-print{display:none!important}.card{box-shadow:none;border:0;padding:0}.verb-card{page-break-inside:avoid}
 }
@@ -476,7 +477,7 @@ function render(){
     const grid=sec.querySelector(".verb-grid");
     for(const v of t.verbs){
       const card=document.createElement("div");card.className="verb-card";
-      const rows=formsFor(v,t.mode).map(([p,f])=>"<div class='person'>"+escapeHtml(p)+"</div><div class='form'>"+escapeHtml(f)+"</div>").join("");
+      const rows=formsFor(v,t.mode).map(([p,f])=>"<div class='conj-line'><div class='person'>"+escapeHtml(p)+":</div><div class='form'>"+escapeHtml(f)+"</div></div>").join("");
       card.innerHTML="<div class='verb-de'>"+escapeHtml(DE[v]||v)+"</div><div class='verb-es'>"+escapeHtml(v)+" · "+escapeHtml(t.title)+"</div><div class='conj'>"+rows+"</div>";
       grid.appendChild(card);
     }
