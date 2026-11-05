@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Vorläufige Korrektur – Grammatiktest</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+*{box-sizing:border-box}body{margin:0;padding:22px}.wrap{max-width:1000px;margin:0 auto}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+h1{margin:0 0 6px;font-size:2rem}h2{margin:0}.sub,.tiny{color:#64748b}.tiny{font-size:.9rem}
+.identity{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0}.resultbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.resultbox div{background:#f8fafc;border-radius:10px;padding:12px}.resultbox strong{display:block;font-size:1.2rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}button{border:0;border-radius:10px;padding:12px 16px;font:inherit;font-weight:750;cursor:pointer}
+.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}
+.note{background:#fff7ed;color:#9a3412;padding:12px 14px;border-radius:10px;margin:14px 0}
+.error{background:#fef2f2;color:#991b1b;padding:14px;border-radius:10px}
+.question{border:1px solid #dbe2ea;border-radius:14px;padding:15px;margin-top:15px;break-inside:avoid}
+.qhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}
+.tense{font-size:.86rem;color:#64748b}.verb{font-size:1.18rem;font-weight:850}.qscore{font-weight:850;white-space:nowrap}
+table{width:100%;border-collapse:collapse;margin-top:8px}th,td{text-align:left;padding:8px 7px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+th{font-size:.84rem;color:#475569}.pts{font-weight:800;white-space:nowrap}.status{font-weight:800;white-space:nowrap}
+.good{color:#166534}.half{color:#9a6700}.bad{color:#b91c1c}.muted-answer{color:#94a3b8;font-style:italic}
+@media(max-width:700px){body{padding:12px}.card{padding:16px}.resultbox{grid-template-columns:1fr 1fr}table{font-size:.84rem}th,td{padding:7px 5px}.hide-mobile{display:none}}
+@media print{
+ @page{size:A4;margin:12mm}
+ body{background:#fff;padding:0}.wrap{max-width:none}.card{box-shadow:none;border:0;padding:0;margin:0}.no-print{display:none!important}
+ .question{page-break-inside:avoid;border-color:#cbd5e1}table{font-size:8.7pt}h1{font-size:18pt}.note{border:1px solid #fed7aa;background:#fff;color:#7c2d12}
+}
+</style>
+</head>
+<body><div class="wrap">
+<section id="loading" class="card"><h1>Korrektur wird geladen …</h1></section>
+<section id="errorCard" class="card" style="display:none"><div id="errorText" class="error"></div></section>
+<section id="content" class="card" style="display:none">
+<h1>Vorläufige Korrektur</h1><div class="sub">Spanisch – Grammatiktest</div>
+<div class="identity"><span><strong>Name:</strong> <span id="studentName"></span></span><span><strong>Datum:</strong> <span id="testDate"></span></span><span><strong>Test:</strong> <span id="testName"></span></span></div>
+<div class="resultbox"><div><span class="tiny">Punkte</span><strong id="points"></strong></div><div><span class="tiny">Prozent</span><strong id="percent"></strong></div><div><span class="tiny">Note</span><strong id="grade"></strong></div><div><span class="tiny">Oberstufenpunkte</span><strong id="op"></strong></div></div>
+<div class="note"><strong>Vorläufige Rückmeldung:</strong> Diese automatische Bewertung kann von der Lehrkraft nachträglich korrigiert werden. Dadurch können sich Punkte, Note und Oberstufenpunkte noch ändern.</div>
+<div class="actions no-print"><button id="printBtn" class="primary">Drucken / als PDF sichern</button><button id="backBtn" class="secondary">Zurück</button></div>
+<div id="questions"></div>
+</section>
+</div>
+<script>
+const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
+const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+const $=id=>document.getElementById(id);
+function fmtDate(s){if(!s)return"";const [y,m,d]=s.slice(0,10).split("-");return d+"."+m+"."+y}
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
+function tenseLabel(mode,group){
+ const m={present:"Presente",gerund:"Gerundio",perfect:"Pretérito perfecto",indef:"Pretérito indefinido",imperfect:"Pretérito imperfecto",pluperfect:"Pluscuamperfecto",subjPresent:"Subjuntivo presente",subjImperfect:"Subjuntivo imperfecto",subjPerfect:"Subjuntivo perfecto",subjPluperfect:"Subjuntivo pluscuamperfecto",impTu:"Imperativo",impVos:"Imperativo",impUsted:"Imperativo",impNeg:"Imperativo",future:"Futuro simple",futurePerfect:"Futuro perfecto",conditional:"Condicional simple",conditionalPerfect:"Condicional compuesto"};
+ return m[mode]||group||"";
+}
+function pointText(p){return Number(p)===0.5?"0,5":String(Number(p)||0)}
+function status(p){p=Number(p)||0;if(p===1)return {txt:"✓ richtig",cls:"good"};if(p===0.5)return {txt:"½ teilweise",cls:"half"};return {txt:"✗ falsch",cls:"bad"}}
+function answerText(v){return String(v??"").trim()?esc(v):'<span class="muted-answer">keine Antwort</span>'}
+async function load(){
+ const hash=new URLSearchParams(location.hash.replace(/^#/,"")),token=hash.get("token");
+ if(!token){showError("Der Korrekturlink ist unvollständig.");return}
+ try{
+  const res=await fetch(SUPABASE_URL+"/functions/v1/grammar-student-test",{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY},body:JSON.stringify({action:"session",accessToken:token})});
+  const data=await res.json();if(!res.ok||data.error)throw new Error(data.error||"Korrektur konnte nicht geladen werden.");if(!data.submitted||!data.result)throw new Error("Für diesen Test liegt noch keine abgegebene Korrektur vor.");
+  const r=data.result;$("studentName").textContent="Schüler "+r.studentCode;$("testDate").textContent=fmtDate(r.test.testDate);$("testName").textContent=r.test.title;
+  $("points").textContent=r.summary.rawPoints+" / "+r.summary.maxPoints;$("percent").textContent=Number(r.summary.percent).toFixed(1)+" %";$("grade").textContent=r.summary.gradeText;$("op").textContent=r.summary.upperSchoolPoints;
+  const root=$("questions");root.innerHTML="";
+  for(const x of (r.corrections||[])){
+   const q=document.createElement("section");q.className="question";
+   const rows=[];
+   const tp=Number(x.translationPoint)||0,ts=status(tp);
+   rows.push("<tr><td><strong>Deutsche Bedeutung</strong></td><td>"+answerText(x.translation)+"</td><td>"+esc(x.expectedTranslation||"—")+"</td><td class='pts'>"+pointText(tp)+"</td><td class='status "+ts.cls+"'>"+ts.txt+"</td></tr>");
+   (x.labels||[]).forEach((lab,i)=>{const p=Number(x.formPoints?.[i])||0,s=status(p);rows.push("<tr><td><strong>"+esc(lab)+"</strong></td><td>"+answerText(x.forms?.[i])+"</td><td>"+esc(x.expectedForms?.[i]||"—")+"</td><td class='pts'>"+pointText(p)+"</td><td class='status "+s.cls+"'>"+s.txt+"</td></tr>")});
+   q.innerHTML="<div class='qhead'><div><div class='tense'>"+esc(tenseLabel(x.mode,x.topicGroup))+"</div><div class='verb'>"+esc(x.position+". "+x.sourceText)+"</div></div><div class='qscore'>"+pointText(x.points)+" / "+x.maxPoints+" P.</div></div>"+
+    "<div style='overflow-x:auto'><table><thead><tr><th>Teil</th><th>Deine Antwort</th><th>Richtige Lösung</th><th>Punkte</th><th class='hide-mobile'>Bewertung</th></tr></thead><tbody>"+rows.join("")+"</tbody></table></div>";
+   root.appendChild(q);
+  }
+  $("loading").style.display="none";$("content").style.display="block";
+ }catch(e){showError(e.message)}
+}
+function showError(msg){$("loading").style.display="none";$("errorText").textContent=msg;$("errorCard").style.display="block"}
+$("printBtn").addEventListener("click",()=>window.print());$("backBtn").addEventListener("click",()=>history.back());load();
+</script></body></html>
