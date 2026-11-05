@@ -119,6 +119,9 @@
     .grammar-summary>div{background:#f8fafc;border-radius:11px;padding:11px}
     .grammar-summary strong{display:block;font-size:1.15rem}
     .empty{padding:18px;border:1px dashed #cbd5e1;border-radius:12px;color:#64748b;text-align:center}
+    .course-open{background:#e2e8f0;color:#172033;font-size:1.05rem;padding:9px 14px;min-width:72px}
+    .course-select-label{display:flex;align-items:center;gap:8px;margin:0;cursor:pointer;font-weight:700}
+    .course-select-label input{width:19px;height:19px;flex:0 0 auto}
     .course-group{border:1px solid #b8c3d1;border-radius:16px;background:#f8fafc;overflow:hidden;padding:10px;margin:4px 0}
     .course-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 4px 10px}
     .course-label{display:flex;align-items:center;gap:11px;margin:0;cursor:pointer;font-size:1.1rem}
@@ -494,7 +497,7 @@
   async function loadUnits(){
     const [{data:units,error:unitError},{data:folders,error:folderError}]=await Promise.all([
       supabase.from("units").select("id,unit_key,title,sort_order,course_key").order("sort_order"),
-      supabase.from("vocab_folders").select("id,unit_id,title,sort_order,quarter_title,quarter_order").order("unit_id").order("sort_order")
+      supabase.from("vocab_folders").select("id,unit_id,title,sort_order,quarter_title,quarter_order,active").eq("active",true).order("unit_id").order("sort_order")
     ]);
     if(unitError||folderError){
       showMsg($("createMsg"),"Die Vokabelbereiche konnten nicht geladen werden.","err");
@@ -520,8 +523,9 @@
 
       if(courseKey==="EF"){
         course.innerHTML=
-          '<div class="course-head"><label class="course-label"><input type="checkbox" class="course-master"><strong>EF</strong><span class="unit-selection-count">'+courseUnits.length+' Unidades</span></label>'+
-          '<button type="button" class="course-toggle">Unidades anzeigen ▾</button></div><div class="course-content hidden"></div>';
+          '<div class="course-head"><button type="button" class="course-toggle course-open" aria-expanded="false" aria-label="EF öffnen">EF ▾</button>'+
+          '<span class="unit-selection-count">'+courseUnits.length+' Unidades</span>'+
+          '<label class="course-select-label"><input type="checkbox" class="course-master"><span>Alle EF-Unidades auswählen</span></label></div><div class="course-content hidden"></div>';
         const holder=course.querySelector(".course-content");
         for(const u of courseUnits){
           const childFolders=courseFolders.filter(f=>String(f.unit_id)===String(u.id));
@@ -541,7 +545,9 @@
         });
         course.querySelector(".course-toggle").addEventListener("click",e=>{
           const hidden=holder.classList.toggle("hidden");
-          e.currentTarget.textContent=hidden?"Unidades anzeigen ▾":"Unidades ausblenden ▴";
+          e.currentTarget.textContent=hidden?"EF ▾":"EF ▴";
+          e.currentTarget.setAttribute("aria-expanded",String(!hidden));
+          e.currentTarget.setAttribute("aria-label",hidden?"EF öffnen":"EF schließen");
         });
       }else{
         const u=courseUnits[0];
@@ -564,7 +570,7 @@
           const title=quarterFolders[0]?.quarter_title||("Quartal "+order);
           const quarter=document.createElement("section");
           quarter.className="quarter-block";
-          quarter.innerHTML='<div class="quarter-head"><label class="quarter-label"><input type="checkbox" class="quarter-master"><span><strong>'+esc(order)+'. Quartal</strong><span class="quarter-title">'+esc(title)+'</span></span></label>'+
+          quarter.innerHTML='<div class="quarter-head"><label class="quarter-label"><input type="checkbox" class="quarter-master"><span><strong>'+esc(courseKey)+'.'+esc(order)+'</strong><span class="quarter-title">'+esc(title)+'</span></span></label>'+
             '<button type="button" class="quarter-toggle">Lernordner anzeigen ▾</button></div><div class="quarter-children hidden"></div>';
           const qchildren=quarter.querySelector(".quarter-children");
           quarterFolders.sort((a,b)=>a.sort_order-b.sort_order).forEach(f=>{
