@@ -260,56 +260,147 @@
     });
   }
 
+  function htmlSafe(value){
+    return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+  }
+
   function renderCatalog(units){
     catalog=units||[];
-    $("unitsBox").innerHTML="";
+    const root=$("unitsBox");
+    root.innerHTML="";
+    const courses=new Map();
     for(const unit of catalog){
+      const key=unit.courseKey||"EF";
+      if(!courses.has(key))courses.set(key,[]);
+      courses.get(key).push(unit);
+    }
+    const courseOrder=["EF","Q1","Q2",...courses.keys()].filter((key,index,all)=>courses.has(key)&&all.indexOf(key)===index);
+
+    for(const courseKey of courseOrder){
+      const courseUnits=courses.get(courseKey)||[];
+      const course=document.createElement("section");
+      course.className="course-group";
+      course.dataset.courseKey=courseKey;
+
+      if(courseKey==="EF"){
+        const total=courseUnits.reduce((n,u)=>n+(u.count||0),0);
+        course.innerHTML='<div class="course-head"><label class="course-label"><input class="course-master" type="checkbox"><strong>EF</strong><span class="count">'+total+' Vokabeln · '+courseUnits.length+' Unidades</span></label><button class="course-toggle" type="button">Unidades anzeigen ▾</button></div><div class="course-content hidden"></div>';
+        const holder=course.querySelector(".course-content");
+        for(const unit of courseUnits){
+          holder.appendChild(buildUnitGroup(unit));
+        }
+        const courseMaster=course.querySelector(".course-master");
+        const unitMasters=[...holder.querySelectorAll(".unit-master")];
+        courseMaster.addEventListener("change",()=>{
+          unitMasters.forEach(master=>{master.checked=courseMaster.checked;master.indeterminate=false;master.dispatchEvent(new Event("change",{bubbles:true}))});
+          courseMaster.indeterminate=false;
+        });
+        holder.addEventListener("change",()=>{
+          const checked=unitMasters.filter(master=>master.checked&&!master.indeterminate).length;
+          const partial=unitMasters.some(master=>master.checked||master.indeterminate);
+          courseMaster.checked=unitMasters.length>0&&checked===unitMasters.length;
+          courseMaster.indeterminate=partial&&!courseMaster.checked;
+        });
+        course.querySelector(".course-toggle").addEventListener("click",e=>{
+          const hidden=holder.classList.toggle("hidden");
+          e.currentTarget.textContent=hidden?"Unidades anzeigen ▾":"Unidades ausblenden ▴";
+        });
+      }else{
+        const unit=courseUnits[0];
+        if(!unit)continue;
+        const quarterCount=new Set((unit.folders||[]).map(f=>f.quarterOrder)).size;
+        course.classList.add("unit-group","phase-course");
+        course.dataset.unitKey=unit.unitKey;
+        course.innerHTML='<div class="unit-head"><label class="unit-label"><input class="unit-master" type="checkbox" value="'+htmlSafe(unit.unitKey)+'"><span class="unit-title-wrap"><strong>'+htmlSafe(courseKey)+'</strong><span class="count">'+(unit.count||0)+' Vokabeln · '+quarterCount+' Quartale</span></span></label><button class="toggle" type="button">Quartale anzeigen ▾</button></div><div class="children hidden"></div>';
+        const master=course.querySelector(".unit-master");
+        const children=course.querySelector(".children");
+        const quarters=new Map();
+        (unit.folders||[]).forEach(folder=>{
+          const order=Number(folder.quarterOrder)||0;
+          if(!quarters.has(order))quarters.set(order,[]);
+          quarters.get(order).push(folder);
+        });
+        for(const [order,folders] of [...quarters.entries()].sort((a,b)=>a[0]-b[0])){
+          const quarter=document.createElement("section");
+          quarter.className="quarter-block";
+          const total=folders.reduce((n,f)=>n+(f.count||0),0);
+          quarter.innerHTML='<div class="quarter-head"><label class="quarter-label"><input class="quarter-master" type="checkbox"><span><strong>'+order+'. Quartal</strong><span class="quarter-title">'+htmlSafe(folders[0]?.quarterTitle||"")+' · '+total+' Vokabeln</span></span></label><button class="quarter-toggle" type="button">Lernordner anzeigen ▾</button></div><div class="quarter-children hidden"></div>';
+          const quarterChildren=quarter.querySelector(".quarter-children");
+          folders.sort((a,b)=>a.sortOrder-b.sortOrder).forEach(folder=>{
+            const label=document.createElement("label");
+            label.className="folder-row";
+            label.innerHTML='<input class="folder-check" type="checkbox" value="'+Number(folder.id)+'"><span>'+htmlSafe(folder.title)+' <span class="count">('+Number(folder.count||0)+')</span></span>';
+            quarterChildren.appendChild(label);
+          });
+          const qmaster=quarter.querySelector(".quarter-master");
+          qmaster.addEventListener("change",()=>{
+            quarterChildren.querySelectorAll(".folder-check").forEach(box=>box.checked=qmaster.checked);
+            updatePhaseMaster();
+          });
+          quarterChildren.addEventListener("change",updatePhaseMaster);
+          quarter.querySelector(".quarter-toggle").addEventListener("click",e=>{
+            const hidden=quarterChildren.classList.toggle("hidden");
+            e.currentTarget.textContent=hidden?"Lernordner anzeigen ▾":"Lernordner ausblenden ▴";
+          });
+          children.appendChild(quarter);
+        }
+
+        const updatePhaseMaster=()=>{
+          const boxes=[...children.querySelectorAll(".folder-check")];
+          const checked=boxes.filter(box=>box.checked).length;
+          master.checked=boxes.length>0&&checked===boxes.length;
+          master.indeterminate=checked>0&&checked<boxes.length;
+          for(const block of children.querySelectorAll(".quarter-block")){
+            const qboxes=[...block.querySelectorAll(".folder-check")],n=qboxes.filter(box=>box.checked).length;
+            const qm=block.querySelector(".quarter-master");
+            qm.checked=qboxes.length>0&&n===qboxes.length;
+            qm.indeterminate=n>0&&n<qboxes.length;
+          }
+        };
+        master.addEventListener("change",()=>{
+          children.querySelectorAll(".folder-check").forEach(box=>box.checked=master.checked);
+          children.querySelectorAll(".quarter-master").forEach(box=>{box.checked=master.checked;box.indeterminate=false});
+          master.indeterminate=false;
+        });
+        course.querySelector(".toggle").addEventListener("click",e=>{
+          const hidden=children.classList.toggle("hidden");
+          e.currentTarget.textContent=hidden?"Quartale anzeigen ▾":"Quartale ausblenden ▴";
+        });
+      }
+      root.appendChild(course);
+    }
+
+    function buildUnitGroup(unit){
       const group=document.createElement("div");
       group.className="unit-group";
       group.dataset.unitKey=unit.unitKey;
-      group.innerHTML=
-        '<div class="unit-head">'+
-          '<label class="unit-label">'+
-            '<input class="unit-master" type="checkbox" value="'+unit.unitKey+'">'+
-            '<span class="unit-title-wrap"><span>'+unit.title+'</span><span class="count">'+unit.count+' Vokabeln</span></span>'+
-          '</label>'+
-          '<button class="toggle" type="button">Unterordner anzeigen ▾</button>'+
-        '</div>'+
-        '<div class="children hidden"></div>';
-
+      group.innerHTML='<div class="unit-head"><label class="unit-label"><input class="unit-master" type="checkbox" value="'+htmlSafe(unit.unitKey)+'"><span class="unit-title-wrap"><span>'+htmlSafe(unit.title)+' </span><span class="count">'+Number(unit.count||0)+' Vokabeln</span></span></label><button class="toggle" type="button">Unterordner anzeigen ▾</button></div><div class="children hidden"></div>';
       const master=group.querySelector(".unit-master");
       const children=group.querySelector(".children");
-      const toggle=group.querySelector(".toggle");
-
       for(const folder of unit.folders||[]){
         const label=document.createElement("label");
         label.className="folder-row";
-        label.innerHTML='<input class="folder-check" type="checkbox" value="'+folder.id+'"><span>'+folder.title+' <span class="count">('+folder.count+')</span></span>';
+        label.innerHTML='<input class="folder-check" type="checkbox" value="'+Number(folder.id)+'"><span>'+htmlSafe(folder.title)+' <span class="count">('+Number(folder.count||0)+')</span></span>';
         children.appendChild(label);
       }
-
       const updateMaster=()=>{
         const boxes=[...children.querySelectorAll(".folder-check")];
-        const checked=boxes.filter(x=>x.checked).length;
-        master.checked=boxes.length>0 && checked===boxes.length;
-        master.indeterminate=checked>0 && checked<boxes.length;
+        const n=boxes.filter(box=>box.checked).length;
+        master.checked=boxes.length>0&&n===boxes.length;
+        master.indeterminate=n>0&&n<boxes.length;
       };
-
       master.addEventListener("change",()=>{
-        children.querySelectorAll(".folder-check").forEach(x=>x.checked=master.checked);
+        children.querySelectorAll(".folder-check").forEach(box=>box.checked=master.checked);
         master.indeterminate=false;
       });
-      children.addEventListener("change",e=>{
-        if(e.target.classList.contains("folder-check")) updateMaster();
+      children.addEventListener("change",updateMaster);
+      group.querySelector(".toggle").addEventListener("click",e=>{
+        const hidden=children.classList.toggle("hidden");
+        e.currentTarget.textContent=hidden?"Unterordner anzeigen ▾":"Unterordner ausblenden ▴";
       });
-      toggle.addEventListener("click",()=>{
-        children.classList.toggle("hidden");
-        toggle.textContent=children.classList.contains("hidden")?"Unterordner anzeigen ▾":"Unterordner ausblenden ▴";
-      });
-      $("unitsBox").appendChild(group);
+      return group;
     }
   }
-
 
   function setVocabMode(mode){
     vocabMode=mode;
@@ -521,13 +612,28 @@
       const master=group.querySelector(".unit-master");
       const boxes=[...group.querySelectorAll(".folder-check")];
       if(wantedUnits.has(String(master.value))){
-        master.checked=true; master.indeterminate=false; boxes.forEach(x=>x.checked=true);
+        master.checked=true;master.indeterminate=false;boxes.forEach(x=>x.checked=true);
       }else{
         boxes.forEach(x=>x.checked=wantedFolders.has(Number(x.value)));
         const checked=boxes.filter(x=>x.checked).length;
         master.checked=boxes.length>0&&checked===boxes.length;
         master.indeterminate=checked>0&&checked<boxes.length;
       }
+    });
+    document.querySelectorAll(".quarter-block").forEach(block=>{
+      const boxes=[...block.querySelectorAll(".folder-check")];
+      const checked=boxes.filter(x=>x.checked).length;
+      const master=block.querySelector(".quarter-master");
+      master.checked=boxes.length>0&&checked===boxes.length;
+      master.indeterminate=checked>0&&checked<boxes.length;
+    });
+    document.querySelectorAll('.course-group[data-course-key="EF"]').forEach(course=>{
+      const masters=[...course.querySelectorAll(".unit-master")];
+      const checked=masters.filter(x=>x.checked&&!x.indeterminate).length;
+      const partial=masters.some(x=>x.checked||x.indeterminate);
+      const master=course.querySelector(".course-master");
+      master.checked=masters.length>0&&checked===masters.length;
+      master.indeterminate=partial&&!master.checked;
     });
   }
 
@@ -814,4 +920,16 @@
   })();
 </script>
 </body>
-</html>
+</html    .course-group{border:1px solid #b8c3d1;border-radius:16px;background:#f8fafc;overflow:hidden;padding:10px;margin:4px 0}
+    .course-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 4px 10px}
+    .course-label{display:flex;align-items:center;gap:11px;margin:0;cursor:pointer;font-size:1.1rem}
+    .course-label input,.quarter-label input{width:19px;height:19px;flex:0 0 auto}
+    .course-content{display:grid;gap:9px}
+    .phase-course{margin:0}
+    .quarter-block{border:1px solid #dbe2ea;border-radius:12px;background:#fff;padding:9px;margin:7px 0}
+    .quarter-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .quarter-label{display:flex;align-items:center;gap:10px;margin:0;cursor:pointer}
+    .quarter-title{display:block;color:#64748b;font-size:.88rem;font-weight:600;margin-top:2px}
+    .quarter-toggle{padding:7px 9px;background:#e2e8f0;color:#334155;font-size:.82rem;white-space:nowrap}
+    .quarter-children{border-top:1px solid #e2e8f0;margin-top:8px;padding-top:7px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 12px}
+>
