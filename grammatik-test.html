@@ -30,7 +30,7 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:75
 <section id="testArea" class="hidden">
 <div class="topbar"><div class="topbar-inner"><div><strong id="testTitle"></strong><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
 <div id="chars" class="chars"><button>á</button><button>é</button><button>í</button><button>ó</button><button>ú</button><button>ü</button><button>ñ</button><button>¿</button><button>¡</button></div></div>
-<section class="card"><h2>Aufgaben</h2><p class="tiny">Übersetze das deutsche Verb ins Spanische und trage anschließend die geforderten Formen ein.</p><div id="questions"></div>
+<section class="card"><h2>Aufgaben</h2><p class="tiny">Das spanische Verb ist vorgegeben. Trage zuerst die deutsche Bedeutung und anschließend die geforderten Formen ein.</p><div id="questions"></div>
 <div class="actions"><button id="submitBtn" class="primary">Test endgültig abgeben</button></div><div id="testMsg" class="msg"></div></section>
 </section>
 <section id="doneCard" class="card hidden"><h1>Test abgegeben</h1><p class="sub">Deine Antworten wurden gespeichert und automatisch ausgewertet.</p>
@@ -55,8 +55,8 @@ function render(data){
  const saved=new Map((data.savedAnswers||[]).map(a=>[String(a.question_id),parseSaved(a.response_text)]));
  $("questions").innerHTML="";
  for(const q of questions){const m=q.question_meta||{},p=saved.get(String(q.id))||{translation:"",forms:[]};const div=document.createElement("div");div.className="question";div.dataset.qid=q.id;
- div.innerHTML='<div class="qhead"><div><div class="prompt">'+q.position+'. '+esc(q.source_snapshot)+'</div><div class="topic">'+esc((m.topicGroup||"")+(m.topicTitle?" – "+m.topicTitle:""))+'</div></div></div>'+
- '<div class="translation"><div class="field"><strong>Spanisches Verb</strong><input class="translation-input" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.translation||"")+'"></div></div>'+
+ div.innerHTML='<div class="qhead"><div><div class="prompt">'+q.position+'. '+esc(q.source_snapshot)+'</div></div></div>'+
+ '<div class="translation"><div class="field"><strong>Deutsche Bedeutung</strong><input class="translation-input" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.translation||"")+'"></div></div>'+
  (m.labels||[]).map((lab,i)=>'<div class="field"><strong>'+esc(lab)+'</strong><input class="form-input" data-i="'+i+'" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.forms?.[i]||"")+'"></div>').join("");
  $("questions").appendChild(div)}
  document.querySelectorAll(".question input").forEach(inp=>{inp.addEventListener("focus",()=>lastInput=inp);inp.addEventListener("input",()=>{updateAnswered();scheduleSave()})});updateAnswered();startTimer();saveAll(false)
