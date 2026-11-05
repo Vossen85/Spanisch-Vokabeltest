@@ -744,7 +744,7 @@
     hideMsg($("teachersMsg"));
     $("teachersList").innerHTML='<div class="empty">Lehreraccounts werden geladen …</div>';
 
-    const {data,error}=await supabase.functions.invoke("teacher-admin",{method:"GET"});
+    const {data,error}=await supabase.functions.invoke("teacher-admin-v2",{body:{action:"list"}});
     if(error||data?.error){
       $("teachersList").innerHTML="";
       let message=data?.error||"Die Lehreraccounts konnten nicht geladen werden.";
@@ -753,7 +753,7 @@
       return;
     }
 
-    const teachers=data?.teachers||[];
+    const teachers=(data?.teachers||[]).filter(t=>!t.rejectedAt);
     const pending=teachers.filter(t=>!t.approved&&!t.isSelf);
     const active=teachers.filter(t=>t.approved&&!t.isSelf);
 
@@ -770,25 +770,30 @@
         '<div class="actions">'+
           (t.approved
             ? '<button type="button" class="badbtn teacher-action" data-action="revoke">Zugang sperren</button>'
-            : '<button type="button" class="goodbtn teacher-action" data-action="approve">Freigeben</button>')+
+            : '<button type="button" class="goodbtn teacher-action" data-action="approve">Freigeben</button>'+
+              '<button type="button" class="badbtn teacher-action" data-action="reject">Ablehnen</button>')+
         '</div>';
 
-      box.querySelector(".teacher-action").addEventListener("click",async e=>{
+      box.querySelectorAll(".teacher-action").forEach(btn=>btn.addEventListener("click",async e=>{
         const action=e.currentTarget.dataset.action;
-        e.currentTarget.disabled=true;
-        const {data,error}=await supabase.functions.invoke("teacher-admin",{body:{action,userId:t.userId}});
+        box.querySelectorAll(".teacher-action").forEach(b=>b.disabled=true);
+        const {data,error}=await supabase.functions.invoke("teacher-admin-v2",{body:{action,userId:t.userId}});
         if(error||data?.error){
-          e.currentTarget.disabled=false;
+          box.querySelectorAll(".teacher-action").forEach(b=>b.disabled=false);
           let message=data?.error||"Die Änderung konnte nicht gespeichert werden.";
           try{const b=await error?.context?.json();if(b?.error)message=b.error}catch{}
           showMsg($("teachersMsg"),message,"err");
           return;
         }
-        showMsg($("teachersMsg"),action==="approve"
-          ?"Der Lehreraccount wurde freigeschaltet. Die E-Mail-Adresse wurde dabei ebenfalls bestätigt."
-          :"Der Lehreraccount wurde gesperrt.","ok");
+        if(action==="approve"){
+          showMsg($("teachersMsg"),"Der Lehreraccount wurde freigeschaltet. Die E-Mail-Adresse wurde dabei ebenfalls bestätigt.","ok");
+        }else if(action==="reject"){
+          showMsg($("teachersMsg"),"Die Registrierung wurde abgelehnt und aus der offenen Liste entfernt.","ok");
+        }else{
+          showMsg($("teachersMsg"),"Der Lehreraccount wurde gesperrt.","ok");
+        }
         await loadTeachers();
-      });
+      }));
       return box;
     }
 
