@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Spanisch – Grammatiktraining</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+*{box-sizing:border-box}body{margin:0;padding:20px}.wrap{max-width:1000px;margin:0 auto}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+h1{margin:0 0 5px;font-size:2rem}h2{margin:0 0 8px}h3{margin:18px 0 8px}.sub,.tiny,.muted{color:#64748b}.tiny{font-size:.9rem}.hidden{display:none!important}
+button,input{font:inherit}button{border:0;border-radius:10px;padding:12px 16px;font-weight:750;cursor:pointer}button:disabled{opacity:.6;cursor:not-allowed}
+.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}label.field{display:block;font-weight:750;margin:14px 0 6px}
+input[type=number]{width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff}
+.note{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-top:14px}.msg{padding:11px 13px;border-radius:10px;margin-top:12px;display:none}.msg.show{display:block}.err{background:#fef2f2;color:#991b1b}.ok{background:#ecfdf5;color:#166534}
+.backline{margin-bottom:14px}.groups{display:grid;gap:14px;margin-top:14px}.group{border:1px solid #cbd5e1;border-radius:14px;background:#fafafa;padding:12px}
+.group-title{font-size:1.04rem;font-weight:850;margin-bottom:8px}.topics{display:grid;gap:8px}.topic{border:1px solid #dbe2ea;border-radius:12px;background:#fff;overflow:hidden}
+.topic-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px}.topic-main{display:flex;gap:10px;align-items:flex-start;flex:1;cursor:pointer}.topic-main input{width:19px;height:19px;margin-top:2px}
+.topic-title{font-weight:800}.topic-meta{display:block;font-size:.82rem;color:#64748b;margin-top:2px}.topic-toggle{padding:8px 10px;background:#eef2f7;color:#172033}
+.topic-children{border-top:1px solid #e2e8f0;padding:10px 12px}.verb-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px}.verb-tools button{padding:7px 10px}
+.verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:7px}.verb-row{display:flex;gap:8px;align-items:flex-start;padding:8px;border-radius:9px;background:#f8fafc}.verb-row input{margin-top:3px}.verb-row small{display:block;color:#64748b}
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:16px}.summary>div{background:#f8fafc;border-radius:10px;padding:10px}.summary strong{display:block;font-size:1.15rem}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.95);padding:8px 0}.topbar-inner{background:#fff;border:1px solid #dbe2ea;border-radius:14px;padding:11px 14px;display:flex;justify-content:space-between;gap:14px;align-items:center}.timer{font-size:1.25rem;font-weight:850;font-variant-numeric:tabular-nums}.danger{color:#b91c1c}
+.chars{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}.chars button{padding:7px 10px;background:#eef2f7;color:#172033}
+.question{border:1px solid #dbe2ea;border-radius:14px;padding:16px;margin:13px 0;background:#fff}.qhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.prompt{font-size:1.15rem;font-weight:850}.tense{font-size:.86rem;color:#64748b}
+.input-row{display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-top:9px}.input-row strong{font-size:.92rem}.input-row input{width:100%;padding:10px 11px;border:1px solid #cbd5e1;border-radius:9px}.translation{margin:12px 0 8px;padding-bottom:10px;border-bottom:1px solid #e2e8f0}
+.resultbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}.resultbox div{background:#f8fafc;border-radius:10px;padding:12px}.resultbox strong{display:block;font-size:1.2rem}
+.mistake{border:1px solid #fecaca;background:#fff;border-radius:12px;padding:12px;margin-top:10px}.mistake.almost{border-color:#fde68a}.mistake-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.mistake-title{font-weight:850}.answer-line{font-size:.92rem;margin-top:5px}.wrong{color:#b91c1c;font-weight:750}.half{color:#9a6700;font-weight:750}.right{color:#166534;font-weight:750}
+a.btn{text-decoration:none;display:inline-block;border-radius:10px;padding:12px 16px;font-weight:750}
+@media(max-width:650px){body{padding:12px}.card{padding:16px}.row{grid-template-columns:1fr}.summary{grid-template-columns:1fr}.input-row{grid-template-columns:1fr;gap:5px}.topbar-inner{align-items:flex-start;flex-direction:column}.resultbox{grid-template-columns:1fr 1fr}.topic-head{align-items:flex-start;flex-direction:column}.topic-toggle{align-self:flex-start}}
+</style>
+</head>
+<body><div class="wrap">
+<section id="setupCard" class="card">
+<div class="backline"><button id="backBtn" class="secondary" type="button">← Zurück zum Schülerbereich</button></div>
+<h1>Spanisch – Grammatiktraining</h1>
+<p class="sub">Stelle dir selbst eine Grammatik-Testsimulation zusammen und überprüfe deine Konjugationen.</p>
+
+<h2 style="margin-top:24px">1. Grammatikbereiche auswählen</h2>
+<p class="tiny">Wähle mindestens einen Bereich. Über „Verben auswählen“ kannst du bestimmte Verben fest in deinen Test aufnehmen.</p>
+<div id="groups" class="groups"><div class="muted">Grammatikbereiche werden geladen …</div></div>
+
+<div class="summary">
+<div><span class="tiny">Gewählte Bereiche</span><strong id="sumTopics">0</strong></div>
+<div><span class="tiny">Festgelegte Verben</span><strong id="sumFixed">0</strong></div>
+<div><span class="tiny">Automatisch ergänzt</span><strong id="sumRandom">10</strong></div>
+</div>
+
+<h2 style="margin-top:26px">2. Test festlegen</h2>
+<div class="row">
+<div><label class="field" for="questionCount">Anzahl der Verb-Aufgaben</label><input id="questionCount" type="number" min="1" max="100" value="10"></div>
+<div><label class="field" for="durationMinutes">Bearbeitungszeit in Minuten</label><input id="durationMinutes" type="number" min="1" max="300" value="20"></div>
+</div>
+<div id="setupHint" class="note">Pro Verb wird zuerst die deutsche Bedeutung und anschließend die verlangte Konjugation abgefragt. Groß-/Kleinschreibungs- und Akzentfehler ergeben 0,5 Punkte.</div>
+<div class="actions"><button id="startBtn" class="primary" type="button">Testsimulation starten</button></div>
+<div id="setupMsg" class="msg"></div>
+</section>
+
+<section id="testArea" class="hidden">
+<div class="topbar">
+<div class="topbar-inner"><div><strong>Grammatik-Testsimulation</strong><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
+<div id="chars" class="chars"><button type="button">á</button><button type="button">é</button><button type="button">í</button><button type="button">ó</button><button type="button">ú</button><button type="button">ü</button><button type="button">ñ</button><button type="button">¿</button><button type="button">¡</button></div>
+</div>
+<section class="card"><h2>Dein Test</h2><p class="tiny">Das spanische Verb und die Zeit/Form sind vorgegeben. Trage die deutsche Bedeutung und anschließend die verlangten Formen ein.</p><div id="questions"></div>
+<div class="actions"><button id="submitBtn" class="primary" type="button">Test endgültig abgeben</button></div><div id="testMsg" class="msg"></div></section>
+</section>
+
+<section id="doneCard" class="card hidden">
+<h1>Dein Ergebnis</h1><p class="sub">Die Grammatik-Testsimulation wurde automatisch ausgewertet.</p>
+<div class="resultbox"><div><span class="tiny">Punkte</span><strong id="donePoints">—</strong></div><div><span class="tiny">Prozent</span><strong id="donePercent">—</strong></div><div><span class="tiny">Note</span><strong id="doneGrade">—</strong></div><div><span class="tiny">Oberstufenpunkte</span><strong id="doneOP">—</strong></div></div>
+<div class="note"><strong>Bewertung:</strong> 1 Punkt = richtig · 0,5 Punkte = nur Akzent- bzw. Groß-/Kleinschreibungsfehler · 0 Punkte = falsch.</div>
+<h2 style="margin-top:26px">Fehler und Hinweise</h2><div id="mistakes"></div>
+<div class="actions"><a id="printLink" class="btn primary" href="#" target="_blank" rel="noopener">Korrektur öffnen / drucken</a><button id="repeatBtn" class="secondary" type="button">Noch einmal mit derselben Auswahl</button><button id="newSelectionBtn" class="secondary" type="button">Neue Auswahl</button></div>
+</section>
+</div>
+<script>
+const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
+const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+const $=id=>document.getElementById(id);
+let catalog=[],questions=[],accessToken="",deadlineAt=null,timerHandle=null,saveHandle=null,lastFocusedInput=null,submitting=false,lastConfig=null;
+const storageKey="spanischGrammarPracticeToken";
+function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
+function hideMsg(el){el.textContent="";el.className="msg"}
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
+function api(body){return fetch(SUPABASE_URL+"/functions/v1/grammar-practice-test",{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY},body:JSON.stringify(body)}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok||d.error)throw new Error(d.error||"Die Anfrage konnte nicht verarbeitet werden.");return d})}
+function tenseLabel(m){
+ const x={present:"Presente",gerund:"Gerundio",perfect:"Pretérito perfecto",indef:"Pretérito indefinido",imperfect:"Pretérito imperfecto",pluperfect:"Pluscuamperfecto",subjPresent:"Subjuntivo presente",subjImperfect:"Subjuntivo imperfecto",subjPerfect:"Subjuntivo perfecto",subjPluperfect:"Subjuntivo pluscuamperfecto",impTu:"Imperativo",impVos:"Imperativo",impUsted:"Imperativo",impNeg:"Imperativo",future:"Futuro simple",futurePerfect:"Futuro perfecto",conditional:"Condicional simple",conditionalPerfect:"Condicional compuesto"};
+ return x[m?.mode]||m?.topicGroup||"";
+}
+function grammarPointsForMode(mode){if(mode==="gerund"||mode==="impTu"||mode==="impVos")return 2;if(mode==="impUsted")return 3;if(mode==="impNeg")return 5;return 7}
+function renderCatalog(){
+ const root=$("groups");root.innerHTML="";const groups=new Map();
+ for(const t of catalog){if(!groups.has(t.group))groups.set(t.group,[]);groups.get(t.group).push(t)}
+ for(const [name,topics] of groups){
+  const g=document.createElement("div");g.className="group";g.innerHTML='<div class="group-title">'+esc(name)+'</div><div class="topics"></div>';const holder=g.querySelector(".topics");
+  for(const topic of topics){
+   const box=document.createElement("div");box.className="topic";box.dataset.topicId=topic.id;
+   box.innerHTML='<div class="topic-head"><label class="topic-main"><input type="checkbox" class="topic-check"><span><span class="topic-title">'+esc(topic.title)+'</span><span class="topic-meta">'+topic.verbs.length+' Verben · <span class="fixed-count">0 fest ausgewählt</span></span></span></label><button type="button" class="topic-toggle">Verben auswählen ▾</button></div>'+
+   '<div class="topic-children hidden"><div class="verb-tools"><button type="button" class="secondary all-fixed">Alle fest auswählen</button><button type="button" class="secondary clear-fixed">Auswahl löschen</button></div><div class="verb-grid">'+
+   topic.verbs.map(v=>'<label class="verb-row"><input type="checkbox" class="verb-check" data-verb="'+esc(v.verb)+'"><span>'+esc(v.verb)+'<small>'+esc(v.de)+'</small></span></label>').join("")+'</div></div>';
+   const check=box.querySelector(".topic-check"),children=box.querySelector(".topic-children"),toggle=box.querySelector(".topic-toggle"),verbs=[...box.querySelectorAll(".verb-check")],counter=box.querySelector(".fixed-count");
+   const refresh=()=>{const n=verbs.filter(x=>x.checked).length;counter.textContent=n+" fest ausgewählt";if(n)check.checked=true;updateSummary()};
+   check.addEventListener("change",updateSummary);verbs.forEach(v=>v.addEventListener("change",refresh));
+   toggle.addEventListener("click",()=>{children.classList.toggle("hidden");toggle.textContent=children.classList.contains("hidden")?"Verben auswählen ▾":"Verben ausblenden ▴"});
+   box.querySelector(".all-fixed").addEventListener("click",()=>{verbs.forEach(x=>x.checked=true);refresh()});
+   box.querySelector(".clear-fixed").addEventListener("click",()=>{verbs.forEach(x=>x.checked=false);refresh()});
+   holder.appendChild(box);
+  }
+  root.appendChild(g);
+ }
+ updateSummary();
+}
+function collectConfig(){
+ const topicIds=[],fixed=[];
+ document.querySelectorAll(".topic").forEach(box=>{
+  const id=box.dataset.topicId;
+  if(box.querySelector(".topic-check").checked)topicIds.push(id);
+  box.querySelectorAll(".verb-check:checked").forEach(v=>fixed.push({topicId:id,verb:v.dataset.verb}));
+ });
+ return {topicIds,fixed};
+}
+function updateSummary(){
+ const total=Math.max(0,Number($("questionCount").value)||0),{topicIds,fixed}=collectConfig();
+ $("sumTopics").textContent=topicIds.length;$("sumFixed").textContent=fixed.length;$("sumRandom").textContent=Math.max(0,total-fixed.length);
+ const topicsWithFixed=new Set(fixed.map(x=>x.topicId)),missing=topicIds.filter(id=>!topicsWithFixed.has(id)).length;
+ if(!topicIds.length)$("setupHint").innerHTML="Wähle mindestens einen Grammatikbereich. Im Test siehst du nur die Zeit/Form und das spanische Verb – keine Regelhinweise.";
+ else if(fixed.length>total)$("setupHint").innerHTML="<strong>Zu viele feste Verben:</strong> Du hast "+fixed.length+" Verben festgelegt, aber nur "+total+" Aufgaben vorgesehen.";
+ else if(fixed.length+missing>total)$("setupHint").innerHTML="<strong>Die Verteilung geht so noch nicht auf:</strong> Damit jeder gewählte Bereich mindestens einmal vorkommt, brauchst du mindestens "+(fixed.length+missing)+" Verb-Aufgaben.";
+ else $("setupHint").innerHTML="Die übrigen "+Math.max(0,total-fixed.length)+" Aufgaben werden möglichst gleichmäßig aus den gewählten Bereichen gezogen. Groß-/Kleinschreibungs- und Akzentfehler ergeben 0,5 Punkte.";
+}
+function randomPick(arr){if(!arr.length)return null;const b=new Uint32Array(1);crypto.getRandomValues(b);return arr[b[0]%arr.length]}
+function buildPlan(total,topicIds,fixed){
+ const map=new Map(catalog.map(t=>[t.id,t])),topics=topicIds.map(id=>map.get(id)).filter(Boolean),selected=[],keys=new Set(),counts=new Map(topics.map(t=>[t.id,0]));
+ for(const f of fixed){const t=map.get(f.topicId),v=t?.verbs?.find(x=>x.verb===f.verb),key=f.topicId+"::"+f.verb;if(t&&v&&!keys.has(key)){keys.add(key);selected.push({topic:t,verb:v});counts.set(t.id,(counts.get(t.id)||0)+1)}}
+ for(const t of topics){if(selected.length>=total)break;if((counts.get(t.id)||0)>0)continue;const avail=t.verbs.filter(v=>!keys.has(t.id+"::"+v.verb)),v=randomPick(avail);if(v){keys.add(t.id+"::"+v.verb);selected.push({topic:t,verb:v});counts.set(t.id,(counts.get(t.id)||0)+1)}}
+ while(selected.length<total){const candidates=topics.map(t=>({topic:t,count:counts.get(t.id)||0,available:t.verbs.filter(v=>!keys.has(t.id+"::"+v.verb))})).filter(x=>x.available.length);if(!candidates.length)break;const min=Math.min(...candidates.map(x=>x.count)),balanced=candidates.filter(x=>x.count===min),chosen=randomPick(balanced),v=randomPick(chosen.available);keys.add(chosen.topic.id+"::"+v.verb);selected.push({topic:chosen.topic,verb:v});counts.set(chosen.topic.id,(counts.get(chosen.topic.id)||0)+1)}
+ return selected;
+}
+function makePlan(config){
+ const plan=buildPlan(config.questionCount,config.topicIds,config.fixed||[]);
+ return plan.map(x=>({topicId:x.topic.id,topicGroup:x.topic.group,topicTitle:x.topic.title,mode:x.topic.mode,verb:x.verb.verb,de:x.verb.de}));
+}
+function currentAnswers(){return [...document.querySelectorAll(".question")].map(q=>({questionId:q.dataset.qid,translation:q.querySelector(".translation-input").value,forms:[...q.querySelectorAll(".form-input")].map(x=>x.value)}))}
+function updateAnswered(){let n=0;document.querySelectorAll(".question input").forEach(x=>{if(x.value.trim())n++});$("answered").textContent=n}
+function renderQuestions(saved=[]){
+ const map=new Map((saved||[]).map(a=>{let p={translation:"",forms:[]};try{p=JSON.parse(a.response_text||"{}")}catch{}return [String(a.question_id),p]}));$("questions").innerHTML="";
+ for(const q of questions){const m=q.question_meta||{},p=map.get(String(q.id))||{translation:"",forms:[]},div=document.createElement("div");div.className="question";div.dataset.qid=q.id;
+  div.innerHTML='<div class="qhead"><div><div class="tense">'+esc(tenseLabel(m))+'</div><div class="prompt">'+q.position+'. '+esc(q.source_snapshot)+'</div></div></div>'+
+   '<div class="translation"><div class="input-row"><strong>Deutsche Bedeutung</strong><input class="translation-input" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.translation||"")+'"></div></div>'+
+   (m.labels||[]).map((lab,i)=>'<div class="input-row"><strong>'+esc(lab)+'</strong><input class="form-input" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.forms?.[i]||"")+'"></div>').join("");
+  $("questions").appendChild(div);
+ }
+ document.querySelectorAll(".question input").forEach(inp=>{inp.addEventListener("focus",()=>lastFocusedInput=inp);inp.addEventListener("input",()=>{updateAnswered();$("saveState").textContent="Änderung noch nicht gespeichert …";clearTimeout(saveHandle);saveHandle=setTimeout(()=>save(false),900)})});updateAnswered();
+}
+function stopTimer(){if(timerHandle)clearInterval(timerHandle);timerHandle=null}
+function startTimer(){stopTimer();const tick=()=>{const ms=Math.max(0,new Date(deadlineAt).getTime()-Date.now()),sec=Math.ceil(ms/1000),min=Math.floor(sec/60),s=sec%60;$("timer").textContent=String(min).padStart(2,"0")+":"+String(s).padStart(2,"0");$("timer").classList.toggle("danger",sec<=60);if(ms<=0){stopTimer();submit(true)}};tick();timerHandle=setInterval(tick,1000)}
+function begin(data){accessToken=data.accessToken;deadlineAt=data.deadlineAt;questions=data.questions||[];sessionStorage.setItem(storageKey,accessToken);$("setupCard").classList.add("hidden");$("doneCard").classList.add("hidden");$("testArea").classList.remove("hidden");renderQuestions(data.savedAnswers||[]);$("saveState").textContent="Test gestartet";startTimer();window.scrollTo({top:0,behavior:"instant"})}
+async function startPractice(configOverride=null){
+ hideMsg($("setupMsg"));const sel=collectConfig(),config=configOverride||{topicIds:sel.topicIds,fixed:sel.fixed,questionCount:Number($("questionCount").value),durationMinutes:Number($("durationMinutes").value)};
+ if(!config.topicIds.length){showMsg($("setupMsg"),"Bitte mindestens einen Grammatikbereich auswählen.","err");return}
+ if(!Number.isInteger(config.questionCount)||config.questionCount<1||config.questionCount>100){showMsg($("setupMsg"),"Bitte eine Anzahl zwischen 1 und 100 eingeben.","err");return}
+ if(!Number.isInteger(config.durationMinutes)||config.durationMinutes<1||config.durationMinutes>300){showMsg($("setupMsg"),"Bitte eine Zeit zwischen 1 und 300 Minuten eingeben.","err");return}
+ const topicsWithFixed=new Set((config.fixed||[]).map(x=>x.topicId)),missing=config.topicIds.filter(id=>!topicsWithFixed.has(id)).length;
+ if((config.fixed||[]).length>config.questionCount||(config.fixed||[]).length+missing>config.questionCount){showMsg($("setupMsg"),"Die Anzahl der Aufgaben ist für deine Auswahl zu klein.","err");return}
+ const plan=makePlan(config);if(plan.length<config.questionCount){showMsg($("setupMsg"),"Für diese Auswahl stehen nur "+plan.length+" unterschiedliche Verb-Aufgaben zur Verfügung.","err");return}
+ $("startBtn").disabled=true;$("startBtn").textContent="Test wird erstellt …";
+ try{const data=await api({action:"start",topicIds:config.topicIds,durationMinutes:config.durationMinutes,plan});lastConfig=config;begin(data)}
+ catch(e){showMsg($("setupMsg"),e.message,"err")}
+ finally{$("startBtn").disabled=false;$("startBtn").textContent="Testsimulation starten"}
+}
+async function save(showError=true){if(!accessToken||submitting)return;try{$("saveState").textContent="Speichern …";const d=await api({action:"save",accessToken,answers:currentAnswers()});if(d.submitted&&d.result){showResult(d.result);return}$("saveState").textContent="Gespeichert"}catch(e){$("saveState").textContent="Speichern fehlgeschlagen";if(showError)showMsg($("testMsg"),e.message,"err")}}
+async function submit(auto=false){if(submitting||!accessToken)return;if(!auto){const empty=[...document.querySelectorAll(".question input")].filter(x=>!x.value.trim()).length;if(empty&&!confirm("Es sind noch "+empty+" Felder leer. Trotzdem endgültig abgeben?"))return}submitting=true;$("submitBtn").disabled=true;$("submitBtn").textContent="Wird ausgewertet …";try{const d=await api({action:"submit",accessToken,answers:currentAnswers()});if(d.result)showResult(d.result)}catch(e){showMsg($("testMsg"),e.message,"err")}finally{submitting=false;$("submitBtn").disabled=false;$("submitBtn").textContent="Test endgültig abgeben"}}
+function showResult(r){
+ stopTimer();$("testArea").classList.add("hidden");$("setupCard").classList.add("hidden");$("doneCard").classList.remove("hidden");sessionStorage.removeItem(storageKey);
+ const s=r.summary||{};$("donePoints").textContent=(s.rawPoints??0)+" / "+(s.maxPoints??0);$("donePercent").textContent=Number(s.percent||0).toFixed(1)+" %";$("doneGrade").textContent=s.gradeText||"—";$("doneOP").textContent=s.upperSchoolPoints??"—";
+ const resultToken=r.accessToken||accessToken;$("printLink").href="grammatik-uebung-korrektur.html#token="+encodeURIComponent(resultToken);
+ const bad=[];for(const x of (r.corrections||[])){if(Number(x.translationPoint)<1)bad.push({title:x.position+". "+x.sourceText+" – Deutsche Bedeutung",own:x.translation,expected:x.expectedTranslation,p:Number(x.translationPoint)});(x.labels||[]).forEach((lab,i)=>{if(Number(x.formPoints?.[i])<1)bad.push({title:x.position+". "+x.sourceText+" – "+lab,own:x.forms?.[i],expected:x.expectedForms?.[i],p:Number(x.formPoints?.[i])})})}
+ $("mistakes").innerHTML="";if(!bad.length)$("mistakes").innerHTML='<div class="msg show ok">Alles richtig – du hast in dieser Simulation keinen Fehler gemacht.</div>';else for(const x of bad){const d=document.createElement("div");d.className="mistake"+(x.p===.5?" almost":"");d.innerHTML='<div class="mistake-head"><div class="mistake-title">'+esc(x.title)+'</div><strong class="'+(x.p===.5?"half":"wrong")+'">'+(x.p===.5?"0,5 Punkte":"0 Punkte")+'</strong></div><div class="answer-line">Deine Antwort: <span class="wrong">'+esc(x.own||"—")+'</span></div><div class="answer-line">Richtige Lösung: <span class="right">'+esc(x.expected||"—")+'</span></div>';$("mistakes").appendChild(d)}
+ window.scrollTo({top:0,behavior:"instant"});
+}
+function showSetup(){stopTimer();accessToken="";questions=[];$("testArea").classList.add("hidden");$("doneCard").classList.add("hidden");$("setupCard").classList.remove("hidden");window.scrollTo({top:0,behavior:"instant"})}
+async function resume(t){try{const d=await api({action:"session",accessToken:t});accessToken=t;if(d.submitted&&d.result)showResult(d.result);else begin(d)}catch{sessionStorage.removeItem(storageKey);showSetup()}}
+$("chars").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;const ch=e.target.textContent,start=lastFocusedInput.selectionStart??lastFocusedInput.value.length,end=lastFocusedInput.selectionEnd??start;lastFocusedInput.setRangeText(ch,start,end,"end");lastFocusedInput.focus();lastFocusedInput.dispatchEvent(new Event("input",{bubbles:true}))});
+$("questionCount").addEventListener("input",updateSummary);$("startBtn").addEventListener("click",()=>startPractice());$("submitBtn").addEventListener("click",()=>submit(false));
+$("repeatBtn").addEventListener("click",async()=>{if(!lastConfig)return;$("repeatBtn").disabled=true;try{await startPractice(lastConfig)}finally{$("repeatBtn").disabled=false}});
+$("newSelectionBtn").addEventListener("click",showSetup);$("backBtn").addEventListener("click",()=>location.href="uebung.html");
+(async()=>{try{const res=await fetch(new URL("grammatik-themen.json",location.href),{cache:"no-store"});if(!res.ok)throw new Error();const data=await res.json();catalog=Array.isArray(data.topics)?data.topics:[];renderCatalog();const old=sessionStorage.getItem(storageKey);if(old)await resume(old)}catch{showMsg($("setupMsg"),"Die Grammatikbereiche konnten nicht geladen werden.","err");$("startBtn").disabled=true}})();
+</script>
+</body></html>
