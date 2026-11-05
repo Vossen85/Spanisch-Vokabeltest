@@ -447,6 +447,7 @@
         doc.text("Deutsch",germanX,y+5.3);
         y+=8;
       };
+      let columnHeaderDrawn=false;
       const drawGroupHeader=(title)=>{
         const titleLines=doc.splitTextToSize(title,contentW-10);
         const groupHeight=Math.max(10,titleLines.length*5+5);
@@ -456,7 +457,10 @@
         doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(15,88,83);
         doc.text(titleLines,margin+5,y+6);
         y+=groupHeight+3;
-        drawColumnHeader();
+        if(!columnHeaderDrawn){
+          drawColumnHeader();
+          columnHeaderDrawn=true;
+        }
       };
       pageTitle(false);
       for(const [title,entries] of makeVocabGroups(rows)){
