@@ -49,13 +49,36 @@ function api(body){return fetch(SUPABASE_URL+"/functions/v1/grammar-student-test
 function fmtDate(s){if(!s)return"";const [y,m,d]=s.slice(0,10).split("-");return d+"."+m+"."+y}
 function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
 function parseSaved(v){try{return JSON.parse(v||"{}")}catch{return {translation:"",forms:[]}}}
+function grammarFormLabel(m){
+ const labels={
+  present:"Presente",
+  gerund:"Gerundio",
+  perfect:"Pretérito perfecto",
+  indef:"Pretérito indefinido",
+  imperfect:"Pretérito imperfecto",
+  pluperfect:"Pluscuamperfecto",
+  subjPresent:"Subjuntivo presente",
+  subjImperfect:"Subjuntivo imperfecto",
+  subjPerfect:"Subjuntivo perfecto",
+  subjPluperfect:"Subjuntivo pluscuamperfecto",
+  impTu:"Imperativo",
+  impVos:"Imperativo",
+  impUsted:"Imperativo",
+  impNeg:"Imperativo",
+  future:"Futuro simple",
+  futurePerfect:"Futuro perfecto",
+  conditional:"Condicional simple",
+  conditionalPerfect:"Condicional compuesto"
+ };
+ return labels[m?.mode]||m?.topicGroup||"";
+}
 function render(data){
  questions=data.questions||[];deadlineAt=data.deadlineAt;token=data.accessToken;sessionStorage.setItem(storageKey,token);
  $("startCard").classList.add("hidden");$("testArea").classList.remove("hidden");$("testTitle").textContent=data.test?.title||"Grammatiktest";
  const saved=new Map((data.savedAnswers||[]).map(a=>[String(a.question_id),parseSaved(a.response_text)]));
  $("questions").innerHTML="";
  for(const q of questions){const m=q.question_meta||{},p=saved.get(String(q.id))||{translation:"",forms:[]};const div=document.createElement("div");div.className="question";div.dataset.qid=q.id;
- div.innerHTML='<div class="qhead"><div><div class="prompt">'+q.position+'. '+esc(q.source_snapshot)+'</div></div></div>'+
+ div.innerHTML='<div class="qhead"><div><div class="topic">'+esc(grammarFormLabel(m))+'</div><div class="prompt">'+q.position+'. '+esc(q.source_snapshot)+'</div></div></div>'+
  '<div class="translation"><div class="field"><strong>Deutsche Bedeutung</strong><input class="translation-input" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.translation||"")+'"></div></div>'+
  (m.labels||[]).map((lab,i)=>'<div class="field"><strong>'+esc(lab)+'</strong><input class="form-input" data-i="'+i+'" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.forms?.[i]||"")+'"></div>').join("");
  $("questions").appendChild(div)}
