@@ -1,0 +1,1789 @@
+{
+  "version": 1,
+  "topics": [
+    {
+      "id": "pres-reg",
+      "group": "Presente",
+      "title": "Regelmäßige Verben",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "comprar",
+          "de": "kaufen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "pres-czc",
+      "group": "Presente",
+      "title": "-ecer / -ocer / -ucir → zc in der yo-Form",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "conocer",
+          "de": "kennen"
+        },
+        {
+          "verb": "ofrecer",
+          "de": "anbieten"
+        },
+        {
+          "verb": "conducir",
+          "de": "fahren"
+        },
+        {
+          "verb": "agradecer",
+          "de": "danken"
+        },
+        {
+          "verb": "crecer",
+          "de": "wachsen"
+        },
+        {
+          "verb": "nacer",
+          "de": "geboren werden"
+        },
+        {
+          "verb": "obedecer",
+          "de": "gehorchen"
+        },
+        {
+          "verb": "permanecer",
+          "de": "bleiben"
+        },
+        {
+          "verb": "pertenecer",
+          "de": "gehören"
+        },
+        {
+          "verb": "reconocer",
+          "de": "(an)erkennen"
+        },
+        {
+          "verb": "producir",
+          "de": "produzieren"
+        },
+        {
+          "verb": "traducir",
+          "de": "übersetzen"
+        }
+      ]
+    },
+    {
+      "id": "pres-gj",
+      "group": "Presente",
+      "title": "-ger / -gir → g → j in der yo-Form",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "coger",
+          "de": "nehmen"
+        },
+        {
+          "verb": "dirigir",
+          "de": "leiten"
+        },
+        {
+          "verb": "mugir",
+          "de": "brüllen, muhen"
+        },
+        {
+          "verb": "proteger",
+          "de": "(be)schützen"
+        },
+        {
+          "verb": "restringir",
+          "de": "einschränken"
+        },
+        {
+          "verb": "corregir",
+          "de": "korrigieren / verbessern"
+        },
+        {
+          "verb": "elegir",
+          "de": "wählen"
+        },
+        {
+          "verb": "regir",
+          "de": "regieren"
+        }
+      ]
+    },
+    {
+      "id": "pres-cz",
+      "group": "Presente",
+      "title": "-cer nach Konsonant → c → z",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "vencer",
+          "de": "besiegen"
+        },
+        {
+          "verb": "convencer",
+          "de": "überzeugen"
+        }
+      ]
+    },
+    {
+      "id": "pres-eie",
+      "group": "Presente",
+      "title": "Stammwechsel e → ie",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "cerrar",
+          "de": "schließen"
+        },
+        {
+          "verb": "querer",
+          "de": "wollen / lieben"
+        },
+        {
+          "verb": "preferir",
+          "de": "vorziehen"
+        },
+        {
+          "verb": "comenzar",
+          "de": "beginnen"
+        },
+        {
+          "verb": "despertarse",
+          "de": "aufwachen"
+        },
+        {
+          "verb": "empezar",
+          "de": "anfangen"
+        },
+        {
+          "verb": "encender",
+          "de": "einschalten"
+        },
+        {
+          "verb": "entender",
+          "de": "verstehen"
+        },
+        {
+          "verb": "mentir",
+          "de": "lügen"
+        },
+        {
+          "verb": "nevar",
+          "de": "schneien"
+        },
+        {
+          "verb": "pensar",
+          "de": "denken"
+        },
+        {
+          "verb": "recomendar",
+          "de": "empfehlen"
+        },
+        {
+          "verb": "sentarse",
+          "de": "sich setzen"
+        },
+        {
+          "verb": "sentirse",
+          "de": "sich fühlen"
+        }
+      ]
+    },
+    {
+      "id": "pres-oue",
+      "group": "Presente",
+      "title": "Stammwechsel o → ue",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "probar",
+          "de": "probieren"
+        },
+        {
+          "verb": "poder",
+          "de": "können"
+        },
+        {
+          "verb": "dormir",
+          "de": "schlafen"
+        },
+        {
+          "verb": "contar",
+          "de": "zählen / erzählen"
+        },
+        {
+          "verb": "doler",
+          "de": "schmerzen"
+        },
+        {
+          "verb": "encontrar",
+          "de": "finden"
+        },
+        {
+          "verb": "morir",
+          "de": "sterben"
+        },
+        {
+          "verb": "mostrar",
+          "de": "zeigen"
+        },
+        {
+          "verb": "mover",
+          "de": "bewegen"
+        },
+        {
+          "verb": "oler",
+          "de": "riechen"
+        },
+        {
+          "verb": "llover",
+          "de": "regnen"
+        },
+        {
+          "verb": "sonar",
+          "de": "klingen"
+        },
+        {
+          "verb": "soñar",
+          "de": "träumen"
+        },
+        {
+          "verb": "volver",
+          "de": "zurückkommen"
+        }
+      ]
+    },
+    {
+      "id": "pres-uue",
+      "group": "Presente",
+      "title": "Stammwechsel u → ue",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "jugar",
+          "de": "spielen"
+        }
+      ]
+    },
+    {
+      "id": "pres-ei",
+      "group": "Presente",
+      "title": "Stammwechsel e → i",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "pedir",
+          "de": "bitten"
+        },
+        {
+          "verb": "reír",
+          "de": "lachen"
+        },
+        {
+          "verb": "seguir",
+          "de": "folgen"
+        },
+        {
+          "verb": "corregir",
+          "de": "korrigieren / verbessern"
+        },
+        {
+          "verb": "despedirse",
+          "de": "sich verabschieden"
+        },
+        {
+          "verb": "elegir",
+          "de": "wählen"
+        },
+        {
+          "verb": "impedir",
+          "de": "verhindern"
+        },
+        {
+          "verb": "medir",
+          "de": "messen"
+        },
+        {
+          "verb": "repetir",
+          "de": "wiederholen"
+        },
+        {
+          "verb": "servir",
+          "de": "dienen"
+        },
+        {
+          "verb": "vestirse",
+          "de": "sich ankleiden"
+        },
+        {
+          "verb": "regir",
+          "de": "regieren"
+        }
+      ]
+    },
+    {
+      "id": "pres-uir",
+      "group": "Presente",
+      "title": "Verben auf -uir mit y-Einschub",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "huir",
+          "de": "flüchten"
+        },
+        {
+          "verb": "concluir",
+          "de": "ableiten"
+        },
+        {
+          "verb": "construir",
+          "de": "bauen"
+        },
+        {
+          "verb": "destruir",
+          "de": "zerstören"
+        },
+        {
+          "verb": "disminuir",
+          "de": "verringern"
+        }
+      ]
+    },
+    {
+      "id": "pres-irreg",
+      "group": "Presente",
+      "title": "Stark unregelmäßige Verben",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "estar",
+          "de": "sein / sich befinden"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "dar",
+          "de": "geben"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "ver",
+          "de": "sehen"
+        },
+        {
+          "verb": "oír",
+          "de": "hören"
+        }
+      ]
+    },
+    {
+      "id": "pres-yo",
+      "group": "Presente",
+      "title": "Besonders unregelmäßige yo-Form",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "tener",
+          "de": "haben"
+        },
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "traer",
+          "de": "bringen"
+        },
+        {
+          "verb": "saber",
+          "de": "wissen / können"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        },
+        {
+          "verb": "salir",
+          "de": "aus- / weggehen"
+        },
+        {
+          "verb": "caer",
+          "de": "fallen"
+        }
+      ]
+    },
+    {
+      "id": "refl-reg",
+      "group": "Reflexive Verben",
+      "title": "Regelmäßige reflexive Konjugation im Presente",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "lavarse",
+          "de": "sich waschen"
+        },
+        {
+          "verb": "aburrirse",
+          "de": "sich langweilen"
+        },
+        {
+          "verb": "afeitarse",
+          "de": "sich rasieren"
+        },
+        {
+          "verb": "bañarse",
+          "de": "(sich) baden"
+        },
+        {
+          "verb": "ducharse",
+          "de": "(sich) duschen"
+        },
+        {
+          "verb": "irse",
+          "de": "weggehen"
+        },
+        {
+          "verb": "levantarse",
+          "de": "aufstehen"
+        },
+        {
+          "verb": "llamarse",
+          "de": "heißen"
+        },
+        {
+          "verb": "peinarse",
+          "de": "sich kämmen"
+        }
+      ]
+    },
+    {
+      "id": "refl-stem",
+      "group": "Reflexive Verben",
+      "title": "Reflexive Verben mit Stammwechsel",
+      "mode": "present",
+      "verbs": [
+        {
+          "verb": "sentarse",
+          "de": "sich setzen"
+        },
+        {
+          "verb": "dormirse",
+          "de": "einschlafen"
+        },
+        {
+          "verb": "vestirse",
+          "de": "sich ankleiden"
+        },
+        {
+          "verb": "acordarse",
+          "de": "sich erinnern"
+        },
+        {
+          "verb": "acostarse",
+          "de": "sich hinlegen"
+        },
+        {
+          "verb": "despedirse",
+          "de": "sich verabschieden"
+        },
+        {
+          "verb": "despertarse",
+          "de": "aufwachen"
+        },
+        {
+          "verb": "encontrarse",
+          "de": "sich treffen"
+        },
+        {
+          "verb": "moverse",
+          "de": "sich bewegen"
+        },
+        {
+          "verb": "reírse",
+          "de": "lachen"
+        },
+        {
+          "verb": "sentirse",
+          "de": "sich fühlen"
+        }
+      ]
+    },
+    {
+      "id": "ger-reg",
+      "group": "Gerundio",
+      "title": "Regelmäßige Bildung",
+      "mode": "gerund",
+      "verbs": [
+        {
+          "verb": "comprar",
+          "de": "kaufen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "ger-irreg",
+      "group": "Gerundio",
+      "title": "Unregelmäßige Formen",
+      "mode": "gerund",
+      "verbs": [
+        {
+          "verb": "caer",
+          "de": "fallen"
+        },
+        {
+          "verb": "dar",
+          "de": "geben"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "dormir",
+          "de": "schlafen"
+        },
+        {
+          "verb": "leer",
+          "de": "lesen"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "morir",
+          "de": "sterben"
+        },
+        {
+          "verb": "oír",
+          "de": "hören"
+        },
+        {
+          "verb": "poder",
+          "de": "können"
+        },
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "traer",
+          "de": "bringen"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        },
+        {
+          "verb": "ver",
+          "de": "sehen"
+        }
+      ]
+    },
+    {
+      "id": "ger-nodiph",
+      "group": "Gerundio",
+      "title": "Kein Diphthong im Gerundio",
+      "mode": "gerund",
+      "verbs": [
+        {
+          "verb": "empezar",
+          "de": "anfangen"
+        },
+        {
+          "verb": "jugar",
+          "de": "spielen"
+        }
+      ]
+    },
+    {
+      "id": "ger-irstem",
+      "group": "Gerundio",
+      "title": "Stammwechsel bei -ir",
+      "mode": "gerund",
+      "verbs": [
+        {
+          "verb": "sentir",
+          "de": "sentir"
+        },
+        {
+          "verb": "seguir",
+          "de": "folgen"
+        }
+      ]
+    },
+    {
+      "id": "ger-uir",
+      "group": "Gerundio",
+      "title": "-uir → y",
+      "mode": "gerund",
+      "verbs": [
+        {
+          "verb": "construir",
+          "de": "bauen"
+        },
+        {
+          "verb": "destruir",
+          "de": "zerstören"
+        }
+      ]
+    },
+    {
+      "id": "perf-reg",
+      "group": "Pretérito perfecto",
+      "title": "Regelmäßiges Partizip",
+      "mode": "perfect",
+      "verbs": [
+        {
+          "verb": "comprar",
+          "de": "kaufen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "vivir",
+          "de": "leben"
+        }
+      ]
+    },
+    {
+      "id": "perf-irreg",
+      "group": "Pretérito perfecto",
+      "title": "Unregelmäßige Partizipien",
+      "mode": "perfect",
+      "verbs": [
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        },
+        {
+          "verb": "cubrir",
+          "de": "zudecken"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "escribir",
+          "de": "schreiben"
+        },
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "morir",
+          "de": "sterben"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "romper",
+          "de": "zerbrechen"
+        },
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "ver",
+          "de": "sehen"
+        },
+        {
+          "verb": "volver",
+          "de": "zurückkommen"
+        },
+        {
+          "verb": "describir",
+          "de": "beschreiben"
+        },
+        {
+          "verb": "revolver",
+          "de": "umrühren"
+        }
+      ]
+    },
+    {
+      "id": "ind-reg",
+      "group": "Pretérito indefinido",
+      "title": "Regelmäßige Verben",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "comprar",
+          "de": "kaufen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "escribir",
+          "de": "schreiben"
+        }
+      ]
+    },
+    {
+      "id": "ind-gar",
+      "group": "Pretérito indefinido",
+      "title": "-gar → gu in der yo-Form",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "llegar",
+          "de": "ankommen"
+        },
+        {
+          "verb": "jugar",
+          "de": "spielen"
+        },
+        {
+          "verb": "apagar",
+          "de": "abdrehen / ausschalten"
+        },
+        {
+          "verb": "negar",
+          "de": "verneinen"
+        },
+        {
+          "verb": "pagar",
+          "de": "zahlen"
+        },
+        {
+          "verb": "rogar",
+          "de": "bitten"
+        }
+      ]
+    },
+    {
+      "id": "ind-car",
+      "group": "Pretérito indefinido",
+      "title": "-car → qu in der yo-Form",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "buscar",
+          "de": "suchen"
+        },
+        {
+          "verb": "tocar",
+          "de": "berühren"
+        },
+        {
+          "verb": "equivocarse",
+          "de": "sich irren"
+        },
+        {
+          "verb": "explicar",
+          "de": "erklären"
+        },
+        {
+          "verb": "practicar",
+          "de": "üben"
+        },
+        {
+          "verb": "sacar",
+          "de": "herausnehmen"
+        }
+      ]
+    },
+    {
+      "id": "ind-zar",
+      "group": "Pretérito indefinido",
+      "title": "-zar → c in der yo-Form",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "almorzar",
+          "de": "zu Mittag essen"
+        },
+        {
+          "verb": "empezar",
+          "de": "anfangen"
+        },
+        {
+          "verb": "comenzar",
+          "de": "beginnen"
+        },
+        {
+          "verb": "cruzar",
+          "de": "überqueren"
+        },
+        {
+          "verb": "realizar",
+          "de": "verwirklichen"
+        }
+      ]
+    },
+    {
+      "id": "ind-iy",
+      "group": "Pretérito indefinido",
+      "title": "i → y in der 3. Person",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "creer",
+          "de": "glauben"
+        },
+        {
+          "verb": "caer",
+          "de": "fallen"
+        },
+        {
+          "verb": "construir",
+          "de": "bauen"
+        },
+        {
+          "verb": "huir",
+          "de": "flüchten"
+        },
+        {
+          "verb": "leer",
+          "de": "lesen"
+        },
+        {
+          "verb": "oír",
+          "de": "hören"
+        }
+      ]
+    },
+    {
+      "id": "ind-ei",
+      "group": "Pretérito indefinido",
+      "title": "Stammwechsel e → i",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "preferir",
+          "de": "vorziehen"
+        },
+        {
+          "verb": "seguir",
+          "de": "folgen"
+        },
+        {
+          "verb": "despedirse",
+          "de": "sich verabschieden"
+        },
+        {
+          "verb": "elegir",
+          "de": "wählen"
+        },
+        {
+          "verb": "mentir",
+          "de": "lügen"
+        },
+        {
+          "verb": "pedir",
+          "de": "bitten"
+        },
+        {
+          "verb": "reír",
+          "de": "lachen"
+        },
+        {
+          "verb": "repetir",
+          "de": "wiederholen"
+        },
+        {
+          "verb": "sentir",
+          "de": "sentir"
+        },
+        {
+          "verb": "sentirse",
+          "de": "sich fühlen"
+        },
+        {
+          "verb": "servir",
+          "de": "dienen"
+        },
+        {
+          "verb": "vestirse",
+          "de": "sich ankleiden"
+        }
+      ]
+    },
+    {
+      "id": "ind-ou",
+      "group": "Pretérito indefinido",
+      "title": "Stammwechsel o → u",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "dormir",
+          "de": "schlafen"
+        },
+        {
+          "verb": "morir",
+          "de": "sterben"
+        }
+      ]
+    },
+    {
+      "id": "ind-irreg",
+      "group": "Pretérito indefinido",
+      "title": "Stark unregelmäßige Verben",
+      "mode": "indef",
+      "verbs": [
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "estar",
+          "de": "sein / sich befinden"
+        },
+        {
+          "verb": "tener",
+          "de": "haben"
+        },
+        {
+          "verb": "poder",
+          "de": "können"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        },
+        {
+          "verb": "querer",
+          "de": "wollen / lieben"
+        },
+        {
+          "verb": "saber",
+          "de": "wissen / können"
+        },
+        {
+          "verb": "dar",
+          "de": "geben"
+        },
+        {
+          "verb": "ver",
+          "de": "sehen"
+        },
+        {
+          "verb": "andar",
+          "de": "gehen"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "traer",
+          "de": "bringen"
+        },
+        {
+          "verb": "traducir",
+          "de": "übersetzen"
+        },
+        {
+          "verb": "producir",
+          "de": "produzieren"
+        },
+        {
+          "verb": "conducir",
+          "de": "fahren"
+        },
+        {
+          "verb": "haber",
+          "de": "haben (Hilfsverb)"
+        },
+        {
+          "verb": "reducir",
+          "de": "verringern"
+        },
+        {
+          "verb": "seducir",
+          "de": "verführen"
+        }
+      ]
+    },
+    {
+      "id": "impf-reg",
+      "group": "Pretérito imperfecto",
+      "title": "Regelmäßige Verben",
+      "mode": "imperfect",
+      "verbs": [
+        {
+          "verb": "comprar",
+          "de": "kaufen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "escribir",
+          "de": "schreiben"
+        }
+      ]
+    },
+    {
+      "id": "impf-irreg",
+      "group": "Pretérito imperfecto",
+      "title": "Die drei unregelmäßigen Verben",
+      "mode": "imperfect",
+      "verbs": [
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "ver",
+          "de": "sehen"
+        }
+      ]
+    },
+    {
+      "id": "plusc",
+      "group": "Pluscuamperfecto",
+      "title": "Imperfecto von haber + Partizip",
+      "mode": "pluperfect",
+      "verbs": [
+        {
+          "verb": "comprar",
+          "de": "kaufen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "vivir",
+          "de": "leben"
+        }
+      ]
+    },
+    {
+      "id": "subj-reg",
+      "group": "Subjuntivo presente",
+      "title": "Regelmäßige Verben",
+      "mode": "subjPresent",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "subj-stem-arer",
+      "group": "Subjuntivo presente",
+      "title": "Stammwechsel bei -ar / -er",
+      "mode": "subjPresent",
+      "verbs": [
+        {
+          "verb": "pensar",
+          "de": "denken"
+        },
+        {
+          "verb": "entender",
+          "de": "verstehen"
+        },
+        {
+          "verb": "probar",
+          "de": "probieren"
+        },
+        {
+          "verb": "poder",
+          "de": "können"
+        },
+        {
+          "verb": "jugar",
+          "de": "spielen"
+        }
+      ]
+    },
+    {
+      "id": "subj-stem-ir",
+      "group": "Subjuntivo presente",
+      "title": "Stammwechsel bei -ir",
+      "mode": "subjPresent",
+      "verbs": [
+        {
+          "verb": "sentir",
+          "de": "sentir"
+        },
+        {
+          "verb": "dormir",
+          "de": "schlafen"
+        },
+        {
+          "verb": "pedir",
+          "de": "bitten"
+        }
+      ]
+    },
+    {
+      "id": "subj-ortho",
+      "group": "Subjuntivo presente",
+      "title": "Orthografische Veränderungen",
+      "mode": "subjPresent",
+      "verbs": [
+        {
+          "verb": "buscar",
+          "de": "suchen"
+        },
+        {
+          "verb": "llegar",
+          "de": "ankommen"
+        },
+        {
+          "verb": "averiguar",
+          "de": "herausfinden"
+        },
+        {
+          "verb": "coger",
+          "de": "nehmen"
+        },
+        {
+          "verb": "dirigir",
+          "de": "leiten"
+        },
+        {
+          "verb": "distinguir",
+          "de": "unterscheiden"
+        },
+        {
+          "verb": "vencer",
+          "de": "besiegen"
+        },
+        {
+          "verb": "conocer",
+          "de": "kennen"
+        },
+        {
+          "verb": "traducir",
+          "de": "übersetzen"
+        },
+        {
+          "verb": "almorzar",
+          "de": "zu Mittag essen"
+        }
+      ]
+    },
+    {
+      "id": "subj-yo",
+      "group": "Subjuntivo presente",
+      "title": "Aus unregelmäßiger yo-Form gebildet",
+      "mode": "subjPresent",
+      "verbs": [
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        },
+        {
+          "verb": "tener",
+          "de": "haben"
+        },
+        {
+          "verb": "salir",
+          "de": "aus- / weggehen"
+        },
+        {
+          "verb": "caer",
+          "de": "fallen"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "oír",
+          "de": "hören"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "traer",
+          "de": "bringen"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        },
+        {
+          "verb": "valer",
+          "de": "wert sein"
+        },
+        {
+          "verb": "conducir",
+          "de": "fahren"
+        },
+        {
+          "verb": "ofrecer",
+          "de": "anbieten"
+        },
+        {
+          "verb": "construir",
+          "de": "bauen"
+        },
+        {
+          "verb": "ver",
+          "de": "sehen"
+        }
+      ]
+    },
+    {
+      "id": "subj-full",
+      "group": "Subjuntivo presente",
+      "title": "Vollständig unregelmäßige Verben",
+      "mode": "subjPresent",
+      "verbs": [
+        {
+          "verb": "dar",
+          "de": "geben"
+        },
+        {
+          "verb": "estar",
+          "de": "sein / sich befinden"
+        },
+        {
+          "verb": "haber",
+          "de": "haben (Hilfsverb)"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "saber",
+          "de": "wissen / können"
+        },
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "caber",
+          "de": "hineinpassen"
+        }
+      ]
+    },
+    {
+      "id": "subji-reg",
+      "group": "Subjuntivo imperfecto",
+      "title": "Regelmäßige Verben",
+      "mode": "subjImperfect",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "subji-irreg",
+      "group": "Subjuntivo imperfecto",
+      "title": "Unregelmäßige Stämme aus dem Indefinido",
+      "mode": "subjImperfect",
+      "verbs": [
+        {
+          "verb": "andar",
+          "de": "gehen"
+        },
+        {
+          "verb": "caber",
+          "de": "hineinpassen"
+        },
+        {
+          "verb": "conducir",
+          "de": "fahren"
+        },
+        {
+          "verb": "dar",
+          "de": "geben"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "estar",
+          "de": "sein / sich befinden"
+        },
+        {
+          "verb": "haber",
+          "de": "haben (Hilfsverb)"
+        },
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "poder",
+          "de": "können"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "querer",
+          "de": "wollen / lieben"
+        },
+        {
+          "verb": "saber",
+          "de": "wissen / können"
+        },
+        {
+          "verb": "tener",
+          "de": "haben"
+        },
+        {
+          "verb": "traer",
+          "de": "bringen"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        }
+      ]
+    },
+    {
+      "id": "subj-perf",
+      "group": "Subjuntivo perfecto",
+      "title": "Subjuntivo von haber + Partizip",
+      "mode": "subjPerfect",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "subj-plusc",
+      "group": "Subjuntivo pluscuamperfecto",
+      "title": "hubiera / hubiese + Partizip",
+      "mode": "subjPluperfect",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "imp-tu-reg",
+      "group": "Imperativo",
+      "title": "Bejahter Imperativ – tú – regelmäßig",
+      "mode": "impTu",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "imp-tu-irreg",
+      "group": "Imperativo",
+      "title": "Bejahter Imperativ – tú – unregelmäßig",
+      "mode": "impTu",
+      "verbs": [
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        },
+        {
+          "verb": "ir",
+          "de": "gehen / fahren"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "salir",
+          "de": "aus- / weggehen"
+        },
+        {
+          "verb": "ser",
+          "de": "sein"
+        },
+        {
+          "verb": "tener",
+          "de": "haben"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        }
+      ]
+    },
+    {
+      "id": "imp-vos",
+      "group": "Imperativo",
+      "title": "Bejahter Imperativ – vosotros / vosotras",
+      "mode": "impVos",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        },
+        {
+          "verb": "sentarse",
+          "de": "sich setzen"
+        },
+        {
+          "verb": "irse",
+          "de": "weggehen"
+        }
+      ]
+    },
+    {
+      "id": "imp-usted",
+      "group": "Imperativo",
+      "title": "Bejahter Imperativ – usted / ustedes",
+      "mode": "impUsted",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "imp-neg",
+      "group": "Imperativo",
+      "title": "Verneinter Imperativ",
+      "mode": "impNeg",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        },
+        {
+          "verb": "salir",
+          "de": "aus- / weggehen"
+        }
+      ]
+    },
+    {
+      "id": "fut-reg",
+      "group": "Futuro simple",
+      "title": "Regelmäßige Verben",
+      "mode": "future",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "fut-irreg",
+      "group": "Futuro simple",
+      "title": "Unregelmäßiger Stamm",
+      "mode": "future",
+      "verbs": [
+        {
+          "verb": "haber",
+          "de": "haben (Hilfsverb)"
+        },
+        {
+          "verb": "caber",
+          "de": "hineinpassen"
+        },
+        {
+          "verb": "poder",
+          "de": "können"
+        },
+        {
+          "verb": "querer",
+          "de": "wollen / lieben"
+        },
+        {
+          "verb": "saber",
+          "de": "wissen / können"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "tener",
+          "de": "haben"
+        },
+        {
+          "verb": "valer",
+          "de": "wert sein"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        },
+        {
+          "verb": "salir",
+          "de": "aus- / weggehen"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        }
+      ]
+    },
+    {
+      "id": "fut-perf",
+      "group": "Futuro perfecto",
+      "title": "Futuro von haber + Partizip",
+      "mode": "futurePerfect",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "cond-reg",
+      "group": "Condicional simple",
+      "title": "Regelmäßige Verben",
+      "mode": "conditional",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    },
+    {
+      "id": "cond-irreg",
+      "group": "Condicional simple",
+      "title": "Unregelmäßiger Stamm",
+      "mode": "conditional",
+      "verbs": [
+        {
+          "verb": "haber",
+          "de": "haben (Hilfsverb)"
+        },
+        {
+          "verb": "poder",
+          "de": "können"
+        },
+        {
+          "verb": "querer",
+          "de": "wollen / lieben"
+        },
+        {
+          "verb": "saber",
+          "de": "wissen / können"
+        },
+        {
+          "verb": "caber",
+          "de": "hineinpassen"
+        },
+        {
+          "verb": "poner",
+          "de": "setzen / legen / stellen"
+        },
+        {
+          "verb": "tener",
+          "de": "haben"
+        },
+        {
+          "verb": "venir",
+          "de": "kommen"
+        },
+        {
+          "verb": "salir",
+          "de": "aus- / weggehen"
+        },
+        {
+          "verb": "valer",
+          "de": "wert sein"
+        },
+        {
+          "verb": "decir",
+          "de": "sagen"
+        },
+        {
+          "verb": "hacer",
+          "de": "machen / tun"
+        }
+      ]
+    },
+    {
+      "id": "cond-comp",
+      "group": "Condicional compuesto",
+      "title": "Condicional von haber + Partizip",
+      "mode": "conditionalPerfect",
+      "verbs": [
+        {
+          "verb": "ayudar",
+          "de": "helfen"
+        },
+        {
+          "verb": "beber",
+          "de": "trinken"
+        },
+        {
+          "verb": "abrir",
+          "de": "öffnen"
+        }
+      ]
+    }
+  ]
+}
