@@ -421,41 +421,68 @@
       if(!rows.length)throw new Error("Für diese Auswahl wurden keine Vokabeln gefunden.");
       const {jsPDF}=window.jspdf;
       const doc=new jsPDF({unit:"mm",format:"a4"});
-      const margin=14,pageW=210,pageH=297;
+      const margin=14,pageW=210,pageH=297,contentW=pageW-margin*2;
+      const spanishX=margin+4,dividerX=margin+88,germanX=dividerX+4;
+      const spanishW=dividerX-spanishX-6,germanW=pageW-margin-germanX-4;
       let y=18;
-      const header=()=>{
-        doc.setFont("helvetica","bold");doc.setFontSize(17);
-        doc.text("Spanisch – Vokabelliste",margin,y);y+=8;
-        doc.setFont("helvetica","normal");doc.setFontSize(9);
-        doc.text(rows.length+" Vokabeln",margin,y);y+=8;
+      doc.setProperties({title:"Spanisch – Vokabelliste",subject:"Vokabelliste nach Unterordnern",creator:"Spanisch-Lernplattform"});
+      const pageTitle=(continuation=false)=>{
+        doc.setFont("helvetica","bold");doc.setFontSize(continuation?13:18);
+        doc.setTextColor(23,32,51);
+        doc.text(continuation?"Spanisch – Vokabelliste (Fortsetzung)":"Spanisch – Vokabelliste",margin,y);
+        y+=continuation?7:9;
+        doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(100,116,139);
+        doc.text(rows.length+" Vokabeln · nach Unterordnern geordnet",margin,y);
+        y+=continuation?8:10;
       };
-      const pageHeader=()=>{doc.addPage();y=18;header();};
-      const groupHeading=(title)=>{
-        doc.setFont("helvetica","bold");doc.setFontSize(12);
-        const lines=doc.splitTextToSize(title,pageW-margin*2);
-        if(y+lines.length*6+12>pageH-14)pageHeader();
-        doc.text(lines,margin,y);y+=lines.length*6+2;
-        doc.setFontSize(9);
-        doc.text("Spanisch",margin,y);doc.text("Deutsch",95,y);y+=3;
-        doc.setDrawColor(190);doc.line(margin,y,pageW-margin,y);y+=5;
+      const newPage=()=>{
+        doc.addPage();
+        y=16;
+        pageTitle(true);
       };
-      header();
+      const drawGroupHeader=(title)=>{
+        const titleLines=doc.splitTextToSize(title,contentW-10);
+        const groupHeight=Math.max(10,titleLines.length*5+5);
+        if(y+groupHeight+10>pageH-margin)newPage();
+        doc.setFillColor(226,242,240);
+        doc.roundedRect(margin,y,contentW,groupHeight,2,2,"F");
+        doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(15,88,83);
+        doc.text(titleLines,margin+5,y+6);
+        y+=groupHeight+3;
+        doc.setFillColor(15,118,110);
+        doc.rect(margin,y,contentW,8,"F");
+        doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(255,255,255);
+        doc.text("Spanisch",spanishX,y+5.3);
+        doc.text("Deutsch",germanX,y+5.3);
+        y+=8;
+      };
+      pageTitle(false);
       for(const [title,entries] of makeVocabGroups(rows)){
-        groupHeading(title);
+        drawGroupHeader(title);
+        let stripe=0;
         for(const row of entries){
-          const esLines=doc.splitTextToSize((row.acceptedAnswers||[]).join(" / "),76);
-          const deLines=doc.splitTextToSize(String(row.sourceText||""),94);
-          const height=Math.max(esLines.length,deLines.length)*5+3;
-          if(y+height>pageH-14){
-            pageHeader();
-            groupHeading(title);
+          const esLines=doc.splitTextToSize((row.acceptedAnswers||[]).join(" / "),spanishW);
+          const deLines=doc.splitTextToSize(String(row.sourceText||""),germanW);
+          const lineCount=Math.max(esLines.length,deLines.length,1);
+          const rowHeight=Math.max(9,lineCount*5+4);
+          if(y+rowHeight>pageH-margin){
+            newPage();
+            drawGroupHeader(title);
+            stripe=0;
           }
-          doc.setFont("helvetica","normal");doc.setFontSize(9);
-          doc.text(esLines,margin,y);
-          doc.text(deLines,95,y);
-          y+=height;
-          doc.setDrawColor(230);doc.line(margin,y-2,pageW-margin,y-2);
+          doc.setFillColor(stripe%2===0?255:248,stripe%2===0?255:250,stripe%2===0?255:252);
+          doc.rect(margin,y,contentW,rowHeight,"F");
+          doc.setDrawColor(218,226,232);doc.setLineWidth(0.2);
+          doc.line(margin,y+rowHeight,pageW-margin,y+rowHeight);
+          doc.line(dividerX,y,dividerX,y+rowHeight);
+          doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(23,32,51);
+          const firstBaseline=y+5.4;
+          doc.text(esLines,spanishX,firstBaseline,{lineHeightFactor:1.15});
+          doc.text(deLines,germanX,firstBaseline,{lineHeightFactor:1.15});
+          y+=rowHeight;
+          stripe++;
         }
+        y+=5;
       }
       doc.save("Spanisch_Vokabelliste.pdf");
       showMsg($("vocabListMsg"),rows.length+" Vokabeln wurden als PDF erstellt.","ok");
@@ -466,7 +493,6 @@
       button.textContent="Als PDF herunterladen";
     }
   }
-
   function collectSelection(){
     const unitKeys=[],folderIds=[];
     document.querySelectorAll(".unit-group").forEach(group=>{
