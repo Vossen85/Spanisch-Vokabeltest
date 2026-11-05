@@ -54,6 +54,14 @@
     .choice-btn{min-height:150px;border-radius:18px;padding:24px;text-align:left;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;font-size:1.25rem;box-shadow:0 8px 22px rgba(15,23,42,.08)}
     .choice-btn span{font-size:.92rem;font-weight:550;line-height:1.4;opacity:.9}
     .mode-btn[aria-pressed="true"]{outline:3px solid #0f766e;outline-offset:3px}
+    .vocab-preview{margin-top:16px;border:1px solid #dbe2ea;border-radius:14px;padding:18px;background:#fff}
+    .vocab-preview-group{margin-top:22px}
+    .vocab-preview-group h3{margin:0 0 8px;color:#172033}
+    .vocab-preview table{width:100%;border-collapse:collapse}
+    .vocab-preview th,.vocab-preview td{text-align:left;padding:9px 8px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+    .vocab-preview th{font-size:.88rem;color:#64748b}
+    .vocab-preview td:first-child{font-weight:700}
+    @media(max-width:600px){.vocab-preview{padding:12px}.vocab-preview th,.vocab-preview td{padding:7px 4px;font-size:.9rem}}
     .choice-vocab{background:#2563eb;color:#fff}
     .choice-grammar{background:#7c3aed;color:#fff}
     .choice-learn{background:#0f766e;color:#fff}
@@ -121,8 +129,16 @@
     <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
 
     <div id="vocabListActions" class="hidden">
-      <div class="actions"><button id="downloadVocabListBtn" class="primary" type="button">Auswahl als PDF herunterladen</button></div>
+      <div class="actions">
+        <button id="showVocabListBtn" class="secondary" type="button">Vokabelliste anzeigen</button>
+        <button id="downloadVocabListBtn" class="primary" type="button">Als PDF herunterladen</button>
+      </div>
       <div id="vocabListMsg" class="msg"></div>
+      <section id="vocabPreview" class="vocab-preview hidden">
+        <h2>Deine Vokabelliste</h2>
+        <p id="vocabPreviewSummary" class="tiny"></p>
+        <div id="vocabPreviewContent"></div>
+      </section>
     </div>
 
     <div id="testOptions">
@@ -224,6 +240,7 @@
   let submitting=false;
   let lastConfig=null;
   let vocabMode="test";
+  let vocabListCache=null;
 
   function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
   function hideMsg(el){el.className="msg"}
@@ -302,29 +319,106 @@
     $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
     hideMsg($("setupMsg"));
     hideMsg($("vocabListMsg"));
+    $("vocabPreview").classList.add("hidden");
+  }
+
+  function selectionSignature(selection){
+    return JSON.stringify({
+      unitKeys:[...(selection.unitKeys||[])].map(String).sort(),
+      folderIds:[...(selection.folderIds||[])].map(Number).sort((a,b)=>a-b)
+    });
+  }
+
+  async function getVocabList(){
+    const selection=collectSelection();
+    if(!selection.unitKeys.length&&!selection.folderIds.length){
+      throw new Error("Bitte wähle mindestens eine Unidad oder einen Unterordner aus.");
+    }
+    const signature=selectionSignature(selection);
+    if(vocabListCache&&vocabListCache.signature===signature)return vocabListCache.data;
+    const data=await api({action:"vocab_list",...selection});
+    vocabListCache={signature,data};
+    return data;
+  }
+
+  function makeVocabGroups(rows){
+    const groups=new Map();
+    for(const row of rows){
+      const folders=(row.folderTitles||[]).length?row.folderTitles:[row.unitTitle||"Weitere Vokabeln"];
+      for(const folder of folders){
+        const title=[row.unitTitle,folder].filter(Boolean).join(" · ");
+        if(!groups.has(title))groups.set(title,[]);
+        groups.get(title).push(row);
+      }
+    }
+    return [...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0],"de"));
+  }
+
+  function renderVocabPreview(data){
+    const rows=data.vocabulary||[];
+    const root=$("vocabPreviewContent");
+    root.innerHTML="";
+    if(!rows.length){
+      $("vocabPreviewSummary").textContent="Für diese Auswahl wurden keine Vokabeln gefunden.";
+      $("vocabPreview").classList.remove("hidden");
+      return;
+    }
+    $("vocabPreviewSummary").textContent=rows.length+" Vokabeln · nach Unterordnern geordnet";
+    for(const [title,entries] of makeVocabGroups(rows)){
+      const section=document.createElement("section");
+      section.className="vocab-preview-group";
+      const heading=document.createElement("h3");
+      heading.textContent=title;
+      section.appendChild(heading);
+      const table=document.createElement("table");
+      table.innerHTML="<thead><tr><th>Spanisch</th><th>Deutsch</th></tr></thead>";
+      const tbody=document.createElement("tbody");
+      for(const row of entries){
+        const tr=document.createElement("tr");
+        const es=document.createElement("td");
+        es.textContent=(row.acceptedAnswers||[]).join(" / ");
+        const de=document.createElement("td");
+        de.textContent=String(row.sourceText||"");
+        tr.append(es,de);
+        tbody.appendChild(tr);
+      }
+      table.appendChild(tbody);
+      section.appendChild(table);
+      root.appendChild(section);
+    }
+    $("vocabPreview").classList.remove("hidden");
+  }
+
+  async function showVocabList(){
+    const button=$("showVocabListBtn");
+    hideMsg($("vocabListMsg"));
+    button.disabled=true;
+    button.textContent="Liste wird geladen …";
+    try{
+      const data=await getVocabList();
+      renderVocabPreview(data);
+      $("vocabPreview").scrollIntoView({behavior:"smooth",block:"start"});
+    }catch(error){
+      showMsg($("vocabListMsg"),error.message||"Die Vokabelliste konnte nicht geladen werden.","err");
+    }finally{
+      button.disabled=false;
+      button.textContent="Vokabelliste anzeigen";
+    }
   }
 
   async function downloadVocabList(){
     hideMsg($("vocabListMsg"));
-    const selection=collectSelection();
-    if(!selection.unitKeys.length&&!selection.folderIds.length){
-      showMsg($("vocabListMsg"),"Bitte wähle mindestens eine Unidad oder einen Unterordner aus.","err");
-      return;
-    }
     if(!window.jspdf){
       showMsg($("vocabListMsg"),"Die PDF-Funktion konnte nicht geladen werden. Bitte lade die Seite neu.","err");
       return;
     }
     const button=$("downloadVocabListBtn");
     button.disabled=true;
-    button.textContent="Vokabelliste wird erstellt …";
+    button.textContent="PDF wird erstellt …";
     try{
-      const data=await api({action:"vocab_list",...selection});
+      const data=await getVocabList();
       const rows=data.vocabulary||[];
-      if(!rows.length){
-        showMsg($("vocabListMsg"),"Für diese Auswahl wurden keine Vokabeln gefunden.","err");
-        return;
-      }
+      if(!rows.length)throw new Error("Für diese Auswahl wurden keine Vokabeln gefunden.");
       const {jsPDF}=window.jspdf;
       const doc=new jsPDF({unit:"mm",format:"a4"});
       const margin=14,pageW=210,pageH=297;
@@ -334,27 +428,34 @@
         doc.text("Spanisch – Vokabelliste",margin,y);y+=8;
         doc.setFont("helvetica","normal");doc.setFontSize(9);
         doc.text(rows.length+" Vokabeln",margin,y);y+=8;
-        doc.setFont("helvetica","bold");doc.setFontSize(9);
-        doc.text("Spanisch",margin,y);doc.text("Deutsch",89,y);doc.text("Ordner",pageW-margin,y,{align:"right"});y+=3;
+      };
+      const pageHeader=()=>{doc.addPage();y=18;header();};
+      const groupHeading=(title)=>{
+        doc.setFont("helvetica","bold");doc.setFontSize(12);
+        const lines=doc.splitTextToSize(title,pageW-margin*2);
+        if(y+lines.length*6+12>pageH-14)pageHeader();
+        doc.text(lines,margin,y);y+=lines.length*6+2;
+        doc.setFontSize(9);
+        doc.text("Spanisch",margin,y);doc.text("Deutsch",95,y);y+=3;
         doc.setDrawColor(190);doc.line(margin,y,pageW-margin,y);y+=5;
       };
-      const nextPage=()=>{doc.addPage();y=18;header();};
       header();
-      for(const row of rows){
-        const spanish=(row.acceptedAnswers||[]).join(" / ");
-        const german=String(row.sourceText||"");
-        const folders=(row.folderTitles||[]).join(", ")||row.unitTitle||"";
-        const esLines=doc.splitTextToSize(spanish,65);
-        const deLines=doc.splitTextToSize(german,72);
-        const folderLines=doc.splitTextToSize(folders,38);
-        const height=Math.max(esLines.length,deLines.length,folderLines.length)*5+3;
-        if(y+height>pageH-14)nextPage();
-        doc.setFont("helvetica","normal");doc.setFontSize(9);
-        doc.text(esLines,margin,y);
-        doc.text(deLines,89,y);
-        doc.text(folderLines,pageW-margin,y,{align:"right"});
-        y+=height;
-        doc.setDrawColor(230);doc.line(margin,y-2,pageW-margin,y-2);
+      for(const [title,entries] of makeVocabGroups(rows)){
+        groupHeading(title);
+        for(const row of entries){
+          const esLines=doc.splitTextToSize((row.acceptedAnswers||[]).join(" / "),76);
+          const deLines=doc.splitTextToSize(String(row.sourceText||""),94);
+          const height=Math.max(esLines.length,deLines.length)*5+3;
+          if(y+height>pageH-14){
+            pageHeader();
+            groupHeading(title);
+          }
+          doc.setFont("helvetica","normal");doc.setFontSize(9);
+          doc.text(esLines,margin,y);
+          doc.text(deLines,95,y);
+          y+=height;
+          doc.setDrawColor(230);doc.line(margin,y-2,pageW-margin,y-2);
+        }
       }
       doc.save("Spanisch_Vokabelliste.pdf");
       showMsg($("vocabListMsg"),rows.length+" Vokabeln wurden als PDF erstellt.","ok");
@@ -362,7 +463,7 @@
       showMsg($("vocabListMsg"),error.message||"Die Vokabelliste konnte nicht erstellt werden.","err");
     }finally{
       button.disabled=false;
-      button.textContent="Auswahl als PDF herunterladen";
+      button.textContent="Als PDF herunterladen";
     }
   }
 
@@ -637,7 +738,13 @@
   $("grammarHomeBtn").addEventListener("click",showPortal);
   $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
   $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
+  $("showVocabListBtn").addEventListener("click",showVocabList);
   $("downloadVocabListBtn").addEventListener("click",downloadVocabList);
+  $("unitsBox").addEventListener("change",()=>{
+    vocabListCache=null;
+    $("vocabPreview").classList.add("hidden");
+    hideMsg($("vocabListMsg"));
+  });
   $("vocabHomeBtn").addEventListener("click",showPortal);
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
