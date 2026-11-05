@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Spanisch – Konjugationen lernen</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+*{box-sizing:border-box}
+body{margin:0;padding:20px}
+.wrap{max-width:1050px;margin:0 auto}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+h1{margin:0 0 6px;font-size:2rem} h2{margin:24px 0 10px} h3{margin:0}
+.sub,.muted,.tiny{color:#64748b}.tiny{font-size:.9rem}
+button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:750;cursor:pointer}
+.primary{background:#0f766e;color:#fff}.secondary{background:#e2e8f0;color:#172033}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.topic-group{border-top:1px solid #e2e8f0;padding-top:16px;margin-top:16px}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}
+.topic{display:flex;gap:10px;align-items:flex-start;border:1px solid #dbe2ea;border-radius:12px;padding:11px 12px;background:#fafafa;cursor:pointer}
+.topic:hover{background:#f1f5f9}.topic input{width:19px;height:19px;margin-top:1px}
+.topic strong{display:block}.topic span{display:block;font-size:.84rem;color:#64748b;margin-top:2px}
+.preview-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.topic-preview{margin-top:24px}
+.topic-title{border-bottom:2px solid #0f766e;padding-bottom:8px;margin-bottom:14px}
+.verb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:14px}
+.verb-card{border:1px solid #dbe2ea;border-radius:16px;padding:16px;background:#fff;break-inside:avoid}
+.verb-de{font-size:1.25rem;font-weight:850;margin-bottom:3px}
+.verb-es{color:#475569;font-style:italic;margin-bottom:12px}
+.conj{display:grid;grid-template-columns:minmax(115px,auto) 1fr;gap:5px 12px;font-size:.97rem}
+.conj .person{color:#64748b}.conj .form{font-weight:750}
+.empty{padding:18px;border-radius:12px;background:#f8fafc;color:#64748b}
+.note{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-top:14px;font-size:.92rem}
+.hidden{display:none!important}
+@media(max-width:650px){body{padding:12px}.card{padding:16px}.topic-grid,.verb-grid{grid-template-columns:1fr}.conj{grid-template-columns:110px 1fr}}
+@media print{
+ body{background:#fff;padding:0}.no-print{display:none!important}.card{box-shadow:none;border:0;padding:0}.verb-card{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="card">
+  <div class="actions no-print" style="margin-top:0;margin-bottom:14px">
+    <button id="backBtn" class="secondary" type="button">← Zurück zur Auswahl</button>
+  </div>
+  <h1>Konjugationen lernen</h1>
+  <p class="sub">Wähle einen oder mehrere Grammatikbereiche. Du kannst die vollständigen Verbformen direkt ansehen und anschließend als PDF herunterladen.</p>
+  <div id="topicList"></div>
+  <div class="actions no-print">
+    <button id="showBtn" class="primary" type="button">Konjugationen anzeigen</button>
+    <button id="pdfBtn" class="secondary" type="button">PDF herunterladen</button>
+    <button id="allBtn" class="secondary" type="button">Alle auswählen</button>
+    <button id="noneBtn" class="secondary" type="button">Auswahl löschen</button>
+  </div>
+  <div class="note">Die Formen werden fest aus den hinterlegten Konjugationsregeln und Verbgruppen erzeugt – nicht von einer KI während der Nutzung.</div>
+</section>
+
+<section id="previewCard" class="card hidden">
+  <div class="preview-head">
+    <div>
+      <h1>Deine Konjugationen</h1>
+      <p id="selectionInfo" class="sub"></p>
+    </div>
+  </div>
+  <div id="preview"></div>
+</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script>
+const PERSONS=["yo","tú","él / ella / usted","nosotros / nosotras","vosotros / vosotras","ellos / ellas / ustedes"];
+const REFL=["me","te","se","nos","os","se"];
+
+const DE={
+comprar:"kaufen",beber:"trinken",abrir:"öffnen",conocer:"kennen",ofrecer:"anbieten",conducir:"fahren",
+agradecer:"danken",crecer:"wachsen",nacer:"geboren werden",obedecer:"gehorchen",permanecer:"bleiben",
+pertenecer:"gehören",reconocer:"(an)erkennen",producir:"produzieren",traducir:"übersetzen",
+coger:"nehmen",dirigir:"leiten",mugir:"brüllen, muhen",proteger:"(be)schützen",restringir:"einschränken",
+corregir:"korrigieren / verbessern",elegir:"wählen",regir:"regieren",vencer:"besiegen",convencer:"überzeugen",
+cerrar:"schließen",querer:"wollen / lieben",preferir:"vorziehen",comenzar:"beginnen",despertarse:"aufwachen",
+empezar:"anfangen",encender:"einschalten",entender:"verstehen",mentir:"lügen",nevar:"schneien",pensar:"denken",
+recomendar:"empfehlen",sentarse:"sich setzen",sentirse:"sich fühlen",probar:"probieren",poder:"können",
+dormir:"schlafen",contar:"zählen / erzählen",doler:"schmerzen",encontrar:"finden",morir:"sterben",mostrar:"zeigen",
+mover:"bewegen",oler:"riechen",llover:"regnen",sonar:"klingen",soñar:"träumen",volver:"zurückkommen",jugar:"spielen",
+pedir:"bitten",reír:"lachen",seguir:"folgen",despedirse:"sich verabschieden",impedir:"verhindern",medir:"messen",
+repetir:"wiederholen",servir:"dienen",vestirse:"sich ankleiden",huir:"flüchten",concluir:"ableiten",construir:"bauen",
+destruir:"zerstören",disminuir:"verringern",ser:"sein",estar:"sein / sich befinden",ir:"gehen / fahren",dar:"geben",
+decir:"sagen",ver:"sehen",oír:"hören",tener:"haben",hacer:"machen / tun",poner:"setzen / legen / stellen",traer:"bringen",
+saber:"wissen / können",venir:"kommen",salir:"aus- / weggehen",caer:"fallen",lavarse:"sich waschen",
+aburrirse:"sich langweilen",afeitarse:"sich rasieren",bañarse:"(sich) baden",ducharse:"(sich) duschen",irse:"weggehen",
+levantarse:"aufstehen",llamarse:"heißen",peinarse:"sich kämmen",dormirse:"einschlafen",acordarse:"sich erinnern",
+acostarse:"sich hinlegen",encontrarse:"sich treffen",moverse:"sich bewegen",reírse:"lachen",vivir:"leben",
+cubrir:"zudecken",escribir:"schreiben",romper:"zerbrechen",describir:"beschreiben",revolver:"umrühren",
+llegar:"ankommen",apagar:"abdrehen / ausschalten",negar:"verneinen",pagar:"zahlen",rogar:"bitten",buscar:"suchen",
+tocar:"berühren",equivocarse:"sich irren",explicar:"erklären",practicar:"üben",sacar:"herausnehmen",almorzar:"zu Mittag essen",
+cruzar:"überqueren",realizar:"verwirklichen",creer:"glauben",leer:"lesen",andar:"gehen",reducir:"verringern",
+seducir:"verführen",haber:"haben (Hilfsverb)",ayudar:"helfen",averiguar:"herausfinden",distinguir:"unterscheiden",
+valer:"wert sein",caber:"hineinpassen"
+};
+
+const TOPICS=[
+{id:"pres-reg",group:"Presente",title:"Regelmäßige Verben",mode:"present",verbs:["comprar","beber","abrir"]},
+{id:"pres-czc",group:"Presente",title:"-ecer / -ocer / -ucir → zc in der yo-Form",mode:"present",verbs:["conocer","ofrecer","conducir","agradecer","crecer","nacer","obedecer","permanecer","pertenecer","reconocer","producir","traducir"]},
+{id:"pres-gj",group:"Presente",title:"-ger / -gir → g → j in der yo-Form",mode:"present",verbs:["coger","dirigir","mugir","proteger","restringir","corregir","elegir","regir"]},
+{id:"pres-cz",group:"Presente",title:"-cer nach Konsonant → c → z",mode:"present",verbs:["vencer","convencer"]},
+{id:"pres-eie",group:"Presente",title:"Stammwechsel e → ie",mode:"present",verbs:["cerrar","querer","preferir","comenzar","despertarse","empezar","encender","entender","mentir","nevar","pensar","recomendar","sentarse","sentirse"]},
+{id:"pres-oue",group:"Presente",title:"Stammwechsel o → ue",mode:"present",verbs:["probar","poder","dormir","contar","doler","encontrar","morir","mostrar","mover","oler","llover","sonar","soñar","volver"]},
+{id:"pres-uue",group:"Presente",title:"Stammwechsel u → ue",mode:"present",verbs:["jugar"]},
+{id:"pres-ei",group:"Presente",title:"Stammwechsel e → i",mode:"present",verbs:["pedir","reír","seguir","corregir","despedirse","elegir","impedir","medir","repetir","servir","vestirse","regir"]},
+{id:"pres-uir",group:"Presente",title:"Verben auf -uir mit y-Einschub",mode:"present",verbs:["huir","concluir","construir","destruir","disminuir"]},
+{id:"pres-irreg",group:"Presente",title:"Stark unregelmäßige Verben",mode:"present",verbs:["ser","estar","ir","dar","decir","ver","oír"]},
+{id:"pres-yo",group:"Presente",title:"Besonders unregelmäßige yo-Form",mode:"present",verbs:["tener","hacer","poner","traer","saber","venir","salir","caer"]},
+{id:"refl-reg",group:"Reflexive Verben",title:"Regelmäßige reflexive Konjugation im Presente",mode:"present",verbs:["lavarse","aburrirse","afeitarse","bañarse","ducharse","irse","levantarse","llamarse","peinarse"]},
+{id:"refl-stem",group:"Reflexive Verben",title:"Reflexive Verben mit Stammwechsel",mode:"present",verbs:["sentarse","dormirse","vestirse","acordarse","acostarse","despedirse","despertarse","encontrarse","moverse","reírse","sentirse"]},
+
+{id:"ger-reg",group:"Gerundio",title:"Regelmäßige Bildung",mode:"gerund",verbs:["comprar","beber","abrir"]},
+{id:"ger-irreg",group:"Gerundio",title:"Unregelmäßige Formen",mode:"gerund",verbs:["caer","dar","decir","dormir","leer","ir","morir","oír","poder","ser","traer","venir","ver"]},
+{id:"ger-nodiph",group:"Gerundio",title:"Kein Diphthong im Gerundio",mode:"gerund",verbs:["empezar","jugar"]},
+{id:"ger-irstem",group:"Gerundio",title:"Stammwechsel bei -ir",mode:"gerund",verbs:["sentir","seguir"]},
+{id:"ger-uir",group:"Gerundio",title:"-uir → y",mode:"gerund",verbs:["construir","destruir"]},
+
+{id:"perf-reg",group:"Pretérito perfecto",title:"Regelmäßiges Partizip",mode:"perfect",verbs:["comprar","beber","vivir"]},
+{id:"perf-irreg",group:"Pretérito perfecto",title:"Unregelmäßige Partizipien",mode:"perfect",verbs:["abrir","cubrir","decir","escribir","hacer","ir","morir","poner","romper","ser","ver","volver","describir","revolver"]},
+
+{id:"ind-reg",group:"Pretérito indefinido",title:"Regelmäßige Verben",mode:"indef",verbs:["comprar","beber","escribir"]},
+{id:"ind-gar",group:"Pretérito indefinido",title:"-gar → gu in der yo-Form",mode:"indef",verbs:["llegar","jugar","apagar","negar","pagar","rogar"]},
+{id:"ind-car",group:"Pretérito indefinido",title:"-car → qu in der yo-Form",mode:"indef",verbs:["buscar","tocar","equivocarse","explicar","practicar","sacar"]},
+{id:"ind-zar",group:"Pretérito indefinido",title:"-zar → c in der yo-Form",mode:"indef",verbs:["almorzar","empezar","comenzar","cruzar","realizar"]},
+{id:"ind-iy",group:"Pretérito indefinido",title:"i → y in der 3. Person",mode:"indef",verbs:["creer","caer","construir","huir","leer","oír"]},
+{id:"ind-ei",group:"Pretérito indefinido",title:"Stammwechsel e → i",mode:"indef",verbs:["preferir","seguir","despedirse","elegir","mentir","pedir","reír","repetir","sentir","sentirse","servir","vestirse"]},
+{id:"ind-ou",group:"Pretérito indefinido",title:"Stammwechsel o → u",mode:"indef",verbs:["dormir","morir"]},
+{id:"ind-irreg",group:"Pretérito indefinido",title:"Stark unregelmäßige Verben",mode:"indef",verbs:["ser","ir","estar","tener","poder","poner","hacer","venir","querer","saber","dar","ver","andar","decir","traer","traducir","producir","conducir","haber","reducir","seducir"]},
+
+{id:"impf-reg",group:"Pretérito imperfecto",title:"Regelmäßige Verben",mode:"imperfect",verbs:["comprar","beber","escribir"]},
+{id:"impf-irreg",group:"Pretérito imperfecto",title:"Die drei unregelmäßigen Verben",mode:"imperfect",verbs:["ser","ir","ver"]},
+{id:"plusc",group:"Pluscuamperfecto",title:"Imperfecto von haber + Partizip",mode:"pluperfect",verbs:["comprar","beber","vivir"]},
+
+{id:"subj-reg",group:"Subjuntivo presente",title:"Regelmäßige Verben",mode:"subjPresent",verbs:["ayudar","beber","abrir"]},
+{id:"subj-stem-arer",group:"Subjuntivo presente",title:"Stammwechsel bei -ar / -er",mode:"subjPresent",verbs:["pensar","entender","probar","poder","jugar"]},
+{id:"subj-stem-ir",group:"Subjuntivo presente",title:"Stammwechsel bei -ir",mode:"subjPresent",verbs:["sentir","dormir","pedir"]},
+{id:"subj-ortho",group:"Subjuntivo presente",title:"Orthografische Veränderungen",mode:"subjPresent",verbs:["buscar","llegar","averiguar","coger","dirigir","distinguir","vencer","conocer","traducir","almorzar"]},
+{id:"subj-yo",group:"Subjuntivo presente",title:"Aus unregelmäßiger yo-Form gebildet",mode:"subjPresent",verbs:["hacer","tener","salir","caer","decir","oír","poner","traer","venir","valer","conducir","ofrecer","construir","ver"]},
+{id:"subj-full",group:"Subjuntivo presente",title:"Vollständig unregelmäßige Verben",mode:"subjPresent",verbs:["dar","estar","haber","ir","saber","ser","caber"]},
+
+{id:"subji-reg",group:"Subjuntivo imperfecto",title:"Regelmäßige Verben",mode:"subjImperfect",verbs:["ayudar","beber","abrir"]},
+{id:"subji-irreg",group:"Subjuntivo imperfecto",title:"Unregelmäßige Stämme aus dem Indefinido",mode:"subjImperfect",verbs:["andar","caber","conducir","dar","decir","estar","haber","hacer","ir","ser","poder","poner","querer","saber","tener","traer","venir"]},
+{id:"subj-perf",group:"Subjuntivo perfecto",title:"Subjuntivo von haber + Partizip",mode:"subjPerfect",verbs:["ayudar","beber","abrir"]},
+{id:"subj-plusc",group:"Subjuntivo pluscuamperfecto",title:"hubiera / hubiese + Partizip",mode:"subjPluperfect",verbs:["ayudar","beber","abrir"]},
+
+{id:"imp-tu-reg",group:"Imperativo",title:"Bejahter Imperativ – tú – regelmäßig",mode:"impTu",verbs:["ayudar","beber","abrir"]},
+{id:"imp-tu-irreg",group:"Imperativo",title:"Bejahter Imperativ – tú – unregelmäßig",mode:"impTu",verbs:["decir","hacer","ir","poner","salir","ser","tener","venir"]},
+{id:"imp-vos",group:"Imperativo",title:"Bejahter Imperativ – vosotros / vosotras",mode:"impVos",verbs:["ayudar","beber","abrir","sentarse","irse"]},
+{id:"imp-usted",group:"Imperativo",title:"Bejahter Imperativ – usted / ustedes",mode:"impUsted",verbs:["ayudar","beber","abrir"]},
+{id:"imp-neg",group:"Imperativo",title:"Verneinter Imperativ",mode:"impNeg",verbs:["ayudar","beber","abrir","salir"]},
+
+{id:"fut-reg",group:"Futuro simple",title:"Regelmäßige Verben",mode:"future",verbs:["ayudar","beber","abrir"]},
+{id:"fut-irreg",group:"Futuro simple",title:"Unregelmäßiger Stamm",mode:"future",verbs:["haber","caber","poder","querer","saber","poner","tener","valer","venir","salir","decir","hacer"]},
+{id:"fut-perf",group:"Futuro perfecto",title:"Futuro von haber + Partizip",mode:"futurePerfect",verbs:["ayudar","beber","abrir"]},
+
+{id:"cond-reg",group:"Condicional simple",title:"Regelmäßige Verben",mode:"conditional",verbs:["ayudar","beber","abrir"]},
+{id:"cond-irreg",group:"Condicional simple",title:"Unregelmäßiger Stamm",mode:"conditional",verbs:["haber","poder","querer","saber","caber","poner","tener","venir","salir","valer","decir","hacer"]},
+{id:"cond-comp",group:"Condicional compuesto",title:"Condicional von haber + Partizip",mode:"conditionalPerfect",verbs:["ayudar","beber","abrir"]}
+];
+
+const EIE=new Set(["cerrar","querer","preferir","comenzar","despertar","empezar","encender","entender","mentir","nevar","pensar","recomendar","sentar","sentir"]);
+const OUE=new Set(["probar","poder","dormir","contar","doler","encontrar","morir","mostrar","mover","oler","llover","sonar","soñar","volver","acordar","acostar"]);
+const UUE=new Set(["jugar"]);
+const EI=new Set(["pedir","reír","seguir","corregir","despedir","elegir","impedir","medir","repetir","servir","vestir","regir"]);
+const CZC=new Set(["conocer","ofrecer","conducir","agradecer","crecer","nacer","obedecer","permanecer","pertenecer","reconocer","producir","traducir"]);
+const GJ=new Set(["coger","dirigir","mugir","proteger","restringir","corregir","elegir","regir"]);
+const CZ=new Set(["vencer","convencer"]);
+const UIR=new Set(["huir","concluir","construir","destruir","disminuir"]);
+
+function splitReflexive(v){return v.endsWith("se")?[v.slice(0,-2),true]:[v,false]}
+function changeLast(s,from,to){const i=s.lastIndexOf(from);return i<0?s:s.slice(0,i)+to+s.slice(i+from.length)}
+function accentLastVowel(s){for(let i=s.length-1;i>=0;i--){const m={a:"á",e:"é",i:"í",o:"ó",u:"ú"}[s[i]];if(m)return s.slice(0,i)+m+s.slice(i+1)}return s}
+function addReflex(forms,isRef){return isRef?forms.map((f,i)=>REFL[i]+" "+f):forms}
+
+const PRESENT_EXACT={
+ser:["soy","eres","es","somos","sois","son"],
+estar:["estoy","estás","está","estamos","estáis","están"],
+ir:["voy","vas","va","vamos","vais","van"],
+dar:["doy","das","da","damos","dais","dan"],
+decir:["digo","dices","dice","decimos","decís","dicen"],
+ver:["veo","ves","ve","vemos","veis","ven"],
+oír:["oigo","oyes","oye","oímos","oís","oyen"],
+tener:["tengo","tienes","tiene","tenemos","tenéis","tienen"],
+hacer:["hago","haces","hace","hacemos","hacéis","hacen"],
+poner:["pongo","pones","pone","ponemos","ponéis","ponen"],
+traer:["traigo","traes","trae","traemos","traéis","traen"],
+saber:["sé","sabes","sabe","sabemos","sabéis","saben"],
+venir:["vengo","vienes","viene","venimos","venís","vienen"],
+salir:["salgo","sales","sale","salimos","salís","salen"],
+caer:["caigo","caes","cae","caemos","caéis","caen"],
+reír:["río","ríes","ríe","reímos","reís","ríen"],
+seguir:["sigo","sigues","sigue","seguimos","seguís","siguen"],
+oler:["huelo","hueles","huele","olemos","oléis","huelen"]
+};
+
+function present(v){
+  let [base,ref]=splitReflexive(v);
+  if(PRESENT_EXACT[base]) return addReflex([...PRESENT_EXACT[base]],ref);
+  const cls=base.endsWith("ar")?"ar":base.endsWith("er")?"er":"ir";
+  const endings=cls==="ar"?["o","as","a","amos","áis","an"]:cls==="er"?["o","es","e","emos","éis","en"]:["o","es","e","imos","ís","en"];
+  let root=base.slice(0,-2);
+  const forms=[];
+  for(let i=0;i<6;i++){
+    let r=root;
+    if((i===0||i===1||i===2||i===5)){
+      if(EIE.has(base)) r=changeLast(r,"e","ie");
+      if(OUE.has(base)) r=changeLast(r,"o","ue");
+      if(UUE.has(base)) r=changeLast(r,"u","ue");
+      if(EI.has(base)) r=changeLast(r,"e","i");
+    }
+    if(UIR.has(base)&&(i===0||i===1||i===2||i===5)){
+      if(i===0) forms.push(r+"yo");
+      else forms.push(r+"y"+endings[i]);
+      continue;
+    }
+    if(i===0){
+      if(CZC.has(base)){forms.push(base.slice(0,-3)+"zco");continue}
+      if(GJ.has(base)){r=r.slice(0,-1)+"j"}
+      else if(CZ.has(base)){r=r.slice(0,-1)+"z"}
+    }
+    forms.push(r+endings[i]);
+  }
+  return addReflex(forms,ref);
+}
+
+const GER_EXACT={
+caer:"cayendo",decir:"diciendo",dormir:"durmiendo",leer:"leyendo",ir:"yendo",morir:"muriendo",oír:"oyendo",
+poder:"pudiendo",ser:"siendo",traer:"trayendo",venir:"viniendo",ver:"viendo",sentir:"sintiendo",seguir:"siguiendo",
+construir:"construyendo",destruir:"destruyendo"
+};
+function gerund(v){
+  let [base]=splitReflexive(v);
+  if(GER_EXACT[base])return GER_EXACT[base];
+  return base.slice(0,-2)+(base.endsWith("ar")?"ando":"iendo");
+}
+
+const PART={
+abrir:"abierto",cubrir:"cubierto",decir:"dicho",escribir:"escrito",hacer:"hecho",ir:"ido",morir:"muerto",
+poner:"puesto",romper:"roto",ser:"sido",ver:"visto",volver:"vuelto",describir:"descrito",revolver:"revuelto"
+};
+function participle(v){
+  let [base]=splitReflexive(v);
+  if(PART[base])return PART[base];
+  return base.slice(0,-2)+(base.endsWith("ar")?"ado":"ido");
+}
+
+const INDEF_EXACT={
+ser:["fui","fuiste","fue","fuimos","fuisteis","fueron"],ir:["fui","fuiste","fue","fuimos","fuisteis","fueron"],
+dar:["di","diste","dio","dimos","disteis","dieron"],ver:["vi","viste","vio","vimos","visteis","vieron"],
+creer:["creí","creíste","creyó","creímos","creísteis","creyeron"],caer:["caí","caíste","cayó","caímos","caísteis","cayeron"],
+construir:["construí","construiste","construyó","construimos","construisteis","construyeron"],
+huir:["huí","huiste","huyó","huimos","huisteis","huyeron"],leer:["leí","leíste","leyó","leímos","leísteis","leyeron"],
+oír:["oí","oíste","oyó","oímos","oísteis","oyeron"]
+};
+const IRREG_ROOT={estar:"estuv",tener:"tuv",poder:"pud",poner:"pus",hacer:"hic",venir:"vin",querer:"quis",saber:"sup",
+andar:"anduv",decir:"dij",traer:"traj",traducir:"traduj",producir:"produj",conducir:"conduj",haber:"hub",reducir:"reduj",seducir:"seduj",caber:"cup"};
+function indef(v){
+  let [base,ref]=splitReflexive(v);
+  let forms;
+  if(INDEF_EXACT[base]) forms=[...INDEF_EXACT[base]];
+  else if(IRREG_ROOT[base]){
+    const r=IRREG_ROOT[base],j=r.endsWith("j");
+    forms=[r+"e",r+"iste",base==="hacer"?"hizo":r+"o",r+"imos",r+"isteis",r+(j?"eron":"ieron")];
+  }else{
+    const cls=base.endsWith("ar")?"ar":base.endsWith("er")?"er":"ir";
+    const endings=cls==="ar"?["é","aste","ó","amos","asteis","aron"]:["í","iste","ió","imos","isteis","ieron"];
+    let root=base.slice(0,-2);
+    forms=endings.map((e,i)=>{
+      let r=root;
+      if(cls==="ir"&&(i===2||i===5)){
+        if(EIE.has(base)||EI.has(base)) r=changeLast(r,"e","i");
+        if(OUE.has(base)) r=changeLast(r,"o","u");
+      }
+      if(i===0&&cls==="ar"){
+        if(base.endsWith("gar")) r=r.slice(0,-1)+"gu";
+        else if(base.endsWith("car")) r=r.slice(0,-1)+"qu";
+        else if(base.endsWith("zar")) r=r.slice(0,-1)+"c";
+      }
+      return r+e;
+    });
+  }
+  return addReflex(forms,ref);
+}
+
+function imperfect(v){
+  let [base,ref]=splitReflexive(v);
+  let forms;
+  if(base==="ser")forms=["era","eras","era","éramos","erais","eran"];
+  else if(base==="ir")forms=["iba","ibas","iba","íbamos","ibais","iban"];
+  else if(base==="ver")forms=["veía","veías","veía","veíamos","veíais","veían"];
+  else{
+    const root=base.slice(0,-2);
+    forms=base.endsWith("ar")
+      ?["aba","abas","aba","ábamos","abais","aban"].map(x=>root+x)
+      :["ía","ías","ía","íamos","íais","ían"].map(x=>root+x);
+  }
+  return addReflex(forms,ref);
+}
+
+const SUBJ_FULL={
+dar:["dé","des","dé","demos","deis","den"],estar:["esté","estés","esté","estemos","estéis","estén"],
+haber:["haya","hayas","haya","hayamos","hayáis","hayan"],ir:["vaya","vayas","vaya","vayamos","vayáis","vayan"],
+saber:["sepa","sepas","sepa","sepamos","sepáis","sepan"],ser:["sea","seas","sea","seamos","seáis","sean"],
+caber:["quepa","quepas","quepa","quepamos","quepáis","quepan"]
+};
+const SUBJ_STEM={hacer:"hag",tener:"teng",salir:"salg",caer:"caig",decir:"dig",oír:"oig",poner:"pong",traer:"traig",
+venir:"veng",valer:"valg",conducir:"conduzc",ofrecer:"ofrezc",construir:"construy",ver:"ve"};
+function subjPresent(v){
+  let [base,ref]=splitReflexive(v);
+  if(SUBJ_FULL[base]) return addReflex([...SUBJ_FULL[base]],ref);
+  const cls=base.endsWith("ar")?"ar":base.endsWith("er")?"er":"ir";
+  const endings=cls==="ar"?["e","es","e","emos","éis","en"]:["a","as","a","amos","áis","an"];
+  let forms=[];
+  for(let i=0;i<6;i++){
+    let r=base.slice(0,-2);
+    if(SUBJ_STEM[base]) r=SUBJ_STEM[base];
+    else if(cls==="ir"&&EIE.has(base)){
+      r=changeLast(r,"e",(i===3||i===4)?"i":"ie");
+    }else if(cls==="ir"&&OUE.has(base)){
+      r=changeLast(r,"o",(i===3||i===4)?"u":"ue");
+    }else if(EI.has(base)){
+      r=changeLast(r,"e","i");
+    }else if((i===0||i===1||i===2||i===5)&&EIE.has(base)){
+      r=changeLast(r,"e","ie");
+    }else if((i===0||i===1||i===2||i===5)&&OUE.has(base)){
+      r=changeLast(r,"o","ue");
+    }else if((i===0||i===1||i===2||i===5)&&UUE.has(base)){
+      r=changeLast(r,"u","ue");
+    }
+    if(!SUBJ_STEM[base]){
+      if(base.endsWith("car")) r=r.slice(0,-1)+"qu";
+      else if(base.endsWith("gar")) r=r.slice(0,-1)+"gu";
+      else if(base.endsWith("guar")) r=r.slice(0,-2)+"gü";
+      else if(base.endsWith("ger")||base.endsWith("gir")) r=r.slice(0,-1)+"j";
+      else if(base.endsWith("guir")) r=r.slice(0,-2)+"g";
+      else if(CZC.has(base)) r=base.slice(0,-3)+"zc";
+      else if(CZ.has(base)) r=r.slice(0,-1)+"z";
+      else if(base.endsWith("zar")) r=r.slice(0,-1)+"c";
+      if(UIR.has(base)) r=base.slice(0,-2)+"y";
+    }
+    forms.push(r+endings[i]);
+  }
+  return addReflex(forms,ref);
+}
+
+function subjImperfect(v){
+  let [base,ref]=splitReflexive(v);
+  const ellos=indef(base)[5];
+  const stem=ellos.slice(0,-3);
+  const sAcc=accentLastVowel(stem);
+  const ra=[stem+"ra",stem+"ras",stem+"ra",sAcc+"ramos",stem+"rais",stem+"ran"];
+  const se=[stem+"se",stem+"ses",stem+"se",sAcc+"semos",stem+"seis",stem+"sen"];
+  const combined=ra.map((x,i)=>x+" / "+se[i]);
+  return addReflex(combined,ref);
+}
+
+const HABER={
+present:["he","has","ha","hemos","habéis","han"],
+imperfect:["había","habías","había","habíamos","habíais","habían"],
+subj:["haya","hayas","haya","hayamos","hayáis","hayan"],
+future:["habré","habrás","habrá","habremos","habréis","habrán"],
+conditional:["habría","habrías","habría","habríamos","habríais","habrían"]
+};
+function compound(v,aux){
+  let [base,ref]=splitReflexive(v),part=participle(base);
+  return HABER[aux].map((h,i)=>(ref?REFL[i]+" ":"")+h+" "+part);
+}
+function subjPluperfect(v){
+  let [base,ref]=splitReflexive(v),part=participle(base);
+  const haber=subjImperfect("haber");
+  return haber.map((h,i)=>(ref?REFL[i]+" ":"")+h.split(" / ")[0]+" "+part+" / "+h.split(" / ")[1]+" "+part);
+}
+
+const FUT_ROOT={haber:"habr",caber:"cabr",poder:"podr",querer:"querr",saber:"sabr",poner:"pondr",tener:"tendr",valer:"valdr",venir:"vendr",salir:"saldr",decir:"dir",hacer:"har"};
+function future(v){
+  let [base,ref]=splitReflexive(v),r=FUT_ROOT[base]||base;
+  const fs=["é","ás","á","emos","éis","án"].map(x=>r+x);
+  return addReflex(fs,ref);
+}
+function conditional(v){
+  let [base,ref]=splitReflexive(v),r=FUT_ROOT[base]||base;
+  const fs=["ía","ías","ía","íamos","íais","ían"].map(x=>r+x);
+  return addReflex(fs,ref);
+}
+
+const IMP_TU={decir:"di",hacer:"haz",ir:"ve",poner:"pon",salir:"sal",ser:"sé",tener:"ten",venir:"ven"};
+function impTu(v){
+  let [base,ref]=splitReflexive(v);
+  let f=IMP_TU[base]||present(base)[2];
+  if(ref) f=f+"te";
+  return [["tú","¡"+f+"!"]];
+}
+function impVos(v){
+  let [base,ref]=splitReflexive(v);
+  if(ref){
+    if(base==="ir")return [["vosotros / vosotras","¡idos! / ¡iros!"]];
+    return [["vosotros / vosotras","¡"+base.slice(0,-1)+"os!"]];
+  }
+  return [["vosotros / vosotras","¡"+base.slice(0,-1)+"d!"]];
+}
+function impUsted(v){
+  const s=subjPresent(v);
+  return [["usted","¡"+s[2]+"!"],["ustedes","¡"+s[5]+"!"]];
+}
+function impNeg(v){
+  const s=subjPresent(v);
+  return [["tú","¡no "+s[1]+"!"],["vosotros / vosotras","¡no "+s[4]+"!"],["usted","¡no "+s[2]+"!"],["ustedes","¡no "+s[5]+"!"]];
+}
+
+function formsFor(v,mode){
+  if(mode==="gerund")return [["Gerundio",gerund(v)]];
+  if(mode==="present")return PERSONS.map((p,i)=>[p,present(v)[i]]);
+  if(mode==="perfect")return PERSONS.map((p,i)=>[p,compound(v,"present")[i]]);
+  if(mode==="indef")return PERSONS.map((p,i)=>[p,indef(v)[i]]);
+  if(mode==="imperfect")return PERSONS.map((p,i)=>[p,imperfect(v)[i]]);
+  if(mode==="pluperfect")return PERSONS.map((p,i)=>[p,compound(v,"imperfect")[i]]);
+  if(mode==="subjPresent")return PERSONS.map((p,i)=>[p,subjPresent(v)[i]]);
+  if(mode==="subjImperfect")return PERSONS.map((p,i)=>[p,subjImperfect(v)[i]]);
+  if(mode==="subjPerfect")return PERSONS.map((p,i)=>[p,compound(v,"subj")[i]]);
+  if(mode==="subjPluperfect")return PERSONS.map((p,i)=>[p,subjPluperfect(v)[i]]);
+  if(mode==="impTu")return impTu(v);
+  if(mode==="impVos")return impVos(v);
+  if(mode==="impUsted")return impUsted(v);
+  if(mode==="impNeg")return impNeg(v);
+  if(mode==="future")return PERSONS.map((p,i)=>[p,future(v)[i]]);
+  if(mode==="futurePerfect")return PERSONS.map((p,i)=>[p,compound(v,"future")[i]]);
+  if(mode==="conditional")return PERSONS.map((p,i)=>[p,conditional(v)[i]]);
+  if(mode==="conditionalPerfect")return PERSONS.map((p,i)=>[p,compound(v,"conditional")[i]]);
+  return [];
+}
+
+const byGroup=new Map();
+for(const t of TOPICS){if(!byGroup.has(t.group))byGroup.set(t.group,[]);byGroup.get(t.group).push(t)}
+const list=document.getElementById("topicList");
+for(const [group,topics] of byGroup){
+  const sec=document.createElement("div");sec.className="topic-group";
+  sec.innerHTML="<h2>"+group+"</h2><div class='topic-grid'></div>";
+  const grid=sec.querySelector(".topic-grid");
+  for(const t of topics){
+    const lab=document.createElement("label");lab.className="topic";
+    lab.innerHTML="<input type='checkbox' value='"+t.id+"'><span><strong>"+t.title+"</strong><span>"+t.verbs.length+" Verb"+(t.verbs.length===1?"":"en")+"</span></span>";
+    grid.appendChild(lab);
+  }
+  list.appendChild(sec);
+}
+
+function selectedTopics(){
+  const ids=new Set([...document.querySelectorAll(".topic input:checked")].map(x=>x.value));
+  return TOPICS.filter(t=>ids.has(t.id));
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function render(){
+  const topics=selectedTopics();
+  const preview=document.getElementById("preview");
+  preview.innerHTML="";
+  if(!topics.length){
+    document.getElementById("previewCard").classList.remove("hidden");
+    document.getElementById("selectionInfo").textContent="";
+    preview.innerHTML="<div class='empty'>Bitte mindestens einen Grammatikbereich auswählen.</div>";
+    return;
+  }
+  document.getElementById("previewCard").classList.remove("hidden");
+  const total=topics.reduce((n,t)=>n+t.verbs.length,0);
+  document.getElementById("selectionInfo").textContent=topics.length+" Bereich(e) · "+total+" Konjugationen";
+  for(const t of topics){
+    const sec=document.createElement("section");sec.className="topic-preview";
+    sec.innerHTML="<h2 class='topic-title'>"+escapeHtml(t.group+" – "+t.title)+"</h2><div class='verb-grid'></div>";
+    const grid=sec.querySelector(".verb-grid");
+    for(const v of t.verbs){
+      const card=document.createElement("div");card.className="verb-card";
+      const rows=formsFor(v,t.mode).map(([p,f])=>"<div class='person'>"+escapeHtml(p)+"</div><div class='form'>"+escapeHtml(f)+"</div>").join("");
+      card.innerHTML="<div class='verb-de'>"+escapeHtml(DE[v]||v)+"</div><div class='verb-es'>"+escapeHtml(v)+" · "+escapeHtml(t.title)+"</div><div class='conj'>"+rows+"</div>";
+      grid.appendChild(card);
+    }
+    preview.appendChild(sec);
+  }
+  document.getElementById("previewCard").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function downloadPdf(){
+  const topics=selectedTopics();
+  if(!topics.length){render();return}
+  if(!window.jspdf){alert("Die PDF-Funktion konnte nicht geladen werden. Bitte die Seite neu laden.");return}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:"mm",format:"a4"});
+  const margin=16,pageW=210,maxY=280;
+  let y=18;
+  const line=(txt,size=10,bold=false,indent=0)=>{
+    doc.setFont("helvetica",bold?"bold":"normal");doc.setFontSize(size);
+    const lines=doc.splitTextToSize(String(txt),210-margin*2-indent);
+    for(const l of lines){
+      if(y>maxY){doc.addPage();y=18}
+      doc.text(l,margin+indent,y);y+=size*0.42+2;
+    }
+  };
+  line("Spanisch – Konjugationen",18,true);y+=2;
+  for(const t of topics){
+    if(y>255){doc.addPage();y=18}
+    line(t.group+" – "+t.title,13,true);y+=1;
+    for(const v of t.verbs){
+      if(y>245){doc.addPage();y=18}
+      line(DE[v]||v,11,true);
+      line(v,9,false);y+=1;
+      for(const [p,f] of formsFor(v,t.mode)) line(p+":  "+f,9,false,3);
+      y+=4;
+    }
+    y+=3;
+  }
+  doc.save("Spanisch_Konjugationen.pdf");
+}
+document.getElementById("showBtn").addEventListener("click",render);
+document.getElementById("pdfBtn").addEventListener("click",downloadPdf);
+document.getElementById("allBtn").addEventListener("click",()=>document.querySelectorAll(".topic input").forEach(x=>x.checked=true));
+document.getElementById("noneBtn").addEventListener("click",()=>document.querySelectorAll(".topic input").forEach(x=>x.checked=false));
+document.getElementById("backBtn").addEventListener("click",()=>location.href="uebung.html");
+</script>
+</body>
+</html>
