@@ -462,14 +462,16 @@
         : (row.folderTitles||[]).map(title=>({title}));
       const entries=folders.length?folders:[{title:"Ohne Lernordner"}];
       for(const folder of entries){
-        const folderLabel=[
-          folder.quarterOrder?(row.courseKey||"Q")+"."+folder.quarterOrder:null,
-          folder.quarterTitle||null,
-          folder.title||null
-        ].filter(Boolean).join(" · ");
+        const quarterCode=folder.quarterOrder?(row.courseKey||"Q")+"."+folder.quarterOrder:null;
+        const quarterTitle=folder.quarterTitle||null;
+        const folderTitle=folder.title||null;
+        const folderLabel=[quarterCode,quarterTitle,folderTitle].filter(Boolean).join(" · ");
         const unitLabel=row.unitTitle&&row.unitTitle!==row.courseKey?row.unitTitle:null;
         const courseLabel=pdf&&/^Q[12]$/.test(row.courseKey||"")?null:(row.courseKey||null);
-        const title=[courseLabel,unitLabel,folderLabel].filter(Boolean).join(" · ");
+        const contextLabel=[courseLabel,unitLabel,quarterCode,quarterTitle].filter(Boolean).join(" · ");
+        const title=pdf
+          ? [contextLabel,folderTitle].filter(Boolean).join("\n")
+          : [courseLabel,unitLabel,folderLabel].filter(Boolean).join(" · ");
         if(!groups.has(title))groups.set(title,[]);
         groups.get(title).push(row);
       }
