@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Spanisch – Grammatiktest</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+*{box-sizing:border-box}body{margin:0;padding:18px}.wrap{max-width:980px;margin:0 auto}.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+h1{margin:0 0 6px}h2{margin:0 0 10px}.sub,.tiny{color:#64748b}.tiny{font-size:.9rem}.hidden{display:none!important}
+input{font:inherit}input[type=text]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff}
+button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer}.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.msg{padding:11px 13px;border-radius:10px;margin-top:12px;display:none}.msg.show{display:block}.err{background:#fef2f2;color:#991b1b}.ok{background:#ecfdf5;color:#166534}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.95);padding:8px 0}.topbar-inner{background:#fff;border:1px solid #dbe2ea;border-radius:14px;padding:11px 14px;display:flex;justify-content:space-between;gap:14px;align-items:center}.timer{font-size:1.25rem;font-weight:850;font-variant-numeric:tabular-nums}.danger{color:#b91c1c}
+.chars{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}.chars button{padding:7px 10px;background:#eef2f7;color:#172033}
+.question{border:1px solid #dbe2ea;border-radius:14px;padding:16px;margin:13px 0;background:#fff}.qhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.prompt{font-size:1.15rem;font-weight:850}.topic{font-size:.86rem;color:#64748b}
+.field{display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-top:9px}.field strong{font-size:.92rem}.translation{margin:12px 0 8px;padding-bottom:10px;border-bottom:1px solid #e2e8f0}
+.result{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0}.result>div{background:#f8fafc;border-radius:11px;padding:11px}.result strong{display:block;font-size:1.2rem}
+@media(max-width:650px){body{padding:10px}.card{padding:15px}.field{grid-template-columns:1fr;gap:5px}.topbar-inner{align-items:flex-start;flex-direction:column}.result{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body><div class="wrap">
+<section id="startCard" class="card">
+<h1 id="title">Grammatiktest</h1><p id="meta" class="sub">Test wird geladen …</p>
+<label class="tiny" for="studentCode">Persönliche Schülernummer</label>
+<input id="studentCode" type="text" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="z. B. 12345">
+<div class="actions"><button id="startBtn" class="primary">Test starten</button></div><div id="startMsg" class="msg"></div>
+</section>
+<section id="testArea" class="hidden">
+<div class="topbar"><div class="topbar-inner"><div><strong id="testTitle"></strong><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
+<div id="chars" class="chars"><button>á</button><button>é</button><button>í</button><button>ó</button><button>ú</button><button>ü</button><button>ñ</button><button>¿</button><button>¡</button></div></div>
+<section class="card"><h2>Aufgaben</h2><p class="tiny">Übersetze das deutsche Verb ins Spanische und trage anschließend die geforderten Formen ein.</p><div id="questions"></div>
+<div class="actions"><button id="submitBtn" class="primary">Test endgültig abgeben</button></div><div id="testMsg" class="msg"></div></section>
+</section>
+<section id="doneCard" class="card hidden"><h1>Test abgegeben</h1><p class="sub">Deine Antworten wurden gespeichert und automatisch ausgewertet.</p>
+<div class="result"><div><span class="tiny">Punkte</span><strong id="points">—</strong></div><div><span class="tiny">Prozent</span><strong id="percent">—</strong></div><div><span class="tiny">Note</span><strong id="grade">—</strong></div><div><span class="tiny">Oberstufenpunkte</span><strong id="op">—</strong></div></div>
+<p class="tiny">Die Lehrkraft kann die automatische Auswertung anschließend noch nachkorrigieren.</p></section>
+</div>
+<script>
+const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
+const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+const $=id=>document.getElementById(id);
+const code=(new URLSearchParams(location.search).get("code")||"").trim().toUpperCase();
+let token="",deadlineAt=null,questions=[],timerHandle=null,saveHandle=null,lastInput=null,submitting=false;
+const storageKey="spanischGrammarTest:"+code;
+function showMsg(el,msg,type="err"){el.textContent=msg;el.className="msg show "+type}
+function api(body){return fetch(SUPABASE_URL+"/functions/v1/grammar-student-test",{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY},body:JSON.stringify(body)}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok||d.error)throw new Error(d.error||"Die Anfrage konnte nicht verarbeitet werden.");return d})}
+function fmtDate(s){if(!s)return"";const [y,m,d]=s.slice(0,10).split("-");return d+"."+m+"."+y}
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
+function parseSaved(v){try{return JSON.parse(v||"{}")}catch{return {translation:"",forms:[]}}}
+function render(data){
+ questions=data.questions||[];deadlineAt=data.deadlineAt;token=data.accessToken;sessionStorage.setItem(storageKey,token);
+ $("startCard").classList.add("hidden");$("testArea").classList.remove("hidden");$("testTitle").textContent=data.test?.title||"Grammatiktest";
+ const saved=new Map((data.savedAnswers||[]).map(a=>[String(a.question_id),parseSaved(a.response_text)]));
+ $("questions").innerHTML="";
+ for(const q of questions){const m=q.question_meta||{},p=saved.get(String(q.id))||{translation:"",forms:[]};const div=document.createElement("div");div.className="question";div.dataset.qid=q.id;
+ div.innerHTML='<div class="qhead"><div><div class="prompt">'+q.position+'. '+esc(q.source_snapshot)+'</div><div class="topic">'+esc((m.topicGroup||"")+(m.topicTitle?" – "+m.topicTitle:""))+'</div></div></div>'+
+ '<div class="translation"><div class="field"><strong>Spanisches Verb</strong><input class="translation-input" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.translation||"")+'"></div></div>'+
+ (m.labels||[]).map((lab,i)=>'<div class="field"><strong>'+esc(lab)+'</strong><input class="form-input" data-i="'+i+'" type="text" autocomplete="off" spellcheck="false" value="'+esc(p.forms?.[i]||"")+'"></div>').join("");
+ $("questions").appendChild(div)}
+ document.querySelectorAll(".question input").forEach(inp=>{inp.addEventListener("focus",()=>lastInput=inp);inp.addEventListener("input",()=>{updateAnswered();scheduleSave()})});updateAnswered();startTimer();saveAll(false)
+}
+function collect(){return [...document.querySelectorAll(".question")].map(q=>({questionId:q.dataset.qid,translation:q.querySelector(".translation-input").value,forms:[...q.querySelectorAll(".form-input")].map(x=>x.value)}))}
+function updateAnswered(){let n=0;document.querySelectorAll(".question input").forEach(x=>{if(x.value.trim())n++});$("answered").textContent=n}
+function scheduleSave(){clearTimeout(saveHandle);saveHandle=setTimeout(()=>saveAll(false),900)}
+async function saveAll(auto){if(!token||submitting)return;try{$("saveState").textContent="Speichern …";const d=await api({action:"save",accessToken:token,answers:collect()});if(d.submitted){showResult(d.result);return}$("saveState").textContent="Gespeichert"}catch{$("saveState").textContent="Speichern fehlgeschlagen"}}
+function startTimer(){clearInterval(timerHandle);const tick=()=>{const ms=Math.max(0,new Date(deadlineAt).getTime()-Date.now()),sec=Math.ceil(ms/1000),min=Math.floor(sec/60),s=sec%60;$("timer").textContent=String(min).padStart(2,"0")+":"+String(s).padStart(2,"0");$("timer").classList.toggle("danger",sec<=60);if(ms<=0){clearInterval(timerHandle);submit(true)}};tick();timerHandle=setInterval(tick,1000)}
+async function submit(auto){if(submitting)return;if(!auto){const empty=[...document.querySelectorAll(".question input")].filter(x=>!x.value.trim()).length;if(empty&&!confirm("Es sind noch "+empty+" Felder leer. Trotzdem endgültig abgeben?"))return}submitting=true;$("submitBtn").disabled=true;$("submitBtn").textContent="Wird abgegeben …";try{const d=await api({action:"submit",accessToken:token,answers:collect(),auto});showResult(d.result)}catch(e){showMsg($("testMsg"),e.message);submitting=false;$("submitBtn").disabled=false;$("submitBtn").textContent="Test endgültig abgeben"}}
+function showResult(r){clearInterval(timerHandle);sessionStorage.removeItem(storageKey);$("testArea").classList.add("hidden");$("startCard").classList.add("hidden");$("doneCard").classList.remove("hidden");$("points").textContent=r.summary.rawPoints+" / "+r.summary.maxPoints;$("percent").textContent=r.summary.percent+" %";$("grade").textContent=r.summary.gradeText;$("op").textContent=r.summary.upperSchoolPoints}
+$("chars").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON"||!lastInput)return;const ch=e.target.textContent,start=lastInput.selectionStart??lastInput.value.length,end=lastInput.selectionEnd??start;lastInput.setRangeText(ch,start,end,"end");lastInput.focus();lastInput.dispatchEvent(new Event("input",{bubbles:true}))});
+$("startBtn").addEventListener("click",async()=>{const studentCode=$("studentCode").value.trim();try{$("startBtn").disabled=true;const old=sessionStorage.getItem(storageKey)||"";const d=await api({action:"start",code,studentCode,accessToken:old});if(d.submitted){showResult(d.result)}else render(d)}catch(e){showMsg($("startMsg"),e.message)}finally{$("startBtn").disabled=false}});
+$("submitBtn").addEventListener("click",()=>submit(false));
+(async()=>{if(!code){showMsg($("startMsg"),"Der Testlink ist unvollständig.");$("startBtn").disabled=true;return}try{const d=await api({action:"info",code});$("title").textContent=d.test.title;$("meta").textContent=fmtDate(d.test.testDate)+" · "+d.test.questionCount+" Verb-Aufgaben · "+d.test.durationMinutes+" Minuten";const old=sessionStorage.getItem(storageKey);if(old){const s=await api({action:"session",accessToken:old});if(s.submitted)showResult(s.result);else render(s)}}catch(e){showMsg($("startMsg"),e.message);$("startBtn").disabled=true}})();
+</script></body></html>
