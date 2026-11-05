@@ -337,7 +337,7 @@
             quarterChildren.querySelectorAll(".folder-check").forEach(box=>box.checked=qmaster.checked);
             updatePhaseMaster();
           });
-          quarterChildren.addEventListener("change",updatePhaseMaster);
+          quarterChildren.addEventListener("change",()=>updatePhaseMaster());
           quarter.querySelector(".quarter-toggle").addEventListener("click",e=>{
             const hidden=quarterChildren.classList.toggle("hidden");
             e.currentTarget.textContent=hidden?"Lernordner anzeigen ▾":"Lernordner ausblenden ▴";
