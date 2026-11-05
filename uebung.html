@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Spanisch – Vokabeltraining</title>
+  <style>
+    :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}
+    body{margin:0;padding:20px}
+    .wrap{max-width:980px;margin:0 auto}
+    .card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,23,42,.05)}
+    h1{margin:0 0 5px;font-size:2rem} h2{margin:0 0 8px} h3{margin:18px 0 8px}
+    .sub,.tiny,.muted{color:#64748b}.tiny{font-size:.9rem}.hidden{display:none!important}
+    button,input{font:inherit} button{border:0;border-radius:10px;padding:12px 16px;font-weight:750;cursor:pointer}
+    button:disabled{opacity:.6;cursor:not-allowed}.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}
+    .good{background:#ecfdf5;color:#166534}.warnbox{background:#fff7ed;color:#9a3412}.bad{background:#fef2f2;color:#991b1b}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    label.field{display:block;font-weight:750;margin:14px 0 6px}
+    input[type=number]{width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff}
+    .units{display:grid;gap:10px;margin-top:12px}
+    .unit-group{border:1px solid #cbd5e1;border-radius:14px;background:#fafafa;overflow:hidden}
+    .unit-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px}
+    .unit-label{margin:0;display:flex;gap:10px;align-items:center;font-weight:800;cursor:pointer}
+    .unit-label input,.folder-row input{width:19px;height:19px;flex:0 0 auto}
+    .unit-title-wrap{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+    .count{font-size:.82rem;color:#64748b;font-weight:650}
+    .toggle{padding:8px 10px;background:#e2e8f0;color:#334155;font-size:.88rem;white-space:nowrap}
+    .children{border-top:1px solid #e2e8f0;padding:8px 14px 12px 42px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:6px 16px;background:#fff}
+    .folder-row{margin:0;display:flex;gap:9px;align-items:center;padding:7px 5px;font-weight:600;cursor:pointer;border-radius:8px}
+    .folder-row:hover{background:#f8fafc}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .msg{padding:12px 14px;border-radius:10px;margin-top:14px;display:none}.msg.show{display:block}
+    .info{background:#eff6ff;color:#1e40af}.ok{background:#ecfdf5;color:#166534}.err{background:#fef2f2;color:#991b1b}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.96);backdrop-filter:blur(8px);padding:10px 0}
+    .topbar-inner{background:#fff;border:1px solid #dbe2ea;border-radius:14px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px;box-shadow:0 3px 14px rgba(15,23,42,.07)}
+    .timer{font-size:1.3rem;font-weight:850;font-variant-numeric:tabular-nums}.timer.warn{color:#b45309}.timer.danger{color:#b91c1c}
+    .progress{font-weight:700}.chars{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.chars button{padding:8px 11px;background:#eef2f7;color:#172033}
+    .question{border:1px solid #dbe2ea;border-radius:14px;padding:16px;margin:12px 0;background:#fff}
+    .qnum{font-size:.85rem;color:#64748b;font-weight:700;margin-bottom:5px}.prompt{font-size:1.12rem;font-weight:800;margin-bottom:10px}
+    .question input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;font-size:1rem}
+    .resultbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+    .resultbox div{background:#f8fafc;border-radius:10px;padding:12px}.resultbox strong{display:block;font-size:1.2rem}
+    .mistake{border:1px solid #fecaca;background:#fffafa;border-radius:12px;padding:13px;margin:9px 0}
+    .almost{border-color:#fed7aa;background:#fffaf5}
+    .mistake-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.mistake-prompt{font-weight:800}
+    .answer-line{margin-top:7px}.solution{color:#166534;font-weight:700}.own{color:#991b1b}.half{color:#9a3412}
+    .note{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-top:14px;font-size:.92rem}
+    a.btn{display:inline-block;text-decoration:none;border-radius:10px;padding:12px 16px;font-weight:750}
+    @media(max-width:700px){
+      body{padding:12px}.card{padding:16px}.row,.resultbox{grid-template-columns:1fr}
+      .topbar-inner{align-items:flex-start;flex-direction:column;gap:6px}.children{padding-left:14px;grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section id="setupCard" class="card">
+    <h1>Spanisch – Vokabeltraining</h1>
+    <p class="sub">Stelle dir selbst eine Testsimulation zusammen und überprüfe deinen Lernstand.</p>
+
+    <h2 style="margin-top:24px">1. Vokabelbereiche auswählen</h2>
+    <p class="tiny">Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.</p>
+    <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
+
+    <h2 style="margin-top:26px">2. Test festlegen</h2>
+    <div class="row">
+      <div>
+        <label class="field" for="questionCount">Anzahl der Vokabeln</label>
+        <input id="questionCount" type="number" min="1" max="500" value="20">
+      </div>
+      <div>
+        <label class="field" for="durationMinutes">Bearbeitungszeit in Minuten</label>
+        <input id="durationMinutes" type="number" min="1" max="300" value="10">
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>So funktioniert die Simulation:</strong> Du erhältst zufällig ausgewählte Vokabeln aus deinen Bereichen. Während der Bearbeitung werden keine Lösungen angezeigt. Nach der Abgabe bekommst du sofort deine Auswertung und siehst deine Fehler.
+    </div>
+
+    <div class="actions">
+      <button id="startBtn" class="primary">Testsimulation starten</button>
+    </div>
+    <div id="setupMsg" class="msg"></div>
+  </section>
+
+  <section id="testArea" class="hidden">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div>
+          <strong>Testsimulation</strong>
+          <div id="saveState" class="tiny">Noch nicht gespeichert</div>
+        </div>
+        <div class="progress"><span id="answeredCount">0</span> / <span id="totalCount">0</span> beantwortet</div>
+        <div id="timer" class="timer">00:00</div>
+      </div>
+      <div class="chars" id="chars">
+        <button type="button">á</button><button type="button">é</button><button type="button">í</button>
+        <button type="button">ó</button><button type="button">ú</button><button type="button">ü</button>
+        <button type="button">ñ</button><button type="button">¿</button><button type="button">¡</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Dein Test</h2>
+      <p class="tiny">Deutsche Vorgabe → vollständige spanische Übersetzung. Du kannst Antworten bis zur endgültigen Abgabe ändern.</p>
+      <div id="questions"></div>
+      <div class="actions">
+        <button id="submitBtn" class="primary">Test endgültig abgeben</button>
+      </div>
+      <div id="testMsg" class="msg"></div>
+    </section>
+  </section>
+
+  <section id="doneCard" class="card hidden">
+    <h1>Dein Ergebnis</h1>
+    <p class="sub">Die Testsimulation wurde automatisch ausgewertet.</p>
+
+    <div class="resultbox">
+      <div><span class="tiny">Punkte</span><strong id="donePoints">—</strong></div>
+      <div><span class="tiny">Prozent</span><strong id="donePercent">—</strong></div>
+      <div><span class="tiny">Note</span><strong id="doneGrade">—</strong></div>
+      <div><span class="tiny">Oberstufenpunkte</span><strong id="doneOP">—</strong></div>
+    </div>
+
+    <div class="note"><strong>Bewertung:</strong> 1 Punkt = richtig · 0,5 Punkte = nur Akzent- bzw. Groß-/Kleinschreibungsfehler · 0 Punkte = falsch.</div>
+
+    <h2 style="margin-top:26px">Fehler und Hinweise</h2>
+    <div id="mistakes"></div>
+
+    <div class="actions">
+      <a id="printLink" class="btn primary" href="#" target="_blank" rel="noopener">Korrektur öffnen / drucken</a>
+      <button id="repeatBtn" class="secondary">Noch einmal mit derselben Auswahl</button>
+      <button id="newSelectionBtn" class="secondary">Neue Auswahl</button>
+    </div>
+  </section>
+
+  <section id="fatalCard" class="card hidden">
+    <h1>Testsimulation nicht verfügbar</h1>
+    <p id="fatalText"></p>
+    <div class="actions"><button id="fatalBackBtn" class="secondary">Zur Auswahl</button></div>
+  </section>
+</div>
+
+<script>
+  const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
+  const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+  const $=id=>document.getElementById(id);
+
+  let catalog=[];
+  let questions=[];
+  let accessToken="";
+  let deadlineAt=null;
+  let timerHandle=null;
+  let autosaveHandle=null;
+  let debounceHandle=null;
+  let lastFocusedInput=null;
+  let submitting=false;
+  let lastConfig=null;
+
+  function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
+  function hideMsg(el){el.className="msg"}
+  function api(body){
+    return fetch(SUPABASE_URL+"/functions/v1/practice-test",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "apikey":SUPABASE_KEY,
+        "Authorization":"Bearer "+SUPABASE_KEY
+      },
+      body:JSON.stringify(body)
+    }).then(async r=>{
+      const data=await r.json().catch(()=>({}));
+      if(!r.ok||data.error) throw new Error(data.error||"Die Anfrage konnte nicht verarbeitet werden.");
+      return data;
+    });
+  }
+
+  function renderCatalog(units){
+    catalog=units||[];
+    $("unitsBox").innerHTML="";
+    for(const unit of catalog){
+      const group=document.createElement("div");
+      group.className="unit-group";
+      group.dataset.unitKey=unit.unitKey;
+      group.innerHTML=
+        '<div class="unit-head">'+
+          '<label class="unit-label">'+
+            '<input class="unit-master" type="checkbox" value="'+unit.unitKey+'">'+
+            '<span class="unit-title-wrap"><span>'+unit.title+'</span><span class="count">'+unit.count+' Vokabeln</span></span>'+
+          '</label>'+
+          '<button class="toggle" type="button">Unterordner anzeigen ▾</button>'+
+        '</div>'+
+        '<div class="children hidden"></div>';
+
+      const master=group.querySelector(".unit-master");
+      const children=group.querySelector(".children");
+      const toggle=group.querySelector(".toggle");
+
+      for(const folder of unit.folders||[]){
+        const label=document.createElement("label");
+        label.className="folder-row";
+        label.innerHTML='<input class="folder-check" type="checkbox" value="'+folder.id+'"><span>'+folder.title+' <span class="count">('+folder.count+')</span></span>';
+        children.appendChild(label);
+      }
+
+      const updateMaster=()=>{
+        const boxes=[...children.querySelectorAll(".folder-check")];
+        const checked=boxes.filter(x=>x.checked).length;
+        master.checked=boxes.length>0 && checked===boxes.length;
+        master.indeterminate=checked>0 && checked<boxes.length;
+      };
+
+      master.addEventListener("change",()=>{
+        children.querySelectorAll(".folder-check").forEach(x=>x.checked=master.checked);
+        master.indeterminate=false;
+      });
+      children.addEventListener("change",e=>{
+        if(e.target.classList.contains("folder-check")) updateMaster();
+      });
+      toggle.addEventListener("click",()=>{
+        children.classList.toggle("hidden");
+        toggle.textContent=children.classList.contains("hidden")?"Unterordner anzeigen ▾":"Unterordner ausblenden ▴";
+      });
+      $("unitsBox").appendChild(group);
+    }
+  }
+
+  function collectSelection(){
+    const unitKeys=[],folderIds=[];
+    document.querySelectorAll(".unit-group").forEach(group=>{
+      const master=group.querySelector(".unit-master");
+      if(master.checked&&!master.indeterminate){
+        unitKeys.push(master.value);
+      }else{
+        group.querySelectorAll(".folder-check:checked").forEach(x=>folderIds.push(Number(x.value)));
+      }
+    });
+    return {unitKeys,folderIds};
+  }
+
+  function applyConfig(config){
+    if(!config)return;
+    $("questionCount").value=config.questionCount||20;
+    $("durationMinutes").value=config.durationMinutes||10;
+    const wantedUnits=new Set((config.unitKeys||[]).map(String));
+    const wantedFolders=new Set((config.folderIds||[]).map(Number));
+    document.querySelectorAll(".unit-group").forEach(group=>{
+      const master=group.querySelector(".unit-master");
+      const boxes=[...group.querySelectorAll(".folder-check")];
+      if(wantedUnits.has(String(master.value))){
+        master.checked=true; master.indeterminate=false; boxes.forEach(x=>x.checked=true);
+      }else{
+        boxes.forEach(x=>x.checked=wantedFolders.has(Number(x.value)));
+        const checked=boxes.filter(x=>x.checked).length;
+        master.checked=boxes.length>0&&checked===boxes.length;
+        master.indeterminate=checked>0&&checked<boxes.length;
+      }
+    });
+  }
+
+  function currentAnswers(){
+    return questions.map(q=>({
+      questionId:q.id,
+      responseText:$("answer-"+q.id)?.value||""
+    }));
+  }
+
+  function updateAnswered(){
+    const n=currentAnswers().filter(a=>a.responseText.trim()).length;
+    $("answeredCount").textContent=n;
+  }
+
+  function renderQuestions(savedAnswers=[]){
+    const savedMap=new Map((savedAnswers||[]).map(a=>[String(a.question_id),a.response_text||""]));
+    $("questions").innerHTML="";
+    $("totalCount").textContent=questions.length;
+    for(const q of questions){
+      const div=document.createElement("div");
+      div.className="question";
+      div.innerHTML=
+        '<div class="qnum">Aufgabe '+q.position+' von '+questions.length+'</div>'+
+        '<div class="prompt"></div>'+
+        '<input id="answer-'+q.id+'" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="text" placeholder="Spanische Übersetzung eingeben">';
+      div.querySelector(".prompt").textContent=q.source_snapshot;
+      const inp=div.querySelector("input");
+      inp.value=savedMap.get(String(q.id))||"";
+      inp.addEventListener("focus",()=>lastFocusedInput=inp);
+      inp.addEventListener("input",()=>{
+        updateAnswered();
+        $("saveState").textContent="Änderung noch nicht gespeichert …";
+        clearTimeout(debounceHandle);
+        debounceHandle=setTimeout(()=>save(false),1200);
+      });
+      $("questions").appendChild(div);
+    }
+    updateAnswered();
+  }
+
+  async function save(showError=true){
+    if(!accessToken||submitting)return;
+    try{
+      const data=await api({action:"save",accessToken,answers:currentAnswers()});
+      if(data.submitted&&data.result){
+        showResult(data.result);
+        return;
+      }
+      $("saveState").textContent="Gespeichert";
+    }catch(e){
+      $("saveState").textContent="Speichern fehlgeschlagen";
+      if(showError)showMsg($("testMsg"),e.message,"err");
+    }
+  }
+
+  function stopTimers(){
+    if(timerHandle)clearInterval(timerHandle);
+    if(autosaveHandle)clearInterval(autosaveHandle);
+    timerHandle=null;autosaveHandle=null;
+  }
+
+  function startTimer(){
+    stopTimers();
+    const tick=()=>{
+      const ms=Math.max(0,new Date(deadlineAt).getTime()-Date.now());
+      const total=Math.ceil(ms/1000);
+      const min=Math.floor(total/60);
+      const sec=total%60;
+      $("timer").textContent=String(min).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+      $("timer").classList.toggle("warn",total<=120&&total>30);
+      $("timer").classList.toggle("danger",total<=30);
+      if(ms<=0){
+        clearInterval(timerHandle);
+        submitTest(true);
+      }
+    };
+    tick();
+    timerHandle=setInterval(tick,500);
+    autosaveHandle=setInterval(()=>save(false),8000);
+  }
+
+  function beginTest(data){
+    accessToken=data.accessToken;
+    deadlineAt=data.deadlineAt;
+    questions=data.questions||[];
+    lastConfig=data.config||lastConfig;
+    sessionStorage.setItem("spanischPracticeToken",accessToken);
+    $("setupCard").classList.add("hidden");
+    $("doneCard").classList.add("hidden");
+    $("fatalCard").classList.add("hidden");
+    $("testArea").classList.remove("hidden");
+    hideMsg($("testMsg"));
+    renderQuestions(data.savedAnswers||[]);
+    $("saveState").textContent="Test gestartet";
+    startTimer();
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  async function startPractice(configOverride=null){
+    hideMsg($("setupMsg"));
+    const selection=configOverride||collectSelection();
+    const config={
+      unitKeys:selection.unitKeys||[],
+      folderIds:selection.folderIds||[],
+      questionCount:Number(configOverride?.questionCount??$("questionCount").value),
+      durationMinutes:Number(configOverride?.durationMinutes??$("durationMinutes").value)
+    };
+    if(!config.unitKeys.length&&!config.folderIds.length){
+      showMsg($("setupMsg"),"Bitte mindestens einen Vokabelbereich auswählen.","err");return;
+    }
+    if(!Number.isInteger(config.questionCount)||config.questionCount<1||config.questionCount>500){
+      showMsg($("setupMsg"),"Bitte eine gültige Anzahl zwischen 1 und 500 eingeben.","err");return;
+    }
+    if(!Number.isInteger(config.durationMinutes)||config.durationMinutes<1||config.durationMinutes>300){
+      showMsg($("setupMsg"),"Bitte eine gültige Zeit zwischen 1 und 300 Minuten eingeben.","err");return;
+    }
+    $("startBtn").disabled=true;$("startBtn").textContent="Test wird erstellt …";
+    try{
+      const data=await api({action:"start",...config});
+      lastConfig=data.config||config;
+      beginTest(data);
+    }catch(e){
+      showMsg($("setupMsg"),e.message,"err");
+    }finally{
+      $("startBtn").disabled=false;$("startBtn").textContent="Testsimulation starten";
+    }
+  }
+
+  async function submitTest(auto=false){
+    if(submitting||!accessToken)return;
+    if(!auto){
+      const unanswered=currentAnswers().filter(a=>!a.responseText.trim()).length;
+      if(unanswered>0&&!confirm("Du hast noch "+unanswered+" Aufgabe(n) nicht beantwortet. Trotzdem endgültig abgeben?"))return;
+    }
+    submitting=true;
+    $("submitBtn").disabled=true;
+    $("submitBtn").textContent="Wird ausgewertet …";
+    try{
+      const data=await api({action:"submit",accessToken,answers:currentAnswers()});
+      if(data.result)showResult(data.result);
+    }catch(e){
+      showMsg($("testMsg"),e.message,"err");
+    }finally{
+      submitting=false;
+      $("submitBtn").disabled=false;
+      $("submitBtn").textContent="Test endgültig abgeben";
+    }
+  }
+
+  function showResult(result){
+    stopTimers();
+    $("testArea").classList.add("hidden");
+    $("setupCard").classList.add("hidden");
+    $("fatalCard").classList.add("hidden");
+    $("doneCard").classList.remove("hidden");
+    lastConfig=result.config||lastConfig;
+
+    const s=result.summary||{};
+    $("donePoints").textContent=(s.rawPoints??0)+" / "+(s.maxPoints??0);
+    $("donePercent").textContent=Number(s.percent||0).toFixed(1)+" %";
+    $("doneGrade").textContent=s.gradeText??"—";
+    $("doneOP").textContent=s.upperSchoolPoints??"—";
+    $("printLink").href="uebung-korrektur.html#token="+encodeURIComponent(accessToken);
+
+    const mistakes=(result.corrections||[]).filter(x=>Number(x.points)<1);
+    $("mistakes").innerHTML="";
+    if(!mistakes.length){
+      $("mistakes").innerHTML='<div class="msg show ok">Alles richtig – stark! Du hast in dieser Simulation keinen Fehler gemacht.</div>';
+    }else{
+      for(const x of mistakes){
+        const p=Number(x.points);
+        const div=document.createElement("div");
+        div.className="mistake"+(p===0.5?" almost":"");
+        div.innerHTML=
+          '<div class="mistake-head"><div class="mistake-prompt"></div><strong class="'+(p===0.5?"half":"own")+'">'+(p===0.5?"0,5 Punkte":"0 Punkte")+'</strong></div>'+
+          '<div class="answer-line">Deine Antwort: <span class="own"></span></div>'+
+          '<div class="answer-line">Richtige Lösung: <span class="solution"></span></div>';
+        div.querySelector(".mistake-prompt").textContent=x.position+". "+x.sourceText;
+        div.querySelector(".own").textContent=x.responseText||"—";
+        div.querySelector(".solution").textContent=(x.acceptedAnswers||[]).join(" / ");
+        $("mistakes").appendChild(div);
+      }
+    }
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  function showSetup(config=lastConfig){
+    stopTimers();
+    sessionStorage.removeItem("spanischPracticeToken");
+    accessToken="";deadlineAt=null;questions=[];
+    $("testArea").classList.add("hidden");
+    $("doneCard").classList.add("hidden");
+    $("fatalCard").classList.add("hidden");
+    $("setupCard").classList.remove("hidden");
+    hideMsg($("setupMsg"));
+    if(config)applyConfig(config);
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  async function resume(token){
+    try{
+      const data=await api({action:"session",accessToken:token});
+      accessToken=token;
+      if(data.submitted&&data.result){
+        lastConfig=data.result.config;
+        showResult(data.result);
+      }else{
+        beginTest(data);
+      }
+    }catch{
+      sessionStorage.removeItem("spanischPracticeToken");
+      showSetup();
+    }
+  }
+
+  $("chars").addEventListener("click",e=>{
+    if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;
+    const ch=e.target.textContent;
+    const start=lastFocusedInput.selectionStart??lastFocusedInput.value.length;
+    const end=lastFocusedInput.selectionEnd??start;
+    lastFocusedInput.setRangeText(ch,start,end,"end");
+    lastFocusedInput.focus();
+    lastFocusedInput.dispatchEvent(new Event("input",{bubbles:true}));
+  });
+  $("startBtn").addEventListener("click",()=>startPractice());
+  $("submitBtn").addEventListener("click",()=>submitTest(false));
+  $("repeatBtn").addEventListener("click",async()=>{
+    if(!lastConfig)return;
+    sessionStorage.removeItem("spanischPracticeToken");
+    accessToken="";
+    $("repeatBtn").disabled=true;
+    try{await startPractice(lastConfig)}finally{$("repeatBtn").disabled=false}
+  });
+  $("newSelectionBtn").addEventListener("click",()=>showSetup(lastConfig));
+  $("fatalBackBtn").addEventListener("click",()=>showSetup(lastConfig));
+
+  (async()=>{
+    try{
+      const data=await api({action:"catalog"});
+      renderCatalog(data.units||[]);
+      const token=sessionStorage.getItem("spanischPracticeToken");
+      if(token)await resume(token);
+    }catch(e){
+      $("unitsBox").innerHTML="";
+      showMsg($("setupMsg"),"Die Vokabelbereiche konnten nicht geladen werden: "+e.message,"err");
+    }
+  })();
+</script>
+</body>
+</html>
