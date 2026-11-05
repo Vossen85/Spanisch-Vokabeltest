@@ -345,7 +345,7 @@
           children.appendChild(quarter);
         }
 
-        const updatePhaseMaster=()=>{
+        function updatePhaseMaster(){
           const boxes=[...children.querySelectorAll(".folder-check")];
           const checked=boxes.filter(box=>box.checked).length;
           master.checked=boxes.length>0&&checked===boxes.length;
@@ -356,7 +356,7 @@
             qm.checked=qboxes.length>0&&n===qboxes.length;
             qm.indeterminate=n>0&&n<qboxes.length;
           }
-        };
+        }
         master.addEventListener("change",()=>{
           children.querySelectorAll(".folder-check").forEach(box=>box.checked=master.checked);
           children.querySelectorAll(".quarter-master").forEach(box=>{box.checked=master.checked;box.indeterminate=false});
