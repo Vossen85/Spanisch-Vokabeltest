@@ -344,7 +344,7 @@
   function makeVocabGroups(rows){
     const groups=new Map();
     for(const row of rows){
-      const folders=(row.folderTitles||[]).length?row.folderTitles:[row.unitTitle||"Weitere Vokabeln"];
+      const folders=(row.folderTitles||[]).length?row.folderTitles:["Ohne Unterordner"];
       for(const folder of folders){
         const title=[row.unitTitle,folder].filter(Boolean).join(" · ");
         if(!groups.has(title))groups.set(title,[]);
