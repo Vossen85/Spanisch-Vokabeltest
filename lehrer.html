@@ -179,6 +179,7 @@
       <button class="navBtn secondary" data-view="tests">Meine Tests</button>
       <button class="navBtn secondary" data-view="students">Nach Schülern</button>
       <button class="navBtn secondary" data-view="create">Test erstellen</button>
+      <button id="adminNavBtn" class="navBtn secondary hidden" data-view="admin">Kollegen verwalten</button>
     </div>
 
     <section id="view-create" class="view hidden">
@@ -256,6 +257,20 @@
         <div id="studentsList"></div>
       </div>
     </section>
+
+    <section id="view-admin" class="view hidden">
+      <div class="card">
+        <div class="topline">
+          <div>
+            <h2>Kollegen verwalten</h2>
+            <div class="tiny">Neue Lehreraccounts müssen von dir freigegeben werden.</div>
+          </div>
+          <button id="refreshTeachersBtn" class="secondary">Aktualisieren</button>
+        </div>
+        <div id="teachersMsg" class="msg"></div>
+        <div id="teachersList"></div>
+      </div>
+    </section>
   </section>
 </div>
 
@@ -273,6 +288,7 @@
   let currentView = "tests";
   let currentOpenTest = null;
   let currentOpenSubmission = null;
+  let currentUserRole = "teacher";
 
   function showMsg(el,text,type="info"){el.textContent=text;el.className="msg show "+type}
   function hideMsg(el){el.textContent="";el.className="msg"}
@@ -289,6 +305,7 @@
     document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
     if(name==="tests") loadDashboard();
     if(name==="students") loadDashboard();
+    if(name==="admin" && currentUserRole==="admin") loadTeachers();
   }
 
   async function refreshUI(){
@@ -317,6 +334,9 @@
     }
     $("pendingCard").classList.add("hidden");
     $("teacherArea").classList.remove("hidden");
+    currentUserRole=profile.role||"teacher";
+    $("adminNavBtn").classList.toggle("hidden",currentUserRole!=="admin");
+    if(currentView==="admin" && currentUserRole!=="admin") currentView="tests";
     $("welcome").textContent="Angemeldet als "+(profile.display_name||session.user.email);
     await loadUnits();
     setView(currentView);
@@ -719,6 +739,76 @@
   $("showSignupBtn").addEventListener("click",()=>showAuthMode("signup"));
   document.querySelectorAll("[data-auth-back]").forEach(btn=>btn.addEventListener("click",()=>showAuthMode(null)));
 
+  async function loadTeachers(){
+    if(currentUserRole!=="admin") return;
+    hideMsg($("teachersMsg"));
+    $("teachersList").innerHTML='<div class="empty">Lehreraccounts werden geladen …</div>';
+
+    const {data,error}=await supabase.functions.invoke("teacher-admin",{method:"GET"});
+    if(error||data?.error){
+      $("teachersList").innerHTML="";
+      let message=data?.error||"Die Lehreraccounts konnten nicht geladen werden.";
+      try{const b=await error?.context?.json();if(b?.error)message=b.error}catch{}
+      showMsg($("teachersMsg"),message,"err");
+      return;
+    }
+
+    const teachers=data?.teachers||[];
+    const pending=teachers.filter(t=>!t.approved&&!t.isSelf);
+    const active=teachers.filter(t=>t.approved&&!t.isSelf);
+
+    function row(t){
+      const box=document.createElement("div");
+      box.className="student-group";
+      const status=t.approved?"Freigeschaltet":"Wartet auf Freigabe";
+      box.innerHTML=
+        '<div class="folder-head"><div>'+
+          '<div class="folder-title">'+esc(t.displayName||"Unbekannt")+'</div>'+
+          '<div class="folder-meta">'+esc(t.email||"Keine E-Mail verfügbar")+'</div>'+
+        '</div>'+
+        '<div class="badges"><span class="badge">'+status+'</span></div></div>'+
+        '<div class="actions">'+
+          (t.approved
+            ? '<button type="button" class="badbtn teacher-action" data-action="revoke">Zugang sperren</button>'
+            : '<button type="button" class="goodbtn teacher-action" data-action="approve">Freigeben</button>')+
+        '</div>';
+
+      box.querySelector(".teacher-action").addEventListener("click",async e=>{
+        const action=e.currentTarget.dataset.action;
+        e.currentTarget.disabled=true;
+        const {data,error}=await supabase.functions.invoke("teacher-admin",{body:{action,userId:t.userId}});
+        if(error||data?.error){
+          e.currentTarget.disabled=false;
+          let message=data?.error||"Die Änderung konnte nicht gespeichert werden.";
+          try{const b=await error?.context?.json();if(b?.error)message=b.error}catch{}
+          showMsg($("teachersMsg"),message,"err");
+          return;
+        }
+        showMsg($("teachersMsg"),action==="approve"
+          ?"Der Lehreraccount wurde freigeschaltet. Die E-Mail-Adresse wurde dabei ebenfalls bestätigt."
+          :"Der Lehreraccount wurde gesperrt.","ok");
+        await loadTeachers();
+      });
+      return box;
+    }
+
+    $("teachersList").innerHTML="";
+    if(pending.length){
+      const h=document.createElement("h3");h.textContent="Wartet auf Freigabe";
+      $("teachersList").appendChild(h);
+      pending.forEach(t=>$("teachersList").appendChild(row(t)));
+    }
+    if(active.length){
+      const h=document.createElement("h3");h.textContent="Freigeschaltete Kollegen";
+      h.style.marginTop="22px";
+      $("teachersList").appendChild(h);
+      active.forEach(t=>$("teachersList").appendChild(row(t)));
+    }
+    if(!pending.length&&!active.length){
+      $("teachersList").innerHTML='<div class="empty">Noch keine weiteren Lehreraccounts vorhanden.</div>';
+    }
+  }
+
   $("loginBtn").addEventListener("click",async()=>{
     hideMsg($("loginMsg"));
     const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
@@ -745,7 +835,7 @@
     else{
       $("signupForm").querySelectorAll("input").forEach(input=>input.disabled=true);
       $("signupBtn").classList.add("hidden");
-      showMsg($("signupMsg"),"Registrierung erfolgreich. Bitte bestätige ggf. deine E-Mail-Adresse. Danach kannst du dich anmelden; der Lehrerzugang wird erst nach Freigabe aktiviert.","ok");
+      showMsg($("signupMsg"),"Registrierung erfolgreich. Dein Account wartet jetzt auf Freigabe durch Christine. Eine eventuell zugesandte Bestätigungsmail musst du nicht verwenden; die E-Mail-Adresse wird bei der Freigabe mit bestätigt.","ok");
     }
   });
 
@@ -756,6 +846,7 @@
   document.querySelectorAll(".navBtn").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
   $("refreshStudentsBtn").addEventListener("click",loadDashboard);
+  $("refreshTeachersBtn").addEventListener("click",loadTeachers);
 
   $("createTestBtn").addEventListener("click",async()=>{
     hideMsg($("createMsg"));$("newTestCard").classList.add("hidden");
