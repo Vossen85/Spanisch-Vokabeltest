@@ -554,7 +554,7 @@
         const courseMaster=course.querySelector(".course-master");
         const unitMasters=[...holder.querySelectorAll(".unit-master")];
         courseMaster.addEventListener("change",()=>{
-          unitMasters.forEach(x=>{x.checked=courseMaster.checked;x.dispatchEvent(new Event("change",{bubbles:true}))});
+          unitMasters.forEach(x=>{x.checked=courseMaster.checked;x.dispatchEvent(new Event("change"))});
           courseMaster.indeterminate=false;
         });
         holder.addEventListener("change",()=>{
