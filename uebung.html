@@ -132,6 +132,10 @@
         ✅ Grammatiktests
         <span>Konjugationen selbst eingeben und überprüfen</span>
       </button>
+      <button id="openGrammarCardsBtn" class="choice-btn choice-learn" type="button">
+        🃏 Grammatik-Karteikarten
+        <span>Übe einen Grammatikunterteil in Sechserstapeln</span>
+      </button>
     </div>
     <div id="grammarChoiceMsg" class="msg"></div>
   </section>
@@ -1196,6 +1200,7 @@
   $("vocabHomeBtn").addEventListener("click",showPortal);
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
+  $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href="grammatik-karten.html"; });
 
   $("chars").addEventListener("click",e=>{
     if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;
