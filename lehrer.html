@@ -315,7 +315,7 @@
           </div>
 
           <label>Grammatikbereiche auswählen</label>
-          <div class="tiny">Die Verben werden später möglichst gleichmäßig aus den ausgewählten Bereichen gezogen. Über „Verben auswählen“ kannst du einzelne Verben fest in den Test aufnehmen.</div>
+          <div class="tiny">Bereiche ohne einzeln angekreuzte Verben werden zufällig ergänzt. Sobald du in einem Bereich einzelne Verben auswählst, kommen aus diesem Bereich ausschließlich diese Verben in den Test.</div>
           <div id="grammarTopicsBox" class="grammar-groups"><div class="empty">Grammatikbereiche werden geladen …</div></div>
 
           <div class="grammar-summary">
@@ -938,7 +938,7 @@
     }else if(fixed.length+missing>total){
       $("grammarSummaryHint").innerHTML='<strong>Die Verteilung geht so noch nicht auf:</strong> Damit jeder gewählte Bereich mindestens einmal vorkommt, brauchst du mindestens '+(fixed.length+missing)+' Verben.';
     }else{
-      $("grammarSummaryHint").innerHTML='Die übrigen '+Math.max(0,total-fixed.length)+' Verben werden möglichst gleichmäßig auf die '+selectedTopics.length+' gewählten Bereiche verteilt. <strong>Maximal '+(total*7)+' Punkte.</strong>';
+      $("grammarSummaryHint").innerHTML='Automatisch ergänzt wird nur aus Bereichen ohne einzeln angekreuzte Verben. Bereiche mit Einzelauswahl liefern ausschließlich die angekreuzten Verben. <strong>Maximal '+(total*7)+' Punkte.</strong>';
     }
   }
 
@@ -970,8 +970,10 @@
     const selected=[];
     const keys=new Set();
     const counts=new Map(topics.map(t=>[t.id,0]));
+    const explicitByTopic=new Set(fixed.map(x=>x.topicId));
 
     for(const f of fixed){
+      if(!selectedTopicIds.includes(f.topicId))continue;
       const topic=topicMap.get(f.topicId);
       const verb=topic?.verbs?.find(v=>v.verb===f.verb);
       const key=f.topicId+"::"+f.verb;
@@ -983,7 +985,7 @@
 
     for(const topic of topics){
       if(selected.length>=total)break;
-      if((counts.get(topic.id)||0)>0)continue;
+      if(explicitByTopic.has(topic.id)||(counts.get(topic.id)||0)>0)continue;
       const available=topic.verbs.filter(v=>!keys.has(topic.id+"::"+v.verb));
       const verb=randomPick(available);
       if(verb){
@@ -996,7 +998,7 @@
       const candidates=topics.map(topic=>({
         topic,
         count:counts.get(topic.id)||0,
-        available:topic.verbs.filter(v=>!keys.has(topic.id+"::"+v.verb))
+        available:explicitByTopic.has(topic.id)?[]:topic.verbs.filter(v=>!keys.has(topic.id+"::"+v.verb))
       })).filter(x=>x.available.length);
       if(!candidates.length)break;
       const min=Math.min(...candidates.map(x=>x.count));
