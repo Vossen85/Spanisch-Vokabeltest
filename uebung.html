@@ -1180,7 +1180,8 @@
   $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
   $("startCardPracticeBtn").addEventListener("click",startCardPractice);
   $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
-  $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);\n  $("quizFlashcard").addEventListener("click",()=>{if(!cardSession)return;if($("quizFlashcard").classList.contains("is-flipped"))return;revealCardAnswer()});
+  $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);
+  $("quizFlashcard").addEventListener("click",()=>{if(!cardSession)return;if($("quizFlashcard").classList.contains("is-flipped"))return;revealCardAnswer()});
   $("cardCorrectBtn").addEventListener("click",()=>answerCard(true));
   $("cardWrongBtn").addEventListener("click",()=>answerCard(false));
   $("cardsBackBtn").addEventListener("click",closeCardPractice);
