@@ -745,7 +745,7 @@
         phase:"study",
         quizRows:[],
         quizIndex:0,
-        roundHadWrong:false
+        roundWrongRows:[]
       };
       $("setupCard").classList.add("hidden");
       $("cardPracticeArea").classList.remove("hidden");
@@ -797,7 +797,7 @@
     cardSession.phase=phase==="cumulative"?"cumulativeQuiz":"groupQuiz";
     cardSession.quizRows=shuffleItems(rows);
     cardSession.quizIndex=0;
-    cardSession.roundHadWrong=false;
+    cardSession.roundWrongRows=[];
     renderCardQuizQuestion();
   }
 
@@ -831,23 +831,26 @@
 
   function answerCard(correct){
     if(!cardSession)return;
-    if(!correct)cardSession.roundHadWrong=true;
+    if(!correct){
+      const current=cardSession.quizRows[cardSession.quizIndex];
+      if(current)cardSession.roundWrongRows.push(current);
+    }
     cardSession.quizIndex++;
     renderCardQuizQuestion();
   }
 
   function handleCardQuizRoundEnd(){
     if(!cardSession)return;
-    const hadWrong=cardSession.roundHadWrong;
+    const wrongRows=cardSession.roundWrongRows||[];
     const wasCumulative=cardSession.phase==="cumulativeQuiz";
-    if(hadWrong){
-      $("quizFeedback").textContent=wasCumulative
-        ?"Einige Antworten waren noch unsicher. Der gemischte Stapel wird noch einmal vollständig und in neuer Reihenfolge abgefragt."
-        :"Einige Antworten waren noch unsicher. Dieser Stapel wird noch einmal vollständig und in neuer Reihenfolge abgefragt.";
+    if(wrongRows.length){
+      const count=wrongRows.length;
+      const noun=count===1?"Karte":"Karten";
+      $("quizFeedback").textContent="Noch "+count+" "+noun+" unsicher. Nur diese "+noun+" werden in neuer Reihenfolge wiederholt.";
       $("quizFeedback").classList.remove("hidden");
-      cardSession.quizRows=shuffleItems(wasCumulative?cardSession.learnedRows:cardSession.currentGroup);
+      cardSession.quizRows=shuffleItems(wrongRows);
       cardSession.quizIndex=0;
-      cardSession.roundHadWrong=false;
+      cardSession.roundWrongRows=[];
       window.setTimeout(renderCardQuizQuestion,1100);
       return;
     }
