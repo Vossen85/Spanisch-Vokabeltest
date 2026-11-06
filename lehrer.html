@@ -1009,7 +1009,11 @@
       selected.push({topic:chosenTopic.topic,verb,fixed:false});
       counts.set(chosenTopic.topic.id,(counts.get(chosenTopic.topic.id)||0)+1);
     }
-    return selected;
+    const topicOrder=new Map(grammarCatalog.map((topic,index)=>[topic.id,index]));
+    return selected
+      .map((item,index)=>({item,index}))
+      .sort((a,b)=>(topicOrder.get(a.item.topic.id)??Infinity)-(topicOrder.get(b.item.topic.id)??Infinity)||a.index-b.index)
+      .map(entry=>entry.item);
   }
 
   function renderGrammarPlan(plan,total){
