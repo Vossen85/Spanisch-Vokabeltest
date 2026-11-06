@@ -683,12 +683,17 @@
     return Number(meta.maxPoints)||1+(Array.isArray(meta.labels)?meta.labels.length:0);
   }
 
+  function grammarPrintTense(meta){
+    const labels={present:"Presente",gerund:"Gerundio",perfect:"Pretérito perfecto",indef:"Pretérito indefinido",imperfect:"Pretérito imperfecto",pluperfect:"Pluscuamperfecto",subjPresent:"Subjuntivo presente",subjImperfect:"Subjuntivo imperfecto",subjPerfect:"Subjuntivo perfecto",subjPluperfect:"Subjuntivo pluscuamperfecto",impTu:"Imperativo",impVos:"Imperativo",impUsted:"Imperativo",impNeg:"Imperativo",future:"Futuro simple",futurePerfect:"Futuro perfecto",conditional:"Condicional simple",conditionalPerfect:"Condicional compuesto"};
+    return labels[meta?.mode]||meta?.topicGroup||"";
+  }
+
   function grammarPrintCard(q,solution){
     const meta=q.question_meta||{};
     const accepted=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
     const labels=Array.isArray(meta.labels)?meta.labels:[];
     const total=printQuestionMaxPoints(q,true);
-    const topic=meta.topicGroup||"";
+    const topic=grammarPrintTense(meta);
     const meaning=solution
       ? '<span class="answer-text">'+esc(accepted[0]||"")+'</span>'
       : '<span class="write-line"></span>';
