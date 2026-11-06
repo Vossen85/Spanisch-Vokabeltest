@@ -61,6 +61,13 @@
     .vocab-preview th,.vocab-preview td{text-align:left;padding:9px 8px;border-bottom:1px solid #e2e8f0;vertical-align:top}
     .vocab-preview th{font-size:.88rem;color:#64748b}
     .vocab-preview td:first-child{font-weight:700}
+    .flashcard-grid{display:grid;grid-auto-flow:column;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+    .flashcard{min-height:112px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;background:#f0fdfa;color:#134e4a;border:2px solid #99f6e4;border-radius:16px;font-size:1.1rem;line-height:1.35;overflow-wrap:anywhere;white-space:normal}
+    .flashcard.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#bfdbfe}
+    .flashcard-question{margin-top:18px;border:1px solid #dbe2ea;border-radius:16px;padding:20px;background:#fff}
+    .quiz-german{font-size:1.5rem;font-weight:850;margin-top:8px;overflow-wrap:anywhere}
+    .quiz-spanish{margin-top:18px;padding:14px;border-radius:12px;background:#ecfdf5;color:#166534;font-size:1.25rem;font-weight:800;overflow-wrap:anywhere}
+    @media(max-width:600px){.flashcard{min-height:95px;padding:12px;font-size:1rem}.flashcard-question{padding:15px}.quiz-german{font-size:1.3rem}}
     @media(max-width:600px){.vocab-preview{padding:12px}.vocab-preview th,.vocab-preview td{padding:7px 4px;font-size:.9rem}}
     .choice-vocab{background:#2563eb;color:#fff}
     .choice-grammar{background:#7c3aed;color:#fff}
@@ -142,11 +149,28 @@
         📄 Vokabelliste als PDF
         <span>Wähle ganze Unidades oder einzelne Unterordner und lade die Liste herunter.</span>
       </button>
+      <button id="chooseCardPracticeBtn" class="choice-btn choice-learn mode-btn" type="button" aria-pressed="false">
+        🃏 Extra-Übungsoption
+        <span>Übe einen Lernordner mit Karteikarten und gemischter Abfrage.</span>
+      </button>
     </div>
 
     <h2 style="margin-top:24px">1. Vokabelbereiche auswählen</h2>
     <p class="tiny">Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.</p>
     <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
+
+    <div id="cardPracticeOptions" class="hidden">
+      <h2 style="margin-top:24px">2. Einen Lernordner auswählen</h2>
+      <p class="tiny">Es wird immer nur ein Lernordner geübt. Wörter aus anderen Lernordnern werden nicht dazugemischt.</p>
+      <label class="field" for="cardFolderSelect">Lernordner</label>
+      <select id="cardFolderSelect" style="width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;font:inherit">
+        <option value="">Lernordner wird geladen …</option>
+      </select>
+      <div class="actions">
+        <button id="startCardPracticeBtn" class="primary" type="button">Übung starten</button>
+      </div>
+      <div id="cardPracticeMsg" class="msg"></div>
+    </div>
 
     <div id="vocabListActions" class="hidden">
       <div class="actions">
@@ -182,6 +206,38 @@
       <button id="startBtn" class="primary">Testsimulation starten</button>
     </div>
     <div id="setupMsg" class="msg"></div>
+    </div>
+  </section>
+
+  <section id="cardPracticeArea" class="card hidden">
+    <div class="backline"><button id="cardsBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
+    <h1 id="cardsTitle">Vokabelkarten</h1>
+    <p id="cardsDescription" class="sub"></p>
+    <div id="cardsStudyArea" class="hidden">
+      <div id="studyCards" class="flashcard-grid"></div>
+      <div class="actions">
+        <button id="startCardQuizBtn" class="primary" type="button">Karten mischen und abfragen</button>
+      </div>
+    </div>
+    <div id="cardsQuizArea" class="hidden">
+      <div id="quizProgress" class="tiny"></div>
+      <div class="flashcard-question">
+        <div class="tiny">Deutsch</div>
+        <div id="quizGerman" class="quiz-german"></div>
+        <div id="quizSpanish" class="quiz-spanish hidden"></div>
+        <div class="actions">
+          <button id="revealCardAnswerBtn" class="secondary" type="button">Spanische Lösung aufdecken</button>
+        </div>
+        <div id="selfCheckControls" class="actions hidden">
+          <button id="cardCorrectBtn" class="good" type="button">Richtig</button>
+          <button id="cardWrongBtn" class="bad" type="button">Falsch</button>
+        </div>
+      </div>
+      <div id="quizFeedback" class="note hidden"></div>
+    </div>
+    <div id="cardsDoneArea" class="hidden">
+      <div id="cardsDoneMessage" class="note good"></div>
+      <div class="actions"><button id="cardsDoneBackBtn" class="primary" type="button">Anderen Lernordner auswählen</button></div>
     </div>
   </section>
 
@@ -261,6 +317,7 @@
   let lastConfig=null;
   let vocabMode="test";
   let vocabListCache=null;
+  let cardSession=null;
 
   function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
   function hideMsg(el){el.className="msg"}
@@ -391,6 +448,7 @@
       }
       root.appendChild(course);
     }
+    renderCardFolderOptions();
 
     function buildUnitGroup(unit){
       const group=document.createElement("div");
@@ -424,12 +482,42 @@
     }
   }
 
+  function renderCardFolderOptions(){
+    const select=$("cardFolderSelect");
+    if(!select)return;
+    select.innerHTML='<option value="">Bitte einen Lernordner auswählen …</option>';
+    for(const unit of catalog){
+      const groups=new Map();
+      for(const folder of unit.folders||[]){
+        const quarter=folder.quarterOrder?((unit.courseKey||"Q")+"."+folder.quarterOrder+(folder.quarterTitle?" · "+folder.quarterTitle:"")):"";
+        const label=[unit.courseKey||"",unit.title&&unit.title!==unit.courseKey?unit.title:"",quarter].filter(Boolean).join(" · ")||"Lernordner";
+        if(!groups.has(label))groups.set(label,[]);
+        groups.get(label).push(folder);
+      }
+      for(const [label,items] of groups){
+        const optgroup=document.createElement("optgroup");
+        optgroup.label=label;
+        for(const folder of items){
+          const option=document.createElement("option");
+          option.value=String(Number(folder.id));
+          option.textContent=(folder.title||"Lernordner")+" ("+Number(folder.count||0)+" Vokabeln)";
+          optgroup.appendChild(option);
+        }
+        select.appendChild(optgroup);
+      }
+    }
+    if(select.options.length===1)select.options[0].textContent="Keine Lernordner verfügbar";
+  }
+
   function setVocabMode(mode){
     vocabMode=mode;
     $("testOptions").classList.toggle("hidden",mode!=="test");
     $("vocabListActions").classList.toggle("hidden",mode!=="list");
+    $("unitsBox").classList.toggle("hidden",mode==="cards");
+    $("cardPracticeOptions").classList.toggle("hidden",mode!=="cards");
     $("chooseVocabTestBtn").setAttribute("aria-pressed",String(mode==="test"));
     $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
+    $("chooseCardPracticeBtn").setAttribute("aria-pressed",String(mode==="cards"));
     hideMsg($("setupMsg"));
     hideMsg($("vocabListMsg"));
     $("vocabPreview").classList.add("hidden");
@@ -624,6 +712,182 @@
       button.textContent="Als PDF herunterladen";
     }
   }
+  function shuffleItems(items){
+    const shuffled=[...items];
+    for(let i=shuffled.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+    }
+    return shuffled;
+  }
+
+  async function startCardPractice(){
+    const folderId=Number($("cardFolderSelect").value);
+    const folder=$("cardFolderSelect").selectedOptions[0];
+    if(!folderId){
+      showMsg($("cardPracticeMsg"),"Bitte wähle genau einen Lernordner aus.","err");
+      return;
+    }
+    const button=$("startCardPracticeBtn");
+    button.disabled=true;
+    button.textContent="Vokabeln werden geladen …";
+    hideMsg($("cardPracticeMsg"));
+    try{
+      const data=await api({action:"vocab_list",unitKeys:[],folderIds:[folderId]});
+      const rows=(data.vocabulary||[]).filter(row=>row&&row.sourceText&&Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length);
+      if(!rows.length)throw new Error("In diesem Lernordner wurden keine passenden Vokabeln gefunden.");
+      cardSession={
+        folderTitle:folder.textContent.replace(/\s*\(\d+ Vokabeln\)$/,""),
+        allRows:rows,
+        groupIndex:0,
+        currentGroup:[],
+        learnedRows:[],
+        phase:"study",
+        quizRows:[],
+        quizIndex:0,
+        roundHadWrong:false
+      };
+      $("setupCard").classList.add("hidden");
+      $("cardPracticeArea").classList.remove("hidden");
+      window.scrollTo({top:0,behavior:"instant"});
+      renderCardStudy();
+    }catch(error){
+      showMsg($("cardPracticeMsg"),error.message||"Die Übung konnte nicht geladen werden.","err");
+    }finally{
+      button.disabled=false;
+      button.textContent="Übung starten";
+    }
+  }
+
+  function renderCardStudy(){
+    if(!cardSession)return;
+    const start=cardSession.groupIndex*6;
+    const rows=cardSession.allRows.slice(start,start+6);
+    if(!rows.length){finishCardPractice();return}
+    cardSession.currentGroup=rows;
+    cardSession.phase="study";
+    $("cardsTitle").textContent=cardSession.folderTitle;
+    $("cardsDescription").textContent="Lernrunde "+(cardSession.groupIndex+1)+" von "+Math.ceil(cardSession.allRows.length/6)+" · Drehe die Karten beliebig oft um. Wenn du bereit bist, starte die gemischte Abfrage.";
+    $("cardsStudyArea").classList.remove("hidden");
+    $("cardsQuizArea").classList.add("hidden");
+    $("cardsDoneArea").classList.add("hidden");
+    const grid=$("studyCards");
+    grid.innerHTML="";
+    grid.style.gridTemplateRows="repeat("+Math.ceil(rows.length/2)+",minmax(95px,auto))";
+    rows.forEach(row=>{
+      const card=document.createElement("button");
+      card.type="button";
+      card.className="flashcard";
+      card.setAttribute("aria-pressed","false");
+      card.textContent=(row.acceptedAnswers||[]).join(" / ");
+      card.addEventListener("click",()=>{
+        const showingSpanish=card.dataset.side!=="de";
+        card.dataset.side=showingSpanish?"de":"es";
+        card.classList.toggle("is-flipped",showingSpanish);
+        card.setAttribute("aria-pressed",String(showingSpanish));
+        card.textContent=showingSpanish?String(row.sourceText||""):(row.acceptedAnswers||[]).join(" / ");
+      });
+      grid.appendChild(card);
+    });
+    $("startCardQuizBtn").textContent="Karten mischen und abfragen";
+  }
+
+  function startCardQuiz(rows,phase){
+    if(!cardSession||!rows?.length)return;
+    cardSession.phase=phase==="cumulative"?"cumulativeQuiz":"groupQuiz";
+    cardSession.quizRows=shuffleItems(rows);
+    cardSession.quizIndex=0;
+    cardSession.roundHadWrong=false;
+    renderCardQuizQuestion();
+  }
+
+  function renderCardQuizQuestion(){
+    if(!cardSession)return;
+    $("cardsStudyArea").classList.add("hidden");
+    $("cardsQuizArea").classList.remove("hidden");
+    $("cardsDoneArea").classList.add("hidden");
+    $("cardsTitle").textContent=cardSession.folderTitle;
+    $("quizSpanish").classList.add("hidden");
+    $("selfCheckControls").classList.add("hidden");
+    $("revealCardAnswerBtn").classList.remove("hidden");
+    $("quizFeedback").classList.add("hidden");
+    const total=cardSession.quizRows.length;
+    const row=cardSession.quizRows[cardSession.quizIndex];
+    if(!row){
+      handleCardQuizRoundEnd();
+      return;
+    }
+    $("quizProgress").textContent=(cardSession.phase==="cumulativeQuiz"?"Gemischte Wiederholung":"Abfrage des Sechserstapels")+" · Karte "+(cardSession.quizIndex+1)+" von "+total;
+    $("quizGerman").textContent=String(row.sourceText||"");
+    $("quizSpanish").textContent=(row.acceptedAnswers||[]).join(" / ");
+  }
+
+  function revealCardAnswer(){
+    if(!cardSession)return;
+    $("quizSpanish").classList.remove("hidden");
+    $("revealCardAnswerBtn").classList.add("hidden");
+    $("selfCheckControls").classList.remove("hidden");
+  }
+
+  function answerCard(correct){
+    if(!cardSession)return;
+    if(!correct)cardSession.roundHadWrong=true;
+    cardSession.quizIndex++;
+    renderCardQuizQuestion();
+  }
+
+  function handleCardQuizRoundEnd(){
+    if(!cardSession)return;
+    const hadWrong=cardSession.roundHadWrong;
+    const wasCumulative=cardSession.phase==="cumulativeQuiz";
+    if(hadWrong){
+      $("quizFeedback").textContent=wasCumulative
+        ?"Einige Antworten waren noch unsicher. Der gemischte Stapel wird noch einmal vollständig und in neuer Reihenfolge abgefragt."
+        :"Einige Antworten waren noch unsicher. Dieser Stapel wird noch einmal vollständig und in neuer Reihenfolge abgefragt.";
+      $("quizFeedback").classList.remove("hidden");
+      cardSession.quizRows=shuffleItems(wasCumulative?cardSession.learnedRows:cardSession.currentGroup);
+      cardSession.quizIndex=0;
+      cardSession.roundHadWrong=false;
+      window.setTimeout(renderCardQuizQuestion,1100);
+      return;
+    }
+    if(wasCumulative){
+      if(cardSession.learnedRows.length<cardSession.allRows.length){
+        cardSession.groupIndex++;
+        renderCardStudy();
+      }else{
+        finishCardPractice();
+      }
+      return;
+    }
+    cardSession.learnedRows.push(...cardSession.currentGroup);
+    if(cardSession.groupIndex>0){
+      startCardQuiz(cardSession.learnedRows,"cumulative");
+    }else if(cardSession.learnedRows.length<cardSession.allRows.length){
+      cardSession.groupIndex++;
+      renderCardStudy();
+    }else{
+      finishCardPractice();
+    }
+  }
+
+  function finishCardPractice(){
+    if(!cardSession)return;
+    $("cardsStudyArea").classList.add("hidden");
+    $("cardsQuizArea").classList.add("hidden");
+    $("cardsDoneArea").classList.remove("hidden");
+    $("cardsTitle").textContent="Geschafft!";
+    $("cardsDescription").textContent="";
+    $("cardsDoneMessage").textContent="Du hast alle "+cardSession.allRows.length+" Vokabeln aus „"+cardSession.folderTitle+"“ sicher abgefragt. Wähle einen anderen Lernordner, wenn du weiterüben möchtest.";
+  }
+
+  function closeCardPractice(){
+    cardSession=null;
+    $("cardPracticeArea").classList.add("hidden");
+    $("setupCard").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
   function collectSelection(){
     const unitKeys=[],folderIds=[];
     document.querySelectorAll(".unit-group").forEach(group=>{
@@ -910,6 +1174,14 @@
   $("grammarHomeBtn").addEventListener("click",showPortal);
   $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
   $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
+  $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
+  $("startCardPracticeBtn").addEventListener("click",startCardPractice);
+  $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
+  $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);
+  $("cardCorrectBtn").addEventListener("click",()=>answerCard(true));
+  $("cardWrongBtn").addEventListener("click",()=>answerCard(false));
+  $("cardsBackBtn").addEventListener("click",closeCardPractice);
+  $("cardsDoneBackBtn").addEventListener("click",closeCardPractice);
   $("showVocabListBtn").addEventListener("click",showVocabList);
   $("downloadVocabListBtn").addEventListener("click",downloadVocabList);
   $("unitsBox").addEventListener("change",()=>{
