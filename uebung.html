@@ -221,17 +221,13 @@
     </div>
     <div id="cardsQuizArea" class="hidden">
       <div id="quizProgress" class="tiny"></div>
-      <div class="flashcard-question">
-        <div class="tiny">Deutsch</div>
-        <div id="quizGerman" class="quiz-german"></div>
-        <div id="quizSpanish" class="quiz-spanish hidden"></div>
-        <div class="actions">
-          <button id="revealCardAnswerBtn" class="secondary" type="button">Spanische Lösung aufdecken</button>
-        </div>
-        <div id="selfCheckControls" class="actions hidden">
-          <button id="cardCorrectBtn" class="good" type="button">Richtig</button>
-          <button id="cardWrongBtn" class="bad" type="button">Falsch</button>
-        </div>
+      <button id="quizFlashcard" class="flashcard quiz-flashcard" type="button" aria-label="Vokabelkarte umdrehen" aria-pressed="false"></button>
+      <div class="actions">
+        <button id="revealCardAnswerBtn" class="secondary" type="button">Spanische Lösung aufdecken</button>
+      </div>
+      <div id="selfCheckControls" class="actions hidden">
+        <button id="cardCorrectBtn" class="good" type="button">Richtig</button>
+        <button id="cardWrongBtn" class="bad" type="button">Falsch</button>
       </div>
       <div id="quizFeedback" class="note hidden"></div>
     </div>
@@ -1180,7 +1176,7 @@
   $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
   $("startCardPracticeBtn").addEventListener("click",startCardPractice);
   $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
-  $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);
+  $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);\n  $("quizFlashcard").addEventListener("click",()=>{if(!cardSession)return;if($("quizFlashcard").classList.contains("is-flipped"))return;revealCardAnswer()});
   $("cardCorrectBtn").addEventListener("click",()=>answerCard(true));
   $("cardWrongBtn").addEventListener("click",()=>answerCard(false));
   $("cardsBackBtn").addEventListener("click",closeCardPractice);
