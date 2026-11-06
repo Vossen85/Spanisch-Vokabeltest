@@ -803,9 +803,10 @@
     $("cardsQuizArea").classList.remove("hidden");
     $("cardsDoneArea").classList.add("hidden");
     $("cardsTitle").textContent=cardSession.folderTitle;
-    $("quizSpanish").classList.add("hidden");
     $("selfCheckControls").classList.add("hidden");
     $("revealCardAnswerBtn").classList.remove("hidden");
+    $("quizFlashcard").classList.remove("is-flipped");
+    $("quizFlashcard").setAttribute("aria-pressed","false");
     $("quizFeedback").classList.add("hidden");
     const total=cardSession.quizRows.length;
     const row=cardSession.quizRows[cardSession.quizIndex];
@@ -814,13 +815,16 @@
       return;
     }
     $("quizProgress").textContent=(cardSession.phase==="cumulativeQuiz"?"Gemischte Wiederholung":"Abfrage des Sechserstapels")+" · Karte "+(cardSession.quizIndex+1)+" von "+total;
-    $("quizGerman").textContent=String(row.sourceText||"");
-    $("quizSpanish").textContent=(row.acceptedAnswers||[]).join(" / ");
+    $("quizFlashcard").dataset.german=String(row.sourceText||"");
+    $("quizFlashcard").dataset.spanish=(row.acceptedAnswers||[]).join(" / ");
+    $("quizFlashcard").textContent=$("quizFlashcard").dataset.german;
   }
 
   function revealCardAnswer(){
     if(!cardSession)return;
-    $("quizSpanish").classList.remove("hidden");
+    $("quizFlashcard").classList.add("is-flipped");
+    $("quizFlashcard").setAttribute("aria-pressed","true");
+    $("quizFlashcard").textContent=$("quizFlashcard").dataset.spanish;
     $("revealCardAnswerBtn").classList.add("hidden");
     $("selfCheckControls").classList.remove("hidden");
   }
