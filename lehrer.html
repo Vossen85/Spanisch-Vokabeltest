@@ -688,7 +688,7 @@
     const accepted=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
     const labels=Array.isArray(meta.labels)?meta.labels:[];
     const total=printQuestionMaxPoints(q,true);
-    const topic=meta.topicTitle||meta.topicGroup||"";
+    const topic=meta.topicGroup||"";
     const meaning=solution
       ? '<span class="answer-text">'+esc(accepted[0]||"")+'</span>'
       : '<span class="write-line"></span>';
