@@ -192,7 +192,34 @@
     .course-code-row code{font-size:1rem;font-weight:800;letter-spacing:.08em}
     .course-add-row{display:flex;align-items:end;gap:8px;margin-top:12px}
     .course-add-row input{max-width:160px}
-    @media(max-width:650px){.course-student,.course-code-row{align-items:flex-start;flex-direction:column}.course-add-row{align-items:stretch;flex-direction:column}}
+    .course-details{border:1px solid #cbd5e1;border-radius:14px;background:#fafafa;overflow:hidden}
+    .course-summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;cursor:pointer}
+    .course-summary::-webkit-details-marker{display:none}
+    .course-summary:focus-visible{outline:3px solid #2563eb;outline-offset:-3px}
+    .course-summary-main{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;min-width:0}
+    .course-name{font-size:1.15rem}
+    .course-summary-label{padding:8px 11px;border-radius:9px;background:#e2e8f0;color:#334155;font-size:.88rem;font-weight:700;white-space:nowrap}
+    .course-details[open] .course-closed-label{display:none}
+    .course-details:not([open]) .course-open-label{display:none}
+    .course-inner{padding:0 16px 16px}
+    .course-roster{display:grid;gap:8px;margin-top:0}
+    .course-student{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 11px;border:1px solid #e2e8f0;border-radius:10px;background:#fff}
+    .course-student-info{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .course-student-info strong{white-space:nowrap}
+    .number-edit{display:flex;align-items:center;gap:7px;font-size:.9rem;font-weight:650}
+    .number-edit input{width:90px;padding:7px 8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff}
+    .course-student-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+    .course-student-actions button{padding:7px 10px;font-size:.86rem}
+    .course-student-actions .remove-student-btn{background:#fef2f2;color:#991b1b}
+    @media(max-width:650px){
+      .course-summary{align-items:flex-start}
+      .course-summary-main{flex-direction:column;align-items:flex-start;gap:3px}
+      .course-inner{padding:0 12px 12px}
+      .course-student{grid-template-columns:1fr}
+      .course-student-actions{justify-content:flex-start}
+      .course-student-actions button{flex:1 1 auto}
+      .course-add-row{align-items:stretch;flex-direction:column}
+    }
   </style>
 </head>
 <body>
@@ -555,17 +582,86 @@
     return error?.message||fallback;
   }
   async function loadCourses(){
-    $("coursesList").innerHTML='<div class="muted">Kurse werden geladen …</div>';
+    const root=$("coursesList");
+    root.innerHTML='<div class="muted">Kurse werden geladen …</div>';
     const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list"}});
-    if(error||data?.error){$("coursesList").innerHTML="";showMsg($("coursesMsg"),responseError(error,data,"Die Kurse konnten nicht geladen werden."),"err");return}
+    if(error||data?.error){root.innerHTML="";showMsg($("coursesMsg"),responseError(error,data,"Die Kurse konnten nicht geladen werden."),"err");return}
     hideMsg($("coursesMsg"));
-    const courses=data.courses||[], students=data.students||[];
-    if(!courses.length){$("coursesList").innerHTML='<div class="empty">Du hast noch keine Kurse angelegt.</div>';return}
-    $("coursesList").innerHTML=courses.map(course=>{
+    const courses=data.courses||[], students=(data.students||[]).filter(s=>s.active!==false);
+    if(!courses.length){root.innerHTML='<div class="empty">Du hast noch keine Kurse angelegt.</div>';return}
+    root.innerHTML=courses.map(course=>{
       const roster=students.filter(s=>s.course_id===course.id);
-      return '<div class="course-card"><div class="topline"><div><h3>'+esc(course.name)+'</h3><div class="tiny">'+roster.length+' Schülerkonten</div></div></div><div class="course-roster">'+(roster.length?roster.map(s=>'<div class="course-student"><strong>Schüler '+esc(s.student_number)+'</strong><button class="secondary" type="button" data-reset-code="'+esc(s.user_id)+'">Code neu erstellen</button></div>').join(""):'<div class="tiny">Noch keine Konten.</div>')+'</div><div class="course-add-row"><div><label for="addStudents-'+esc(course.id)+'">Weitere Schülerkonten</label><input id="addStudents-'+esc(course.id)+'" type="number" min="1" max="60" value="1"></div><button class="secondary" type="button" data-add-students="'+esc(course.id)+'">Konten ergänzen</button></div></div>';
+      const rosterHtml=roster.length?roster.map(s=>
+        '<div class="course-student">'+
+          '<div class="course-student-info">'+
+            '<strong>Schüler '+esc(s.student_number)+'</strong>'+
+            '<label class="number-edit">Nummer ändern'+
+              '<input type="number" min="1" max="500" step="1" inputmode="numeric" value="'+esc(s.student_number)+'" data-student-number="'+esc(s.user_id)+'" aria-label="Neue Schülernummer für Schüler '+esc(s.student_number)+'">'+
+            '</label>'+
+          '</div>'+
+          '<div class="course-student-actions">'+
+            '<button class="secondary" type="button" data-save-number="'+esc(s.user_id)+'" data-course-id="'+esc(course.id)+'">Nummer speichern</button>'+
+            '<button class="secondary" type="button" data-reset-code="'+esc(s.user_id)+'">Code neu erstellen</button>'+
+            '<button class="remove-student-btn" type="button" data-remove-student="'+esc(s.user_id)+'" data-course-id="'+esc(course.id)+'">Entfernen</button>'+
+          '</div>'+
+        '</div>'
+      ).join(""):'<div class="tiny">Noch keine Schülerkonten.</div>';
+      return '<details class="course-details">'+
+        '<summary class="course-summary">'+
+          '<span class="course-summary-main"><strong class="course-name">'+esc(course.name)+'</strong><span class="tiny">'+roster.length+' Schülerkonten</span></span>'+
+          '<span class="course-summary-label"><span class="course-open-label">Schüler anzeigen</span><span class="course-closed-label">Schüler ausblenden</span></span>'+
+        '</summary>'+
+        '<div class="course-inner">'+
+          '<div class="course-roster">'+rosterHtml+'</div>'+
+          '<div class="course-add-row"><div><label for="addStudents-'+esc(course.id)+'">Weitere Schülerkonten</label><input id="addStudents-'+esc(course.id)+'" type="number" min="1" max="60" value="1"></div><button class="secondary" type="button" data-add-students="'+esc(course.id)+'">Konten ergänzen</button></div>'+
+        '</div>'+
+      '</details>';
     }).join("");
-    $("coursesList").querySelectorAll("[data-reset-code]").forEach(button=>button.addEventListener("click",async()=>{
+
+    const courseCards=[...root.querySelectorAll(".course-details")];
+    courseCards.forEach(card=>card.addEventListener("toggle",()=>{
+      if(card.open)courseCards.forEach(other=>{if(other!==card)other.open=false});
+    }));
+
+    root.querySelectorAll("[data-save-number]").forEach(button=>button.addEventListener("click",async()=>{
+      const row=button.closest(".course-student");
+      const input=row?.querySelector("[data-student-number]");
+      const studentNumber=Number(input?.value);
+      if(!Number.isInteger(studentNumber)||studentNumber<1||studentNumber>500){
+        showMsg($("coursesMsg"),"Die Schülernummer muss eine ganze Zahl zwischen 1 und 500 sein.","err");return;
+      }
+      button.disabled=true;button.textContent="Wird gespeichert …";
+      const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{
+        action:"update_student_number",
+        userId:button.dataset.saveNumber,
+        courseId:button.dataset.courseId,
+        studentNumber
+      }});
+      if(error||data?.error){
+        showMsg($("coursesMsg"),responseError(error,data,"Die Schülernummer konnte nicht geändert werden."),"err");
+        button.disabled=false;button.textContent="Nummer speichern";return;
+      }
+      showMsg($("coursesMsg"),"Die Schülernummer wurde geändert. Zugangscode, Konto und Lernfortschritt sind unverändert.","ok");
+      await loadCourses();
+    }));
+
+    root.querySelectorAll("[data-remove-student]").forEach(button=>button.addEventListener("click",async()=>{
+      if(!confirm("Diesen Schüler aus der aktiven Kursliste entfernen? Das Konto, der Zugangscode und der gespeicherte Lernfortschritt bleiben erhalten. Der persönliche Lernzugang wird deaktiviert."))return;
+      button.disabled=true;button.textContent="Wird entfernt …";
+      const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{
+        action:"remove_student",
+        userId:button.dataset.removeStudent,
+        courseId:button.dataset.courseId
+      }});
+      if(error||data?.error){
+        showMsg($("coursesMsg"),responseError(error,data,"Der Schüler konnte nicht aus der Kursliste entfernt werden."),"err");
+        button.disabled=false;button.textContent="Entfernen";return;
+      }
+      showMsg($("coursesMsg"),"Der Schüler wurde aus der aktiven Kursliste entfernt. Konto, Zugangscode und Lernfortschritt bleiben gespeichert.","ok");
+      await loadCourses();
+    }));
+
+    root.querySelectorAll("[data-reset-code]").forEach(button=>button.addEventListener("click",async()=>{
       if(!confirm("Der bisherige Code wird ungültig. Einen neuen Zugangscode erstellen?"))return;
       button.disabled=true;button.textContent="Wird erstellt …";
       const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"regenerate_code",userId:button.dataset.resetCode}});
@@ -573,7 +669,8 @@
       showCourseCodes("Neuer Code für Schülerkonto",[{studentNumber:students.find(s=>s.user_id===data.student.userId)?.student_number||"—",code:data.student.code}]);
       button.disabled=false;button.textContent="Code neu erstellen";
     }));
-    $("coursesList").querySelectorAll("[data-add-students]").forEach(button=>button.addEventListener("click",async()=>{
+
+    root.querySelectorAll("[data-add-students]").forEach(button=>button.addEventListener("click",async()=>{
       const courseId=button.dataset.addStudents;
       const count=Number($("addStudents-"+courseId).value);
       button.disabled=true;button.textContent="Konten werden erstellt …";
