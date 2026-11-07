@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="#f5f7fb">
 <title>Persönlicher Lernbereich – ¡Avanza!</title>
 <style>
@@ -27,8 +30,8 @@
 <div id="accountName" class="account-name"></div>
 <p class="tiny">Du bist angemeldet. Deine Lernfortschritte werden unter diesem anonymen Schülerkonto gespeichert.</p>
 <div class="row">
-<a id="continueBtn" class="button primary" href="uebung.html?personalisiert=1">Zum Lernbereich</a>
-<a class="button secondary" href="grammatik-karten.html?personalisiert=1">Direkt zu den Grammatik-Karteikarten</a>
+<a id="continueBtn" class="button primary" href="uebung.html?personalisiert=1&v=20261107-1">Zum Lernbereich</a>
+<a class="button secondary" href="grammatik-karten.html?personalisiert=1&v=20261107-1">Direkt zu den Grammatik-Karteikarten</a>
 <button id="logoutBtn" class="secondary" type="button">Abmelden</button>
 </div>
 </div>
@@ -40,7 +43,7 @@ const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 const $=id=>document.getElementById(id);
 async function studentProgress(body){const {data,error}=await studentClient.functions.invoke("student-progress",{body});if(error||data?.error)throw new Error(data?.error||error?.message||"Das Schülerkonto konnte nicht geladen werden.");return data}
-function continueUrl(){return new URLSearchParams(location.search).get("next")==="grammar"?"grammatik-karten.html?personalisiert=1":"uebung.html?personalisiert=1"}
+function continueUrl(){return new URLSearchParams(location.search).get("next")==="grammar"?"grammatik-karten.html?personalisiert=1&v=20261107-1":"uebung.html?personalisiert=1"}
 async function refreshAccount(){
   const {data}=await studentClient.auth.getSession();
   if(!data?.session){$("loginArea").classList.remove("hidden");$("accountArea").classList.add("hidden");return}
