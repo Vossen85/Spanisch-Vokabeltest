@@ -426,18 +426,21 @@
 
     <section id="view-practice" class="view hidden">
       <div class="card">
-        <h2>Schülerbereich – Vokabeltraining</h2>
-        <p>Dieser QR-Code führt dauerhaft zum eigenständigen Übungsbereich für die Schülerinnen und Schüler.</p>
-        <p class="tiny">Die SuS stellen dort selbst ihre Vokabelbereiche, die Anzahl der Aufgaben und die Bearbeitungszeit zusammen. Der QR-Code ist immer derselbe und kann dauerhaft in Teams, im Klassenraum oder auf Arbeitsblättern verwendet werden.</p>
-        <div class="qrgrid" style="margin-top:18px">
-          <div><div id="practiceQr" class="qrbox"></div></div>
-          <div>
-            <strong>Schülerlink</strong>
-            <div id="practiceLink" class="linkbox"></div>
-            <div class="actions">
-              <button id="copyPracticeLinkBtn" class="secondary">Link kopieren</button>
-              <button id="printPracticeQrBtn" class="secondary">QR-Code drucken</button>
-            </div>
+        <h2>Schülerzugänge</h2>
+        <div class="course-card">
+          <h3>Allgemeiner Übungsbereich</h3>
+          <p class="tiny">Ohne Anmeldung und ohne Speicherung persönlicher Lernfortschritte. Dieser bisherige Schülerlink bleibt unverändert nutzbar.</p>
+          <div class="qrgrid" style="margin-top:14px">
+            <div><div id="practiceQr" class="qrbox"></div></div>
+            <div><strong>Allgemeiner Schülerlink</strong><div id="practiceLink" class="linkbox"></div><div class="actions"><button id="copyPracticeLinkBtn" class="secondary">Link kopieren</button><button id="printPracticeQrBtn" class="secondary">QR-Code drucken</button></div></div>
+          </div>
+        </div>
+        <div class="course-card" style="margin-top:14px">
+          <h3>Persönlicher Lernbereich</h3>
+          <p class="tiny">Die Schülerinnen und Schüler öffnen diesen Link und melden sich mit ihrem persönlichen Zugangscode aus der Kursverwaltung an. Falsche Karten werden für spätere Wiederholungen gespeichert.</p>
+          <div class="qrgrid" style="margin-top:14px">
+            <div><div id="personalPracticeQr" class="qrbox"></div></div>
+            <div><strong>Persönlicher Schülerlink</strong><div id="personalPracticeLink" class="linkbox"></div><div class="actions"><button id="copyPersonalPracticeLinkBtn" class="secondary">Link kopieren</button></div></div>
           </div>
         </div>
       </div>
@@ -508,13 +511,20 @@
   function studentUrl(code){const u=new URL("test.html",window.location.href);u.searchParams.set("code",code);return u.toString()}
   function grammarStudentUrl(code){const u=new URL("grammatik-test.html",window.location.href);u.searchParams.set("code",code);return u.toString()}
   function practiceUrl(){return new URL("uebung.html",window.location.href).toString()}
+  function personalPracticeUrl(){return new URL("konto.html",window.location.href).toString()}
   function renderPracticeShare(){
-    const url=practiceUrl();
+    const url=practiceUrl(), personalUrl=personalPracticeUrl();
     $("practiceLink").textContent=url;
+    $("personalPracticeLink").textContent=personalUrl;
     if(!$("practiceQr").dataset.ready){
       $("practiceQr").innerHTML="";
       new QRCode($("practiceQr"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
       $("practiceQr").dataset.ready="1";
+    }
+    if(!$("personalPracticeQr").dataset.ready){
+      $("personalPracticeQr").innerHTML="";
+      new QRCode($("personalPracticeQr"),{text:personalUrl,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
+      $("personalPracticeQr").dataset.ready="1";
     }
   }
 
@@ -1833,6 +1843,16 @@
       setTimeout(()=>$("copyPracticeLinkBtn").textContent="Link kopieren",1800);
     }catch{
       prompt("Schülerlink kopieren:",url);
+    }
+  });
+  $("copyPersonalPracticeLinkBtn").addEventListener("click",async()=>{
+    const url=personalPracticeUrl();
+    try{
+      await navigator.clipboard.writeText(url);
+      $("copyPersonalPracticeLinkBtn").textContent="Link kopiert ✓";
+      setTimeout(()=>$("copyPersonalPracticeLinkBtn").textContent="Link kopieren",1800);
+    }catch{
+      prompt("Persönlichen Schülerlink kopieren:",url);
     }
   });
   $("printPracticeQrBtn").addEventListener("click",()=>{
