@@ -440,7 +440,7 @@
           <p class="tiny">Die Schülerinnen und Schüler öffnen diesen Link und melden sich mit ihrem persönlichen Zugangscode aus der Kursverwaltung an. Falsche Karten werden für spätere Wiederholungen gespeichert.</p>
           <div class="qrgrid" style="margin-top:14px">
             <div><div id="personalPracticeQr" class="qrbox"></div></div>
-            <div><strong>Persönlicher Schülerlink</strong><div id="personalPracticeLink" class="linkbox"></div><div class="actions"><button id="copyPersonalPracticeLinkBtn" class="secondary">Link kopieren</button></div></div>
+            <div><strong>Persönlicher Schülerlink</strong><div id="personalPracticeLink" class="linkbox"></div><div class="actions"><button id="copyPersonalPracticeLinkBtn" class="secondary">Link kopieren</button><button id="printPersonalPracticeQrBtn" class="secondary">QR-Code drucken</button></div></div>
           </div>
         </div>
       </div>
@@ -1864,6 +1864,17 @@
     const w=window.open("","_blank","width=700,height=850");
     if(!w)return;
     w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>QR-Code Vokabeltraining</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:40px;color:#172033}img{width:300px;height:300px;margin:24px}.url{font-size:15px;word-break:break-all}.hint{color:#64748b}@media print{button{display:none}}</style></head><body><h1>Spanisch – Vokabeltraining</h1><p class="hint">QR-Code zum eigenständigen Schülerbereich</p><img src="'+src+'" alt="QR-Code"><p class="url">'+url+'</p><button onclick="window.print()">Drucken</button></body></html>');
+    w.document.close();
+  });
+  $("printPersonalPracticeQrBtn").addEventListener("click",()=>{
+    renderPracticeShare();
+    const canvas=$("personalPracticeQr").querySelector("canvas");
+    const img=$("personalPracticeQr").querySelector("img");
+    const src=canvas?.toDataURL("image/png")||img?.src||"";
+    const url=personalPracticeUrl();
+    const w=window.open("","_blank","width=700,height=850");
+    if(!w)return;
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>QR-Code persönlicher Lernbereich</title><style>body{font-family:Arial,sans-serif;text-align:center;padding:40px;color:#172033}img{width:300px;height:300px;margin:24px}.url{font-size:15px;word-break:break-all}.hint{color:#64748b}@media print{button{display:none}}</style></head><body><h1>Persönlicher Lernbereich – ¡Avanza!</h1><p class="hint">QR-Code öffnen, dann den persönlichen Schülercode eingeben</p><img src="'+src+'" alt="QR-Code"><p class="url">'+url+'</p><button onclick="window.print()">Drucken</button></body></html>');
     w.document.close();
   });
 
