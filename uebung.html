@@ -100,13 +100,26 @@
   
     .quarter-label>span{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
     .quarter-title{display:block;color:#64748b;font-family:inherit;font-size:.88rem;font-style:normal;font-weight:600;line-height:1.35;margin-top:2px}
-  </style>
+    .student-account-box{margin:16px 0 20px;padding:14px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc}
+  .student-login-row{display:flex;gap:8px;align-items:center}
+  .student-login-row input{flex:1;min-width:0;padding:11px;border:1px solid #cbd5e1;border-radius:9px;font:inherit;text-transform:uppercase}
+  @media(max-width:520px){.student-login-row{align-items:stretch;flex-direction:column}}
+</style>
 </head>
 <body>
 <div class="wrap">
   <section id="portalCard" class="card">
     <h1>Spanisch – Lernen & Testen</h1>
     <p class="sub">Was möchtest du üben?</p>
+    <div class="student-account-box">
+      <div id="studentLoggedOut">
+        <p class="tiny">Melde dich mit deinem persönlichen Zugangscode an, damit dein Lernfortschritt gespeichert und später wiederholt wird. Tests und Listen funktionieren weiterhin auch ohne Anmeldung.</p>
+        <label class="field" for="studentLoginCode">Schülercode</label>
+        <div class="student-login-row"><input id="studentLoginCode" type="text" autocomplete="username" autocapitalize="characters" placeholder="ABCD-EFGH-JKLM"><button id="studentLoginBtn" class="secondary" type="button">Anmelden</button></div>
+        <div id="studentAccountMsg" class="msg"></div>
+      </div>
+      <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p><button id="studentLogoutBtn" class="secondary" type="button">Abmelden / anderes Konto</button></div>
+    </div>
     <div class="choice-grid">
       <button id="openVocabBtn" class="choice-btn choice-vocab" type="button">
         📚 Vokabeln
@@ -217,6 +230,7 @@
     <div class="backline"><button id="cardsBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
     <h1 id="cardsTitle">Vokabelkarten</h1>
     <p id="cardsDescription" class="sub"></p>
+  <div id="cardsSaveStatus" class="tiny" aria-live="polite"></div>
     <div id="cardsStudyArea" class="hidden">
       <div id="studyCards" class="flashcard-grid"></div>
       <div class="actions">
@@ -299,10 +313,13 @@
   </section>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script>
   const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
   const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+  const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
+
   const $=id=>document.getElementById(id);
 
   let catalog=[];
@@ -318,6 +335,43 @@
   let vocabMode="test";
   let vocabListCache=null;
   let cardSession=null;
+  let studentAccountProfile=null;
+
+  async function studentProgress(body){
+    const {data,error}=await studentClient.functions.invoke("student-progress",{body});
+    if(error||data?.error)throw new Error(data?.error||error?.message||"Der Lernfortschritt konnte nicht gespeichert werden.");
+    return data;
+  }
+  async function refreshStudentAccount(){
+    const {data}=await studentClient.auth.getSession();
+    if(!data?.session){studentAccountProfile=null;$("studentLoggedOut").classList.remove("hidden");$("studentLoggedIn").classList.add("hidden");return}
+    try{
+      const me=await studentProgress({action:"me"});
+      studentAccountProfile=me;
+      $("studentAccountName").textContent=(me.courseName||"Kurs")+" · Schüler "+me.studentNumber;
+      $("studentLoggedOut").classList.add("hidden");$("studentLoggedIn").classList.remove("hidden");
+      $("studentAccountMsg").className="msg";
+    }catch(error){
+      studentAccountProfile=null;
+      $("studentLoggedOut").classList.remove("hidden");$("studentLoggedIn").classList.add("hidden");
+      $("studentAccountMsg").textContent=error.message;$("studentAccountMsg").className="msg show err";
+    }
+  }
+  $("studentLoginBtn").addEventListener("click",async()=>{
+    const code=String($("studentLoginCode").value||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+    $("studentAccountMsg").className="msg";
+    if(code.length!==12){$("studentAccountMsg").textContent="Bitte gib den vollständigen 12-stelligen Schülercode ein.";$("studentAccountMsg").className="msg show err";return}
+    const button=$("studentLoginBtn");button.disabled=true;button.textContent="Anmeldung läuft …";
+    const {error}=await studentClient.auth.signInWithPassword({email:code.toLowerCase()+"@students.avanza.invalid",password:code});
+    button.disabled=false;button.textContent="Anmelden";
+    if(error){$("studentAccountMsg").textContent="Der Code ist ungültig oder wurde erneuert.";$("studentAccountMsg").className="msg show err";return}
+    $("studentLoginCode").value="";
+    await refreshStudentAccount();
+  });
+  $("studentLogoutBtn").addEventListener("click",async()=>{
+    await studentClient.auth.signOut();studentAccountProfile=null;await refreshStudentAccount();
+  });
+  studentClient.auth.onAuthStateChange(()=>setTimeout(refreshStudentAccount,0));
 
   function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
   function hideMsg(el){el.className="msg"}
@@ -735,10 +789,22 @@
     try{
       const data=await api({action:"vocab_list",unitKeys:[],folderIds:[folderId]});
       const rows=(data.vocabulary||[]).filter(row=>row&&row.sourceText&&Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length);
+      let reviewCount=0;
+      if(studentAccountProfile){
+        try{
+          const due=await studentProgress({action:"due",itemType:"vocab",groupKey:String(folderId)});
+          const dueOrder=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));
+          const dueKey=row=>String(folderId)+":"+String(row.sourceText||"");
+          rows.sort((a,b)=>(dueOrder.has(dueKey(a))?dueOrder.get(dueKey(a)):Infinity)-(dueOrder.has(dueKey(b))?dueOrder.get(dueKey(b)):Infinity));
+          reviewCount=dueOrder.size;
+        }catch(error){console.warn("Wiederholung konnte nicht geladen werden:",error)}
+      }
       if(!rows.length)throw new Error("In diesem Lernordner wurden keine passenden Vokabeln gefunden.");
       cardSession={
         folderTitle:folder.textContent.replace(/\s*\(\d+ Vokabeln\)$/,""),
         allRows:rows,
+        folderId,
+        reviewCount,
         groupIndex:0,
         currentGroup:[],
         learnedRows:[],
@@ -767,7 +833,7 @@
     cardSession.currentGroup=rows;
     cardSession.phase="study";
     $("cardsTitle").textContent=cardSession.folderTitle;
-    $("cardsDescription").textContent="Lernrunde "+(cardSession.groupIndex+1)+" von "+Math.ceil(cardSession.allRows.length/6)+" · Drehe die Karten beliebig oft um. Wenn du bereit bist, starte die gemischte Abfrage.";
+    $("cardsDescription").textContent=(cardSession.groupIndex===0&&cardSession.reviewCount?"Wiederholung fälliger Karten: "+cardSession.reviewCount+" · ":"")+"Lernrunde "+(cardSession.groupIndex+1)+" von "+Math.ceil(cardSession.allRows.length/6)+" · Drehe die Karten beliebig oft um. Wenn du bereit bist, starte die gemischte Abfrage.";
     $("cardsStudyArea").classList.remove("hidden");
     $("cardsQuizArea").classList.add("hidden");
     $("cardsDoneArea").classList.add("hidden");
@@ -833,8 +899,18 @@
     $("selfCheckControls").classList.remove("hidden");
   }
 
-  function answerCard(correct){
+  async function answerCard(correct){
     if(!cardSession)return;
+    const current=cardSession.quizRows[cardSession.quizIndex];
+    if(studentAccountProfile&&current){
+      try{
+        await studentProgress({action:"record",itemType:"vocab",groupKey:String(cardSession.folderId),itemKey:String(cardSession.folderId)+":"+String(current.sourceText||""),itemLabel:String(current.sourceText||""),correct});
+        $("cardsSaveStatus").textContent="Lernfortschritt gespeichert.";
+      }catch(error){
+        $("cardsSaveStatus").textContent="Der Lernfortschritt konnte gerade nicht gespeichert werden.";
+        console.warn(error);
+      }
+    }
     if(!correct){
       const current=cardSession.quizRows[cardSession.quizIndex];
       if(current)cardSession.roundWrongRows.push(current);
@@ -1201,6 +1277,7 @@
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href="grammatik-karten.html"; });
+  refreshStudentAccount();
 
   $("chars").addEventListener("click",e=>{
     if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;
