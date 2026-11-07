@@ -115,7 +115,7 @@
     <h1>Spanisch – Lernen & Testen</h1>
     <p class="sub">Was möchtest du üben?</p>
     <div id="studentAccountBox" class="student-account-box">
-      <div id="guestAccountLink"><p class="tiny">Möchtest du deinen Lernfortschritt speichern und falsche Karteikarten später wiederholen?</p><a class="button secondary" href="konto.html?v=20261107-1">Zum persönlichen Lernbereich mit Zugangscode</a></div>
+      <div id="guestAccountLink"><p class="tiny">Möchtest du deinen Lernfortschritt speichern und falsche Karteikarten später wiederholen?</p><a class="button secondary" href="konto.html?v=20261107-2">Zum persönlichen Lernbereich mit Zugangscode</a></div>
       <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
       <div id="studentAccountMsg" class="msg"></div>
     </div>
@@ -342,7 +342,7 @@
     if(!PERSONALIZED_MODE){studentAccountProfile=null;$("guestAccountLink").classList.remove("hidden");$("studentLoggedIn").classList.add("hidden");return}
     $("guestAccountLink").classList.add("hidden");
     const {data}=await studentClient.auth.getSession();
-    if(!data?.session){studentAccountProfile=null;location.replace("konto.html?v=20261107-1");return}
+    if(!data?.session){studentAccountProfile=null;location.replace("konto.html?v=20261107-2");return}
     try{
       const me=await studentProgress({action:"me"});
       studentAccountProfile=me;
@@ -352,11 +352,11 @@
     }catch(error){
       studentAccountProfile=null;
       $("studentAccountMsg").textContent=error.message;$("studentAccountMsg").className="msg show err";
-      location.replace("konto.html?v=20261107-1");
+      location.replace("konto.html?v=20261107-2");
     }
   }
   $("studentLogoutBtn").addEventListener("click",async()=>{
-    await studentClient.auth.signOut();studentAccountProfile=null;location.href="konto.html?v=20261107-1";
+    await studentClient.auth.signOut();studentAccountProfile=null;location.href="konto.html?v=20261107-2";
   });
   studentClient.auth.onAuthStateChange(()=>setTimeout(refreshStudentAccount,0));
 
