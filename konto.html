@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f7fb">
+<title>Persönlicher Lernbereich – ¡Avanza!</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:22px;background:#f5f7fb;color:#172033;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:760px;margin:0 auto}.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 6px 20px rgba(15,23,42,.05)}h1{margin:0 0 8px;font-size:2rem}h2{margin:0 0 8px}.sub,.tiny{color:#64748b}.tiny{font-size:.92rem;line-height:1.45}label{display:block;font-weight:700;margin:14px 0 6px}input,button{font:inherit}input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;text-transform:uppercase}button,.button{display:inline-block;border:0;border-radius:10px;padding:12px 16px;font-weight:750;text-decoration:none;cursor:pointer}.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}.row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.msg{margin-top:12px;min-height:1.2em;color:#b91c1c}.hidden{display:none!important}.account-name{padding:12px;border-radius:10px;background:#eff6ff;font-weight:750}@media(max-width:540px){body{padding:12px}.card{padding:18px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<main class="wrap">
+<section class="card">
+<a class="button secondary" href="uebung.html">← Zur allgemeinen Schülerseite</a>
+<h1 style="margin-top:18px">Persönlicher Lernbereich</h1>
+<p class="sub">Melde dich mit dem Zugangscode an, den deine Lehrkraft für dich erstellt hat. Falsche Karteikarten werden dann gespeichert und später zur Wiederholung vorgezogen.</p>
+<p class="tiny">Der Zugangscode ist dein Anmeldenachweis. Du brauchst keinen Namen und keine E-Mail-Adresse. Gib den Code nicht an andere weiter.</p>
+<div id="loginArea">
+<label for="studentCode">Persönlicher Zugangscode</label>
+<input id="studentCode" type="text" autocomplete="username" autocapitalize="characters" placeholder="ABCD-EFGH-JKLM" maxlength="20">
+<div class="row"><button id="loginBtn" class="primary" type="button">Mit Code anmelden</button></div>
+<div id="loginMsg" class="msg" aria-live="polite"></div>
+</div>
+<div id="accountArea" class="hidden">
+<div id="accountName" class="account-name"></div>
+<p class="tiny">Du bist angemeldet. Deine Lernfortschritte werden unter diesem anonymen Schülerkonto gespeichert.</p>
+<div class="row">
+<a id="continueBtn" class="button primary" href="uebung.html?personalisiert=1">Zum Lernbereich</a>
+<a class="button secondary" href="grammatik-karten.html?personalisiert=1">Direkt zu den Grammatik-Karteikarten</a>
+<button id="logoutBtn" class="secondary" type="button">Abmelden</button>
+</div>
+</div>
+</section>
+</main>
+<script>
+const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
+const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
+const $=id=>document.getElementById(id);
+async function studentProgress(body){const {data,error}=await studentClient.functions.invoke("student-progress",{body});if(error||data?.error)throw new Error(data?.error||error?.message||"Das Schülerkonto konnte nicht geladen werden.");return data}
+function continueUrl(){return new URLSearchParams(location.search).get("next")==="grammar"?"grammatik-karten.html?personalisiert=1":"uebung.html?personalisiert=1"}
+async function refreshAccount(){
+  const {data}=await studentClient.auth.getSession();
+  if(!data?.session){$("loginArea").classList.remove("hidden");$("accountArea").classList.add("hidden");return}
+  try{
+    const me=await studentProgress({action:"me"});
+    $("accountName").textContent=(me.courseName||"Kurs")+" · Schüler "+me.studentNumber;
+    $("continueBtn").href=continueUrl();
+    $("loginArea").classList.add("hidden");$("accountArea").classList.remove("hidden");
+  }catch(error){
+    $("loginMsg").textContent=error.message;
+    $("loginArea").classList.remove("hidden");$("accountArea").classList.add("hidden");
+  }
+}
+$("loginBtn").addEventListener("click",async()=>{
+  const code=String($("studentCode").value||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+  if(code.length!==12){$("loginMsg").textContent="Bitte gib den vollständigen 12-stelligen Zugangscode ein.";return}
+  const btn=$("loginBtn");btn.disabled=true;btn.textContent="Anmeldung läuft …";$("loginMsg").textContent="";
+  const {error}=await studentClient.auth.signInWithPassword({email:code.toLowerCase()+"@students.avanza.invalid",password:code});
+  btn.disabled=false;btn.textContent="Mit Code anmelden";
+  if(error){$("loginMsg").textContent="Der Code stimmt nicht oder wurde erneuert.";return}
+  $("studentCode").value="";
+  await refreshAccount();
+});
+$("logoutBtn").addEventListener("click",async()=>{await studentClient.auth.signOut();await refreshAccount()});
+studentClient.auth.onAuthStateChange(()=>setTimeout(refreshAccount,0));
+refreshAccount();
+</script>
+</body>
+</html>
