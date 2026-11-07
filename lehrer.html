@@ -199,8 +199,6 @@
     .course-summary-main{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;min-width:0}
     .course-name{font-size:1.15rem}
     .course-summary-label{padding:8px 11px;border-radius:9px;background:#e2e8f0;color:#334155;font-size:.88rem;font-weight:700;white-space:nowrap}
-    .course-details[open] .course-open-label{display:none}
-    .course-details:not([open]) .course-closed-label{display:none}
     .course-inner{padding:0 16px 16px}
     .course-roster{display:grid;gap:8px;margin-top:0}
     .course-student{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 11px;border:1px solid #e2e8f0;border-radius:10px;background:#fff}
@@ -609,7 +607,7 @@
       return '<details class="course-details">'+
         '<summary class="course-summary">'+
           '<span class="course-summary-main"><strong class="course-name">'+esc(course.name)+'</strong><span class="tiny">'+roster.length+' Schülerkonten</span></span>'+
-          '<span class="course-summary-label"><span class="course-open-label">Schüler anzeigen</span><span class="course-closed-label">Schüler ausblenden</span></span>'+
+          '<span class="course-summary-label course-action-label">Schüler anzeigen</span>'+
         '</summary>'+
         '<div class="course-inner">'+
           '<div class="course-roster">'+rosterHtml+'</div>'+
@@ -620,6 +618,8 @@
 
     const courseCards=[...root.querySelectorAll(".course-details")];
     courseCards.forEach(card=>card.addEventListener("toggle",()=>{
+      const label=card.querySelector(".course-action-label");
+      if(label)label.textContent=card.open?"Schüler ausblenden":"Schüler anzeigen";
       if(card.open)courseCards.forEach(other=>{if(other!==card)other.open=false});
     }));
 
