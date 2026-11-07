@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <link rel="manifest" href="./schueler.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icons/avanza-schueler.svg">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -1300,6 +1303,13 @@
       showMsg($("setupMsg"),"Die Vokabelbereiche konnten nicht geladen werden: "+e.message,"err");
     }
   })();
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./lehrer-sw.js", { scope: "./" }).catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>
