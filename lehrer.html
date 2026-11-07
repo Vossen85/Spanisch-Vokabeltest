@@ -13,6 +13,14 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="./lehrer.webmanifest">
   <link rel="apple-touch-icon" sizes="180x180" href="./icons/avanza-lehrer-180.png">
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./lehrer-sw.js", { scope: "./" })
+          .catch(error => console.warn("Avanza App-Installation:", error));
+      });
+    }
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     :root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
