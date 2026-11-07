@@ -180,6 +180,19 @@
     #createdSolutionPreview .topic-label{font-size:.8rem;color:#64748b;margin:3px 0}
     #createdSolutionPreview .row-label{font-size:.86rem;color:#475569}
     #createdSolutionPreview .answer-text{font-weight:650;text-align:right}
+    .course-list{display:grid;gap:14px;margin-top:18px}
+    .course-card{border:1px solid #cbd5e1;border-radius:14px;padding:16px;background:#fafafa}
+    .course-card h3{margin:0}
+    .course-roster{display:grid;gap:7px;margin-top:12px}
+    .course-student{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 11px;border:1px solid #e2e8f0;border-radius:10px;background:#fff}
+    .course-student button{padding:7px 10px;font-size:.88rem}
+    .course-codes{margin-top:18px;padding:16px;border:1px solid #bfdbfe;border-radius:12px;background:#eff6ff}
+    .course-code-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:8px;border-bottom:1px solid #dbeafe}
+    .course-code-row:last-child{border-bottom:0}
+    .course-code-row code{font-size:1rem;font-weight:800;letter-spacing:.08em}
+    .course-add-row{display:flex;align-items:end;gap:8px;margin-top:12px}
+    .course-add-row input{max-width:160px}
+    @media(max-width:650px){.course-student,.course-code-row{align-items:flex-start;flex-direction:column}.course-add-row{align-items:stretch;flex-direction:column}}
   </style>
 </head>
 <body>
@@ -259,6 +272,7 @@
       <button class="navBtn secondary" data-view="students">Nach Schülern</button>
       <button class="navBtn secondary" data-view="create">Test erstellen</button>
       <button class="navBtn secondary" data-view="practice">Schülerbereich teilen</button>
+      <button class="navBtn secondary" data-view="courses">Kurse verwalten</button>
       <button id="adminNavBtn" class="navBtn secondary hidden" data-view="admin">Kollegen verwalten</button>
     </div>
 
@@ -429,6 +443,26 @@
       </div>
     </section>
 
+    <section id="view-courses" class="view hidden">
+      <div class="card">
+        <h2>Kurse verwalten</h2>
+        <p class="tiny">Lege Kurse und nummerierte, anonyme Schülerkonten an. Jeder Zugangscode gehört zu genau einem Konto und speichert dessen Lernfortschritt.</p>
+        <div class="row">
+          <div><label for="courseName">Kursname</label><input id="courseName" type="text" maxlength="80" placeholder="z. B. Q1"></div>
+          <div><label for="courseStudentCount">Anzahl der Schülerkonten</label><input id="courseStudentCount" type="number" min="1" max="60" value="13"></div>
+        </div>
+        <div class="actions"><button id="createCourseBtn" class="primary" type="button">Kurs und Konten erstellen</button></div>
+        <div id="coursesMsg" class="msg"></div>
+        <div id="courseCodesCard" class="course-codes hidden">
+          <h3 id="courseCodesHeading">Neue Zugangscodes</h3>
+          <p class="tiny">Diese Codes werden aus Sicherheitsgründen nur jetzt angezeigt. Wenn ein Code verloren geht, kannst du für dieses Konto einen neuen erstellen.</p>
+          <div id="courseCodesList"></div>
+          <div class="actions"><button id="copyCourseCodesBtn" class="secondary" type="button">Codes kopieren</button></div>
+        </div>
+        <div id="coursesList" class="course-list"><div class="muted">Kurse werden geladen …</div></div>
+      </div>
+    </section>
+
     <section id="view-admin" class="view hidden">
       <div class="card">
         <div class="topline">
@@ -492,8 +526,73 @@
     if(name==="tests") loadDashboard();
     if(name==="students") loadDashboard();
     if(name==="practice") renderPracticeShare();
+    if(name==="courses") loadCourses();
     if(name==="admin" && currentUserRole==="admin") loadTeachers();
   }
+
+  let courseCodesClipboard = "";
+  function showCourseCodes(title, students){
+    const rows=(students||[]).map(s=>({studentNumber:s.studentNumber,code:s.code}));
+    courseCodesClipboard=title+"\\n"+rows.map(s=>"Schüler "+s.studentNumber+"\\t"+s.code).join("\\n");
+    $("courseCodesHeading").textContent="Zugangscodes · "+title;
+    $("courseCodesList").innerHTML=rows.map(s=>'<div class="course-code-row"><strong>Schüler '+esc(s.studentNumber)+'</strong><code>'+esc(s.code)+'</code></div>').join("");
+    $("courseCodesCard").classList.remove("hidden");
+    $("courseCodesCard").scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+  function responseError(error,data,fallback){
+    if(data?.error)return data.error;
+    try{const parsed=error?.context?.json?.();if(parsed?.error)return parsed.error}catch{}
+    return error?.message||fallback;
+  }
+  async function loadCourses(){
+    $("coursesList").innerHTML='<div class="muted">Kurse werden geladen …</div>';
+    const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list"}});
+    if(error||data?.error){$("coursesList").innerHTML="";showMsg($("coursesMsg"),responseError(error,data,"Die Kurse konnten nicht geladen werden."),"err");return}
+    hideMsg($("coursesMsg"));
+    const courses=data.courses||[], students=data.students||[];
+    if(!courses.length){$("coursesList").innerHTML='<div class="empty">Du hast noch keine Kurse angelegt.</div>';return}
+    $("coursesList").innerHTML=courses.map(course=>{
+      const roster=students.filter(s=>s.course_id===course.id);
+      return '<div class="course-card"><div class="topline"><div><h3>'+esc(course.name)+'</h3><div class="tiny">'+roster.length+' Schülerkonten</div></div></div><div class="course-roster">'+(roster.length?roster.map(s=>'<div class="course-student"><strong>Schüler '+esc(s.student_number)+'</strong><button class="secondary" type="button" data-reset-code="'+esc(s.user_id)+'">Code neu erstellen</button></div>').join(""):'<div class="tiny">Noch keine Konten.</div>')+'</div><div class="course-add-row"><div><label for="addStudents-'+esc(course.id)+'">Weitere Schülerkonten</label><input id="addStudents-'+esc(course.id)+'" type="number" min="1" max="60" value="1"></div><button class="secondary" type="button" data-add-students="'+esc(course.id)+'">Konten ergänzen</button></div></div>';
+    }).join("");
+    $("coursesList").querySelectorAll("[data-reset-code]").forEach(button=>button.addEventListener("click",async()=>{
+      if(!confirm("Der bisherige Code wird ungültig. Einen neuen Zugangscode erstellen?"))return;
+      button.disabled=true;button.textContent="Wird erstellt …";
+      const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"regenerate_code",userId:button.dataset.resetCode}});
+      if(error||data?.error){showMsg($("coursesMsg"),responseError(error,data,"Der Code konnte nicht erneuert werden."),"err");button.disabled=false;button.textContent="Code neu erstellen";return}
+      showCourseCodes("Neuer Code für Schülerkonto",[{studentNumber:students.find(s=>s.user_id===data.student.userId)?.student_number||"—",code:data.student.code}]);
+      button.disabled=false;button.textContent="Code neu erstellen";
+    }));
+    $("coursesList").querySelectorAll("[data-add-students]").forEach(button=>button.addEventListener("click",async()=>{
+      const courseId=button.dataset.addStudents;
+      const count=Number($("addStudents-"+courseId).value);
+      button.disabled=true;button.textContent="Konten werden erstellt …";
+      const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"add_students",courseId,studentCount:count}});
+      button.disabled=false;button.textContent="Konten ergänzen";
+      if(error||data?.error){showMsg($("coursesMsg"),responseError(error,data,"Die Schülerkonten konnten nicht erstellt werden."),"err");return}
+      const course=courses.find(c=>c.id===courseId);
+      showCourseCodes("Neue Zugangscodes · "+(course?.name||"Kurs"),data.students||[]);
+      await loadCourses();
+    }));
+  }
+  $("createCourseBtn").addEventListener("click",async()=>{
+    hideMsg($("coursesMsg"));
+    const name=$("courseName").value.trim(),studentCount=Number($("courseStudentCount").value);
+    if(!name){showMsg($("coursesMsg"),"Bitte gib einen Kursnamen ein.","err");return}
+    if(!Number.isInteger(studentCount)||studentCount<1||studentCount>60){showMsg($("coursesMsg"),"Bitte gib eine Schülerzahl zwischen 1 und 60 ein.","err");return}
+    const button=$("createCourseBtn");button.disabled=true;button.textContent="Kurs und Konten werden erstellt …";
+    const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"create_course",name,studentCount}});
+    button.disabled=false;button.textContent="Kurs und Konten erstellen";
+    if(error||data?.error){showMsg($("coursesMsg"),responseError(error,data,"Der Kurs konnte nicht erstellt werden."),"err");return}
+    $("courseName").value="";
+    showCourseCodes(data.course.name,data.students||[]);
+    showMsg($("coursesMsg"),"Kurs und "+(data.students||[]).length+" anonyme Schülerkonten wurden erstellt.","ok");
+    await loadCourses();
+  });
+  $("copyCourseCodesBtn").addEventListener("click",async()=>{
+    try{await navigator.clipboard.writeText(courseCodesClipboard);$("copyCourseCodesBtn").textContent="Kopiert ✓";setTimeout(()=>$("copyCourseCodesBtn").textContent="Codes kopieren",1400)}
+    catch{showMsg($("coursesMsg"),"Kopieren nicht verfügbar. Du kannst die angezeigten Codes direkt ablesen.","err")}
+  });
 
   async function refreshUI(){
     const {data:{session}}=await supabase.auth.getSession();
