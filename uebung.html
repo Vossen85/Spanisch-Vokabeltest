@@ -176,12 +176,8 @@
     <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
 
     <div id="cardPracticeOptions" class="hidden">
-      <h2 style="margin-top:24px">2. Einen Lernordner auswählen</h2>
-      <p class="tiny">Es wird immer nur ein Lernordner geübt. Wörter aus anderen Lernordnern werden nicht dazugemischt.</p>
-      <label class="field" for="cardFolderSelect">Lernordner</label>
-      <select id="cardFolderSelect" style="width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;font:inherit">
-        <option value="">Lernordner wird geladen …</option>
-      </select>
+      <h2 style="margin-top:24px">2. Karteikarten üben</h2>
+      <p class="tiny">Wähle im Ordnerbaum genau einen Lernordner aus. Es werden keine Wörter aus anderen Lernordnern dazugemischt.</p>
       <div class="actions">
         <button id="startCardPracticeBtn" class="primary" type="button">Übung starten</button>
       </div>
@@ -493,8 +489,6 @@
       }
       root.appendChild(course);
     }
-    renderCardFolderOptions();
-
     function buildUnitGroup(unit){
       const group=document.createElement("div");
       group.className="unit-group";
@@ -527,38 +521,11 @@
     }
   }
 
-  function renderCardFolderOptions(){
-    const select=$("cardFolderSelect");
-    if(!select)return;
-    select.innerHTML='<option value="">Bitte einen Lernordner auswählen …</option>';
-    for(const unit of catalog){
-      const groups=new Map();
-      for(const folder of unit.folders||[]){
-        const quarter=folder.quarterOrder?((unit.courseKey||"Q")+"."+folder.quarterOrder+(folder.quarterTitle?" · "+folder.quarterTitle:"")):"";
-        const label=[unit.courseKey||"",unit.title&&unit.title!==unit.courseKey?unit.title:"",quarter].filter(Boolean).join(" · ")||"Lernordner";
-        if(!groups.has(label))groups.set(label,[]);
-        groups.get(label).push(folder);
-      }
-      for(const [label,items] of groups){
-        const optgroup=document.createElement("optgroup");
-        optgroup.label=label;
-        for(const folder of items){
-          const option=document.createElement("option");
-          option.value=String(Number(folder.id));
-          option.textContent=(folder.title||"Lernordner")+" ("+Number(folder.count||0)+" Vokabeln)";
-          optgroup.appendChild(option);
-        }
-        select.appendChild(optgroup);
-      }
-    }
-    if(select.options.length===1)select.options[0].textContent="Keine Lernordner verfügbar";
-  }
-
   function setVocabMode(mode){
     vocabMode=mode;
     $("testOptions").classList.toggle("hidden",mode!=="test");
     $("vocabListActions").classList.toggle("hidden",mode!=="list");
-    $("unitsBox").classList.toggle("hidden",mode==="cards");
+    $("unitsBox").classList.remove("hidden");
     $("cardPracticeOptions").classList.toggle("hidden",mode!=="cards");
     $("chooseVocabTestBtn").setAttribute("aria-pressed",String(mode==="test"));
     $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
@@ -768,10 +735,15 @@
 
   async function startCardPractice(){
     if(PERSONALIZED_MODE&&!studentAccountProfile){await refreshStudentAccount();if(!studentAccountProfile)return}
-    const folderId=Number($("cardFolderSelect").value);
-    const folder=$("cardFolderSelect").selectedOptions[0];
-    if(!folderId){
-      showMsg($("cardPracticeMsg"),"Bitte wähle genau einen Lernordner aus.","err");
+    const selectedFolderIds=[...new Set([...$("unitsBox").querySelectorAll(".folder-check:checked")].map(box=>Number(box.value)).filter(Number.isFinite))];
+    if(selectedFolderIds.length!==1){
+      showMsg($("cardPracticeMsg"),"Bitte wähle im Ordnerbaum genau einen Lernordner aus.","err");
+      return;
+    }
+    const folderId=selectedFolderIds[0];
+    const folder=catalog.flatMap(unit=>unit.folders||[]).find(item=>Number(item.id)===folderId);
+    if(!folder){
+      showMsg($("cardPracticeMsg"),"Der ausgewählte Lernordner ist nicht verfügbar. Bitte lade die Seite neu.","err");
       return;
     }
     const button=$("startCardPracticeBtn");
@@ -793,7 +765,7 @@
       }
       if(!rows.length)throw new Error("In diesem Lernordner wurden keine passenden Vokabeln gefunden.");
       cardSession={
-        folderTitle:folder.textContent.replace(/\s*\(\d+ Vokabeln\)$/,""),
+        folderTitle:folder.title||"Lernordner",
         allRows:rows,
         folderId,
         reviewCount,
