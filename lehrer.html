@@ -492,7 +492,7 @@
         <div id="coursesMsg" class="msg"></div>
         <div id="courseCodesCard" class="course-codes hidden">
           <h3 id="courseCodesHeading">Neue Zugangscodes</h3>
-          <p class="tiny">Diese Codes werden aus Sicherheitsgründen nur jetzt angezeigt. Wenn ein Code verloren geht, kannst du für dieses Konto einen neuen erstellen.</p>
+          <p class="tiny">Die Zugangscodes bleiben verschlüsselt gespeichert und können hier jederzeit erneut angezeigt oder kopiert werden. Wenn ein Schüler seinen Code verliert, muss er daher nicht neu erstellt werden.</p>
           <div id="courseCodesList"></div>
           <div class="actions"><button id="copyCourseCodesBtn" class="secondary" type="button">Codes kopieren</button></div>
         </div>
@@ -621,6 +621,7 @@
         '</summary>'+
         '<div class="course-inner">'+
           '<div class="course-name-editor"><label for="renameCourse-'+esc(course.id)+'">Kursname<input id="renameCourse-'+esc(course.id)+'" type="text" maxlength="80" value="'+esc(course.name)+'" data-course-name></label><button class="secondary" type="button" data-rename-course="'+esc(course.id)+'">Kursnamen speichern</button></div>'+
+          '<div class="course-code-actions"><button class="secondary" type="button" data-show-codes="'+esc(course.id)+'">Zugangscodes anzeigen</button></div>'+
           '<div class="course-roster">'+rosterHtml+'</div>'+
           '<div class="course-add-row"><div><label for="addStudents-'+esc(course.id)+'">Weitere Schülerkonten</label><input id="addStudents-'+esc(course.id)+'" type="number" min="1" max="60" value="1"></div><button class="secondary" type="button" data-add-students="'+esc(course.id)+'">Konten ergänzen</button></div>'+
           '<div class="course-order-actions">'+
@@ -709,6 +710,21 @@
       const label=card.querySelector(".course-action-label");
       if(label)label.textContent=card.open?"Schüler ausblenden":"Schüler anzeigen";
       if(card.open)courseCards.forEach(other=>{if(other!==card)other.open=false});
+    }));
+
+    root.querySelectorAll("[data-show-codes]").forEach(button=>button.addEventListener("click",async()=>{
+      const courseId=button.dataset.showCodes;
+      const course=courses.find(item=>item.id===courseId);
+      button.disabled=true;button.textContent="Codes werden geladen …";
+      const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list_codes",courseId}});
+      button.disabled=false;button.textContent="Zugangscodes anzeigen";
+      if(error||data?.error){
+        showMsg($("coursesMsg"),responseError(error,data,"Die Zugangscodes konnten nicht geladen werden."),"err");return;
+      }
+      showCourseCodes("Zugangscodes · "+(course?.name||"Kurs"),data.students||[]);
+      if(data.renewed){
+        showMsg($("coursesMsg"),"Für "+data.renewed+" frühere Vorschaukonten wurde einmalig ein neuer Code erstellt, weil der ursprüngliche Code nicht mehr gespeichert war. Die bisherigen Codes dieser Konten sind damit ungültig.","info");
+      }
     }));
 
     root.querySelectorAll("[data-remove-student]").forEach(button=>button.addEventListener("click",async()=>{
