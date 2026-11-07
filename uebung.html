@@ -111,14 +111,10 @@
   <section id="portalCard" class="card">
     <h1>Spanisch – Lernen & Testen</h1>
     <p class="sub">Was möchtest du üben?</p>
-    <div class="student-account-box">
-      <div id="studentLoggedOut">
-        <p class="tiny">Melde dich mit deinem persönlichen Zugangscode an, damit dein Lernfortschritt gespeichert und später wiederholt wird. Tests und Listen funktionieren weiterhin auch ohne Anmeldung.</p>
-        <label class="field" for="studentLoginCode">Schülercode</label>
-        <div class="student-login-row"><input id="studentLoginCode" type="text" autocomplete="username" autocapitalize="characters" placeholder="ABCD-EFGH-JKLM"><button id="studentLoginBtn" class="secondary" type="button">Anmelden</button></div>
-        <div id="studentAccountMsg" class="msg"></div>
-      </div>
-      <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p><button id="studentLogoutBtn" class="secondary" type="button">Abmelden / anderes Konto</button></div>
+    <div id="studentAccountBox" class="student-account-box">
+      <div id="guestAccountLink"><p class="tiny">Möchtest du deinen Lernfortschritt speichern und falsche Karteikarten später wiederholen?</p><a class="button secondary" href="konto.html">Zum persönlichen Lernbereich mit Zugangscode</a></div>
+      <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
+      <div id="studentAccountMsg" class="msg"></div>
     </div>
     <div class="choice-grid">
       <button id="openVocabBtn" class="choice-btn choice-vocab" type="button">
@@ -318,6 +314,7 @@
 <script>
   const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
   const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+  const PERSONALIZED_MODE=new URLSearchParams(location.search).get("personalisiert")==="1";
   const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 
   const $=id=>document.getElementById(id);
@@ -343,33 +340,24 @@
     return data;
   }
   async function refreshStudentAccount(){
+    if(!PERSONALIZED_MODE){studentAccountProfile=null;$("guestAccountLink").classList.remove("hidden");$("studentLoggedIn").classList.add("hidden");return}
+    $("guestAccountLink").classList.add("hidden");
     const {data}=await studentClient.auth.getSession();
-    if(!data?.session){studentAccountProfile=null;$("studentLoggedOut").classList.remove("hidden");$("studentLoggedIn").classList.add("hidden");return}
+    if(!data?.session){studentAccountProfile=null;location.replace("konto.html");return}
     try{
       const me=await studentProgress({action:"me"});
       studentAccountProfile=me;
       $("studentAccountName").textContent=(me.courseName||"Kurs")+" · Schüler "+me.studentNumber;
-      $("studentLoggedOut").classList.add("hidden");$("studentLoggedIn").classList.remove("hidden");
+      $("studentLoggedIn").classList.remove("hidden");
       $("studentAccountMsg").className="msg";
     }catch(error){
       studentAccountProfile=null;
-      $("studentLoggedOut").classList.remove("hidden");$("studentLoggedIn").classList.add("hidden");
       $("studentAccountMsg").textContent=error.message;$("studentAccountMsg").className="msg show err";
+      location.replace("konto.html");
     }
   }
-  $("studentLoginBtn").addEventListener("click",async()=>{
-    const code=String($("studentLoginCode").value||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
-    $("studentAccountMsg").className="msg";
-    if(code.length!==12){$("studentAccountMsg").textContent="Bitte gib den vollständigen 12-stelligen Schülercode ein.";$("studentAccountMsg").className="msg show err";return}
-    const button=$("studentLoginBtn");button.disabled=true;button.textContent="Anmeldung läuft …";
-    const {error}=await studentClient.auth.signInWithPassword({email:code.toLowerCase()+"@students.avanza.invalid",password:code});
-    button.disabled=false;button.textContent="Anmelden";
-    if(error){$("studentAccountMsg").textContent="Der Code ist ungültig oder wurde erneuert.";$("studentAccountMsg").className="msg show err";return}
-    $("studentLoginCode").value="";
-    await refreshStudentAccount();
-  });
   $("studentLogoutBtn").addEventListener("click",async()=>{
-    await studentClient.auth.signOut();studentAccountProfile=null;await refreshStudentAccount();
+    await studentClient.auth.signOut();studentAccountProfile=null;location.href="konto.html";
   });
   studentClient.auth.onAuthStateChange(()=>setTimeout(refreshStudentAccount,0));
 
@@ -776,6 +764,7 @@
   }
 
   async function startCardPractice(){
+    if(PERSONALIZED_MODE&&!studentAccountProfile){await refreshStudentAccount();if(!studentAccountProfile)return}
     const folderId=Number($("cardFolderSelect").value);
     const folder=$("cardFolderSelect").selectedOptions[0];
     if(!folderId){
@@ -790,7 +779,7 @@
       const data=await api({action:"vocab_list",unitKeys:[],folderIds:[folderId]});
       const rows=(data.vocabulary||[]).filter(row=>row&&row.sourceText&&Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length);
       let reviewCount=0;
-      if(studentAccountProfile){
+      if(PERSONALIZED_MODE&&studentAccountProfile){
         try{
           const due=await studentProgress({action:"due",itemType:"vocab",groupKey:String(folderId)});
           const dueOrder=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));
@@ -902,7 +891,7 @@
   async function answerCard(correct){
     if(!cardSession)return;
     const current=cardSession.quizRows[cardSession.quizIndex];
-    if(studentAccountProfile&&current){
+    if(PERSONALIZED_MODE&&studentAccountProfile&&current){
       try{
         await studentProgress({action:"record",itemType:"vocab",groupKey:String(cardSession.folderId),itemKey:String(cardSession.folderId)+":"+String(current.sourceText||""),itemLabel:String(current.sourceText||""),correct});
         $("cardsSaveStatus").textContent="Lernfortschritt gespeichert.";
@@ -1276,7 +1265,7 @@
   $("vocabHomeBtn").addEventListener("click",showPortal);
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
-  $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href="grammatik-karten.html"; });
+  $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
   refreshStudentAccount();
 
   $("chars").addEventListener("click",e=>{
