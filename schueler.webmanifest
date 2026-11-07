@@ -1,0 +1,19 @@
+{
+  "id": "./uebung.html",
+  "name": "¡Avanza! Schülerbereich",
+  "short_name": "¡Avanza!",
+  "description": "Spanisch lernen und üben im Schülerbereich",
+  "start_url": "./uebung.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#f5f7fb",
+  "icons": [
+    {
+      "src": "./icons/avanza-schueler.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
