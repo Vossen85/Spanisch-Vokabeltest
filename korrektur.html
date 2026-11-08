@@ -26,6 +26,11 @@
     .pts{font-weight:800;white-space:nowrap}
     .note{background:#fff7ed;color:#9a3412;padding:12px 14px;border-radius:10px;margin:14px 0}
     .error{background:#fef2f2;color:#991b1b;padding:14px;border-radius:10px}
+    .grading-scale{margin-top:28px;break-inside:avoid;page-break-inside:avoid}
+    .grading-scale h2{font-size:1.15rem;margin:0 0 6px}
+    .grading-scale table{margin-top:0;font-size:.92rem}
+    .grading-scale th,.grading-scale td{padding:6px 8px}
+    .grading-scale td:nth-child(1),.grading-scale td:nth-child(3){font-weight:800;width:12%}
     @media(max-width:700px){body{padding:12px}.card{padding:16px}.resultbox{grid-template-columns:1fr 1fr}table{font-size:.86rem}th,td{padding:7px 5px}}
     @media print{
       @page{size:A4;margin:12mm}
@@ -76,6 +81,19 @@
         <tbody id="rows"></tbody>
       </table>
     </div>
+    <section class="grading-scale" aria-labelledby="gradingScaleTitle">
+      <h2 id="gradingScaleTitle">Umrechnung in Oberstufenpunkte</h2>
+      <table><thead><tr><th>Punkte</th><th>Erreichte Prozent</th><th>Punkte</th><th>Erreichte Prozent</th></tr></thead><tbody>
+        <tr><td>15</td><td>95–100 %</td><td>7</td><td>55–&lt;60 %</td></tr>
+        <tr><td>14</td><td>90–&lt;95 %</td><td>6</td><td>50–&lt;55 %</td></tr>
+        <tr><td>13</td><td>85–&lt;90 %</td><td>5</td><td>45–&lt;50 %</td></tr>
+        <tr><td>12</td><td>80–&lt;85 %</td><td>4</td><td>39–&lt;45 %</td></tr>
+        <tr><td>11</td><td>75–&lt;80 %</td><td>3</td><td>33–&lt;39 %</td></tr>
+        <tr><td>10</td><td>70–&lt;75 %</td><td>2</td><td>27–&lt;33 %</td></tr>
+        <tr><td>9</td><td>65–&lt;70 %</td><td>1</td><td>20–&lt;27 %</td></tr>
+        <tr><td>8</td><td>60–&lt;65 %</td><td>0</td><td>0–&lt;20 %</td></tr>
+      </tbody></table>
+    </section>
   </section>
 </div>
 
