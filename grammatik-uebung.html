@@ -216,13 +216,45 @@ async function startPractice(configOverride=null){
 }
 async function save(showError=true){if(!accessToken||submitting)return;try{$("saveState").textContent="Speichern …";const d=await api({action:"save",accessToken,answers:currentAnswers()});if(d.submitted&&d.result){showResult(d.result);return}$("saveState").textContent="Gespeichert"}catch(e){$("saveState").textContent="Speichern fehlgeschlagen";if(showError)showMsg($("testMsg"),e.message,"err")}}
 async function submit(auto=false){if(submitting||!accessToken)return;if(!auto){const empty=[...document.querySelectorAll(".question input")].filter(x=>!x.value.trim()).length;if(empty&&!confirm("Es sind noch "+empty+" Felder leer. Trotzdem endgültig abgeben?"))return}submitting=true;$("submitBtn").disabled=true;$("submitBtn").textContent="Wird ausgewertet …";try{const d=await api({action:"submit",accessToken,answers:currentAnswers()});if(d.result)showResult(d.result)}catch(e){showMsg($("testMsg"),e.message,"err")}finally{submitting=false;$("submitBtn").disabled=false;$("submitBtn").textContent="Test endgültig abgeben"}}
+async function saveGrammarTestResults(result,sessionId){
+ const resultToken=result.accessToken||accessToken;
+ const savedKey="avanzaGrammarTestRecorded:"+resultToken;
+ if(!sessionId||sessionStorage.getItem(savedKey)==="saved")return;
+ const results=[];
+ for(const question of result.corrections||[]){
+  const groupKey=String(question.topicTitle||question.topicGroup||"Grammatiktest").slice(0,120);
+  const prefix=String(question.position||"")+". "+String(question.sourceText||"");
+  results.push({
+   itemType:"grammar",groupKey,
+   itemLabel:(prefix+" – Deutsche Bedeutung").slice(0,300),
+   correct:Number(question.translationPoint)>=1
+  });
+  (question.labels||[]).forEach((label,index)=>{
+   results.push({
+    itemType:"grammar",groupKey,
+    itemLabel:(prefix+" – "+String(label||("Form "+(index+1)))).slice(0,300),
+    correct:Number(question.formPoints?.[index])>=1
+   });
+  });
+ }
+ const cleanResults=results.filter(item=>item.itemLabel.trim());
+ if(!cleanResults.length)return;
+ const client=getActivityClient();
+ if(!client)throw new Error("Das Schülerkonto ist nicht erreichbar.");
+ const {data,error}=await client.functions.invoke("student-progress",{body:{action:"record_results",sessionId,results:cleanResults}});
+ if(error||data?.error)throw new Error(data?.error||error?.message||"Grammatikergebnisse konnten nicht gespeichert werden.");
+ sessionStorage.setItem(savedKey,"saved");
+}
 function showResult(r){
+ const resultActivitySessionId=activitySessionId;
  void stopTrackedActivity(true);
  stopTimer();$("testArea").classList.add("hidden");$("setupCard").classList.add("hidden");$("doneCard").classList.remove("hidden");sessionStorage.removeItem(storageKey);
  const s=r.summary||{};$("donePoints").textContent=(s.rawPoints??0)+" / "+(s.maxPoints??0);$("donePercent").textContent=Number(s.percent||0).toFixed(1)+" %";$("doneGrade").textContent=s.gradeText||"—";$("doneOP").textContent=s.upperSchoolPoints??"—";
  const resultToken=r.accessToken||accessToken;$("printLink").href="grammatik-uebung-korrektur.html#token="+encodeURIComponent(resultToken);
  const bad=[];for(const x of (r.corrections||[])){if(Number(x.translationPoint)<1)bad.push({title:x.position+". "+x.sourceText+" – Deutsche Bedeutung",own:x.translation,expected:x.expectedTranslation,p:Number(x.translationPoint)});(x.labels||[]).forEach((lab,i)=>{if(Number(x.formPoints?.[i])<1)bad.push({title:x.position+". "+x.sourceText+" – "+lab,own:x.forms?.[i],expected:x.expectedForms?.[i],p:Number(x.formPoints?.[i])})})}
  $("mistakes").innerHTML="";if(!bad.length)$("mistakes").innerHTML='<div class="msg show ok">Alles richtig – du hast in dieser Simulation keinen Fehler gemacht.</div>';else for(const x of bad){const d=document.createElement("div");d.className="mistake"+(x.p===.5?" almost":"");d.innerHTML='<div class="mistake-head"><div class="mistake-title">'+esc(x.title)+'</div><strong class="'+(x.p===.5?"half":"wrong")+'">'+(x.p===.5?"0,5 Punkte":"0 Punkte")+'</strong></div><div class="answer-line">Deine Antwort: <span class="wrong">'+esc(x.own||"—")+'</span></div><div class="answer-line">Richtige Lösung: <span class="right">'+esc(x.expected||"—")+'</span></div>';$("mistakes").appendChild(d)}
+ const saveStatus=document.createElement("p");saveStatus.className="msg show info";saveStatus.textContent="Testergebnis wird im Lernfortschritt gespeichert.";$("mistakes").appendChild(saveStatus);
+ void saveGrammarTestResults(r,resultActivitySessionId).then(()=>{saveStatus.textContent="Testergebnis wurde im Lernfortschritt gespeichert."}).catch(error=>{console.warn("Grammatikergebnis konnte nicht im Lernfortschritt gespeichert werden:",error);saveStatus.textContent="Testergebnis konnte nicht gespeichert werden."});
  window.scrollTo({top:0,behavior:"instant"});
 }
 function showSetup(){stopTimer();accessToken="";questions=[];$("testArea").classList.add("hidden");$("doneCard").classList.add("hidden");$("setupCard").classList.remove("hidden");window.scrollTo({top:0,behavior:"instant"})}
