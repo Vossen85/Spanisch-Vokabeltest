@@ -319,18 +319,20 @@
 
     <div class="note"><strong>Bewertung:</strong> 1 Punkt = richtig · 0,5 Punkte = nur Akzent- bzw. Groß-/Kleinschreibungsfehler · 0 Punkte = falsch.</div>
 
-    <h2 style="margin-top:26px">Fehler und Hinweise</h2>
-    <div id="mistakes"></div>
+    <div id="mistakeReviewBlock">
+      <h2 style="margin-top:26px">Fehler und Hinweise</h2>
+      <div id="mistakes"></div>
+    </div>
 
     <div class="actions">
       <a id="printLink" class="btn primary" href="#" target="_blank" rel="noopener">Korrektur öffnen / drucken</a>
-      <button id="wrongRepeatBtn" class="secondary hidden" type="button">Nur falsche Vokabeln wiederholen</button>
+      <button id="wrongRepeatBtn" class="secondary hidden" type="button">Vokabeln unter 1 Punkt wiederholen</button>
       <button id="repeatBtn" class="secondary">Noch einmal mit derselben Auswahl</button>
       <button id="newSelectionBtn" class="secondary">Neue Auswahl</button>
     </div>
 
     <section id="wrongRepeatArea" class="note hidden" aria-live="polite">
-      <h2>Falsche Vokabeln wiederholen</h2>
+      <h2>Wiederholung der Vokabeln unter 1 Punkt</h2>
       <p id="wrongRepeatProgress" class="tiny"></p>
       <div id="wrongRepeatPrompt" class="question"></div>
       <label class="field" for="wrongRepeatInput">Deine spanische Übersetzung</label>
@@ -342,7 +344,8 @@
       <p id="wrongRepeatFeedback" class="msg"></p>
       <div id="wrongRepeatFinished" class="hidden">
         <p id="wrongRepeatFinishedText"></p>
-        <button id="wrongRepeatAgainBtn" class="secondary hidden" type="button">Noch einmal die noch falschen Wörter üben</button>
+        <button id="wrongRepeatAgainBtn" class="secondary hidden" type="button">Noch einmal die noch nicht richtigen Wörter üben</button>
+        <button id="wrongRepeatBackBtn" class="secondary" type="button">Zurück zum Ergebnis</button>
       </div>
     </section>
   </section>
@@ -1350,6 +1353,7 @@
     wrongRepeatQueue=[...items];
     wrongRepeatMissed=[];
     wrongRepeatIndex=0;
+    $("mistakeReviewBlock").classList.add("hidden");
     $("wrongRepeatArea").classList.remove("hidden");
     $("wrongRepeatArea").scrollIntoView({behavior:"smooth",block:"start"});
     renderWrongRepeatQuestion();
@@ -1385,6 +1389,11 @@
     renderWrongRepeatQuestion();
   });
   $("wrongRepeatAgainBtn").addEventListener("click",()=>startWrongRepeat(wrongRepeatMissed));
+  $("wrongRepeatBackBtn").addEventListener("click",()=>{
+    $("wrongRepeatArea").classList.add("hidden");
+    $("mistakeReviewBlock").classList.remove("hidden");
+    $("mistakeReviewBlock").scrollIntoView({behavior:"smooth",block:"start"});
+  });
 
   function showSetup(config=lastConfig){
     stopTimers();
