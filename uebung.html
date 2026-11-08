@@ -171,15 +171,33 @@
       </button>
     </div>
 
-    <h2 style="margin-top:24px">1. Vokabelbereiche auswählen</h2>
-    <p class="tiny">Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.</p>
+    <h2 id="selectionHeading" style="margin-top:24px">1. Vokabelbereiche auswählen</h2>
+    <p id="selectionHelp" class="tiny">Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.</p>
     <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
 
     <div id="cardPracticeOptions" class="hidden">
       <h2 style="margin-top:24px">2. Karteikarten üben</h2>
-      <p class="tiny">Wähle im Ordnerbaum genau einen Lernordner aus. Es werden keine Wörter aus anderen Lernordnern dazugemischt.</p>
-      <div class="actions">
-        <button id="startCardPracticeBtn" class="primary" type="button">Übung starten</button>
+      <p class="tiny">Wähle, was du heute üben möchtest.</p>
+      <div class="choice-grid" style="margin-top:16px">
+        <button id="cardModeTopicBtn" class="choice-btn choice-learn mode-btn" type="button">
+          📚 Thema selbst wählen
+          <span>Wähle einen Lernordner und übe dessen Vokabeln.</span>
+        </button>
+        <button id="cardModeErrorsBtn" class="choice-btn choice-learn mode-btn" type="button">
+          🔁 Fehler und fällige Vokabeln
+          <span>Wiederhole Wörter, die noch unsicher oder heute fällig sind.</span>
+        </button>
+        <button id="cardModeMixBtn" class="choice-btn choice-learn mode-btn" type="button">
+          🧠 Langzeitmix starten
+          <span>Übe fällige Wörter gemischt mit älteren bekannten Vokabeln.</span>
+        </button>
+      </div>
+      <p id="cardPersonalNote" class="tiny hidden">Die persönlichen Wiederholungen funktionieren mit deinem Schülerkonto. <a href="konto.html">Mit Schülercode anmelden</a></p>
+      <div id="cardTopicSelection" class="hidden">
+        <p class="tiny">Wähle im Ordnerbaum genau einen Lernordner aus.</p>
+        <div class="actions">
+          <button id="startCardPracticeBtn" class="primary" type="button">Thema üben</button>
+        </div>
       </div>
       <div id="cardPracticeMsg" class="msg"></div>
     </div>
@@ -330,7 +348,7 @@
   let lastConfig=null;
   let vocabMode="test";
   let vocabListCache=null;
-  let cardSession=null;
+  let cardSession=null;\n  let vocabTopicSelectionOpen=false;
   let studentAccountProfile=null;
 
   async function studentProgress(body){
@@ -525,13 +543,21 @@
     vocabMode=mode;
     $("testOptions").classList.toggle("hidden",mode!=="test");
     $("vocabListActions").classList.toggle("hidden",mode!=="list");
-    $("unitsBox").classList.remove("hidden");
     $("cardPracticeOptions").classList.toggle("hidden",mode!=="cards");
+    const showTopicTree=mode!=="cards"||vocabTopicSelectionOpen;
+    $("selectionHeading").classList.toggle("hidden",!showTopicTree);
+    $("selectionHelp").classList.toggle("hidden",!showTopicTree);
+    $("unitsBox").classList.toggle("hidden",!showTopicTree);
+    $("cardTopicSelection").classList.toggle("hidden",!vocabTopicSelectionOpen||mode!=="cards");
     $("chooseVocabTestBtn").setAttribute("aria-pressed",String(mode==="test"));
     $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
     $("chooseCardPracticeBtn").setAttribute("aria-pressed",String(mode==="cards"));
+    $("cardModeErrorsBtn").disabled=!PERSONALIZED_MODE;
+    $("cardModeMixBtn").disabled=!PERSONALIZED_MODE;
+    $("cardPersonalNote").classList.toggle("hidden",PERSONALIZED_MODE);
     hideMsg($("setupMsg"));
     hideMsg($("vocabListMsg"));
+    hideMsg($("cardPracticeMsg"));
     $("vocabPreview").classList.add("hidden");
   }
 
@@ -733,41 +759,85 @@
     return shuffled;
   }
 
-  async function startCardPractice(){
+  async function startCardPractice(mode="topic"){
     if(PERSONALIZED_MODE&&!studentAccountProfile){await refreshStudentAccount();if(!studentAccountProfile)return}
-    const selectedFolderIds=[...new Set([...$("unitsBox").querySelectorAll(".folder-check:checked")].map(box=>Number(box.value)).filter(Number.isFinite))];
-    if(selectedFolderIds.length!==1){
-      showMsg($("cardPracticeMsg"),"Bitte wähle im Ordnerbaum genau einen Lernordner aus.","err");
-      return;
-    }
-    const folderId=selectedFolderIds[0];
-    const folder=catalog.flatMap(unit=>unit.folders||[]).find(item=>Number(item.id)===folderId);
-    if(!folder){
-      showMsg($("cardPracticeMsg"),"Der ausgewählte Lernordner ist nicht verfügbar. Bitte lade die Seite neu.","err");
-      return;
-    }
     const button=$("startCardPracticeBtn");
-    button.disabled=true;
-    button.textContent="Vokabeln werden geladen …";
-    hideMsg($("cardPracticeMsg"));
-    try{
-      const data=await api({action:"vocab_list",unitKeys:[],folderIds:[folderId]});
-      const rows=(data.vocabulary||[]).filter(row=>row&&row.sourceText&&Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length);
-      let reviewCount=0;
-      if(PERSONALIZED_MODE&&studentAccountProfile){
-        try{
-          const due=await studentProgress({action:"due",itemType:"vocab",groupKey:String(folderId)});
-          const dueOrder=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));
-          const dueKey=row=>String(folderId)+":"+String(row.sourceText||"");
-          rows.sort((a,b)=>(dueOrder.has(dueKey(a))?dueOrder.get(dueKey(a)):Infinity)-(dueOrder.has(dueKey(b))?dueOrder.get(dueKey(b)):Infinity));
-          reviewCount=dueOrder.size;
-        }catch(error){console.warn("Wiederholung konnte nicht geladen werden:",error)}
+    if(mode==="topic"&&!vocabTopicSelectionOpen){
+      vocabTopicSelectionOpen=true;
+      setVocabMode("cards");
+      $("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});
+      return;
+    }
+    if(mode!=="topic"&&!PERSONALIZED_MODE){
+      showMsg($("cardPracticeMsg"),"Melde dich mit deinem persönlichen Schülercode an, damit deine Wiederholungen gespeichert werden.","err");
+      return;
+    }
+    let folderId=null;
+    let folder=null;
+    if(mode==="topic"){
+      const selectedFolderIds=[...new Set([...$("unitsBox").querySelectorAll(".folder-check:checked")].map(box=>Number(box.value)).filter(Number.isFinite))];
+      if(selectedFolderIds.length!==1){
+        showMsg($("cardPracticeMsg"),"Bitte wähle genau einen Lernordner aus.","err");
+        return;
       }
-      if(!rows.length)throw new Error("In diesem Lernordner wurden keine passenden Vokabeln gefunden.");
+      folderId=selectedFolderIds[0];
+      folder=catalog.flatMap(unit=>unit.folders||[]).find(item=>Number(item.id)===folderId);
+      if(!folder){
+        showMsg($("cardPracticeMsg"),"Der ausgewählte Lernordner ist nicht verfügbar. Bitte lade die Seite neu.","err");
+        return;
+      }
+    }
+    const activeButton=mode==="topic"?button:(mode==="errors"?$("cardModeErrorsBtn"):$("cardModeMixBtn"));
+    activeButton.disabled=true;
+    const oldText=activeButton.textContent;
+    if(mode==="topic")activeButton.textContent="Vokabeln werden geladen …";
+    hideMsg($("cardPracticeMsg"));
+    if(mode!=="topic")showMsg($("cardPracticeMsg"),"Vokabeln werden geladen …");
+    try{
+      let rows=[];
+      let reviewCount=0;
+      let folderTitle="";
+      if(mode==="topic"){
+        const data=await api({action:"vocab_list",unitKeys:[],folderIds:[folderId]});
+        rows=(data.vocabulary||[]).filter(row=>row&&row.sourceText&&Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length);
+        folderTitle=folder.title||"Lernordner";
+        if(PERSONALIZED_MODE&&studentAccountProfile){
+          try{
+            const due=await studentProgress({action:"due",itemType:"vocab",groupKey:String(folderId)});
+            const dueOrder=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));
+            const dueKey=row=>String(folderId)+":"+String(row.sourceText||"");
+            rows.sort((a,b)=>(dueOrder.has(dueKey(a))?dueOrder.get(dueKey(a)):Infinity)-(dueOrder.has(dueKey(b))?dueOrder.get(dueKey(b)):Infinity));
+            reviewCount=dueOrder.size;
+          }catch(error){console.warn("Wiederholung konnte nicht geladen werden:",error)}
+        }
+      }else{
+        const [review,catalogVocabulary]=await Promise.all([
+          studentProgress({action:"review",itemType:"vocab",mode}),
+          api({action:"vocab_list",unitKeys:[],folderIds:catalog.flatMap(unit=>(unit.folders||[]).map(f=>Number(f.id)))})
+        ]);
+        const allRows=(catalogVocabulary.vocabulary||[]).filter(row=>row&&row.sourceText&&Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length);
+        rows=(review.items||[]).map(item=>{
+          const id=Number(item.group_key);
+          const row=allRows.find(candidate=>String(candidate.sourceText||"")===String(item.item_label||"")&&(candidate.folderIds||[]).includes(id));
+          return row?{...row,progressGroupKey:String(item.group_key),progressItemKey:String(item.item_key),wasDue:Boolean(item.next_review_at&&new Date(item.next_review_at).getTime()<=Date.now()),wasWrong:item.last_result===false}:null;
+        }).filter(Boolean);
+        reviewCount=Number(review.dueCount||0);
+        folderTitle=mode==="errors"?"Fehler und fällige Vokabeln":"Langzeitmix";
+      }
+      if(!rows.length){
+        const emptyMessage=mode==="errors"
+          ?"Gerade gibt es keine falsch beantworteten oder fälligen Vokabeln."
+          :mode==="mix"
+            ?"Heute ist noch keine Vokabel fällig. Übe ein selbst gewähltes Thema; der Langzeitmix wächst mit deinen Wiederholungen."
+            :"In diesem Lernordner wurden keine passenden Vokabeln gefunden.";
+        showMsg($("cardPracticeMsg"),emptyMessage,"info");
+        return;
+      }
       cardSession={
-        folderTitle:folder.title||"Lernordner",
+        folderTitle,
         allRows:rows,
         folderId,
+        mode,
         reviewCount,
         groupIndex:0,
         currentGroup:[],
@@ -784,8 +854,8 @@
     }catch(error){
       showMsg($("cardPracticeMsg"),error.message||"Die Übung konnte nicht geladen werden.","err");
     }finally{
-      button.disabled=false;
-      button.textContent="Übung starten";
+      activeButton.disabled=false;
+      if(mode==="topic")activeButton.textContent=oldText;
     }
   }
 
@@ -868,7 +938,7 @@
     const current=cardSession.quizRows[cardSession.quizIndex];
     if(PERSONALIZED_MODE&&studentAccountProfile&&current){
       try{
-        await studentProgress({action:"record",itemType:"vocab",groupKey:String(cardSession.folderId),itemKey:String(cardSession.folderId)+":"+String(current.sourceText||""),itemLabel:String(current.sourceText||""),correct});
+        await studentProgress({action:"record",itemType:"vocab",groupKey:String(current.progressGroupKey||cardSession.folderId),itemKey:String(current.progressItemKey||String(cardSession.folderId)+":"+String(current.sourceText||"")),itemLabel:String(current.sourceText||""),correct});
         $("cardsSaveStatus").textContent="Lernfortschritt gespeichert.";
       }catch(error){
         $("cardsSaveStatus").textContent="Der Lernfortschritt konnte gerade nicht gespeichert werden.";
@@ -1222,7 +1292,7 @@
   $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
   $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
   $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
-  $("startCardPracticeBtn").addEventListener("click",startCardPractice);
+  $("cardModeTopicBtn").addEventListener("click",()=>{vocabTopicSelectionOpen=true;setVocabMode("cards");$("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});});\n  $("cardModeErrorsBtn").addEventListener("click",()=>startCardPractice("errors"));\n  $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));\n  $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
   $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
   $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);
   $("quizFlashcard").addEventListener("click",()=>{if(!cardSession)return;if($("quizFlashcard").classList.contains("is-flipped"))return;revealCardAnswer()});
