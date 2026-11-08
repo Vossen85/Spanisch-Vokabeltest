@@ -232,9 +232,9 @@
   .activity-week{border-top:1px solid #dbe2ea;padding:10px 0}.activity-week-details{margin-top:12px}.activity-week-details summary{cursor:pointer;font-weight:700;padding:8px 0}
   .activity-week-metrics{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:8px;color:#475569}
   .activity-category-list{display:grid;gap:6px;margin-top:10px}
-  .activity-category{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 10px;border-radius:8px;background:#f1f5f9}
-  .activity-category-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.activity-group-details{margin-top:7px;font-size:.86rem}.activity-group-details summary{cursor:pointer;width:fit-content;color:#334155;font-weight:700;padding:3px 0}.activity-group-details summary:focus-visible{outline:2px solid #2563eb;outline-offset:2px}.activity-groups{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0 0;padding:0;list-style:none}.activity-groups li{padding:4px 8px;border-radius:999px;background:#e2e8f0;color:#334155}.activity-groups-empty{margin:6px 0 0;color:#64748b;font-size:.85rem}
-  .activity-category strong{font-size:.92rem}.activity-category span{text-align:right;color:#475569;font-size:.9rem}
+  .activity-category{display:block;padding:11px 12px;border-radius:11px;background:#f1f5f9}.activity-category-head{display:block}.activity-category strong{font-size:.97rem}.activity-category-count{margin-top:7px;color:#64748b;font-size:.87rem}.activity-accuracy-track{position:relative;height:17px;margin:12px 0 3px;border-radius:999px;overflow:hidden;background:#d1d5db;box-shadow:inset 0 0 0 1px rgba(15,23,42,.18)}.activity-accuracy-fill{display:block;height:100%;width:var(--fill,0%);border-radius:inherit;transition:width .35s ease}.activity-accuracy-fill.low{background:#ff3030}.activity-accuracy-fill.mid{background:#ff9f1c}.activity-accuracy-fill.high{background:#00d084}.activity-accuracy-fill.none{width:0}.activity-accuracy-readout{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;font-size:.75rem;color:#64748b}.activity-accuracy-readout span:last-child{text-align:right}.activity-accuracy-readout strong{font-size:.98rem;text-align:center;color:#172033}.activity-accuracy-readout strong.low{color:#ff5252}.activity-accuracy-readout strong.mid{color:#ffad33}.activity-accuracy-readout strong.high{color:#00d084}.activity-accuracy-readout strong.none{color:#64748b}
+  .activity-category-head{display:block}.activity-group-details{margin-top:7px;font-size:.86rem}.activity-group-details summary{cursor:pointer;width:fit-content;color:#334155;font-weight:700;padding:3px 0}.activity-group-details summary:focus-visible{outline:2px solid #2563eb;outline-offset:2px}.activity-groups{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0 0;padding:0;list-style:none}.activity-groups li{padding:4px 8px;border-radius:999px;background:#e2e8f0;color:#334155}.activity-groups-empty{margin:6px 0 0;color:#64748b;font-size:.85rem}
+  .activity-category strong{font-size:.97rem}
   @media(max-width:520px){.activity-category-head{align-items:flex-start;flex-direction:column;gap:2px}.activity-category-head span{text-align:left}}
     .activity-course-select{display:block;width:100%;height:52px!important;min-height:52px!important;min-width:0;box-sizing:border-box;padding:0 36px 0 13px;font:inherit;font-size:1.02rem;border:1px solid #cbd5e1;border-radius:10px;background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m3 6 5 5 5-5' fill='none' stroke='%23475569' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;-webkit-appearance:none;appearance:none;cursor:pointer}
     .activity-report-filters{display:grid;grid-template-columns:minmax(180px,.8fr) repeat(2,minmax(0,1fr));gap:18px 24px;align-items:start}
@@ -760,14 +760,18 @@
         const categories=reportCategories.map(category=>{
           const metric=w[category.key]||{answers:0,correct:0};
           const answers=Number(metric.answers)||0,correct=Number(metric.correct)||0;
-          const result=answers
-            ? answers+" "+category.unit+" · "+correct+" von "+answers+" richtig ("+Math.round(correct*100/answers)+" %)"
-            : "Noch keine Antworten";
+          const percent=answers?Math.round(correct*1000/answers)/10:null;
+          const percentLabel=percent===null?"–":new Intl.NumberFormat("de-DE",{maximumFractionDigits:1}).format(percent)+" %";
+          const level=percent===null?"none":percent<33.333?"low":percent<66.667?"mid":"high";
+          const countText=answers+" "+category.unit+((category.key==="vocabLearn"||category.key==="grammarLearn")?" geübt":" bearbeitet");
           const groups=Array.isArray(metric.groups)?metric.groups:[];
           const groupList=groups.length
             ? '<ul class="activity-groups">'+groups.map(group=>'<li>'+esc(group)+'</li>').join("")+'</ul>'
             : '<div class="activity-groups-empty">Keine Bereiche erfasst.</div>';
-          return '<div class="activity-category"><div class="activity-category-head"><strong>'+category.label+'</strong><span>'+result+'</span></div>'+
+          return '<div class="activity-category"><div class="activity-category-head"><strong>'+category.label+'</strong></div>'+
+            '<div class="activity-accuracy-track" role="img" aria-label="'+(percent===null?"Noch keine Trefferquote":esc(percentLabel+" direkt richtig"))+'"><span class="activity-accuracy-fill '+level+'" style="--fill:'+(percent===null?0:percent)+'%"></span></div>'+
+            '<div class="activity-accuracy-readout"><span>0 %</span><strong class="'+level+'">'+(percent===null?"Noch keine Quote":percentLabel+" richtig")+'</strong><span>100 %</span></div>'+
+            '<div class="activity-category-count">'+countText+'</div>'+
             '<details class="activity-group-details"><summary>Bereiche anzeigen ('+groups.length+')</summary>'+groupList+'</details></div>';
         }).join("");
         return '<div class="activity-week"><div class="activity-student-head"><b>Woche ab '+fmtDate(w.weekStart)+'</b></div>'+
