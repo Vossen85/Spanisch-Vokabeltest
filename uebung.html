@@ -85,8 +85,9 @@
     @media(max-width:600px){.flashcard{min-height:95px;padding:12px;font-size:1rem}.flashcard-question{padding:15px}.quiz-german{font-size:1.3rem}}
     @media(max-width:600px){.vocab-preview{padding:12px}.vocab-preview th,.vocab-preview td{padding:7px 4px;font-size:.9rem}}
     .choice-vocab{background:#2563eb;color:#fff}
-    .choice-grammar{background:#7c3aed;color:#fff}.choice-progress{background:#db2777;color:#fff;grid-column:1/-1}
+    .choice-grammar{background:#7c3aed;color:#fff}.choice-tests{background:#ff7900;color:#fff;grid-column:1/-1}.choice-tests:hover{background:#ed6a00}.choice-tests:focus-visible{outline:3px solid #fdba74;outline-offset:3px}.choice-progress{background:#db2777;color:#fff;grid-column:1/-1}
     .choice-progress:hover{background:#be185d}
+    .student-tests-panel{grid-column:1/-1;margin-top:-7px;padding:18px;border:1px solid #fed7aa;border-radius:16px;background:#fffaf5;color:#7c2d12}.student-tests-panel h2{margin:0 0 8px}.student-tests-status{color:#64748b}.student-test-period{margin-top:18px;padding:14px;border:1px solid #fdba74;border-radius:12px;background:#fff}.student-test-period h3{margin:0 0 10px;color:#9a3412}.student-test-table-wrap{overflow-x:auto}.student-test-table{width:100%;border-collapse:collapse;min-width:620px}.student-test-table th,.student-test-table td{padding:9px 8px;border-bottom:1px solid #ffedd5;text-align:left;vertical-align:top}.student-test-table th{color:#9a3412;font-size:.88rem}.student-test-grade{font-weight:800}.student-tests-login{display:inline-flex;margin-top:10px;text-decoration:none}
     .choice-progress:focus-visible{outline:3px solid #f9a8d4;outline-offset:3px}
     .choice-learn{background:#0f766e;color:#fff}
     .choice-test{background:#c2410c;color:#fff}
@@ -157,6 +158,15 @@
         ✏️ Grammatik
         <span>Konjugationen lernen oder Grammatiktests bearbeiten</span>
       </button>
+      <button id="openTestsBtn" class="choice-btn choice-tests" type="button" aria-expanded="false" aria-controls="studentTestsPanel">
+        📝 Tests
+        <span>Deine geschriebenen Tests, Korrekturen und Noten ansehen</span>
+      </button>
+      <section id="studentTestsPanel" class="student-tests-panel hidden" aria-labelledby="studentTestsHeading">
+        <h2 id="studentTestsHeading">Meine Tests und Noten</h2>
+        <div id="studentTestsStatus" class="student-tests-status" aria-live="polite">Öffne den Bereich, um deine Testergebnisse zu laden.</div>
+        <div id="studentTestsList"></div>
+      </section>
       <button id="openProgressBtn" class="choice-btn choice-progress" type="button">
         📈 Lernfortschritt
         <span>Wochenberichte mit Lernzeit, richtigen Antworten und Karten zum Wiederholen</span>
@@ -404,6 +414,7 @@
   let cardSession=null;
   let vocabTopicSelectionOpen=false;
   let studentAccountProfile=null;
+  let studentTestHistoryRefresh=null;
 
   async function studentProgress(body){
     const {data,error}=await studentClient.functions.invoke("student-progress",{body});
@@ -459,6 +470,7 @@
       notice.innerHTML=weekly?'<strong>Wochenziel:</strong> '+Number(weekly.required_minutes||0)+' Minuten'+(weekly.topic_notes?'<br>Themen: '+htmlSafe(weekly.topic_notes):''):'Für diese Woche ist kein Wochenziel eingetragen.';
       $("studentLoggedIn").classList.remove("hidden");$("guestAccountLink").classList.add("hidden");
       $("studentAccountMsg").className="msg";
+      if(!$("studentTestsPanel").classList.contains("hidden"))loadStudentTestHistory();
     }catch(error){
       studentAccountProfile=null;
       $("studentAccountMsg").textContent=error.message;$("studentAccountMsg").className="msg show err";
@@ -468,7 +480,7 @@
   $("studentLogoutBtn").addEventListener("click",async()=>{
     await studentClient.auth.signOut();studentAccountProfile=null;location.href="konto.html?v=20261107-2";
   });
-  studentClient.auth.onAuthStateChange(()=>setTimeout(refreshStudentAccount,0));
+  studentClient.auth.onAuthStateChange(()=>setTimeout(async()=>{await refreshStudentAccount();if(!$("studentTestsPanel").classList.contains("hidden"))loadStudentTestHistory()},0));
 
   function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
   function hideMsg(el){el.className="msg"}
@@ -1584,6 +1596,50 @@
     $("grammarChoiceCard").classList.remove("hidden");
     window.scrollTo({top:0,behavior:"instant"});
   });
+  $("openTestsBtn").addEventListener("click",toggleStudentTests);
+  async function loadStudentTestHistory(){
+    const status=$("studentTestsStatus"),list=$("studentTestsList");
+    if(!studentAccountProfile){
+      status.textContent="Melde dich mit deinem Schüler-Zugangscode an, damit deine Tests und Noten angezeigt werden.";
+      list.innerHTML='<a class="button primary student-tests-login" href="konto.html?next=tests">Mit Zugangscode anmelden</a>';
+      return;
+    }
+    status.textContent="Testergebnisse werden geladen …";list.innerHTML="";
+    const {data,error}=await studentClient.functions.invoke("student-test-history",{body:{}});
+    if(error||data?.error){status.textContent=data?.error||"Testergebnisse konnten nicht geladen werden.";return}
+    const results=data.results||[];
+    if(!results.length){status.textContent="Für dieses Konto liegen noch keine abgeschlossenen Tests vor.";return}
+    const groups=new Map();
+    for(const r of results){
+      const key=(r.courseName||"Kurs")+" · "+(r.quarterNumber?"Quartal "+r.quarterNumber:"Quartal nicht angegeben");
+      if(!groups.has(key))groups.set(key,[]);
+      groups.get(key).push(r);
+    }
+    status.textContent="Deine gespeicherten Testergebnisse:";
+    list.innerHTML=[...groups.entries()].map(([label,items])=>
+      '<section class="student-test-period"><h3>'+htmlSafe(label)+'</h3><div class="student-test-table-wrap"><table class="student-test-table"><thead><tr><th>Test</th><th>Datum</th><th>Punkte</th><th>Prozent</th><th>Note</th><th>OP</th></tr></thead><tbody>'+
+      items.map(r=>'<tr><td>'+htmlSafe(r.testTitle)+'</td><td>'+formatSavedTestDate(r.testDate)+'</td><td>'+Number(r.rawPoints)+' / '+Number(r.maxPoints)+'</td><td>'+Number(r.percent).toFixed(1)+' %</td><td class="student-test-grade">'+htmlSafe(r.gradeText)+'</td><td>'+Number(r.upperSchoolPoints)+'</td></tr>').join("")+
+      '</tbody></table></div></section>'
+    ).join("");
+  }
+  function formatSavedTestDate(value){
+    if(!value)return"—";
+    const [y,m,d]=String(value).slice(0,10).split("-");
+    return d+"."+m+"."+y;
+  }
+  async function toggleStudentTests(){
+    const panel=$("studentTestsPanel"),button=$("openTestsBtn");
+    const opening=panel.classList.contains("hidden");
+    panel.classList.toggle("hidden",!opening);button.setAttribute("aria-expanded",String(opening));
+    if(opening){
+      await loadStudentTestHistory();
+      if(studentTestHistoryRefresh)clearInterval(studentTestHistoryRefresh);
+      studentTestHistoryRefresh=setInterval(()=>{
+        if(document.visibilityState==="visible"&&!panel.classList.contains("hidden"))loadStudentTestHistory();
+      },20000);
+      if(location.hash==="#tests")panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+    }else if(studentTestHistoryRefresh){clearInterval(studentTestHistoryRefresh);studentTestHistoryRefresh=null;}
+  }
   $("openProgressBtn").addEventListener("click",()=>location.href=studentAccountProfile?"lernfortschritt.html":"konto.html?next=report");
   $("grammarHomeBtn").addEventListener("click",showPortal);
   $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
@@ -1612,6 +1668,7 @@
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
   refreshStudentAccount();
+  if(location.hash==="#tests"){ $("studentTestsPanel").classList.remove("hidden");$("openTestsBtn").setAttribute("aria-expanded","true");setTimeout(loadStudentTestHistory,0); }
 
   $("chars").addEventListener("click",e=>{
     if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;

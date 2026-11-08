@@ -76,7 +76,7 @@ async function loadTestHistory(){
     '</tbody></table></div></section>'
   ).join("");
 }
-function continueUrl(){const next=new URLSearchParams(location.search).get("next");if(next==="grammar")return "grammatik-karten.html?personalisiert=1&v=20261107-2";if(next==="report")return "lernfortschritt.html";return "uebung.html?personalisiert=1"}
+function continueUrl(){const next=new URLSearchParams(location.search).get("next");if(next==="grammar")return "grammatik-karten.html?personalisiert=1&v=20261107-2";if(next==="report")return "lernfortschritt.html";if(next==="tests")return "uebung.html?personalisiert=1#tests";return "uebung.html?personalisiert=1"}
 async function refreshAccount(){
   const {data}=await studentClient.auth.getSession();
   if(!data?.session){$("loginArea").classList.remove("hidden");$("accountArea").classList.add("hidden");return}
