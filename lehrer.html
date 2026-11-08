@@ -528,11 +528,11 @@
     <section id="view-reports" class="view hidden">
       <div class="card">
         <h2>Lernberichte</h2>
-        <p class="tiny">Sieh dir Lernzeit und bearbeitete Karten pro Schüler für eine Woche oder einen mehrwöchigen Zeitraum an. Die Erfassung beginnt ab Einführung dieser Funktion; ältere Wochen werden nicht nachträglich ergänzt.</p>
+        <p class="tiny">Sieh dir Lernzeit und bearbeitete Karten pro Schüler für eine Woche oder einen mehrwöchigen Zeitraum an. Wähle beliebige Tage; es werden jeweils die ganzen Kalenderwochen von Montag bis Sonntag berücksichtigt. Die Erfassung beginnt ab Einführung dieser Funktion; ältere Wochen werden nicht nachträglich ergänzt.</p>
         <div class="row">
           <div><label for="reportCourse">Kurs</label><select id="reportCourse"><option value="">Kurse werden geladen …</option></select></div>
-          <div><label for="reportFromWeek">Von Woche ab (Montag)</label><input id="reportFromWeek" type="date"></div>
-          <div><label for="reportToWeek">Bis Woche ab (Montag)</label><input id="reportToWeek" type="date"></div>
+          <div><label for="reportFromWeek">Von (beliebiger Tag)</label><input id="reportFromWeek" type="date"></div>
+          <div><label for="reportToWeek">Bis (beliebiger Tag)</label><input id="reportToWeek" type="date"></div>
         </div>
         <div class="actions"><button id="loadReportsBtn" class="primary" type="button">Bericht anzeigen</button></div>
         <div id="reportsMsg" class="msg"></div>
@@ -614,6 +614,23 @@
     const d=new Date(localMonday()+"T12:00:00");d.setDate(d.getDate()-7*count);
     return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
   }
+  function weekMonday(dateString){
+    const d=new Date(dateString+"T12:00:00");
+    if(Number.isNaN(d.getTime()))return "";
+    d.setDate(d.getDate()-((d.getDay()+6)%7));
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  async function edgeErrorMessage(error,data,fallback){
+    if(data?.error)return data.error;
+    try{
+      const response=error?.context;
+      if(response?.clone){
+        const body=await response.clone().json();
+        if(body?.error)return body.error;
+      }
+    }catch{}
+    return error?.message||fallback;
+  }
   async function loadActivityCourses(){
     if(activityCoursesLoaded)return;
     const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list"}});
@@ -633,7 +650,7 @@
     if(!courseId||!weekStart)return;
     $("requiredMinutes").value="60";$("topicNotes").value="";
     const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"get_assignment",courseId,weekStart}});
-    if(error||data?.error){showMsg($("assignmentMsg"),responseError(error,data,"Die Wochenaufgabe konnte nicht geladen werden."),"err");return}
+    if(error||data?.error){showMsg($("assignmentMsg"),await edgeErrorMessage(error,data,"Die Wochenaufgabe konnte nicht geladen werden."),"err");return}
     hideMsg($("assignmentMsg"));
     if(data.assignment){$("requiredMinutes").value=data.assignment.required_minutes;$("topicNotes").value=data.assignment.topic_notes||""}
   }
@@ -649,11 +666,13 @@
     if($("reportCourse").value)await loadReportRange();
   }
   async function loadReportRange(){
-    const courseId=$("reportCourse").value,startWeek=$("reportFromWeek").value,endWeek=$("reportToWeek").value;
-    if(!courseId||!startWeek||!endWeek){$("learningReports").innerHTML="";return}
+    const courseId=$("reportCourse").value,selectedFrom=$("reportFromWeek").value,selectedTo=$("reportToWeek").value;
+    if(!courseId||!selectedFrom||!selectedTo){$("learningReports").innerHTML="";return}
+    const startWeek=weekMonday(selectedFrom),endWeek=weekMonday(selectedTo);
+    if(endWeek<startWeek){showMsg($("reportsMsg"),"Das Bis-Datum liegt vor dem Von-Datum.","err");return}
     $("learningReports").innerHTML='<div class="muted">Lernberichte werden geladen …</div>';
     const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"report_range",courseId,startWeek,endWeek}});
-    if(error||data?.error){$("learningReports").innerHTML="";showMsg($("reportsMsg"),responseError(error,data,"Der Bericht konnte nicht geladen werden."),"err");return}
+    if(error||data?.error){$("learningReports").innerHTML="";showMsg($("reportsMsg"),await edgeErrorMessage(error,data,"Der Bericht konnte nicht geladen werden."),"err");return}
     hideMsg($("reportsMsg"));
     const cards=(data.students||[]).map(st=>{
       const weeks=(st.weeks||[]).map(w=>{
@@ -682,7 +701,7 @@
       requiredMinutes:Number($("requiredMinutes").value),topicNotes:$("topicNotes").value.trim()
     }});
     button.disabled=false;button.textContent="Wochenaufgabe speichern";
-    if(error||data?.error){showMsg($("assignmentMsg"),responseError(error,data,"Die Wochenaufgabe konnte nicht gespeichert werden."),"err");return}
+    if(error||data?.error){showMsg($("assignmentMsg"),await edgeErrorMessage(error,data,"Die Wochenaufgabe konnte nicht gespeichert werden."),"err");return}
     showMsg($("assignmentMsg"),"Wochenaufgabe für "+data.courseName+" gespeichert.","ok");
   });
   $("assignmentCourse").addEventListener("change",loadAssignment);
