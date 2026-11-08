@@ -116,7 +116,8 @@
     <p class="sub">Was möchtest du üben?</p>
     <div id="studentAccountBox" class="student-account-box">
       <div id="guestAccountLink"><p class="tiny">Möchtest du deinen Lernfortschritt speichern und falsche Karteikarten später wiederholen?</p><a class="button secondary" href="konto.html?v=20261107-2">Zum persönlichen Lernbereich mit Zugangscode</a></div>
-      <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
+      <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p>
+        <div id="weeklyAssignmentNotice" class="tiny"></div><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
       <div id="studentAccountMsg" class="msg"></div>
     </div>
     <div class="choice-grid">
@@ -357,6 +358,39 @@
     if(error||data?.error)throw new Error(data?.error||error?.message||"Der Lernfortschritt konnte nicht gespeichert werden.");
     return data;
   }
+  let currentActivitySessionId=null;
+  let activityContext=null;
+  let activityHeartbeat=null;
+  let activityLastInteraction=Date.now();
+  function noteActivity(){activityLastInteraction=Date.now()}
+  ["pointerdown","keydown","touchstart"].forEach(name=>document.addEventListener(name,noteActivity,{passive:true}));
+  async function startTrackedActivity(activityType,mode,groupKey){
+    if(!PERSONALIZED_MODE||!studentAccountProfile)return null;
+    activityContext={activityType,mode,groupKey};
+    if(activityHeartbeat)clearInterval(activityHeartbeat);
+    currentActivitySessionId=null;
+    const {data,error}=await studentClient.functions.invoke("learning-activity",{body:{action:"start",activityType,mode,groupKey}});
+    if(error||data?.error){console.warn("Lernzeit konnte nicht gestartet werden:",data?.error||error?.message);return null}
+    currentActivitySessionId=data.sessionId;
+    activityHeartbeat=setInterval(async()=>{
+      if(!currentActivitySessionId||document.visibilityState!=="visible"||Date.now()-activityLastInteraction>90000)return;
+      const {error:pingError}=await studentClient.functions.invoke("learning-activity",{body:{action:"ping",sessionId:currentActivitySessionId}});
+      if(pingError)console.warn("Lernzeit-Heartbeat fehlgeschlagen:",pingError.message);
+    },30000);
+    return currentActivitySessionId;
+  }
+  async function stopTrackedActivity(){
+    const id=currentActivitySessionId;
+    currentActivitySessionId=null;
+    if(activityHeartbeat){clearInterval(activityHeartbeat);activityHeartbeat=null}
+    if(id)await studentClient.functions.invoke("learning-activity",{body:{action:"end",sessionId:id}});
+  }
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="hidden")void stopTrackedActivity();
+    else if(activityContext){noteActivity();void startTrackedActivity(activityContext.activityType,activityContext.mode,activityContext.groupKey)}
+  });
+  window.addEventListener("pagehide",()=>{void stopTrackedActivity()});
+
   async function refreshStudentAccount(){
     if(!PERSONALIZED_MODE){studentAccountProfile=null;$("guestAccountLink").classList.remove("hidden");$("studentLoggedIn").classList.add("hidden");return}
     $("guestAccountLink").classList.add("hidden");
@@ -366,6 +400,10 @@
       const me=await studentProgress({action:"me"});
       studentAccountProfile=me;
       $("studentAccountName").textContent=(me.courseName||"Kurs")+" · Schüler "+me.studentNumber;
+      const weekly=me.weeklyAssignment,notice=$("weeklyAssignmentNotice");
+      notice.innerHTML=weekly
+        ? '<strong>Wochenaufgabe:</strong> '+Number(me.activeMinutes||0)+' von '+Number(weekly.required_minutes||0)+' Minuten'+(weekly.topic_notes?'<br>Themen: '+htmlSafe(weekly.topic_notes):'')
+        : 'Für diese Woche ist keine Pflichtzeit eingetragen.';
       $("studentLoggedIn").classList.remove("hidden");
       $("studentAccountMsg").className="msg";
     }catch(error){
@@ -848,6 +886,7 @@
         quizIndex:0,
         roundWrongRows:[]
       };
+      await startTrackedActivity("vocab",mode,String(folderId??mode));
       $("setupCard").classList.add("hidden");
       $("cardPracticeArea").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"instant"});
@@ -939,7 +978,7 @@
     const current=cardSession.quizRows[cardSession.quizIndex];
     if(PERSONALIZED_MODE&&studentAccountProfile&&current){
       try{
-        await studentProgress({action:"record",itemType:"vocab",groupKey:String(current.progressGroupKey||cardSession.folderId),itemKey:String(current.progressItemKey||String(cardSession.folderId)+":"+String(current.sourceText||"")),itemLabel:String(current.sourceText||""),correct});
+        await studentProgress({action:"record",itemType:"vocab",groupKey:String(current.progressGroupKey||cardSession.folderId),itemKey:String(current.progressItemKey||String(cardSession.folderId)+":"+String(current.sourceText||"")),itemLabel:String(current.sourceText||""),correct,sessionId:currentActivitySessionId||undefined});
         $("cardsSaveStatus").textContent="Lernfortschritt gespeichert.";
       }catch(error){
         $("cardsSaveStatus").textContent="Der Lernfortschritt konnte gerade nicht gespeichert werden.";
