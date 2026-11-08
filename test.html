@@ -52,10 +52,19 @@
     @media(max-width:650px){
       body{padding:12px}.card{padding:16px}.topbar-inner{align-items:flex-start;flex-direction:column;gap:6px}.summary,.resultbox{grid-template-columns:1fr}
     }
+  
+  .avanza-home-header{margin:0 0 12px;line-height:0}
+  .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
+  .avanza-home-link img{display:block;width:50px;height:50px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px rgba(15,23,42,.16)}
+  .avanza-home-link:focus-visible{outline:3px solid #2563eb}
+  .avanza-home-link:hover img{transform:translateY(-1px)}
+  .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
+  @media print{.avanza-home-header{display:none!important}}
   </style>
 </head>
 <body>
 <div class="wrap">
+  <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
   <section id="loadingCard" class="card">
     <h1>Spanisch – Vokabeltest</h1>
     <p>Test wird geladen …</p>
@@ -411,6 +420,20 @@
   });
 
   loadInfo();
+</script>
+<script>
+(()=>{const link=document.querySelector(".avanza-home-link");if(!link)return;
+ const home=link.dataset.homeTarget||"uebung.html";
+ function sync(){const area=document.getElementById("testArea"),done=document.getElementById("doneCard");
+   const legacyTest=document.getElementById("test"),legacyResult=document.getElementById("result");
+   const locked=(area&&!area.classList.contains("hidden")&&(!done||done.classList.contains("hidden")))||
+     (legacyTest&&!legacyTest.classList.contains("hidden")&&(!legacyResult||legacyResult.classList.contains("hidden")));
+   link.classList.toggle("is-locked",locked);
+   if(locked){link.removeAttribute("href");link.setAttribute("aria-disabled","true");link.setAttribute("tabindex","-1");link.title="Während des laufenden Tests gesperrt";}
+   else{link.href=home;link.removeAttribute("aria-disabled");link.removeAttribute("tabindex");link.title="Zur Startseite";}
+ }
+ new MutationObserver(sync).observe(document.body,{subtree:true,attributes:true,attributeFilter:["class"]});sync();
+})();
 </script>
 </body>
 </html>
