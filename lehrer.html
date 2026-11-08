@@ -561,11 +561,11 @@
     <section id="view-reports" class="view hidden">
       <div class="card">
         <h2>Lernberichte</h2>
-        <p class="tiny">Sieh dir Lernzeit und bearbeitete Karten pro Schüler für eine Woche oder einen mehrwöchigen Zeitraum an. Wähle beliebige Tage; es werden jeweils die ganzen Kalenderwochen von Montag bis Sonntag berücksichtigt. Die Erfassung beginnt ab Einführung dieser Funktion; ältere Wochen werden nicht nachträglich ergänzt.</p>
+        <p class="tiny">Sieh dir Lernzeit und bearbeitete Karten pro Schüler für eine Woche oder einen mehrwöchigen Zeitraum an. Wähle beliebige Tage; es werden jeweils die ganzen Kalenderwochen von Montag bis Sonntag berücksichtigt. Die Lernberichte beginnen am 02.11.2026. Frühere Aktivitätsdaten sind nicht Bestandteil der Berichte.</p>
         <div class="activity-report-filters">
           <div><label for="reportCourse">Kurs</label><select id="reportCourse" class="activity-course-select"><option value="">Kurse werden geladen …</option></select></div>
           <div class="activity-report-dates">
-            <div><label for="reportFromWeek">Von (beliebiger Tag)</label><input id="reportFromWeek" type="date"></div>
+            <div><label for="reportFromWeek">Von (beliebiger Tag)</label><input id="reportFromWeek" type="date" min="2026-11-02"></div>
             <div><label for="reportToWeek">Bis (beliebiger Tag)</label><input id="reportToWeek" type="date"></div>
           </div>
         </div>
@@ -698,7 +698,8 @@
     await loadWeeklyAssignmentHistory();
   }
   async function loadLearningReports(){
-    if(!$("reportFromWeek").value)$("reportFromWeek").value=mondayWeeksAgo(3);
+    $("reportFromWeek").min="2026-11-02";
+    if(!$("reportFromWeek").value||$("reportFromWeek").value<"2026-11-02")$("reportFromWeek").value="2026-11-02";
     if(!$("reportToWeek").value)$("reportToWeek").value=localMonday();
     await loadActivityCourses();
   }
@@ -737,6 +738,7 @@
   }
   async function loadReportRange(){
     const courseId=$("reportCourse").value,selectedFrom=$("reportFromWeek").value,selectedTo=$("reportToWeek").value;
+    if(selectedFrom<"2026-11-02"){$("reportFromWeek").value="2026-11-02";showMsg($("reportsMsg"),"Lernberichte beginnen am 02.11.2026.","err");return false}
     if(!courseId||!selectedFrom||!selectedTo){$("learningReports").innerHTML="";showMsg($("reportsMsg"),"Bitte Kurs und Zeitraum auswählen.","err");return false}
     const startWeek=weekMonday(selectedFrom),endWeek=weekMonday(selectedTo);
     if(endWeek<startWeek){showMsg($("reportsMsg"),"Das Bis-Datum liegt vor dem Von-Datum.","err");return false}
