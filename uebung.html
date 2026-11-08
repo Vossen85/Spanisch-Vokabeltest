@@ -398,6 +398,7 @@
   function noteActivity(){activityLastInteraction=Date.now()}
   ["pointerdown","keydown","touchstart"].forEach(name=>document.addEventListener(name,noteActivity,{passive:true}));
   async function startTrackedActivity(activityType,mode,groupKey){
+    if(!studentAccountProfile)await refreshStudentAccount();
     if(!PERSONALIZED_MODE||!studentAccountProfile)return null;
     activityContext={activityType,mode,groupKey};
     if(activityHeartbeat)clearInterval(activityHeartbeat);
