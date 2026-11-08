@@ -238,6 +238,13 @@
     .activity-report-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
     .activity-report-dates input{width:100%;min-width:0}
     @media(max-width:760px){.activity-report-filters{grid-template-columns:1fr}}
+    .assignment-history{margin-top:22px;padding-top:16px;border-top:1px solid #e2e8f0}
+    .assignment-history-tabs{margin:12px 0}
+    .assignment-history-tab.active{background:#172033;color:#fff}
+    .assignment-history-item{border:1px solid #dbe2ea;border-radius:12px;padding:14px;margin:10px 0;background:#fff}
+    .assignment-history-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .assignment-history-status{font-size:.82rem;font-weight:750;border-radius:999px;padding:5px 9px;background:#eff6ff;color:#1d4ed8;white-space:nowrap}
+    .assignment-history-meta{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:10px;color:#475569}
   </style>
 </head>
 <body>
@@ -528,6 +535,16 @@
         <div class="actions"><button id="saveWeeklyAssignmentBtn" class="primary" type="button">Wochenaufgabe speichern</button></div>
         <div id="assignmentMsg" class="msg"></div>
         <p class="tiny">Schüler sehen das Wochenziel im persönlichen Lernbereich. Die allgemeine Schülerseite ohne Code speichert keine persönliche Lernzeit.</p>
+        <section class="assignment-history" aria-labelledby="assignmentHistoryTitle">
+          <h3 id="assignmentHistoryTitle">Aufgabenübersicht</h3>
+          <p class="tiny">Sieh nach, was für die Kurse aktuell gilt oder welche Wochenaufgaben bereits im Archiv liegen.</p>
+          <div class="actions assignment-history-tabs" role="group" aria-label="Wochenaufgaben anzeigen">
+            <button id="currentAssignmentsBtn" class="secondary assignment-history-tab active" type="button" aria-pressed="true">Aktuelle Aufgaben</button>
+            <button id="archivedAssignmentsBtn" class="secondary assignment-history-tab" type="button" aria-pressed="false">Aufgabenarchiv</button>
+          </div>
+          <div id="assignmentHistoryMsg" class="msg"></div>
+          <div id="assignmentHistoryList" aria-live="polite"></div>
+        </section>
       </div>
     </section>
 
@@ -542,9 +559,9 @@
             <div><label for="reportToWeek">Bis (beliebiger Tag)</label><input id="reportToWeek" type="date"></div>
           </div>
         </div>
-        <div class="actions"><button id="loadReportsBtn" class="primary" type="button">Bericht anzeigen</button></div>
+        <div class="actions"><button id="loadReportsBtn" class="primary" type="button" aria-expanded="false">Bericht anzeigen</button></div>
         <div id="reportsMsg" class="msg"></div>
-        <div id="learningReports"></div>
+        <div id="learningReports" class="hidden"></div>
         <p class="tiny">Erfasst werden aktive persönliche Vokabel- und Grammatik-Karteikartenübungen samt richtig/falsch markierten Antworten.</p>
       </div>
     </section>
@@ -662,25 +679,60 @@
     hideMsg($("assignmentMsg"));
     if(data.assignment){$("requiredMinutes").value=data.assignment.required_minutes;$("topicNotes").value=data.assignment.topic_notes||""}
   }
+  let weeklyAssignmentsCache=[];
+  let assignmentHistoryView="current";
   async function loadLearningActivity(){
     if(!$("assignmentWeek").value)$("assignmentWeek").value=localMonday();
     await loadActivityCourses();
     await loadAssignment();
+    await loadWeeklyAssignmentHistory();
   }
   async function loadLearningReports(){
     if(!$("reportFromWeek").value)$("reportFromWeek").value=mondayWeeksAgo(3);
     if(!$("reportToWeek").value)$("reportToWeek").value=localMonday();
     await loadActivityCourses();
-    if($("reportCourse").value)await loadReportRange();
+  }
+  async function loadWeeklyAssignmentHistory(){
+    hideMsg($("assignmentHistoryMsg"));
+    $("assignmentHistoryList").innerHTML='<div class="muted">Wochenaufgaben werden geladen …</div>';
+    const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"list_assignments"}});
+    if(error||data?.error){
+      $("assignmentHistoryList").innerHTML="";
+      showMsg($("assignmentHistoryMsg"),await edgeErrorMessage(error,data,"Die Aufgabenübersicht konnte nicht geladen werden."),"err");
+      return false;
+    }
+    weeklyAssignmentsCache=data.assignments||[];
+    renderWeeklyAssignmentHistory();
+    return true;
+  }
+  function renderWeeklyAssignmentHistory(){
+    const currentWeek=localMonday();
+    const visible=(weeklyAssignmentsCache||[])
+      .filter(item=>assignmentHistoryView==="current"?item.week_start>=currentWeek:item.week_start<currentWeek)
+      .sort((a,b)=>String(b.week_start).localeCompare(String(a.week_start))||String(a.courseName).localeCompare(String(b.courseName),"de"));
+    $("currentAssignmentsBtn").classList.toggle("active",assignmentHistoryView==="current");
+    $("currentAssignmentsBtn").setAttribute("aria-pressed",String(assignmentHistoryView==="current"));
+    $("archivedAssignmentsBtn").classList.toggle("active",assignmentHistoryView==="archive");
+    $("archivedAssignmentsBtn").setAttribute("aria-pressed",String(assignmentHistoryView==="archive"));
+    if(!visible.length){
+      $("assignmentHistoryList").innerHTML='<div class="empty">'+(assignmentHistoryView==="current"?"Für die aktuelle oder kommende Woche sind noch keine Aufgaben eingestellt.":"Im Archiv sind noch keine vergangenen Wochenaufgaben gespeichert.")+'</div>';
+      return;
+    }
+    $("assignmentHistoryList").innerHTML=visible.map(item=>{
+      const status=item.week_start===currentWeek?"Diese Woche":item.week_start>currentWeek?"Kommend":"Archiv";
+      return '<article class="assignment-history-item"><div class="assignment-history-head"><div><strong>'+esc(item.courseName||"Kurs")+'</strong><div class="tiny">Woche ab '+fmtDate(item.week_start)+'</div></div><span class="assignment-history-status">'+status+'</span></div>'+
+        '<div class="assignment-history-meta"><strong>'+n(item.required_minutes)+' Minuten pro Woche</strong>'+
+        (item.topic_notes?'<span>Themen: '+esc(item.topic_notes)+'</span>':'<span class="muted">Keine Themenfelder angegeben</span>')+'</div></article>';
+    }).join("");
   }
   async function loadReportRange(){
     const courseId=$("reportCourse").value,selectedFrom=$("reportFromWeek").value,selectedTo=$("reportToWeek").value;
-    if(!courseId||!selectedFrom||!selectedTo){$("learningReports").innerHTML="";return}
+    if(!courseId||!selectedFrom||!selectedTo){$("learningReports").innerHTML="";showMsg($("reportsMsg"),"Bitte Kurs und Zeitraum auswählen.","err");return false}
     const startWeek=weekMonday(selectedFrom),endWeek=weekMonday(selectedTo);
-    if(endWeek<startWeek){showMsg($("reportsMsg"),"Das Bis-Datum liegt vor dem Von-Datum.","err");return}
+    if(endWeek<startWeek){showMsg($("reportsMsg"),"Das Bis-Datum liegt vor dem Von-Datum.","err");return false}
     $("learningReports").innerHTML='<div class="muted">Lernberichte werden geladen …</div>';
     const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"report_range",courseId,startWeek,endWeek}});
-    if(error||data?.error){$("learningReports").innerHTML="";showMsg($("reportsMsg"),await edgeErrorMessage(error,data,"Der Bericht konnte nicht geladen werden."),"err");return}
+    if(error||data?.error){$("learningReports").innerHTML="";showMsg($("reportsMsg"),await edgeErrorMessage(error,data,"Der Bericht konnte nicht geladen werden."),"err");return false}
     hideMsg($("reportsMsg"));
     const cards=(data.students||[]).map(st=>{
       const weeks=(st.weeks||[]).map(w=>{
@@ -700,6 +752,7 @@
     }).join("");
     $("learningReports").innerHTML='<h3>'+esc(data.courseName)+' · '+fmtDate(data.startWeek)+' bis '+fmtDate(data.endWeek)+'</h3>'+
       (cards||'<div class="empty">In diesem Kurs gibt es noch keine aktiven Schülerkonten.</div>');
+    return true;
   }
   $("saveWeeklyAssignmentBtn").addEventListener("click",async()=>{
     const button=$("saveWeeklyAssignmentBtn");
@@ -711,11 +764,24 @@
     button.disabled=false;button.textContent="Wochenaufgabe speichern";
     if(error||data?.error){showMsg($("assignmentMsg"),await edgeErrorMessage(error,data,"Die Wochenaufgabe konnte nicht gespeichert werden."),"err");return}
     showMsg($("assignmentMsg"),"Wochenaufgabe für "+data.courseName+" gespeichert.","ok");
+    await loadWeeklyAssignmentHistory();
   });
   $("assignmentCourse").addEventListener("change",loadAssignment);
   $("assignmentWeek").addEventListener("change",loadAssignment);
-  $("loadReportsBtn").addEventListener("click",loadReportRange);
-  $("reportCourse").addEventListener("change",loadReportRange);
+  $("currentAssignmentsBtn").addEventListener("click",()=>{assignmentHistoryView="current";renderWeeklyAssignmentHistory()});
+  $("archivedAssignmentsBtn").addEventListener("click",()=>{assignmentHistoryView="archive";renderWeeklyAssignmentHistory()});
+  $("loadReportsBtn").addEventListener("click",async()=>{
+    const reports=$("learningReports"),button=$("loadReportsBtn");
+    if(!reports.classList.contains("hidden")){
+      reports.classList.add("hidden");button.textContent="Bericht anzeigen";button.setAttribute("aria-expanded","false");return;
+    }
+    if(await loadReportRange()){
+      reports.classList.remove("hidden");button.textContent="Bericht verbergen";button.setAttribute("aria-expanded","true");
+    }
+  });
+  $("reportCourse").addEventListener("change",()=>{if(!$("learningReports").classList.contains("hidden"))loadReportRange()});
+  $("reportFromWeek").addEventListener("change",()=>{if(!$("learningReports").classList.contains("hidden"))loadReportRange()});
+  $("reportToWeek").addEventListener("change",()=>{if(!$("learningReports").classList.contains("hidden"))loadReportRange()});
 
   function setView(name){
     currentView=name;
