@@ -429,8 +429,12 @@
     const id=currentActivitySessionId;
     currentActivitySessionId=null;
     if(activityHeartbeat){clearInterval(activityHeartbeat);activityHeartbeat=null}
-    if(id)await studentClient.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"&&Date.now()-activityLastInteraction<=90000}});
+    if(id){
+      const {error}=await studentClient.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"&&Date.now()-activityLastInteraction<=90000}});
+      if(error)console.warn("Lernzeit konnte nicht gespeichert werden:",error.message);
+    }
   }
+  async function finishTrackedActivity(){activityContext=null;await stopTrackedActivity()}
   document.addEventListener("visibilitychange",()=>{
     if(document.visibilityState==="hidden")void stopTrackedActivity();
     else if(activityContext){noteActivity();void startTrackedActivity(activityContext.activityType,activityContext.mode,activityContext.groupKey)}
@@ -1072,6 +1076,7 @@
 
   function finishCardPractice(){
     if(!cardSession)return;
+    void finishTrackedActivity();
     $("cardsStudyArea").classList.add("hidden");
     $("cardsQuizArea").classList.add("hidden");
     $("cardsDoneArea").classList.remove("hidden");
@@ -1081,6 +1086,7 @@
   }
 
   function closeCardPractice(){
+    void finishTrackedActivity();
     cardSession=null;
     $("cardPracticeArea").classList.add("hidden");
     $("setupCard").classList.remove("hidden");
@@ -1228,6 +1234,7 @@
     renderQuestions(data.savedAnswers||[]);
     $("saveState").textContent="Test gestartet";
     startTimer();
+    void startTrackedActivity("vocab","test",(lastConfig?.folderIds||lastConfig?.unitKeys||[]).join(","));
     window.scrollTo({top:0,behavior:"instant"});
   }
 
@@ -1284,6 +1291,7 @@
 
   function showResult(result){
     stopTimers();
+    void finishTrackedActivity();
     $("testArea").classList.add("hidden");
     $("setupCard").classList.add("hidden");
     $("fatalCard").classList.add("hidden");
