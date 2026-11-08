@@ -1339,6 +1339,13 @@
 
     const corrections=result.corrections||[];
     const mistakes=corrections.filter(x=>Number(x.points)<1);
+    wrongRepeatQueue=corrections.filter(x=>Number(x.points)<1&&Array.isArray(x.acceptedAnswers)&&x.acceptedAnswers.length);
+    wrongRepeatMissed=[];
+    wrongRepeatIndex=0;
+    $("wrongRepeatBtn").classList.toggle("hidden",wrongRepeatQueue.length===0);
+    $("wrongRepeatArea").classList.add("hidden");
+    $("wrongRepeatFinished").classList.add("hidden");
+    $("mistakes").innerHTML="";
     let progressSaveStatus=null;
     if(PERSONALIZED_MODE&&studentAccountProfile){
       progressSaveStatus=document.createElement("div");
@@ -1347,13 +1354,6 @@
       $("mistakes").appendChild(progressSaveStatus);
       void saveVocabTestProgress(result,corrections,progressSaveStatus);
     }
-    wrongRepeatQueue=corrections.filter(x=>Number(x.points)<1&&Array.isArray(x.acceptedAnswers)&&x.acceptedAnswers.length);
-    wrongRepeatMissed=[];
-    wrongRepeatIndex=0;
-    $("wrongRepeatBtn").classList.toggle("hidden",wrongRepeatQueue.length===0);
-    $("wrongRepeatArea").classList.add("hidden");
-    $("wrongRepeatFinished").classList.add("hidden");
-    $("mistakes").innerHTML="";
     if(!mistakes.length){
       $("mistakes").innerHTML='<div class="msg show ok">Alles richtig – stark! Du hast in dieser Simulation keinen Fehler gemacht.</div>';
     }else{
