@@ -232,7 +232,13 @@
   .activity-metrics{margin-top:9px;color:#475569;font-size:.95rem}
   .activity-done{color:#15803d}.activity-open{color:#b45309}
   .activity-topics{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.activity-topic{background:#eff6ff;border-radius:8px;padding:5px 8px;font-size:.85rem}
-  .activity-week{border-top:1px solid #dbe2ea;padding:10px 0}.activity-week-details{margin-top:12px}.activity-week-details summary{cursor:pointer;font-weight:700;padding:8px 0}\n</style>
+  .activity-week{border-top:1px solid #dbe2ea;padding:10px 0}.activity-week-details{margin-top:12px}.activity-week-details summary{cursor:pointer;font-weight:700;padding:8px 0}\n
+    .activity-course-select{display:block;width:100%;min-width:0;min-height:48px;padding:10px 14px;font:inherit;font-size:1.08rem}
+    .activity-report-filters{display:grid;grid-template-columns:minmax(240px,1fr) minmax(0,2fr);gap:16px;align-items:end}
+    .activity-report-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .activity-report-dates input{width:100%;min-width:0}
+    @media(max-width:760px){.activity-report-filters{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 <div class="wrap">
@@ -512,7 +518,7 @@
         <h2>Wochenaufgabe festlegen</h2>
         <p class="tiny">Speichere pro Kurs eine Wochenvorgabe. Sie erscheint bei den persönlich angemeldeten Schülern in der gewählten Woche zusammen mit ihrer bisher erfassten Lernzeit.</p>
         <div class="row">
-          <div><label for="assignmentCourse">Kurs</label><select id="assignmentCourse"><option value="">Kurse werden geladen …</option></select></div>
+          <div><label for="assignmentCourse">Kurs</label><select id="assignmentCourse" class="activity-course-select"><option value="">Kurse werden geladen …</option></select></div>
           <div><label for="assignmentWeek">Woche ab (Montag)</label><input id="assignmentWeek" type="date"></div>
         </div>
         <div class="row">
@@ -529,10 +535,12 @@
       <div class="card">
         <h2>Lernberichte</h2>
         <p class="tiny">Sieh dir Lernzeit und bearbeitete Karten pro Schüler für eine Woche oder einen mehrwöchigen Zeitraum an. Wähle beliebige Tage; es werden jeweils die ganzen Kalenderwochen von Montag bis Sonntag berücksichtigt. Die Erfassung beginnt ab Einführung dieser Funktion; ältere Wochen werden nicht nachträglich ergänzt.</p>
-        <div class="row">
-          <div><label for="reportCourse">Kurs</label><select id="reportCourse"><option value="">Kurse werden geladen …</option></select></div>
-          <div><label for="reportFromWeek">Von (beliebiger Tag)</label><input id="reportFromWeek" type="date"></div>
-          <div><label for="reportToWeek">Bis (beliebiger Tag)</label><input id="reportToWeek" type="date"></div>
+        <div class="activity-report-filters">
+          <div><label for="reportCourse">Kurs</label><select id="reportCourse" class="activity-course-select"><option value="">Kurse werden geladen …</option></select></div>
+          <div class="activity-report-dates">
+            <div><label for="reportFromWeek">Von (beliebiger Tag)</label><input id="reportFromWeek" type="date"></div>
+            <div><label for="reportToWeek">Bis (beliebiger Tag)</label><input id="reportToWeek" type="date"></div>
+          </div>
         </div>
         <div class="actions"><button id="loadReportsBtn" class="primary" type="button">Bericht anzeigen</button></div>
         <div id="reportsMsg" class="msg"></div>
