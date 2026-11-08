@@ -92,6 +92,39 @@ const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const $=id=>document.getElementById(id);
 let catalog=[],questions=[],accessToken="",deadlineAt=null,timerHandle=null,saveHandle=null,lastFocusedInput=null,submitting=false,lastConfig=null;
 const storageKey="spanischGrammarPracticeToken";
+let activitySessionId=null,activityContext=null,activityHeartbeat=null,activityLastInteraction=Date.now();
+function noteActivity(){activityLastInteraction=Date.now()}
+["pointerdown","keydown","touchstart"].forEach(name=>document.addEventListener(name,noteActivity,{passive:true}));
+function getActivityClient(){
+ if(window.avanzaStudentClient)return window.avanzaStudentClient;
+ if(!window.supabase?.createClient)return null;
+ window.avanzaStudentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
+ return window.avanzaStudentClient;
+}
+async function startTrackedActivity(){
+ const client=getActivityClient();if(!client)return null;
+ const {data:session}=await client.auth.getSession();if(!session?.session)return null;
+ activityContext={activityType:"grammar",mode:"test",groupKey:(lastConfig?.topicIds||[]).join(",")};
+ if(activityHeartbeat)clearInterval(activityHeartbeat);
+ activitySessionId=null;
+ const {data,error}=await client.functions.invoke("learning-activity",{body:{action:"start",...activityContext}});
+ if(error||data?.error){console.warn("Lernzeit konnte nicht gestartet werden:",data?.error||error?.message);return null}
+ activitySessionId=data.sessionId;
+ activityHeartbeat=setInterval(async()=>{
+  if(!activitySessionId||document.visibilityState!=="visible"||Date.now()-activityLastInteraction>90000)return;
+  const {error:pingError}=await client.functions.invoke("learning-activity",{body:{action:"ping",sessionId:activitySessionId}});
+  if(pingError)console.warn("Lernzeit-Heartbeat fehlgeschlagen:",pingError.message);
+ },30000);
+ return activitySessionId;
+}
+async function stopTrackedActivity(clearContext=false){
+ if(clearContext)activityContext=null;
+ const id=activitySessionId;activitySessionId=null;
+ if(activityHeartbeat){clearInterval(activityHeartbeat);activityHeartbeat=null}
+ if(id){const client=getActivityClient();if(client)await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"&&Date.now()-activityLastInteraction<=90000}})}
+}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")void stopTrackedActivity();else if(activityContext){noteActivity();void startTrackedActivity()}});
+window.addEventListener("pagehide",()=>{void stopTrackedActivity()});
 function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
 function hideMsg(el){el.textContent="";el.className="msg"}
 function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]))}
@@ -167,7 +200,7 @@ function renderQuestions(saved=[]){
 }
 function stopTimer(){if(timerHandle)clearInterval(timerHandle);timerHandle=null}
 function startTimer(){stopTimer();const tick=()=>{const ms=Math.max(0,new Date(deadlineAt).getTime()-Date.now()),sec=Math.ceil(ms/1000),min=Math.floor(sec/60),s=sec%60;$("timer").textContent=String(min).padStart(2,"0")+":"+String(s).padStart(2,"0");$("timer").classList.toggle("danger",sec<=60);if(ms<=0){stopTimer();submit(true)}};tick();timerHandle=setInterval(tick,1000)}
-function begin(data){accessToken=data.accessToken;deadlineAt=data.deadlineAt;questions=data.questions||[];sessionStorage.setItem(storageKey,accessToken);$("setupCard").classList.add("hidden");$("doneCard").classList.add("hidden");$("testArea").classList.remove("hidden");renderQuestions(data.savedAnswers||[]);$("saveState").textContent="Test gestartet";startTimer();window.scrollTo({top:0,behavior:"instant"})}
+function begin(data){accessToken=data.accessToken;deadlineAt=data.deadlineAt;questions=data.questions||[];sessionStorage.setItem(storageKey,accessToken);$("setupCard").classList.add("hidden");$("doneCard").classList.add("hidden");$("testArea").classList.remove("hidden");renderQuestions(data.savedAnswers||[]);$("saveState").textContent="Test gestartet";startTimer();void startTrackedActivity();window.scrollTo({top:0,behavior:"instant"})}
 async function startPractice(configOverride=null){
  hideMsg($("setupMsg"));const sel=collectConfig(),config=configOverride||{topicIds:sel.topicIds,fixed:sel.fixed,questionCount:Number($("questionCount").value),durationMinutes:Number($("durationMinutes").value)};
  if(!config.topicIds.length){showMsg($("setupMsg"),"Bitte mindestens einen Grammatikbereich auswählen.","err");return}
@@ -184,6 +217,7 @@ async function startPractice(configOverride=null){
 async function save(showError=true){if(!accessToken||submitting)return;try{$("saveState").textContent="Speichern …";const d=await api({action:"save",accessToken,answers:currentAnswers()});if(d.submitted&&d.result){showResult(d.result);return}$("saveState").textContent="Gespeichert"}catch(e){$("saveState").textContent="Speichern fehlgeschlagen";if(showError)showMsg($("testMsg"),e.message,"err")}}
 async function submit(auto=false){if(submitting||!accessToken)return;if(!auto){const empty=[...document.querySelectorAll(".question input")].filter(x=>!x.value.trim()).length;if(empty&&!confirm("Es sind noch "+empty+" Felder leer. Trotzdem endgültig abgeben?"))return}submitting=true;$("submitBtn").disabled=true;$("submitBtn").textContent="Wird ausgewertet …";try{const d=await api({action:"submit",accessToken,answers:currentAnswers()});if(d.result)showResult(d.result)}catch(e){showMsg($("testMsg"),e.message,"err")}finally{submitting=false;$("submitBtn").disabled=false;$("submitBtn").textContent="Test endgültig abgeben"}}
 function showResult(r){
+ void stopTrackedActivity(true);
  stopTimer();$("testArea").classList.add("hidden");$("setupCard").classList.add("hidden");$("doneCard").classList.remove("hidden");sessionStorage.removeItem(storageKey);
  const s=r.summary||{};$("donePoints").textContent=(s.rawPoints??0)+" / "+(s.maxPoints??0);$("donePercent").textContent=Number(s.percent||0).toFixed(1)+" %";$("doneGrade").textContent=s.gradeText||"—";$("doneOP").textContent=s.upperSchoolPoints??"—";
  const resultToken=r.accessToken||accessToken;$("printLink").href="grammatik-uebung-korrektur.html#token="+encodeURIComponent(resultToken);
