@@ -52,7 +52,7 @@ const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 const $=id=>document.getElementById(id);
 async function studentProgress(body){const {data,error}=await studentClient.functions.invoke("student-progress",{body});if(error||data?.error)throw new Error(data?.error||error?.message||"Das Schülerkonto konnte nicht geladen werden.");return data}
-function continueUrl(){return new URLSearchParams(location.search).get("next")==="grammar"?"grammatik-karten.html?personalisiert=1&v=20261107-2":"uebung.html?personalisiert=1"}
+function continueUrl(){const next=new URLSearchParams(location.search).get("next");if(next==="grammar")return "grammatik-karten.html?personalisiert=1&v=20261107-2";if(next==="report")return "lernfortschritt.html";return "uebung.html?personalisiert=1"}
 async function refreshAccount(){
   const {data}=await studentClient.auth.getSession();
   if(!data?.session){$("loginArea").classList.remove("hidden");$("accountArea").classList.add("hidden");return}
