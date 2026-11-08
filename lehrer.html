@@ -98,6 +98,19 @@
     th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #e2e8f0;vertical-align:top}
     th{font-size:.87rem;color:#475569}
     .score{font-weight:850}
+    .submission-table-wrap{width:100%;min-width:0;overflow-x:auto}
+    @media(max-width:650px){
+      .submission-table-wrap{overflow:visible}
+      .submission-table{display:block;width:100%;table-layout:fixed}
+      .submission-table thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      .submission-table tbody{display:grid;gap:10px;width:100%}
+      .submission-table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px;width:100%;padding:9px;border:1px solid #dbe2ea;border-radius:12px;background:#fff}
+      .submission-table td{display:flex;flex-direction:column;justify-content:flex-start;gap:3px;min-width:0;padding:7px 4px;border:0;overflow-wrap:anywhere;word-break:break-word}
+      .submission-table td::before{content:attr(data-label);font-size:.78rem;font-weight:750;color:#64748b}
+      .submission-table td:last-child{grid-column:1/-1;padding-top:9px}
+      .submission-table td:last-child::before{content:none}
+      .submission-table td button{width:100%;white-space:normal;line-height:1.25}
+    }
     .student-group{border:1px solid #dbe2ea;border-radius:14px;padding:15px;background:#fff;margin-bottom:12px}
     .detail-panel{margin-top:14px;border-top:1px solid #e2e8f0;padding-top:14px}
     .answer-card{border:1px solid #dbe2ea;border-radius:12px;padding:13px;margin:9px 0;background:#fafafa}
@@ -1856,16 +1869,16 @@
 
   function submissionTable(subs,t){
     const sorted=[...subs].sort((a,b)=>String(a.student_code).localeCompare(String(b.student_code),undefined,{numeric:true}));
-    return '<div style="overflow-x:auto"><table><thead><tr>'+
+    return '<div class="submission-table-wrap"><table class="submission-table"><thead><tr>'+
       '<th>Schülernr.</th><th>Punkte</th><th>%</th><th>Note</th><th>OP</th><th>Abgabe</th><th></th>'+
       '</tr></thead><tbody>'+
       sorted.map(s=>'<tr data-submission-id="'+esc(s.id)+'">'+
-        '<td><strong>'+esc(s.student_code)+'</strong></td>'+
-        '<td class="score">'+n(s.raw_points)+' / '+n(s.max_points)+'</td>'+
-        '<td>'+n(s.percent).toFixed(1)+' %</td>'+
-        '<td>'+esc(s.grade_text||"—")+'</td>'+
-        '<td><strong>'+n(s.upper_school_points)+'</strong></td>'+
-        '<td>'+fmtTime(s.submitted_at)+'</td>'+
+        '<td data-label="Schülernr."><strong>'+esc(s.student_code)+'</strong></td>'+
+        '<td data-label="Punkte" class="score">'+n(s.raw_points)+' / '+n(s.max_points)+'</td>'+
+        '<td data-label="%">'+n(s.percent).toFixed(1)+' %</td>'+
+        '<td data-label="Note">'+esc(s.grade_text||"—")+'</td>'+
+        '<td data-label="OP"><strong>'+n(s.upper_school_points)+'</strong></td>'+
+        '<td data-label="Abgabe">'+fmtTime(s.submitted_at)+'</td>'+
         '<td><button class="secondary openSubmissionBtn" data-submission-id="'+esc(s.id)+'">Details / Nachkorrektur</button></td>'+
       '</tr>').join("")+
       '</tbody></table></div>';
