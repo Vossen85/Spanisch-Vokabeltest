@@ -107,10 +107,19 @@
   .student-login-row{display:flex;gap:8px;align-items:center}
   .student-login-row input{flex:1;min-width:0;padding:11px;border:1px solid #cbd5e1;border-radius:9px;font:inherit;text-transform:uppercase}
   @media(max-width:520px){.student-login-row{align-items:stretch;flex-direction:column}}
-</style>
+
+  .avanza-home-header{margin:0 0 12px;line-height:0}
+  .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
+  .avanza-home-link img{display:block;width:50px;height:50px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px rgba(15,23,42,.16)}
+  .avanza-home-link:focus-visible{outline:3px solid #2563eb}
+  .avanza-home-link:hover img{transform:translateY(-1px)}
+  .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
+  @media print{.avanza-home-header{display:none!important}}
+  </style>
 </head>
 <body>
 <div class="wrap">
+  <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
   <section id="portalCard" class="card">
     <h1>Spanisch – Lernen & Testen</h1>
     <p class="sub">Was möchtest du üben?</p>
