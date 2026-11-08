@@ -18,9 +18,18 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:75
 .field{display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center;margin-top:9px}.field strong{font-size:.92rem}.translation{margin:12px 0 8px;padding-bottom:10px;border-bottom:1px solid #e2e8f0}
 .result{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0}.result>div{background:#f8fafc;border-radius:11px;padding:11px}.result strong{display:block;font-size:1.2rem}
 @media(max-width:650px){body{padding:10px}.card{padding:15px}.field{grid-template-columns:1fr;gap:5px}.topbar-inner{align-items:flex-start;flex-direction:column}.result{grid-template-columns:repeat(2,1fr)}}
-</style>
+
+  .avanza-home-header{margin:0 0 12px;line-height:0}
+  .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
+  .avanza-home-link img{display:block;width:50px;height:50px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px rgba(15,23,42,.16)}
+  .avanza-home-link:focus-visible{outline:3px solid #2563eb}
+  .avanza-home-link:hover img{transform:translateY(-1px)}
+  .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
+  @media print{.avanza-home-header{display:none!important}}
+  </style>
 </head>
 <body><div class="wrap">
+  <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
 <section id="startCard" class="card">
 <h1 id="title">Grammatiktest</h1><p id="meta" class="sub">Test wird geladen …</p>
 <label class="tiny" for="studentCode">Persönliche Schülernummer</label>
@@ -96,4 +105,18 @@ $("chars").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON"||!lastInp
 $("startBtn").addEventListener("click",async()=>{const studentCode=$("studentCode").value.trim();try{$("startBtn").disabled=true;const old=sessionStorage.getItem(storageKey)||"";const d=await api({action:"start",code,studentCode,accessToken:old});if(d.submitted){showResult(d.result)}else render(d)}catch(e){showMsg($("startMsg"),e.message)}finally{$("startBtn").disabled=false}});
 $("submitBtn").addEventListener("click",()=>submit(false));
 (async()=>{if(!code){showMsg($("startMsg"),"Der Testlink ist unvollständig.");$("startBtn").disabled=true;return}try{const d=await api({action:"info",code});$("title").textContent=d.test.title;$("meta").textContent=fmtDate(d.test.testDate)+" · "+d.test.questionCount+" Verb-Aufgaben · "+d.test.durationMinutes+" Minuten";const old=sessionStorage.getItem(storageKey);if(old){token=old;const s=await api({action:"session",accessToken:old});if(s.submitted)showResult(s.result);else render(s)}}catch(e){showMsg($("startMsg"),e.message);$("startBtn").disabled=true}})();
-</script></body></html>
+</script><script>
+(()=>{const link=document.querySelector(".avanza-home-link");if(!link)return;
+ const home=link.dataset.homeTarget||"uebung.html";
+ function sync(){const area=document.getElementById("testArea"),done=document.getElementById("doneCard");
+   const legacyTest=document.getElementById("test"),legacyResult=document.getElementById("result");
+   const locked=(area&&!area.classList.contains("hidden")&&(!done||done.classList.contains("hidden")))||
+     (legacyTest&&!legacyTest.classList.contains("hidden")&&(!legacyResult||legacyResult.classList.contains("hidden")));
+   link.classList.toggle("is-locked",locked);
+   if(locked){link.removeAttribute("href");link.setAttribute("aria-disabled","true");link.setAttribute("tabindex","-1");link.title="Während des laufenden Tests gesperrt";}
+   else{link.href=home;link.removeAttribute("aria-disabled");link.removeAttribute("tabindex");link.title="Zur Startseite";}
+ }
+ new MutationObserver(sync).observe(document.body,{subtree:true,attributes:true,attributeFilter:["class"]});sync();
+})();
+</script>
+</body></html>
