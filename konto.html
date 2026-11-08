@@ -10,7 +10,7 @@
 <title>Persönlicher Lernbereich – ¡Avanza!</title>
 <style>
 *{box-sizing:border-box}body{margin:0;padding:22px;background:#f5f7fb;color:#172033;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:760px;margin:0 auto}.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 6px 20px rgba(15,23,42,.05)}h1{margin:0 0 8px;font-size:2rem}h2{margin:0 0 8px}.sub,.tiny{color:#64748b}.tiny{font-size:.92rem;line-height:1.45}label{display:block;font-weight:700;margin:14px 0 6px}input,button{font:inherit}input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;text-transform:uppercase}button,.button{display:inline-block;border:0;border-radius:10px;padding:12px 16px;font-weight:750;text-decoration:none;cursor:pointer}.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}.row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.msg{margin-top:12px;min-height:1.2em;color:#b91c1c}.hidden{display:none!important}.account-name{padding:12px;border-radius:10px;background:#eff6ff;font-weight:750}@media(max-width:540px){body{padding:12px}.card{padding:18px}}
-.test-history{margin:22px 0}.test-history h2{margin-bottom:10px}.test-period{margin:14px 0;padding:14px;border:1px solid #dbe2ea;border-radius:12px}.test-period h3{margin:0 0 8px}.test-history table{width:100%;border-collapse:collapse;font-size:.9rem}.test-history th,.test-history td{text-align:left;padding:8px 6px;border-bottom:1px solid #e2e8f0}.test-history th{color:#64748b;font-size:.82rem}.test-grade{font-weight:800}.test-history-status{color:#64748b;margin:8px 0}@media(max-width:640px){.test-history table{font-size:.78rem}.test-history th,.test-history td{padding:6px 3px}}
+.test-history{margin:22px 0}.test-history h2{margin-bottom:10px}.test-period{margin:14px 0;padding:14px;border:1px solid #dbe2ea;border-radius:12px}.test-period h3{margin:0 0 10px}.test-history-status{color:#64748b;margin:8px 0}.test-result{margin:8px 0;border:1px solid #e2e8f0;border-radius:11px;overflow:hidden}.test-result-summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px;min-height:52px;padding:12px 14px;cursor:pointer;background:#fff}.test-result-summary::-webkit-details-marker{display:none}.test-result-summary::after{content:"⌄";font-size:1.1rem;color:#64748b}.test-result[open]>.test-result-summary::after{content:"⌃"}.test-result-date{white-space:nowrap;font-variant-numeric:tabular-nums}.test-result-grade{white-space:nowrap}.test-result-detail{padding:12px 14px;border-top:1px solid #e2e8f0;background:#fafafa}.test-result-metrics{margin:0 0 12px;color:#475569;font-size:.9rem}.test-correction-question{margin:10px 0;padding:12px;border:1px solid #e2e8f0;border-radius:10px;background:#fff}.test-correction-question h4{margin:0 0 5px;font-size:.95rem}.test-correction-question h4 span{font-weight:500;color:#64748b}.test-correction-prompt{font-weight:700;margin-bottom:8px;overflow-wrap:anywhere}.test-correction-answer{padding:9px 10px;margin-top:7px;border-radius:8px;background:#f8fafc;overflow-wrap:anywhere}.test-correction-answer.correct{border-left:4px solid #16a34a}.test-correction-answer.partial{border-left:4px solid #f59e0b}.test-correction-answer.incorrect{border-left:4px solid #ef4444}.test-correction-answer-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:4px}.test-correction-answer-head span,.test-correction-label{font-size:.84rem;color:#64748b}.test-correction-answer.correct .test-correction-answer-head span{color:#15803d}.test-correction-answer.partial .test-correction-answer-head span{color:#b45309}.test-correction-answer.incorrect .test-correction-answer-head span{color:#b91c1c}@media(max-width:540px){.test-period{padding:10px}.test-result-summary{gap:8px;padding:12px 10px}.test-result-detail{padding:10px}.test-correction-question{padding:10px}}
 
   .avanza-home-header{margin:0 0 12px;line-height:0}
   .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
@@ -63,17 +63,39 @@ async function loadTestHistory(){
   if(error||data?.error){$("testHistoryStatus").textContent=data?.error||"Testergebnisse konnten nicht geladen werden.";return}
   const results=data.results||[];
   if(!results.length){$("testHistoryStatus").textContent="Für dieses Konto liegen noch keine abgeschlossenen Tests vor."; $("testHistory").innerHTML="";return}
+  $("testHistoryStatus").textContent="Tippe auf Datum und Note, um deine Antworten und die Lösungen anzusehen.";
+  $("testHistory").innerHTML=renderTestResults(results,esc,formatTestDate);
+}
+function formatHistoryPoints(value){
+  return new Intl.NumberFormat("de-DE",{maximumFractionDigits:1}).format(Number(value)||0);
+}
+function renderTestResults(results,escapeHtml,dateFormatter){
+  const sorted=[...(results||[])].sort((a,b)=>String(a.testDate||a.submittedAt||"").localeCompare(String(b.testDate||b.submittedAt||"")));
   const groups=new Map();
-  for(const r of results){
+  for(const r of sorted){
     const key=(r.courseName||"Kurs")+" · "+(r.quarterNumber?"Quartal "+r.quarterNumber:"Quartal nicht angegeben");
     if(!groups.has(key))groups.set(key,[]);
     groups.get(key).push(r);
   }
-  $("testHistoryStatus").textContent="Deine gespeicherten Testergebnisse:";
-  $("testHistory").innerHTML=[...groups.entries()].map(([label,items])=>
-    '<section class="test-period"><h3>'+esc(label)+'</h3><div style="overflow-x:auto"><table><thead><tr><th>Test</th><th>Datum</th><th>Punkte</th><th>Prozent</th><th>Note</th><th>OP</th></tr></thead><tbody>'+
-    items.map(r=>'<tr><td>'+esc(r.testTitle)+'</td><td>'+formatTestDate(r.testDate)+'</td><td>'+Number(r.rawPoints)+' / '+Number(r.maxPoints)+'</td><td>'+Number(r.percent).toFixed(1)+' %</td><td class="test-grade">'+esc(r.gradeText)+'</td><td>'+Number(r.upperSchoolPoints)+'</td></tr>').join("")+
-    '</tbody></table></div></section>'
+  return [...groups.entries()].map(([label,items])=>
+    '<section class="test-period"><h3>'+escapeHtml(label)+'</h3>'+
+    items.map(r=>{
+      const questions=(r.corrections||[]).map(q=>{
+        const fields=(q.fields||[]).map(f=>{
+          const pts=Number(f.points)||0,max=Number(f.maxPoints)||1;
+          const state=pts>=max?"correct":pts>0?"partial":"incorrect";
+          const stateText=pts>=max?"Richtig":pts>0?"Teilweise richtig":"Falsch";
+          const accepted=(f.acceptedAnswers||[]).map(x=>String(x)).filter(Boolean).join(" / ")||"—";
+          return '<div class="test-correction-answer '+state+'"><div class="test-correction-answer-head"><strong>'+escapeHtml(f.label||"Antwort")+'</strong><span>'+stateText+' · '+formatHistoryPoints(pts)+' / '+formatHistoryPoints(max)+' P.</span></div><div><span class="test-correction-label">Deine Antwort:</span> '+escapeHtml(f.responseText||"—")+'</div><div><span class="test-correction-label">Lösung:</span> '+escapeHtml(accepted)+'</div></div>';
+        }).join("");
+        const topic=[q.topicGroup,q.topicTitle].filter(Boolean).join(" · ");
+        return '<article class="test-correction-question"><h4>Aufgabe '+escapeHtml(q.position||"")+(topic?' <span>'+escapeHtml(topic)+'</span>':"")+'</h4><div class="test-correction-prompt">'+escapeHtml(q.sourceText||"")+'</div>'+fields+'</article>';
+      }).join("");
+      const pointSummary=formatHistoryPoints(r.rawPoints)+" / "+formatHistoryPoints(r.maxPoints)+" Punkte · "+formatHistoryPoints(r.percent)+" % · "+formatHistoryPoints(r.upperSchoolPoints)+" Oberstufenpunkte";
+      const correctionContent=questions||'<p class="tiny">Für diese Abgabe sind keine Einzelantworten gespeichert.</p>';
+      return '<details class="test-result"><summary class="test-result-summary"><time class="test-result-date">'+escapeHtml(dateFormatter(r.testDate||r.submittedAt))+'</time><strong class="test-result-grade">Note '+escapeHtml(r.gradeText||"—")+'</strong></summary><div class="test-result-detail"><div class="test-result-metrics">'+escapeHtml(pointSummary)+'</div>'+correctionContent+'</div></details>';
+    }).join("")+
+    '</section>'
   ).join("");
 }
 function continueUrl(){const next=new URLSearchParams(location.search).get("next");if(next==="grammar")return "grammatik-karten.html?personalisiert=1&v=20261107-2";if(next==="report")return "lernfortschritt.html";if(next==="tests")return "uebung.html?personalisiert=1#tests";return "uebung.html?personalisiert=1"}

@@ -87,7 +87,7 @@
     .choice-vocab{background:#2563eb;color:#fff}
     .choice-grammar{background:#7c3aed;color:#fff}.choice-tests{background:#ff7900;color:#fff;grid-column:1/-1}.choice-tests:hover{background:#ed6a00}.choice-tests:focus-visible{outline:3px solid #fdba74;outline-offset:3px}.choice-progress{background:#db2777;color:#fff;grid-column:1/-1}
     .choice-progress:hover{background:#be185d}
-    .student-tests-panel{margin-top:16px;padding:18px;border:1px solid #fed7aa;border-radius:16px;background:#fffaf5;color:#7c2d12}.student-tests-panel h2{margin:0 0 8px}.student-tests-status{color:#64748b}.student-test-period{margin-top:18px;padding:14px;border:1px solid #fdba74;border-radius:12px;background:#fff}.student-test-period h3{margin:0 0 10px;color:#9a3412}.student-test-table-wrap{overflow-x:auto}.student-test-table{width:100%;border-collapse:collapse;min-width:620px}.student-test-table th,.student-test-table td{padding:9px 8px;border-bottom:1px solid #ffedd5;text-align:left;vertical-align:top}.student-test-table th{color:#9a3412;font-size:.88rem}.student-test-grade{font-weight:800}.student-tests-login{display:inline-flex;margin-top:10px;text-decoration:none}
+    .student-tests-panel{margin-top:16px;padding:18px;border:1px solid #fed7aa;border-radius:16px;background:#fffaf5;color:#7c2d12}.student-tests-panel h2{margin:0 0 8px}.student-tests-status{color:#64748b}.student-tests-login{display:inline-flex;margin-top:10px;text-decoration:none}.student-test-period{margin-top:18px;padding:14px;border:1px solid #fdba74;border-radius:12px;background:#fffaf5;color:#7c2d12}.student-test-period h3{margin:0 0 10px;color:#9a3412}.student-test-result{margin:8px 0;border:1px solid #fed7aa;border-radius:11px;overflow:hidden}.student-test-summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px;min-height:52px;padding:12px 14px;cursor:pointer;background:#fff}.student-test-summary::-webkit-details-marker{display:none}.student-test-summary::after{content:"⌄";font-size:1.1rem;color:#9a3412}.student-test-result[open]>.student-test-summary::after{content:"⌃"}.student-test-date{white-space:nowrap;font-variant-numeric:tabular-nums}.student-test-grade{white-space:nowrap}.student-test-detail{padding:12px 14px;border-top:1px solid #ffedd5;background:#fff}.student-test-metrics{margin:0 0 12px;color:#64748b;font-size:.9rem}.student-test-question{margin:10px 0;padding:12px;border:1px solid #ffedd5;border-radius:10px;background:#fff}.student-test-question h3{margin:0 0 5px;font-size:.95rem}.student-test-question h3 span{font-weight:500;color:#64748b}.student-test-prompt{font-weight:700;margin-bottom:8px;overflow-wrap:anywhere}.student-test-answer{padding:9px 10px;margin-top:7px;border-radius:8px;background:#fffaf5;overflow-wrap:anywhere}.student-test-answer.correct{border-left:4px solid #00b46f}.student-test-answer.partial{border-left:4px solid #ff9f1c}.student-test-answer.incorrect{border-left:4px solid #ff3030}.student-test-answer-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:4px}.student-test-answer-head span,.student-test-label{font-size:.84rem;color:#64748b}.student-test-answer.correct .student-test-answer-head span{color:#087443}.student-test-answer.partial .student-test-answer-head span{color:#b45309}.student-test-answer.incorrect .student-test-answer-head span{color:#b91c1c}@media(max-width:540px){.student-test-period{padding:10px}.student-test-summary{gap:8px;padding:12px 10px}.student-test-detail{padding:10px}.student-test-question{padding:10px}}
     .choice-progress:focus-visible{outline:3px solid #f9a8d4;outline-offset:3px}
     .choice-learn{background:#0f766e;color:#fff}
     .choice-test{background:#c2410c;color:#fff}
@@ -1620,19 +1620,38 @@
     if(error||data?.error){status.textContent=data?.error||"Testergebnisse konnten nicht geladen werden.";return}
     const results=data.results||[];
     if(!results.length){status.textContent="Für dieses Konto liegen noch keine abgeschlossenen Tests vor.";return}
+    status.textContent="Tippe auf Datum und Note, um deine Antworten und die Lösungen anzusehen.";
+    list.innerHTML=renderStudentTestResults(results);
+  }
+  function renderStudentTestResults(results){
+    const sorted=[...results].sort((a,b)=>String(a.testDate||a.submittedAt||"").localeCompare(String(b.testDate||b.submittedAt||"")));
     const groups=new Map();
-    for(const r of results){
+    for(const r of sorted){
       const key=(r.courseName||"Kurs")+" · "+(r.quarterNumber?"Quartal "+r.quarterNumber:"Quartal nicht angegeben");
       if(!groups.has(key))groups.set(key,[]);
       groups.get(key).push(r);
     }
-    status.textContent="Deine gespeicherten Testergebnisse:";
-    list.innerHTML=[...groups.entries()].map(([label,items])=>
-      '<section class="student-test-period"><h3>'+htmlSafe(label)+'</h3><div class="student-test-table-wrap"><table class="student-test-table"><thead><tr><th>Test</th><th>Datum</th><th>Punkte</th><th>Prozent</th><th>Note</th><th>OP</th></tr></thead><tbody>'+
-      items.map(r=>'<tr><td>'+htmlSafe(r.testTitle)+'</td><td>'+formatSavedTestDate(r.testDate)+'</td><td>'+Number(r.rawPoints)+' / '+Number(r.maxPoints)+'</td><td>'+Number(r.percent).toFixed(1)+' %</td><td class="student-test-grade">'+htmlSafe(r.gradeText)+'</td><td>'+Number(r.upperSchoolPoints)+'</td></tr>').join("")+
-      '</tbody></table></div></section>'
+    return [...groups.entries()].map(([label,items])=>
+      '<section class="student-test-period"><h3>'+htmlSafe(label)+'</h3>'+
+      items.map(r=>{
+        const questions=(r.corrections||[]).map(q=>{
+          const fields=(q.fields||[]).map(f=>{
+            const pts=Number(f.points)||0,max=Number(f.maxPoints)||1;
+            const state=pts>=max?"correct":pts>0?"partial":"incorrect";
+            const stateText=pts>=max?"Richtig":pts>0?"Teilweise richtig":"Falsch";
+            const accepted=(f.acceptedAnswers||[]).map(x=>String(x)).filter(Boolean).join(" / ")||"—";
+            return '<div class="student-test-answer '+state+'"><div class="student-test-answer-head"><strong>'+htmlSafe(f.label||"Antwort")+'</strong><span>'+stateText+' · '+formatSavedPoints(pts)+' / '+formatSavedPoints(max)+' P.</span></div><div><span class="student-test-label">Deine Antwort:</span> '+htmlSafe(f.responseText||"—")+'</div><div><span class="student-test-label">Lösung:</span> '+htmlSafe(accepted)+'</div></div>';
+          }).join("");
+          const topic=[q.topicGroup,q.topicTitle].filter(Boolean).join(" · ");
+          return '<article class="student-test-question"><h3>Aufgabe '+htmlSafe(q.position||"")+(topic?' <span>'+htmlSafe(topic)+'</span>':"")+'</h3><div class="student-test-prompt">'+htmlSafe(q.sourceText||"")+'</div>'+fields+'</article>';
+        }).join("");
+        const metrics=formatSavedPoints(r.rawPoints)+" / "+formatSavedPoints(r.maxPoints)+" Punkte · "+formatSavedPoints(r.percent)+" % · "+formatSavedPoints(r.upperSchoolPoints)+" Oberstufenpunkte";
+        return '<details class="student-test-result"><summary class="student-test-summary"><time class="student-test-date">'+htmlSafe(formatSavedTestDate(r.testDate||r.submittedAt))+'</time><strong class="student-test-grade">Note '+htmlSafe(r.gradeText||"—")+'</strong></summary><div class="student-test-detail"><div class="student-test-metrics">'+htmlSafe(metrics)+'</div>'+(questions||'<p class="tiny">Für diese Abgabe sind keine Einzelantworten gespeichert.</p>')+'</div></details>';
+      }).join("")+
+      '</section>'
     ).join("");
   }
+  function formatSavedPoints(value){return new Intl.NumberFormat("de-DE",{maximumFractionDigits:1}).format(Number(value)||0)}
   function formatSavedTestDate(value){
     if(!value)return"—";
     const [y,m,d]=String(value).slice(0,10).split("-");
