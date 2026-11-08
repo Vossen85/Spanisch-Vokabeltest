@@ -1287,7 +1287,7 @@
 
     const corrections=result.corrections||[];
     const mistakes=corrections.filter(x=>Number(x.points)<1);
-    wrongRepeatQueue=corrections.filter(x=>Number(x.points)===0&&Array.isArray(x.acceptedAnswers)&&x.acceptedAnswers.length);
+    wrongRepeatQueue=corrections.filter(x=>Number(x.points)<1&&Array.isArray(x.acceptedAnswers)&&x.acceptedAnswers.length);
     wrongRepeatMissed=[];
     wrongRepeatIndex=0;
     $("wrongRepeatBtn").classList.toggle("hidden",wrongRepeatQueue.length===0);
