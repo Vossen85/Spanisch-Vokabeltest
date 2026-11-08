@@ -939,7 +939,7 @@
         quizIndex:0,
         roundWrongRows:[]
       };
-      await startTrackedActivity("vocab",mode,String(folderId??mode));
+      await startTrackedActivity("vocab","extra",String(folderId??mode));
       $("setupCard").classList.add("hidden");
       $("cardPracticeArea").classList.remove("hidden");
       window.scrollTo({top:0,behavior:"instant"});
@@ -1297,27 +1297,26 @@
   }
 
   let testProgressSavingToken="";
-  async function saveVocabTestProgress(result,corrections,statusNode){
+  async function saveVocabTestProgress(result,corrections,statusNode,sessionId){
     if(!studentAccountProfile)await refreshStudentAccount();
     if(!PERSONALIZED_MODE||!studentAccountProfile||!accessToken)return;
     const savedKey="spanischVocabTestRecorded:"+accessToken;
     if(sessionStorage.getItem(savedKey)==="saved"||testProgressSavingToken===accessToken)return;
     testProgressSavingToken=accessToken;
     try{
+      if(!sessionId)throw new Error("Die Testergebnisse konnten keiner Lernzeitsitzung zugeordnet werden.");
       const config=result.config||lastConfig||{};
       const groups=[...(config.folderIds||[]).map(id=>"Ordner "+id),...(config.unitKeys||[])];
-      const groupKey=("Test · "+(groups.join(", ")||"Vokabeln")).slice(0,120);
-      for(const item of corrections){
-        const label=String(item.sourceText||"").trim();
-        if(!label)continue;
-        await studentProgress({
-          action:"record",
-          itemType:"vocab",
-          groupKey,
-          itemKey:"test:"+accessToken+":"+String(item.position||""),
-          itemLabel:label,
-          correct:Number(item.points)>=1
-        });
+      const groupKey=("Vokabeltest · "+(groups.join(", ")||"Vokabeln")).slice(0,120);
+      const results=corrections.map(item=>({
+        itemType:"vocab",
+        groupKey,
+        itemLabel:(String(item.position||"")+". "+String(item.sourceText||"")).slice(0,300),
+        correct:Number(item.points)>=1
+      })).filter(item=>item.itemLabel.trim());
+      if(results.length){
+        const {data,error}=await studentClient.functions.invoke("student-progress",{body:{action:"record_results",sessionId,results}});
+        if(error||data?.error)throw new Error(data?.error||error?.message||"Testergebnisse konnten nicht gespeichert werden.");
       }
       sessionStorage.setItem(savedKey,"saved");
       if(statusNode)statusNode.textContent="Testergebnis wurde im Lernfortschritt gespeichert.";
@@ -1331,6 +1330,7 @@
 
   function showResult(result){
     stopTimers();
+    const resultActivitySessionId=currentActivitySessionId;
     void finishTrackedActivity();
     $("testArea").classList.add("hidden");
     $("setupCard").classList.add("hidden");
@@ -1363,7 +1363,7 @@
       progressSaveStatus.className="msg show info";
       progressSaveStatus.textContent="Testergebnis wird im Lernfortschritt gespeichert.";
       $("mistakes").appendChild(progressSaveStatus);
-      void saveVocabTestProgress(result,corrections,progressSaveStatus);
+      void saveVocabTestProgress(result,corrections,progressSaveStatus,resultActivitySessionId);
     }
     if(!mistakes.length){
       $("mistakes").innerHTML='<div class="msg show ok">Alles richtig – stark! Du hast in dieser Simulation keinen Fehler gemacht.</div>';
