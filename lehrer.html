@@ -470,7 +470,8 @@
           </div>
         </div>
         <div class="actions">
-          <button id="printCreatedTestBtn" class="primary" type="button" disabled>Test + Lösungen als PDF speichern / drucken</button>
+          <button id="printCreatedTestBtn" class="primary" type="button" disabled>Test als PDF speichern / drucken</button>
+          <button id="printCreatedSolutionBtn" class="secondary" type="button" disabled>Lösungen als PDF speichern / drucken</button>
           <button id="toggleCreatedSolutionBtn" class="secondary" type="button" aria-expanded="false" disabled>Lösung anzeigen</button>
           
         </div>
@@ -1420,7 +1421,7 @@
     }
     const item={testId:test.id,testType:test.test_type,title:test.title,testDate:test.test_date,durationMinutes:test.duration_minutes,questions};
     printWindow.document.open();
-    printWindow.document.write(createdTestHtml(solutionOnly,!solutionOnly,item));
+    printWindow.document.write(createdTestHtml(solutionOnly,false,item));
     printWindow.document.close();
     status.textContent=solutionOnly?"Lösungs-PDF ist bereit.":"Test-PDF mit Lösungen ist bereit.";
     if(button)button.disabled=false;
@@ -1884,8 +1885,8 @@
         '</div>'+
       '</div>'+
       '<div class="actions folder-pdf-actions">'+
-        '<button class="secondary folderPdfBtn printFolderTestBtn" type="button">Test + Lösungen als PDF speichern / drucken</button>'+
-        ''+
+        '<button class="secondary folderPdfBtn printFolderTestBtn" type="button">Test als PDF speichern / drucken</button>'+
+        '<button class="secondary folderPdfBtn printFolderSolutionBtn" type="button">Lösungen als PDF speichern / drucken</button>'+
       '</div><p class="tiny folderPdfMsg" aria-live="polite"></p>'+
       '<h3 style="margin-top:20px">Auswertung</h3>'+
       (submitted.length?submissionTable(submitted,t):'<div class="empty">Noch keine abgegebenen Tests.</div>')+
@@ -1897,6 +1898,7 @@
       setTimeout(()=>e.currentTarget.textContent="Link kopieren",1300);
     });
     panel.querySelector(".printFolderTestBtn").addEventListener("click",e=>openFolderTestPrint(t,false,panel,e.currentTarget));
+    panel.querySelector(".printFolderSolutionBtn").addEventListener("click",e=>openFolderTestPrint(t,true,panel,e.currentTarget));
     panel.querySelectorAll(".openSubmissionBtn").forEach(btn=>{
       btn.addEventListener("click",()=>{
         const sid=btn.dataset.submissionId;
@@ -2530,7 +2532,8 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
     await loadDashboard();
   });
 
-  $("printCreatedTestBtn").addEventListener("click",()=>openCreatedTestPrint(false,true));
+  $("printCreatedTestBtn").addEventListener("click",()=>openCreatedTestPrint(false,false));
+  $("printCreatedSolutionBtn").addEventListener("click",()=>openCreatedTestPrint(true));
   $("toggleCreatedSolutionBtn").addEventListener("click",()=>{
     const preview=$("createdSolutionPreview");
     const hidden=preview.classList.toggle("hidden");
