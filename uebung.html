@@ -48,6 +48,18 @@
     .resultbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
     .resultbox div{background:#f8fafc;border-radius:10px;padding:12px}.resultbox strong{display:block;font-size:1.2rem}
     .mistake{border:1px solid #fecaca;background:#fffafa;border-radius:12px;padding:13px;margin:9px 0}
+    .wrong-repeat-table-wrap{width:100%;overflow-x:auto;margin:14px 0}
+    .wrong-repeat-table{width:100%;border-collapse:collapse;table-layout:fixed}
+    .wrong-repeat-table th,.wrong-repeat-table td{padding:10px 8px;border:1px solid #64748b;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+    .wrong-repeat-table th{font-size:.9rem;color:#94a3b8}
+    .wrong-repeat-table th:nth-child(1){width:30%}.wrong-repeat-table th:nth-child(2){width:34%}.wrong-repeat-table th:nth-child(3){width:36%}
+    .wrong-repeat-answer{width:100%;min-width:0;padding:10px;border:1px solid #94a3b8;border-radius:8px;background:transparent;color:inherit;font:inherit}
+    .wrong-repeat-result{border-radius:8px;padding:8px;font-size:.9rem}
+    .wrong-repeat-row-correct{background:rgba(20,184,166,.12)}
+    .wrong-repeat-row-wrong{background:rgba(239,68,68,.12)}
+    .wrong-repeat-result-correct{color:#0f766e;font-weight:750}
+    .wrong-repeat-result-wrong{color:#b91c1c;font-weight:750}
+    @media(max-width:600px){.wrong-repeat-table th,.wrong-repeat-table td{padding:7px 5px;font-size:.84rem}.wrong-repeat-answer{padding:8px 5px;font-size:.9rem}.wrong-repeat-result{padding:6px;font-size:.8rem}}
     .almost{border-color:#fed7aa;background:#fffaf5}
     .mistake-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.mistake-prompt{font-weight:800}
     .answer-line{margin-top:7px}.solution{color:#166534;font-weight:700}.own{color:#991b1b}.half{color:#9a3412}
@@ -337,27 +349,21 @@
 
     <div class="actions">
       <a id="printLink" class="btn primary" href="#" target="_blank" rel="noopener">Korrektur öffnen / drucken</a>
-      <button id="wrongRepeatBtn" class="secondary hidden" type="button">Vokabeln unter 1 Punkt wiederholen</button>
+      <button id="wrongRepeatBtn" class="secondary hidden" type="button">Alle Fehler gemeinsam wiederholen</button>
       <button id="repeatBtn" class="secondary">Noch einmal mit derselben Auswahl</button>
       <button id="newSelectionBtn" class="secondary">Neue Auswahl</button>
     </div>
 
     <section id="wrongRepeatArea" class="note hidden" aria-live="polite">
-      <h2>Wiederholung der Vokabeln unter 1 Punkt</h2>
-      <p id="wrongRepeatProgress" class="tiny"></p>
-      <div id="wrongRepeatPrompt" class="question"></div>
-      <label class="field" for="wrongRepeatInput">Deine spanische Übersetzung</label>
-      <input id="wrongRepeatInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Antwort eingeben">
+      <h2>Alle Fehler gemeinsam wiederholen</h2>
+      <p id="wrongRepeatProgress" class="tiny">Trage deine Antworten in die Tabelle ein und prüfe sie gemeinsam.</p>
+      <div id="wrongRepeatTableWrap" class="wrong-repeat-table-wrap"></div>
       <div class="actions">
-        <button id="wrongRepeatCheckBtn" class="primary" type="button">Antwort prüfen</button>
-        <button id="wrongRepeatNextBtn" class="secondary hidden" type="button">Weiter</button>
+        <button id="wrongRepeatCheckBtn" class="primary" type="button">Tabelle korrigieren</button>
+        <button id="wrongRepeatAgainBtn" class="secondary hidden" type="button">Noch falsche Wörter erneut üben</button>
+        <button id="wrongRepeatBackBtn" class="secondary" type="button">Zurück zum Ergebnis</button>
       </div>
-      <p id="wrongRepeatFeedback" class="msg"></p>
-      <div id="wrongRepeatFinished" class="hidden">
-        <p id="wrongRepeatFinishedText"></p>
-        <button id="wrongRepeatAgainBtn" class="secondary hidden" type="button">Noch einmal die noch nicht richtigen Wörter üben</button>
-      </div>
-      <button id="wrongRepeatBackBtn" class="secondary" type="button">Zurück zum Ergebnis</button>
+      <p id="wrongRepeatFeedback" class="msg" role="status"></p>
     </section>
   </section>
 
@@ -384,6 +390,7 @@
   let wrongRepeatQueue=[];
   let wrongRepeatMissed=[];
   let wrongRepeatIndex=0;
+  let wrongRepeatRound=0;
   let accessToken="";
   let deadlineAt=null;
   let timerHandle=null;
@@ -1345,7 +1352,9 @@
     wrongRepeatIndex=0;
     $("wrongRepeatBtn").classList.toggle("hidden",wrongRepeatQueue.length===0);
     $("wrongRepeatArea").classList.add("hidden");
-    $("wrongRepeatFinished").classList.add("hidden");
+    $("wrongRepeatFeedback").className="msg";
+    $("wrongRepeatAgainBtn").classList.add("hidden");
+    $("wrongRepeatCheckBtn").classList.remove("hidden");
     $("mistakes").innerHTML="";
     let progressSaveStatus=null;
     if(PERSONALIZED_MODE&&studentAccountProfile){
@@ -1376,80 +1385,149 @@
   }
 
   function normalizeRetryAnswer(value){
-    return String(value??"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase()
-      .replace(/[¿?¡!.,;:]/g," ").replace(/\\s+/g," ").trim();
+    return String(value??"").normalize("NFC").trim()
+      .replace(/,/g," ")
+      .replace(/\s*\/\s*/g," ")
+      .replace(/\s+/g," ")
+      .replace(/^[¿¡"'“”‘’\s]+|[?!.,"'“”‘’\s]+$/g,"");
   }
 
-  function renderWrongRepeatQuestion(){
-    const input=$("wrongRepeatInput");
-    const feedback=$("wrongRepeatFeedback");
-    $("wrongRepeatFinished").classList.add("hidden");
-    feedback.className="msg";
-    $("wrongRepeatNextBtn").classList.add("hidden");
-    $("wrongRepeatCheckBtn").classList.remove("hidden");
-    if(wrongRepeatIndex>=wrongRepeatQueue.length){
-      $("wrongRepeatProgress").textContent="";
-      $("wrongRepeatPrompt").textContent="";
-      input.classList.add("hidden");
-      $("wrongRepeatCheckBtn").classList.add("hidden");
-      $("wrongRepeatFinished").classList.remove("hidden");
-      $("wrongRepeatFinishedText").textContent=wrongRepeatMissed.length
-        ? "Einige Wörter waren noch nicht richtig. Wir wiederholen jetzt nur diese Wörter."
-        : "Geschafft! Du hast alle zuvor falschen Vokabeln richtig beantwortet.";
-      $("wrongRepeatAgainBtn").classList.toggle("hidden",wrongRepeatMissed.length===0);
-      return;
+  function retryVariantsFromExpected(expected){
+    const variants=new Set();
+    const parts=String(expected||"").includes(" / ")
+      ?String(expected).split(/\s+\/\s+/)
+      :[String(expected||"")];
+    for(const part of parts){
+      const value=part.trim();
+      if(!value)continue;
+      variants.add(normalizeRetryAnswer(value));
+      const match=value.match(/^(.*?)\s*\(([^()]*)\)\s*(.*)$/);
+      if(match){
+        const before=match[1].trim(),inside=match[2].trim(),after=match[3].trim();
+        const without=[before,after].filter(Boolean).join(" ").trim();
+        if(without)variants.add(normalizeRetryAnswer(without));
+        const compact=inside.replace(/^\+\s*/,"").trim();
+        if(compact&&!compact.includes("/")){
+          const withInside=[before,compact,after].filter(Boolean).join(" ").trim();
+          if(withInside)variants.add(normalizeRetryAnswer(withInside));
+        }
+      }
     }
-    input.classList.remove("hidden");
-    input.value="";
-    input.disabled=false;
-    $("wrongRepeatPrompt").textContent=wrongRepeatQueue[wrongRepeatIndex].sourceText||"";
-    $("wrongRepeatProgress").textContent="Wort "+(wrongRepeatIndex+1)+" von "+wrongRepeatQueue.length;
-    input.focus();
+    variants.delete("");
+    return [...variants];
+  }
+
+  function retryGenderShorthandMatches(typed,expected){
+    const typedParts=typed.split(" ").filter(Boolean),expectedParts=expected.split(" ").filter(Boolean);
+    if(typedParts.length!==2||expectedParts.length!==2||typedParts[0]!==expectedParts[0])return false;
+    const suffix=typedParts[1].replace(/^-/,"");
+    return ["a","o","as","os"].includes(suffix)&&expectedParts[1].endsWith(suffix);
+  }
+
+  function isRetryAnswerFullyCorrect(typed,item){
+    const normalized=normalizeRetryAnswer(typed);
+    if(!normalized)return false;
+    const expected=(item.acceptedAnswers||[]).flatMap(retryVariantsFromExpected);
+    return expected.some(answer=>answer===normalized||retryGenderShorthandMatches(normalized,answer));
+  }
+
+  function renderWrongRepeatTable(){
+    const wrapper=$("wrongRepeatTableWrap");
+    wrapper.innerHTML="";
+    const table=document.createElement("table");
+    table.className="wrong-repeat-table";
+    const head=document.createElement("thead");
+    const headRow=document.createElement("tr");
+    ["Deutsche Vorgabe","Deine Übersetzung","Korrektur"].forEach(label=>{
+      const th=document.createElement("th");th.scope="col";th.textContent=label;headRow.appendChild(th);
+    });
+    head.appendChild(headRow);table.appendChild(head);
+    const body=document.createElement("tbody");
+    wrongRepeatQueue.forEach((item,index)=>{
+      const row=document.createElement("tr");
+      const prompt=document.createElement("td");prompt.textContent=item.sourceText||"";
+      const answerCell=document.createElement("td");
+      const input=document.createElement("input");
+      input.type="text";input.className="wrong-repeat-answer";
+      input.autocomplete="off";input.autocapitalize="none";input.spellcheck=false;
+      input.setAttribute("aria-label","Spanische Übersetzung für "+String(item.sourceText||""));
+      answerCell.appendChild(input);
+      const resultCell=document.createElement("td");
+      resultCell.className="wrong-repeat-result";
+      resultCell.textContent="Noch offen";
+      row.dataset.index=String(index);
+      row.append(prompt,answerCell,resultCell);
+      body.appendChild(row);
+    });
+    table.appendChild(body);wrapper.appendChild(table);
+    const first=wrapper.querySelector("input");
+    if(first)first.focus();
   }
 
   function startWrongRepeat(items=wrongRepeatQueue){
     wrongRepeatQueue=[...items];
     wrongRepeatMissed=[];
-    wrongRepeatIndex=0;
+    wrongRepeatRound++;
     $("mistakeReviewBlock").classList.add("hidden");
     $("wrongRepeatArea").classList.remove("hidden");
+    $("wrongRepeatAgainBtn").classList.add("hidden");
+    $("wrongRepeatCheckBtn").classList.remove("hidden");
+    $("wrongRepeatFeedback").className="msg";
+    $("wrongRepeatProgress").textContent="Durchgang "+wrongRepeatRound+" · "+wrongRepeatQueue.length+" Vokabeln. Prüfe alle Antworten gemeinsam.";
     $("wrongRepeatArea").scrollIntoView({behavior:"smooth",block:"start"});
-    renderWrongRepeatQuestion();
+    if(!activityContext||activityContext.mode!=="test-wiederholung"){
+      void startTrackedActivity("vocab","test-wiederholung",(lastConfig?.folderIds||lastConfig?.unitKeys||[]).join(","));
+    }
+    renderWrongRepeatTable();
   }
 
   $("wrongRepeatBtn").addEventListener("click",()=>startWrongRepeat());
   $("wrongRepeatCheckBtn").addEventListener("click",()=>{
-    const item=wrongRepeatQueue[wrongRepeatIndex];
-    if(!item)return;
-    const answer=normalizeRetryAnswer($("wrongRepeatInput").value);
-    if(!answer){
-      $("wrongRepeatFeedback").textContent="Gib zuerst eine Antwort ein.";
-      $("wrongRepeatFeedback").className="msg show err";
-      return;
-    }
-    const accepted=(item.acceptedAnswers||[]).map(normalizeRetryAnswer);
-    const correct=accepted.includes(answer);
-    const feedback=$("wrongRepeatFeedback");
-    feedback.className="msg show "+(correct?"ok":"err");
-    feedback.textContent=correct
-      ? "Richtig!"
-      : "Noch nicht richtig. Richtige Lösung: "+(item.acceptedAnswers||[]).join(" / ");
-    if(!correct)wrongRepeatMissed.push(item);
-    $("wrongRepeatInput").disabled=true;
+    const rows=[...$("wrongRepeatTableWrap").querySelectorAll("tbody tr")];
+    if(!rows.length)return;
+    const missed=[];
+    rows.forEach((row,index)=>{
+      const item=wrongRepeatQueue[index];
+      const input=row.querySelector(".wrong-repeat-answer");
+      const result=row.querySelector(".wrong-repeat-result");
+      const answer=input.value.trim();
+      const correct=isRetryAnswerFullyCorrect(answer,item);
+      input.disabled=true;
+      row.classList.toggle("wrong-repeat-row-correct",correct);
+      row.classList.toggle("wrong-repeat-row-wrong",!correct);
+      result.classList.toggle("wrong-repeat-result-correct",correct);
+      result.classList.toggle("wrong-repeat-result-wrong",!correct);
+      if(correct){
+        result.textContent="Richtig: "+answer;
+      }else{
+        missed.push(item);
+        result.textContent=(answer?"Deine Antwort: "+answer+" · ":"Keine Antwort · ")+"Lösung: "+(item.acceptedAnswers||[]).join(" / ");
+      }
+    });
+    wrongRepeatMissed=missed;
     $("wrongRepeatCheckBtn").classList.add("hidden");
-    $("wrongRepeatNextBtn").classList.remove("hidden");
+    $("wrongRepeatProgress").textContent="Durchgang "+wrongRepeatRound+" · "+rows.length+" Vokabeln korrigiert.";
+    if(!missed.length){
+      $("wrongRepeatFeedback").textContent="Alle Antworten sind jetzt vollständig richtig. Es wird keine neue Note berechnet.";
+      $("wrongRepeatFeedback").className="msg show ok";
+      $("wrongRepeatAgainBtn").classList.add("hidden");
+    }else{
+      $("wrongRepeatFeedback").textContent=missed.length+" "+(missed.length===1?"Vokabel ist":"Vokabeln sind")+" noch nicht vollständig richtig. Nur diese erscheinen im nächsten Durchgang erneut.";
+      $("wrongRepeatFeedback").className="msg show err";
+      $("wrongRepeatAgainBtn").textContent="Noch "+missed.length+" "+(missed.length===1?"falsche Vokabel erneut üben":"falsche Vokabeln erneut üben");
+      $("wrongRepeatAgainBtn").classList.remove("hidden");
+    }
   });
-  $("wrongRepeatInput").addEventListener("keydown",event=>{
-    if(event.key==="Enter"&&!$("wrongRepeatCheckBtn").classList.contains("hidden"))$("wrongRepeatCheckBtn").click();
-  });
-  $("wrongRepeatNextBtn").addEventListener("click",()=>{
-    wrongRepeatIndex++;
-    renderWrongRepeatQuestion();
+  $("wrongRepeatTableWrap").addEventListener("keydown",event=>{
+    if(event.key==="Enter"&&!$("wrongRepeatCheckBtn").classList.contains("hidden")){
+      event.preventDefault();$("wrongRepeatCheckBtn").click();
+    }
   });
   $("wrongRepeatAgainBtn").addEventListener("click",()=>startWrongRepeat(wrongRepeatMissed));
   $("wrongRepeatBackBtn").addEventListener("click",()=>{
     $("wrongRepeatArea").classList.add("hidden");
     $("mistakeReviewBlock").classList.remove("hidden");
+    void finishTrackedActivity();
     $("mistakeReviewBlock").scrollIntoView({behavior:"smooth",block:"start"});
   });
 
