@@ -472,7 +472,7 @@
         <div class="actions">
           <button id="printCreatedTestBtn" class="primary" type="button" disabled>Test + Lösungen als PDF speichern / drucken</button>
           <button id="toggleCreatedSolutionBtn" class="secondary" type="button" aria-expanded="false" disabled>Lösung anzeigen</button>
-          <button id="printCreatedSolutionBtn" class="secondary" type="button" disabled>Lösung als PDF speichern / drucken</button>
+          
         </div>
         <p class="tiny">Die Lehrerversion enthält zuerst den Test und anschließend die Lösungen mit Erwartungshorizont. Im Druckdialog kannst du bei Bedarf über den Seitenbereich nur die Testseiten drucken.</p>
         <div id="createdSolutionPreview" class="hidden"></div>
@@ -1885,7 +1885,7 @@
       '</div>'+
       '<div class="actions folder-pdf-actions">'+
         '<button class="secondary folderPdfBtn printFolderTestBtn" type="button">Test + Lösungen als PDF speichern / drucken</button>'+
-        '<button class="secondary folderPdfBtn printFolderSolutionBtn" type="button">Lösung als PDF speichern / drucken</button>'+
+        ''+
       '</div><p class="tiny folderPdfMsg" aria-live="polite"></p>'+
       '<h3 style="margin-top:20px">Auswertung</h3>'+
       (submitted.length?submissionTable(submitted,t):'<div class="empty">Noch keine abgegebenen Tests.</div>')+
@@ -1897,7 +1897,6 @@
       setTimeout(()=>e.currentTarget.textContent="Link kopieren",1300);
     });
     panel.querySelector(".printFolderTestBtn").addEventListener("click",e=>openFolderTestPrint(t,false,panel,e.currentTarget));
-    panel.querySelector(".printFolderSolutionBtn").addEventListener("click",e=>openFolderTestPrint(t,true,panel,e.currentTarget));
     panel.querySelectorAll(".openSubmissionBtn").forEach(btn=>{
       btn.addEventListener("click",()=>{
         const sid=btn.dataset.submissionId;
@@ -2532,7 +2531,6 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
   });
 
   $("printCreatedTestBtn").addEventListener("click",()=>openCreatedTestPrint(false,true));
-  $("printCreatedSolutionBtn").addEventListener("click",()=>openCreatedTestPrint(true));
   $("toggleCreatedSolutionBtn").addEventListener("click",()=>{
     const preview=$("createdSolutionPreview");
     const hidden=preview.classList.toggle("hidden");
