@@ -443,11 +443,11 @@
           </div>
         </div>
         <div class="actions">
-          <button id="printCreatedTestBtn" class="primary" type="button" disabled>Test als PDF speichern / drucken</button>
+          <button id="printCreatedTestBtn" class="primary" type="button" disabled>Test + Lösungen als PDF speichern / drucken</button>
           <button id="toggleCreatedSolutionBtn" class="secondary" type="button" aria-expanded="false" disabled>Lösung anzeigen</button>
           <button id="printCreatedSolutionBtn" class="secondary" type="button" disabled>Lösung als PDF speichern / drucken</button>
         </div>
-        <p class="tiny">Im Druckdialog kannst du „Als PDF speichern“ oder einen Drucker auswählen.</p>
+        <p class="tiny">Die Lehrerversion enthält zuerst den Test und anschließend die Lösungen mit Erwartungshorizont. Im Druckdialog kannst du bei Bedarf über den Seitenbereich nur die Testseiten drucken.</p>
         <div id="createdSolutionPreview" class="hidden"></div>
         <div id="createdDocumentMsg" class="msg"></div>
       </div>
@@ -1266,54 +1266,79 @@
       (topic?'<div class="topic-label">'+esc(topic)+'</div>':'')+rows+'</section>';
   }
 
-  function createdTestHtml(solution){
+  function createdQuestionContent(questions,isGrammar,solution){
+    if(isGrammar){
+      return '<div class="grammar-grid">'+questions.map(q=>grammarPrintCard(q,solution)).join("")+'</div>';
+    }
+    return '<div class="vocab-grid">'+questions.map(q=>{
+      const answers=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
+      const response=solution
+        ? '<div class="answer-text">'+esc(answers.join(" / "))+'</div>'
+        : '<div class="write-line"></div>';
+      return '<div class="vocab-item"><span class="number">'+esc(q.position)+'.</span><div class="vocab-content">'+
+        '<div class="prompt">'+esc(q.source_snapshot)+'</div>'+response+'</div></div>';
+    }).join("")+'</div>';
+  }
+
+  function createdSolutionRubric(questions,isGrammar){
+    if(isGrammar){
+      const rows=questions.flatMap(q=>{
+        const meta=q.question_meta||{},labels=Array.isArray(meta.labels)?meta.labels:[];
+        return [
+          '<tr><td>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</td><td>Bedeutung / Übersetzung</td><td>1 P.</td></tr>',
+          ...labels.map(label=>'<tr><td>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</td><td>'+esc(label)+'</td><td>1 P.</td></tr>')
+        ];
+      }).join("");
+      return '<table class="rubric"><thead><tr><th>Aufgabe</th><th>Bewertungskriterium</th><th>Maximal</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+        '<p class="rubric-note">Jede geforderte Bedeutung und jede geforderte Verbform zählt jeweils 1 Punkt. Die erreichbare Gesamtpunktzahl pro Verb steht auch auf der jeweiligen Lösungsaufgabe.</p>';
+    }
+    const rows=questions.map(q=>{
+      const answers=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
+      return '<tr><td>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</td><td><strong>'+esc(answers.join(" / "))+'</strong></td><td>1 P.</td></tr>';
+    }).join("");
+    return '<table class="rubric"><thead><tr><th>Aufgabe</th><th>Erwartete Lösung(en)</th><th>Maximal</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+      '<p class="rubric-note">Vollständig richtige Lösung: 1 Punkt. Ein Fehler nur bei Akzent oder Groß-/Kleinschreibung: 0,5 Punkte. Sonstige falsche oder fehlende Antwort: 0 Punkte.</p>';
+  }
+
+  function createdTestHtml(solutionOnly,includeSolutions=false){
     const item=createdTestDocument;
     const isGrammar=item.testType==="grammar";
     const questions=item.questions||[];
     const maxPoints=questions.reduce((sum,q)=>sum+printQuestionMaxPoints(q,isGrammar),0);
     const title=esc(item.title||(isGrammar?"Grammatiktest":"Vokabeltest"));
-    let content="";
-    if(isGrammar){
-      content='<div class="grammar-grid">'+questions.map(q=>grammarPrintCard(q,solution)).join("")+'</div>';
-    }else{
-      content='<div class="vocab-grid">'+questions.map(q=>{
-        const answers=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
-        const response=solution
-          ? '<div class="answer-text">'+esc(answers.join(" / "))+'</div>'
-          : '<div class="write-line"></div>';
-        return '<div class="vocab-item"><span class="number">'+esc(q.position)+'.</span><div class="vocab-content">'+
-          '<div class="prompt">'+esc(q.source_snapshot)+'</div>'+response+'</div></div>';
-      }).join("")+'</div>';
-    }
-    const heading=solution?title+' – Lösung':title;
-    const instruction=solution
-      ? 'Lösungsschlüssel · '+maxPoints+' Punkte maximal'
-      : (isGrammar
-          ? 'Trage die deutsche Bedeutung und die geforderten Verbformen ein.'
-          : 'Übersetze die deutschen Vorgaben vollständig ins Spanische.');
-    const identity=solution?'':'<div class="student-fields"><span>Name: __________________________________</span><span>Schülernummer: ______________</span></div>';
+    const solutionContent=createdQuestionContent(questions,isGrammar,true);
+    const testContent=createdQuestionContent(questions,isGrammar,false);
+    const meta=esc(fmtDate(item.testDate))+' · '+esc(item.durationMinutes)+' Minuten · '+questions.length+' '+(isGrammar?"Verb-Aufgaben":"Vokabeln")+' · '+maxPoints+' Punkte maximal';
+    const testHeading=solutionOnly?'':'<section class="test-section"><h1>'+title+'</h1><div class="meta">'+meta+'</div>'+
+      '<p class="intro">'+(isGrammar?'Trage die deutsche Bedeutung und die geforderten Verbformen ein.':'Übersetze die deutschen Vorgaben vollständig ins Spanische.')+'</p>'+
+      '<div class="student-fields"><span>Name: __________________________________</span><span>Schülernummer: ______________</span></div>'+testContent+'</section>';
+    const solutionHeading=solutionOnly||includeSolutions
+      ? '<section class="solution-section"><h1 class="solution-title">LÖSUNGEN</h1><div class="solution-subtitle">'+title+' · '+meta+'</div>'+
+        '<h2>Erwartungshorizont und Bepunktung</h2>'+createdSolutionRubric(questions,isGrammar)+
+        '<h2 class="answer-key-title">Lösungsschlüssel</h2>'+solutionContent+
+        '<p class="solution-note">Die Lösungen entsprechen dem gespeicherten Lösungsschlüssel des erstellten Tests.</p></section>'
+      : '';
+    const heading=solutionOnly?'Lösungen – '+title:title;
     return '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
       '<title>'+heading+'</title><style>'+
       '@page{size:A4 portrait;margin:13mm 12mm 14mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:0;font-size:10pt}'+
-      'h1{font-size:18pt;margin:0 0 4mm}.meta{font-size:9pt;color:#333;margin-bottom:5mm}.intro{font-size:9.5pt;margin:0 0 5mm}'+
+      'h1{font-size:18pt;margin:0 0 4mm}h2{font-size:13pt;margin:5mm 0 2mm}.meta,.solution-subtitle{font-size:9pt;color:#333;margin-bottom:5mm}.intro{font-size:9.5pt;margin:0 0 5mm}'+
       '.student-fields{display:flex;justify-content:space-between;gap:10mm;font-size:9pt;margin:5mm 0 6mm;padding-bottom:4mm;border-bottom:1px solid #999}'+
       '.vocab-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:9mm;align-items:start}.vocab-item{display:flex;gap:2mm;break-inside:avoid;border-bottom:1px solid #ddd;padding:2.2mm 0;min-height:13mm}.number{width:7mm;flex:0 0 7mm;font-weight:bold}.vocab-content{min-width:0;flex:1}.prompt{font-weight:600;line-height:1.25}.write-line{height:5.5mm;border-bottom:1px solid #777;margin-top:1.7mm}.answer-text{display:block;line-height:1.3;margin-top:1mm;font-weight:600;overflow-wrap:anywhere}'+
       '.grammar-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm 5mm;align-items:start}.verb-card{border:1px solid #9ca3af;padding:3mm;border-radius:2mm;break-inside:avoid}.verb-card-head{display:flex;justify-content:space-between;gap:2mm;align-items:baseline;font-size:10pt}.points{font-size:8pt;white-space:nowrap}.topic-label{font-size:7.5pt;color:#555;margin:1mm 0 2mm}.grammar-row{display:grid;grid-template-columns:31mm 1fr;gap:2mm;align-items:end;min-height:6mm;border-top:1px solid #e5e7eb;padding:1mm 0;font-size:8.4pt}.row-label{font-size:7.7pt;color:#333;overflow-wrap:anywhere}.grammar-row .write-line{height:4mm;margin:0}.grammar-row .answer-text{margin:0;font-size:8.1pt}'+
-      '.solution-note{font-size:8.5pt;color:#444;margin:0 0 5mm}@media screen{body{max-width:210mm;margin:18px auto;padding:12mm;box-shadow:0 1px 12px #bbb;background:white}}'+
-      '</style></head><body><h1>'+heading+'</h1>'+
-      '<div class="meta">'+esc(fmtDate(item.testDate))+' · '+esc(item.durationMinutes)+' Minuten · '+questions.length+' '+(isGrammar?"Verb-Aufgaben":"Vokabeln")+' · '+maxPoints+' Punkte maximal</div>'+
-      '<p class="intro">'+instruction+'</p>'+identity+content+
-      (solution?'<p class="solution-note">Die aufgeführten Antworten entsprechen dem gespeicherten Lösungsschlüssel des erstellten Tests.</p>':'')+
+      '.solution-section{break-before:page;page-break-before:always}.solution-title{font-size:30pt;font-weight:900;letter-spacing:.04em;margin:0 0 3mm}.solution-subtitle{border-bottom:2px solid #111;padding-bottom:3mm}.rubric{width:100%;border-collapse:collapse;font-size:8.5pt;margin:2mm 0 3mm}.rubric th,.rubric td{border:1px solid #777;text-align:left;vertical-align:top;padding:2mm}.rubric th{background:#eee}.rubric td:last-child,.rubric th:last-child{white-space:nowrap;width:16%}.rubric-note,.solution-note{font-size:8pt;color:#333;margin:2mm 0 4mm}.answer-key-title{margin-top:7mm}'+
+      '@media screen{body{max-width:210mm;margin:18px auto;padding:12mm;box-shadow:0 1px 12px #bbb;background:white}}'+
+      '</style></head><body>'+testHeading+solutionHeading+
       '<script>window.addEventListener("load",function(){setTimeout(function(){window.focus();window.print()},250)});<\/script>'+
       '</body></html>';
   }
 
-  function openCreatedTestPrint(solution){
+  function openCreatedTestPrint(solutionOnly,includeSolutions=false){
     if(!createdTestDocument?.questions?.length){alert("Die Testaufgaben sind noch nicht geladen.");return}
     const printWindow=window.open("","_blank");
     if(!printWindow){alert("Das Druckfenster wurde blockiert. Bitte Pop-ups für diese Seite erlauben und erneut klicken.");return}
     printWindow.document.open();
-    printWindow.document.write(createdTestHtml(solution));
+    printWindow.document.write(createdTestHtml(solutionOnly,includeSolutions));
     printWindow.document.close();
   }
 
@@ -2352,7 +2377,7 @@
     await loadDashboard();
   });
 
-  $("printCreatedTestBtn").addEventListener("click",()=>openCreatedTestPrint(false));
+  $("printCreatedTestBtn").addEventListener("click",()=>openCreatedTestPrint(false,true));
   $("printCreatedSolutionBtn").addEventListener("click",()=>openCreatedTestPrint(true));
   $("toggleCreatedSolutionBtn").addEventListener("click",()=>{
     const preview=$("createdSolutionPreview");
