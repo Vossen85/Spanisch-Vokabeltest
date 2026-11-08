@@ -240,6 +240,13 @@
       .course-name-editor button{width:100%}
       .course-order-actions button{flex:1 1 auto}
     }
+    @media(max-width:650px){
+      .folder-head{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+      .folder-head>div{min-width:0}
+      .folder-meta{overflow-wrap:anywhere}
+      .folder-head .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:8px}
+      .folder-head .actions button{width:100%;min-width:0;padding:10px 8px;white-space:normal}
+    }
     .activity-student{border:1px solid #dbe2ea;border-radius:12px;padding:14px;margin:12px 0;background:#fff}
   .activity-student-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
   .activity-week{border-top:1px solid #dbe2ea;padding:10px 0}.activity-week-details{margin-top:12px}.activity-week-details summary{cursor:pointer;font-weight:700;padding:8px 0}
@@ -1811,12 +1818,13 @@
 
   async function deleteTest(t){
     const st=testStats(t.id);
-    const warning='Test „'+(t.title||'Vokabeltest')+'“ vom '+fmtDate(t.test_date)+' endgültig löschen?\n\nDabei werden auch '+st.submitted.length+' abgegebene Test(s) und alle dazugehörigen Ergebnisse gelöscht. Das kann nicht rückgängig gemacht werden.';
+    const warning='Test „'+(t.title||'Vokabeltest')+'“ vom '+fmtDate(t.test_date)+' endgültig löschen?\n\nDabei werden alle '+st.all.length+' begonnenen und abgegebenen Abgaben samt Antworten, Korrekturen und Noten aus den Schülerkonten entfernt. Die Schülerkonten selbst bleiben bestehen. Das kann nicht rückgängig gemacht werden.';
     if(!confirm(warning)) return;
 
-    const {error}=await supabase.from("tests").delete().eq("id",t.id);
-    if(error){
-      alert("Der Test konnte nicht gelöscht werden.");
+    const {data,error}=await supabase.from("tests").delete().eq("id",t.id).select("id").maybeSingle();
+    if(error||!data){
+      const message=error?.message||"Der Test wurde nicht gelöscht. Prüfe, ob du als zuständige Lehrkraft angemeldet bist.";
+      alert("Der Test konnte nicht gelöscht werden. "+message);
       return;
     }
     await loadDashboard();
