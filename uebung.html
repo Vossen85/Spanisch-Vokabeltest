@@ -1289,6 +1289,38 @@
     }
   }
 
+  let testProgressSavingToken="";
+  async function saveVocabTestProgress(result,corrections,statusNode){
+    if(!PERSONALIZED_MODE||!studentAccountProfile||!accessToken)return;
+    const savedKey="spanischVocabTestRecorded:"+accessToken;
+    if(sessionStorage.getItem(savedKey)==="saved"||testProgressSavingToken===accessToken)return;
+    testProgressSavingToken=accessToken;
+    try{
+      const config=result.config||lastConfig||{};
+      const groups=[...(config.folderIds||[]).map(id=>"Ordner "+id),...(config.unitKeys||[])];
+      const groupKey=("Test · "+(groups.join(", ")||"Vokabeln")).slice(0,120);
+      for(const item of corrections){
+        const label=String(item.sourceText||"").trim();
+        if(!label)continue;
+        await studentProgress({
+          action:"record",
+          itemType:"vocab",
+          groupKey,
+          itemKey:"test:"+accessToken+":"+String(item.position||""),
+          itemLabel:label,
+          correct:Number(item.points)>=1
+        });
+      }
+      sessionStorage.setItem(savedKey,"saved");
+      if(statusNode)statusNode.textContent="Testergebnis wurde im Lernfortschritt gespeichert.";
+    }catch(error){
+      console.warn("Vokabeltestergebnis konnte nicht im Lernfortschritt gespeichert werden:",error);
+      if(statusNode)statusNode.textContent="Testergebnis konnte nicht gespeichert werden. Bitte lade den Bericht später erneut.";
+    }finally{
+      testProgressSavingToken="";
+    }
+  }
+
   function showResult(result){
     stopTimers();
     void finishTrackedActivity();
@@ -1307,6 +1339,14 @@
 
     const corrections=result.corrections||[];
     const mistakes=corrections.filter(x=>Number(x.points)<1);
+    let progressSaveStatus=null;
+    if(PERSONALIZED_MODE&&studentAccountProfile){
+      progressSaveStatus=document.createElement("div");
+      progressSaveStatus.className="msg show info";
+      progressSaveStatus.textContent="Testergebnis wird im Lernfortschritt gespeichert.";
+      $("mistakes").appendChild(progressSaveStatus);
+      void saveVocabTestProgress(result,corrections,progressSaveStatus);
+    }
     wrongRepeatQueue=corrections.filter(x=>Number(x.points)<1&&Array.isArray(x.acceptedAnswers)&&x.acceptedAnswers.length);
     wrongRepeatMissed=[];
     wrongRepeatIndex=0;
