@@ -74,6 +74,8 @@
     <h1 id="startTitle">Vokabeltest</h1>
     <p class="sub">Deutsche Vorgabe → vollständige spanische Übersetzung</p>
     <div class="summary">
+      <div><strong>Kurs</strong><br><span id="startCourse">—</span></div>
+      <div><strong>Quartal</strong><br><span id="startQuarter">—</span></div>
       <div><strong>Datum</strong><br><span id="startDate"></span></div>
       <div><strong>Aufgaben</strong><br><span id="startCount"></span></div>
       <div><strong>Zeit</strong><br><span id="startDuration"></span></div>
@@ -91,7 +93,8 @@
         <div>
           <strong id="testTitle">Vokabeltest</strong>
           <div class="identity">
-            <span><strong>Name:</strong> <span id="testStudentName"></span></span>
+            <span><strong>Kurs:</strong> <span id="testCourseLabelHeader"></span></span>
+            <span><strong>Schülernummer:</strong> <span id="testStudentName"></span></span>
             <span><strong>Datum:</strong> <span id="testDateLabel"></span></span>
             <span><strong>Test:</strong> <span id="testNameLabel"></span></span>
           </div>
@@ -207,7 +210,10 @@
     try{
       const data = await api({ action:"info", code });
       $("loadingCard").classList.add("hidden");
+      currentTestMeta = data.test;
       $("startTitle").textContent = data.test.title;
+      $("startCourse").textContent = data.test.courseName || "Nicht zugeordnet";
+      $("startQuarter").textContent = data.test.quarterNumber ? "Quartal " + data.test.quarterNumber : "—";
       $("startDate").textContent = formatDate(data.test.testDate);
       $("startCount").textContent = data.test.questionCount;
       $("startDuration").textContent = data.test.durationMinutes + " Minuten";
@@ -234,13 +240,14 @@
     deadlineAt = new Date(data.deadlineAt);
     questions = data.questions || [];
     studentCodeCurrent = String(data.studentCode || studentCodeCurrent || "");
-    currentTestMeta = data.test;
+    currentTestMeta = {...(currentTestMeta||{}), ...(data.test||{})};
 
     $("startCard").classList.add("hidden");
     $("doneCard").classList.add("hidden");
     $("testArea").classList.remove("hidden");
     $("testTitle").textContent = data.test.title;
-    $("testStudentName").textContent = "Schüler " + studentCodeCurrent;
+    $("testStudentName").textContent = studentCodeCurrent;
+    $("testCourseLabelHeader").textContent = (currentTestMeta.courseName || "Kurs nicht zugeordnet") + (currentTestMeta.quarterNumber ? " · Quartal " + currentTestMeta.quarterNumber : "");
     $("testDateLabel").textContent = formatDate(data.test.testDate);
     $("testNameLabel").textContent = data.test.title;
     $("totalCount").textContent = questions.length;
@@ -281,6 +288,9 @@
       showMsg($("startMsg"), "Bitte deine persönliche Schülernummer eingeben.", "err");
       return;
     }
+    const courseLabel=currentTestMeta?.courseName||"nicht zugeordneter Kurs";
+    const quarterLabel=currentTestMeta?.quarterNumber?" · Quartal "+currentTestMeta.quarterNumber:"";
+    if(!window.confirm("Bitte prüfe deine Eingabe: Kurs "+courseLabel+quarterLabel+" · Schülernummer "+studentCode+". Stimmt das?"))return;
 
     $("startBtn").disabled = true;
     $("startBtn").textContent = "Test wird gestartet …";

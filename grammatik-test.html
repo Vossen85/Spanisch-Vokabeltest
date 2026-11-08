@@ -32,12 +32,13 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:75
   <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
 <section id="startCard" class="card">
 <h1 id="title">Grammatiktest</h1><p id="meta" class="sub">Test wird geladen …</p>
+<p id="courseAssignment" class="tiny"></p>
 <label class="tiny" for="studentCode">Persönliche Schülernummer</label>
 <input id="studentCode" type="text" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="z. B. 12345">
 <div class="actions"><button id="startBtn" class="primary">Test starten</button></div><div id="startMsg" class="msg"></div>
 </section>
 <section id="testArea" class="hidden">
-<div class="topbar"><div class="topbar-inner"><div><strong id="testTitle"></strong><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
+<div class="topbar"><div class="topbar-inner"><div><strong id="testTitle"></strong><div id="testIdentity" class="tiny"></div><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
 <div id="chars" class="chars"><button>á</button><button>é</button><button>í</button><button>ó</button><button>ú</button><button>ü</button><button>ñ</button><button>¿</button><button>¡</button></div></div>
 <section class="card"><h2>Aufgaben</h2><p class="tiny">Das spanische Verb ist vorgegeben. Trage zuerst die deutsche Bedeutung und anschließend die geforderten Formen ein.</p><div id="questions"></div>
 <div class="actions"><button id="submitBtn" class="primary">Test endgültig abgeben</button></div><div id="testMsg" class="msg"></div></section>
@@ -52,7 +53,7 @@ const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
 const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const $=id=>document.getElementById(id);
 const code=(new URLSearchParams(location.search).get("code")||"").trim().toUpperCase();
-let token="",deadlineAt=null,questions=[],timerHandle=null,saveHandle=null,lastInput=null,submitting=false;
+let token="",deadlineAt=null,questions=[],timerHandle=null,saveHandle=null,lastInput=null,submitting=false,currentTestMeta=null,currentStudentCode="";
 const storageKey="spanischGrammarTest:"+code;
 function showMsg(el,msg,type="err"){el.textContent=msg;el.className="msg show "+type}
 function api(body){return fetch(SUPABASE_URL+"/functions/v1/grammar-student-test",{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY},body:JSON.stringify(body)}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok||d.error)throw new Error(d.error||"Die Anfrage konnte nicht verarbeitet werden.");return d})}
@@ -84,7 +85,10 @@ function grammarFormLabel(m){
 }
 function render(data){
  questions=data.questions||[];deadlineAt=data.deadlineAt;token=data.accessToken;sessionStorage.setItem(storageKey,token);
+ currentTestMeta={...(currentTestMeta||{}),...(data.test||{})};
+ currentStudentCode=String(data.studentCode||$("studentCode").value||currentStudentCode);
  $("startCard").classList.add("hidden");$("testArea").classList.remove("hidden");$("testTitle").textContent=data.test?.title||"Grammatiktest";
+ $("testIdentity").textContent=(currentTestMeta.courseName||"Kurs nicht zugeordnet")+(currentTestMeta.quarterNumber?" · Quartal "+currentTestMeta.quarterNumber:"")+" · Schülernummer "+currentStudentCode;
  const saved=new Map((data.savedAnswers||[]).map(a=>[String(a.question_id),parseSaved(a.response_text)]));
  $("questions").innerHTML="";
  for(const q of questions){const m=q.question_meta||{},p=saved.get(String(q.id))||{translation:"",forms:[]};const div=document.createElement("div");div.className="question";div.dataset.qid=q.id;
@@ -102,9 +106,9 @@ function startTimer(){clearInterval(timerHandle);const tick=()=>{const ms=Math.m
 async function submit(auto){if(submitting)return;if(!auto){const empty=[...document.querySelectorAll(".question input")].filter(x=>!x.value.trim()).length;if(empty&&!confirm("Es sind noch "+empty+" Felder leer. Trotzdem endgültig abgeben?"))return}submitting=true;$("submitBtn").disabled=true;$("submitBtn").textContent="Wird abgegeben …";try{const d=await api({action:"submit",accessToken:token,answers:collect(),auto});showResult(d.result)}catch(e){showMsg($("testMsg"),e.message);submitting=false;$("submitBtn").disabled=false;$("submitBtn").textContent="Test endgültig abgeben"}}
 function showResult(r){clearInterval(timerHandle);const resultToken=r.accessToken||token||sessionStorage.getItem(storageKey)||"";if(resultToken)token=resultToken;sessionStorage.removeItem(storageKey);$("testArea").classList.add("hidden");$("startCard").classList.add("hidden");$("doneCard").classList.remove("hidden");$("points").textContent=r.summary.rawPoints+" / "+r.summary.maxPoints;$("percent").textContent=Number(r.summary.percent).toFixed(1)+" %";$("grade").textContent=r.summary.gradeText;$("op").textContent=r.summary.upperSchoolPoints;const u=new URL("grammatik-korrektur.html",window.location.href);u.hash="token="+encodeURIComponent(resultToken);$("correctionLink").href=resultToken?u.toString():"#";$("correctionLink").style.pointerEvents=resultToken?"auto":"none";$("correctionLink").style.opacity=resultToken?"1":".5"}
 $("chars").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON"||!lastInput)return;const ch=e.target.textContent,start=lastInput.selectionStart??lastInput.value.length,end=lastInput.selectionEnd??start;lastInput.setRangeText(ch,start,end,"end");lastInput.focus();lastInput.dispatchEvent(new Event("input",{bubbles:true}))});
-$("startBtn").addEventListener("click",async()=>{const studentCode=$("studentCode").value.trim();try{$("startBtn").disabled=true;const old=sessionStorage.getItem(storageKey)||"";const d=await api({action:"start",code,studentCode,accessToken:old});if(d.submitted){showResult(d.result)}else render(d)}catch(e){showMsg($("startMsg"),e.message)}finally{$("startBtn").disabled=false}});
+$("startBtn").addEventListener("click",async()=>{const studentCode=$("studentCode").value.trim();if(!/^[0-9]{1,12}$/.test(studentCode)){showMsg($("startMsg"),"Bitte deine persönliche Schülernummer eingeben.");return}const label=currentTestMeta?.courseName||"nicht zugeordneter Kurs",quarter=currentTestMeta?.quarterNumber?" · Quartal "+currentTestMeta.quarterNumber:"";if(!window.confirm("Bitte prüfe deine Eingabe: Kurs "+label+quarter+" · Schülernummer "+studentCode+". Stimmt das?"))return;try{$("startBtn").disabled=true;currentStudentCode=studentCode;const old=sessionStorage.getItem(storageKey)||"";const d=await api({action:"start",code,studentCode,accessToken:old});if(d.submitted){showResult(d.result)}else render(d)}catch(e){showMsg($("startMsg"),e.message)}finally{$("startBtn").disabled=false}});
 $("submitBtn").addEventListener("click",()=>submit(false));
-(async()=>{if(!code){showMsg($("startMsg"),"Der Testlink ist unvollständig.");$("startBtn").disabled=true;return}try{const d=await api({action:"info",code});$("title").textContent=d.test.title;$("meta").textContent=fmtDate(d.test.testDate)+" · "+d.test.questionCount+" Verb-Aufgaben · "+d.test.durationMinutes+" Minuten";const old=sessionStorage.getItem(storageKey);if(old){token=old;const s=await api({action:"session",accessToken:old});if(s.submitted)showResult(s.result);else render(s)}}catch(e){showMsg($("startMsg"),e.message);$("startBtn").disabled=true}})();
+(async()=>{if(!code){showMsg($("startMsg"),"Der Testlink ist unvollständig.");$("startBtn").disabled=true;return}try{const d=await api({action:"info",code});currentTestMeta=d.test;$("title").textContent=d.test.title;$("meta").textContent=fmtDate(d.test.testDate)+" · "+d.test.questionCount+" Verb-Aufgaben · "+d.test.durationMinutes+" Minuten";$("courseAssignment").textContent=(d.test.courseName||"Kurs nicht zugeordnet")+(d.test.quarterNumber?" · Quartal "+d.test.quarterNumber:"");const old=sessionStorage.getItem(storageKey);if(old){token=old;const s=await api({action:"session",accessToken:old});if(s.submitted)showResult(s.result);else render(s)}}catch(e){showMsg($("startMsg"),e.message);$("startBtn").disabled=true}})();
 </script><script>
 (()=>{const link=document.querySelector(".avanza-home-link");if(!link)return;
  const home=link.dataset.homeTarget||"uebung.html";

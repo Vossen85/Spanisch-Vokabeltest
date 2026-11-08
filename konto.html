@@ -10,6 +10,7 @@
 <title>Persönlicher Lernbereich – ¡Avanza!</title>
 <style>
 *{box-sizing:border-box}body{margin:0;padding:22px;background:#f5f7fb;color:#172033;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:760px;margin:0 auto}.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 6px 20px rgba(15,23,42,.05)}h1{margin:0 0 8px;font-size:2rem}h2{margin:0 0 8px}.sub,.tiny{color:#64748b}.tiny{font-size:.92rem;line-height:1.45}label{display:block;font-weight:700;margin:14px 0 6px}input,button{font:inherit}input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;text-transform:uppercase}button,.button{display:inline-block;border:0;border-radius:10px;padding:12px 16px;font-weight:750;text-decoration:none;cursor:pointer}.primary{background:#2563eb;color:#fff}.secondary{background:#e2e8f0;color:#172033}.row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.msg{margin-top:12px;min-height:1.2em;color:#b91c1c}.hidden{display:none!important}.account-name{padding:12px;border-radius:10px;background:#eff6ff;font-weight:750}@media(max-width:540px){body{padding:12px}.card{padding:18px}}
+.test-history{margin:22px 0}.test-history h2{margin-bottom:10px}.test-period{margin:14px 0;padding:14px;border:1px solid #dbe2ea;border-radius:12px}.test-period h3{margin:0 0 8px}.test-history table{width:100%;border-collapse:collapse;font-size:.9rem}.test-history th,.test-history td{text-align:left;padding:8px 6px;border-bottom:1px solid #e2e8f0}.test-history th{color:#64748b;font-size:.82rem}.test-grade{font-weight:800}.test-history-status{color:#64748b;margin:8px 0}@media(max-width:640px){.test-history table{font-size:.78rem}.test-history th,.test-history td{padding:6px 3px}}
 
   .avanza-home-header{margin:0 0 12px;line-height:0}
   .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
@@ -38,6 +39,7 @@
 <div id="accountArea" class="hidden">
 <div id="accountName" class="account-name"></div>
 <p class="tiny">Du bist angemeldet. Deine Lernfortschritte werden unter diesem anonymen Schülerkonto gespeichert.</p>
+<section class="test-history" aria-labelledby="testHistoryHeading"><h2 id="testHistoryHeading">Meine Tests und Noten</h2><div id="testHistoryStatus" class="test-history-status">Testergebnisse werden geladen …</div><div id="testHistory"></div></section>
 <div class="row">
 <a id="continueBtn" class="button primary" href="uebung.html?personalisiert=1&v=20261107-2">Zum Lernbereich</a>
 <a class="button secondary" href="grammatik-karten.html?personalisiert=1&v=20261107-2">Direkt zu den Grammatik-Karteikarten</a>
@@ -52,6 +54,28 @@ const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 const $=id=>document.getElementById(id);
 async function studentProgress(body){const {data,error}=await studentClient.functions.invoke("student-progress",{body});if(error||data?.error)throw new Error(data?.error||error?.message||"Das Schülerkonto konnte nicht geladen werden.");return data}
+function esc(s){return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[ch]))}
+function formatTestDate(value){if(!value)return"—";const [y,m,d]=value.slice(0,10).split("-");return d+"."+m+"."+y}
+let testHistoryRefresh=null;
+async function loadTestHistory(){
+  $("testHistoryStatus").textContent="Testergebnisse werden geladen …";
+  const {data,error}=await studentClient.functions.invoke("student-test-history",{body:{}});
+  if(error||data?.error){$("testHistoryStatus").textContent=data?.error||"Testergebnisse konnten nicht geladen werden.";return}
+  const results=data.results||[];
+  if(!results.length){$("testHistoryStatus").textContent="Für dieses Konto liegen noch keine abgeschlossenen Tests vor."; $("testHistory").innerHTML="";return}
+  const groups=new Map();
+  for(const r of results){
+    const key=(r.courseName||"Kurs")+" · "+(r.quarterNumber?"Quartal "+r.quarterNumber:"Quartal nicht angegeben");
+    if(!groups.has(key))groups.set(key,[]);
+    groups.get(key).push(r);
+  }
+  $("testHistoryStatus").textContent="Deine gespeicherten Testergebnisse:";
+  $("testHistory").innerHTML=[...groups.entries()].map(([label,items])=>
+    '<section class="test-period"><h3>'+esc(label)+'</h3><div style="overflow-x:auto"><table><thead><tr><th>Test</th><th>Datum</th><th>Punkte</th><th>Prozent</th><th>Note</th><th>OP</th></tr></thead><tbody>'+
+    items.map(r=>'<tr><td>'+esc(r.testTitle)+'</td><td>'+formatTestDate(r.testDate)+'</td><td>'+Number(r.rawPoints)+' / '+Number(r.maxPoints)+'</td><td>'+Number(r.percent).toFixed(1)+' %</td><td class="test-grade">'+esc(r.gradeText)+'</td><td>'+Number(r.upperSchoolPoints)+'</td></tr>').join("")+
+    '</tbody></table></div></section>'
+  ).join("");
+}
 function continueUrl(){const next=new URLSearchParams(location.search).get("next");if(next==="grammar")return "grammatik-karten.html?personalisiert=1&v=20261107-2";if(next==="report")return "lernfortschritt.html";return "uebung.html?personalisiert=1"}
 async function refreshAccount(){
   const {data}=await studentClient.auth.getSession();
@@ -61,6 +85,9 @@ async function refreshAccount(){
     $("accountName").textContent=(me.courseName||"Kurs")+" · Schüler "+me.studentNumber;
     $("continueBtn").href=continueUrl();
     $("loginArea").classList.add("hidden");$("accountArea").classList.remove("hidden");
+    await loadTestHistory();
+    if(testHistoryRefresh)clearInterval(testHistoryRefresh);
+    testHistoryRefresh=setInterval(()=>{if(document.visibilityState==="visible")loadTestHistory()},20000);
   }catch(error){
     $("loginMsg").textContent=error.message;
     $("loginArea").classList.remove("hidden");$("accountArea").classList.add("hidden");
@@ -76,7 +103,7 @@ $("loginBtn").addEventListener("click",async()=>{
   $("studentCode").value="";
   await refreshAccount();
 });
-$("logoutBtn").addEventListener("click",async()=>{await studentClient.auth.signOut();await refreshAccount()});
+$("logoutBtn").addEventListener("click",async()=>{if(testHistoryRefresh)clearInterval(testHistoryRefresh);await studentClient.auth.signOut();await refreshAccount()});
 studentClient.auth.onAuthStateChange(()=>setTimeout(refreshAccount,0));
 refreshAccount();
 </script>
