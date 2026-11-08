@@ -247,10 +247,18 @@
     .assignment-history-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
     .assignment-history-status{font-size:.82rem;font-weight:750;border-radius:999px;padding:5px 9px;background:#eff6ff;color:#1d4ed8;white-space:nowrap}
     .assignment-history-meta{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:10px;color:#475569}
+    .avanza-home-header{margin:0 0 12px;line-height:0}
+  .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
+  .avanza-home-link img{display:block;width:50px;height:50px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px rgba(15,23,42,.16)}
+  .avanza-home-link:focus-visible{outline:3px solid #2563eb}
+  .avanza-home-link:hover img{transform:translateY(-1px)}
+  .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
+  @media print{.avanza-home-header{display:none!important}}
   </style>
 </head>
 <body>
 <div class="wrap">
+  <header class="avanza-home-header"><a class="avanza-home-link" href="lehrer.html" data-home-target="lehrer.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-lehrer-180.png" alt="¡Avanza! Startseite"></a></header>
   <h1>Spanisch-Tests</h1>
   <div class="sub">Lehrerbereich</div>
 
