@@ -87,7 +87,7 @@
     .choice-vocab{background:#2563eb;color:#fff}
     .choice-grammar{background:#7c3aed;color:#fff}.choice-tests{background:#ff7900;color:#fff;grid-column:1/-1}.choice-tests:hover{background:#ed6a00}.choice-tests:focus-visible{outline:3px solid #fdba74;outline-offset:3px}.choice-progress{background:#db2777;color:#fff;grid-column:1/-1}
     .choice-progress:hover{background:#be185d}
-    .student-tests-panel{grid-column:1/-1;margin-top:-7px;padding:18px;border:1px solid #fed7aa;border-radius:16px;background:#fffaf5;color:#7c2d12}.student-tests-panel h2{margin:0 0 8px}.student-tests-status{color:#64748b}.student-test-period{margin-top:18px;padding:14px;border:1px solid #fdba74;border-radius:12px;background:#fff}.student-test-period h3{margin:0 0 10px;color:#9a3412}.student-test-table-wrap{overflow-x:auto}.student-test-table{width:100%;border-collapse:collapse;min-width:620px}.student-test-table th,.student-test-table td{padding:9px 8px;border-bottom:1px solid #ffedd5;text-align:left;vertical-align:top}.student-test-table th{color:#9a3412;font-size:.88rem}.student-test-grade{font-weight:800}.student-tests-login{display:inline-flex;margin-top:10px;text-decoration:none}
+    .student-tests-panel{margin-top:16px;padding:18px;border:1px solid #fed7aa;border-radius:16px;background:#fffaf5;color:#7c2d12}.student-tests-panel h2{margin:0 0 8px}.student-tests-status{color:#64748b}.student-test-period{margin-top:18px;padding:14px;border:1px solid #fdba74;border-radius:12px;background:#fff}.student-test-period h3{margin:0 0 10px;color:#9a3412}.student-test-table-wrap{overflow-x:auto}.student-test-table{width:100%;border-collapse:collapse;min-width:620px}.student-test-table th,.student-test-table td{padding:9px 8px;border-bottom:1px solid #ffedd5;text-align:left;vertical-align:top}.student-test-table th{color:#9a3412;font-size:.88rem}.student-test-grade{font-weight:800}.student-tests-login{display:inline-flex;margin-top:10px;text-decoration:none}
     .choice-progress:focus-visible{outline:3px solid #f9a8d4;outline-offset:3px}
     .choice-learn{background:#0f766e;color:#fff}
     .choice-test{background:#c2410c;color:#fff}
@@ -162,16 +162,22 @@
         📝 Tests
         <span>Deine geschriebenen Tests, Korrekturen und Noten ansehen</span>
       </button>
-      <section id="studentTestsPanel" class="student-tests-panel hidden" aria-labelledby="studentTestsHeading">
-        <h2 id="studentTestsHeading">Meine Tests und Noten</h2>
-        <div id="studentTestsStatus" class="student-tests-status" aria-live="polite">Öffne den Bereich, um deine Testergebnisse zu laden.</div>
-        <div id="studentTestsList"></div>
-      </section>
       <button id="openProgressBtn" class="choice-btn choice-progress" type="button">
         📈 Lernfortschritt
         <span>Wochenberichte mit Lernzeit, richtigen Antworten und Karten zum Wiederholen</span>
       </button>
     </div>
+  </section>
+
+  <section id="testsChoiceCard" class="card hidden">
+    <div class="backline"><button id="testsHomeBtn" class="secondary" type="button">← Zurück</button></div>
+    <h1>Tests</h1>
+    <p class="sub">Hier findest du deine geschriebenen Tests, Korrekturen und Noten.</p>
+    <section id="studentTestsPanel" class="student-tests-panel" aria-labelledby="studentTestsHeading">
+      <h2 id="studentTestsHeading">Meine Tests und Noten</h2>
+      <div id="studentTestsStatus" class="student-tests-status" aria-live="polite">Testergebnisse werden geladen …</div>
+      <div id="studentTestsList"></div>
+    </section>
   </section>
 
   <section id="grammarChoiceCard" class="card hidden">
@@ -470,7 +476,7 @@
       notice.innerHTML=weekly?'<strong>Wochenziel:</strong> '+Number(weekly.required_minutes||0)+' Minuten'+(weekly.topic_notes?'<br>Themen: '+htmlSafe(weekly.topic_notes):''):'Für diese Woche ist kein Wochenziel eingetragen.';
       $("studentLoggedIn").classList.remove("hidden");$("guestAccountLink").classList.add("hidden");
       $("studentAccountMsg").className="msg";
-      if(!$("studentTestsPanel").classList.contains("hidden"))loadStudentTestHistory();
+      if(!$("testsChoiceCard").classList.contains("hidden"))loadStudentTestHistory();
     }catch(error){
       studentAccountProfile=null;
       $("studentAccountMsg").textContent=error.message;$("studentAccountMsg").className="msg show err";
@@ -480,7 +486,7 @@
   $("studentLogoutBtn").addEventListener("click",async()=>{
     await studentClient.auth.signOut();studentAccountProfile=null;location.href="konto.html?v=20261107-2";
   });
-  studentClient.auth.onAuthStateChange(()=>setTimeout(async()=>{await refreshStudentAccount();if(!$("studentTestsPanel").classList.contains("hidden"))loadStudentTestHistory()},0));
+  studentClient.auth.onAuthStateChange(()=>setTimeout(async()=>{await refreshStudentAccount();if(!$("testsChoiceCard").classList.contains("hidden"))loadStudentTestHistory()},0));
 
   function showMsg(el,msg,type="info"){el.textContent=msg;el.className="msg show "+type}
   function hideMsg(el){el.className="msg"}
@@ -1578,6 +1584,10 @@
     void refreshStudentAccount();
     $("portalCard").classList.remove("hidden");
     $("grammarChoiceCard").classList.add("hidden");
+    $("testsChoiceCard").classList.add("hidden");
+    $("openTestsBtn").setAttribute("aria-expanded","false");
+    if(studentTestHistoryRefresh){clearInterval(studentTestHistoryRefresh);studentTestHistoryRefresh=null;}
+    if(location.hash==="#tests")history.replaceState(null,"",location.pathname+location.search);
     $("setupCard").classList.add("hidden");
     $("testArea").classList.add("hidden");
     $("doneCard").classList.add("hidden");
@@ -1596,7 +1606,8 @@
     $("grammarChoiceCard").classList.remove("hidden");
     window.scrollTo({top:0,behavior:"instant"});
   });
-  $("openTestsBtn").addEventListener("click",toggleStudentTests);
+  $("openTestsBtn").addEventListener("click",openTestsView);
+  $("testsHomeBtn").addEventListener("click",showPortal);
   async function loadStudentTestHistory(){
     const status=$("studentTestsStatus"),list=$("studentTestsList");
     if(!studentAccountProfile){
@@ -1627,18 +1638,22 @@
     const [y,m,d]=String(value).slice(0,10).split("-");
     return d+"."+m+"."+y;
   }
-  async function toggleStudentTests(){
-    const panel=$("studentTestsPanel"),button=$("openTestsBtn");
-    const opening=panel.classList.contains("hidden");
-    panel.classList.toggle("hidden",!opening);button.setAttribute("aria-expanded",String(opening));
-    if(opening){
-      await loadStudentTestHistory();
-      if(studentTestHistoryRefresh)clearInterval(studentTestHistoryRefresh);
-      studentTestHistoryRefresh=setInterval(()=>{
-        if(document.visibilityState==="visible"&&!panel.classList.contains("hidden"))loadStudentTestHistory();
-      },20000);
-      if(location.hash==="#tests")panel.scrollIntoView({behavior:"smooth",block:"nearest"});
-    }else if(studentTestHistoryRefresh){clearInterval(studentTestHistoryRefresh);studentTestHistoryRefresh=null;}
+  async function openTestsView(){
+    $("portalCard").classList.add("hidden");
+    $("grammarChoiceCard").classList.add("hidden");
+    $("setupCard").classList.add("hidden");
+    $("testArea").classList.add("hidden");
+    $("doneCard").classList.add("hidden");
+    $("fatalCard").classList.add("hidden");
+    $("testsChoiceCard").classList.remove("hidden");
+    $("openTestsBtn").setAttribute("aria-expanded","true");
+    if(location.hash!=="#tests")history.replaceState(null,"",location.pathname+location.search+"#tests");
+    await loadStudentTestHistory();
+    if(studentTestHistoryRefresh)clearInterval(studentTestHistoryRefresh);
+    studentTestHistoryRefresh=setInterval(()=>{
+      if(document.visibilityState==="visible"&&!$("testsChoiceCard").classList.contains("hidden"))loadStudentTestHistory();
+    },20000);
+    window.scrollTo({top:0,behavior:"instant"});
   }
   $("openProgressBtn").addEventListener("click",()=>location.href=studentAccountProfile?"lernfortschritt.html":"konto.html?next=report");
   $("grammarHomeBtn").addEventListener("click",showPortal);
@@ -1668,7 +1683,7 @@
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
   refreshStudentAccount();
-  if(location.hash==="#tests"){ $("studentTestsPanel").classList.remove("hidden");$("openTestsBtn").setAttribute("aria-expanded","true");setTimeout(loadStudentTestHistory,0); }
+  if(location.hash==="#tests"){ $("portalCard").classList.add("hidden");$("testsChoiceCard").classList.remove("hidden");$("openTestsBtn").setAttribute("aria-expanded","true");setTimeout(openTestsView,0); }
 
   $("chars").addEventListener("click",e=>{
     if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;
