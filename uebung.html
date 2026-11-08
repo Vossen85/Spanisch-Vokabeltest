@@ -73,7 +73,7 @@
     @media(max-width:600px){.flashcard{min-height:95px;padding:12px;font-size:1rem}.flashcard-question{padding:15px}.quiz-german{font-size:1.3rem}}
     @media(max-width:600px){.vocab-preview{padding:12px}.vocab-preview th,.vocab-preview td{padding:7px 4px;font-size:.9rem}}
     .choice-vocab{background:#2563eb;color:#fff}
-    .choice-grammar{background:#7c3aed;color:#fff}
+    .choice-grammar{background:#7c3aed;color:#fff}.choice-progress{background:linear-gradient(120deg,#0f766e,#0891b2);color:#fff;grid-column:1/-1}
     .choice-learn{background:#0f766e;color:#fff}
     .choice-test{background:#c2410c;color:#fff}
     .backline{margin-bottom:14px}
@@ -103,7 +103,7 @@
   
     .quarter-label>span{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
     .quarter-title{display:block;color:#64748b;font-family:inherit;font-size:.88rem;font-style:normal;font-weight:600;line-height:1.35;margin-top:2px}
-    .student-account-box{margin:16px 0 20px;padding:14px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc}.weekly-time-panel{margin:10px 0;padding:14px;border:1px solid #cbd5e1;border-radius:12px;background:white}.weekly-time-callout{font-weight:750;color:#1e3a8a;margin-bottom:10px}.weekly-time-list{display:grid;gap:6px}.weekly-time-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #e2e8f0}.weekly-time-row:last-child{border-bottom:0}@media(max-width:520px){.weekly-time-row{align-items:flex-start;flex-direction:column}}
+    .student-account-box{margin:16px 0 20px;padding:14px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc}
   .student-login-row{display:flex;gap:8px;align-items:center}
   .student-login-row input{flex:1;min-width:0;padding:11px;border:1px solid #cbd5e1;border-radius:9px;font:inherit;text-transform:uppercase}
   @media(max-width:520px){.student-login-row{align-items:stretch;flex-direction:column}}
@@ -126,7 +126,7 @@
     <div id="studentAccountBox" class="student-account-box">
       <div id="guestAccountLink"><p class="tiny">Möchtest du deinen Lernfortschritt speichern und falsche Karteikarten später wiederholen?</p><a class="button secondary" href="konto.html?v=20261107-2">Zum persönlichen Lernbereich mit Zugangscode</a></div>
       <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p>
-        <div id="weeklyAssignmentNotice" class="tiny"></div><button id="weeklyHistoryToggle" class="secondary" type="button" aria-expanded="false">Wochenzeiten und Restzeit ansehen</button><div id="weeklyHistoryPanel" class="weekly-time-panel hidden"></div><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
+        <div id="weeklyAssignmentNotice" class="tiny"></div><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
       <div id="studentAccountMsg" class="msg"></div>
     </div>
     <div class="choice-grid">
@@ -137,6 +137,10 @@
       <button id="openGrammarBtn" class="choice-btn choice-grammar" type="button">
         ✏️ Grammatik
         <span>Konjugationen lernen oder Grammatiktests bearbeiten</span>
+      </button>
+      <button id="openProgressBtn" class="choice-btn choice-progress" type="button">
+        📈 Lernfortschritt
+        <span>Wochenberichte mit Lernzeit, richtigen Antworten und Karten zum Wiederholen</span>
       </button>
     </div>
   </section>
@@ -364,6 +368,7 @@
   const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
   let PERSONALIZED_MODE=new URLSearchParams(location.search).get("personalisiert")==="1";
   const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
+  window.avanzaStudentClient=studentClient;
 
   const $=id=>document.getElementById(id);
 
@@ -432,8 +437,8 @@
       const me=await studentProgress({action:"me"});
       studentAccountProfile=me;PERSONALIZED_MODE=true;
       $("studentAccountName").textContent=(me.courseName||"Kurs")+" · Schüler "+me.studentNumber;
-      const weekly=me.weeklyAssignment,notice=$("weeklyAssignmentNotice"),minutes=Number(me.activeMinutes||0);
-      notice.innerHTML='<strong>Diese Woche bisher:</strong> '+minutes+' Lernminuten.'+(weekly?' Wochenziel: '+Number(weekly.required_minutes||0)+' Minuten; noch '+Math.max(0,Number(weekly.required_minutes||0)-minutes)+' Minuten übrig.'+(weekly.topic_notes?'<br>Themen: '+htmlSafe(weekly.topic_notes):''):' Für diese Woche ist kein Wochenziel eingetragen.');
+      const weekly=me.weeklyAssignment,notice=$("weeklyAssignmentNotice");
+      notice.innerHTML=weekly?'<strong>Wochenziel:</strong> '+Number(weekly.required_minutes||0)+' Minuten'+(weekly.topic_notes?'<br>Themen: '+htmlSafe(weekly.topic_notes):''):'Für diese Woche ist kein Wochenziel eingetragen.';
       $("studentLoggedIn").classList.remove("hidden");$("guestAccountLink").classList.add("hidden");
       $("studentAccountMsg").className="msg";
     }catch(error){
@@ -442,20 +447,6 @@
       if(PERSONALIZED_MODE)location.replace("konto.html?v=20261107-2");else $("guestAccountLink").classList.remove("hidden");
     }
   }
-  function weekLabel(value){const start=new Date(value+"T12:00:00"),end=new Date(start);end.setDate(end.getDate()+6);const f=new Intl.DateTimeFormat("de-DE",{day:"2-digit",month:"2-digit"});return f.format(start)+"–"+f.format(end)}
-  async function toggleWeeklyHistory(){
-    const button=$("weeklyHistoryToggle"),panel=$("weeklyHistoryPanel");
-    if(!panel.classList.contains("hidden")){panel.classList.add("hidden");button.setAttribute("aria-expanded","false");button.textContent="Wochenzeiten und Restzeit ansehen";return}
-    button.disabled=true;button.textContent="Wochenzeiten werden geladen …";
-    try{
-      const data=await studentProgress({action:"learning_history"}),weeks=data.weeks||[],current=weeks[weeks.length-1];
-      const remaining=current?.remainingMinutes;
-      panel.innerHTML='<div class="weekly-time-callout">'+(remaining===null||remaining===undefined?"Für diese Woche ist kein Wochenziel gesetzt.":remaining===0?"Wochenziel erreicht.":remaining+" Lernminuten bis zum Wochenziel.")+'</div><strong>Lernzeit der letzten 12 Wochen</strong><div class="weekly-time-list">'+[...weeks].reverse().map(w=>'<div class="weekly-time-row"><span>Woche ab '+weekLabel(w.weekStart)+'</span><span>'+Number(w.activeMinutes||0)+' Min.'+(w.requiredMinutes===null?"":' · Ziel '+Number(w.requiredMinutes)+' · Rest '+Number(w.remainingMinutes)+' Min.')+'</span></div>').join("")+'</div>';
-      panel.classList.remove("hidden");button.setAttribute("aria-expanded","true");button.textContent="Wochenübersicht ausblenden";
-    }catch(error){panel.innerHTML='<div class="account-msg">'+htmlSafe(error.message||"Wochenzeiten konnten nicht geladen werden.")+'</div>';panel.classList.remove("hidden");button.setAttribute("aria-expanded","true");button.textContent="Wochenübersicht ausblenden";}
-    finally{button.disabled=false}
-  }
-  $("weeklyHistoryToggle").addEventListener("click",toggleWeeklyHistory);
   $("studentLogoutBtn").addEventListener("click",async()=>{
     await studentClient.auth.signOut();studentAccountProfile=null;location.href="konto.html?v=20261107-2";
   });
@@ -1458,6 +1449,7 @@
     $("grammarChoiceCard").classList.remove("hidden");
     window.scrollTo({top:0,behavior:"instant"});
   });
+  $("openProgressBtn").addEventListener("click",()=>location.href=studentAccountProfile?"lernfortschritt.html":"konto.html?next=report");
   $("grammarHomeBtn").addEventListener("click",showPortal);
   $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
   $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
@@ -1526,5 +1518,6 @@
     });
   }
 </script>
+<script src="./student-progress-widget.js"></script>
 </body>
 </html>
