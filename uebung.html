@@ -348,7 +348,8 @@
   let lastConfig=null;
   let vocabMode="test";
   let vocabListCache=null;
-  let cardSession=null;\n  let vocabTopicSelectionOpen=false;
+  let cardSession=null;
+  let vocabTopicSelectionOpen=false;
   let studentAccountProfile=null;
 
   async function studentProgress(body){
@@ -1292,7 +1293,9 @@
   $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
   $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
   $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
-  $("cardModeTopicBtn").addEventListener("click",()=>{vocabTopicSelectionOpen=true;setVocabMode("cards");$("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});});\n  $("cardModeErrorsBtn").addEventListener("click",()=>startCardPractice("errors"));\n  $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));\n  $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
+  $("cardModeTopicBtn").addEventListener("click",()=>{vocabTopicSelectionOpen=true;setVocabMode("cards");$("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});});
+  $("cardModeErrorsBtn").addEventListener("click",()=>startCardPractice("errors"));
+  $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));\n  $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
   $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
   $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);
   $("quizFlashcard").addEventListener("click",()=>{if(!cardSession)return;if($("quizFlashcard").classList.contains("is-flipped"))return;revealCardAnswer()});
