@@ -228,11 +228,13 @@
       .course-order-actions button{flex:1 1 auto}
     }
     .activity-student{border:1px solid #dbe2ea;border-radius:12px;padding:14px;margin:12px 0;background:#fff}
-  .activity-student-head,.activity-metrics{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .activity-metrics{margin-top:9px;color:#475569;font-size:.95rem}
-  .activity-done{color:#15803d}.activity-open{color:#b45309}
-  .activity-topics{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.activity-topic{background:#eff6ff;border-radius:8px;padding:5px 8px;font-size:.85rem}
+  .activity-student-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
   .activity-week{border-top:1px solid #dbe2ea;padding:10px 0}.activity-week-details{margin-top:12px}.activity-week-details summary{cursor:pointer;font-weight:700;padding:8px 0}
+  .activity-week-metrics{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:8px;color:#475569}
+  .activity-category-list{display:grid;gap:6px;margin-top:10px}
+  .activity-category{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:8px 10px;border-radius:8px;background:#f1f5f9}
+  .activity-category strong{font-size:.92rem}.activity-category span{text-align:right;color:#475569;font-size:.9rem}
+  @media(max-width:520px){.activity-category{align-items:flex-start;flex-direction:column;gap:2px}.activity-category span{text-align:left}}
     .activity-course-select{display:block;width:100%;height:52px!important;min-height:52px!important;min-width:0;box-sizing:border-box;padding:0 36px 0 13px;font:inherit;font-size:1.02rem;border:1px solid #cbd5e1;border-radius:10px;background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m3 6 5 5 5-5' fill='none' stroke='%23475569' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;-webkit-appearance:none;appearance:none;cursor:pointer}
     .activity-report-filters{display:grid;grid-template-columns:minmax(180px,.8fr) repeat(2,minmax(0,1fr));gap:18px 24px;align-items:start}
     .activity-report-dates{display:contents}
@@ -746,20 +748,27 @@
     const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"report_range",courseId,startWeek,endWeek}});
     if(error||data?.error){$("learningReports").innerHTML="";showMsg($("reportsMsg"),await edgeErrorMessage(error,data,"Der Bericht konnte nicht geladen werden."),"err");return false}
     hideMsg($("reportsMsg"));
+    const reportCategories=[
+      {key:"vocabLearn",label:"Vokabeln lernen",unit:"Karten"},
+      {key:"vocabTest",label:"Vokabeltest",unit:"Vokabeln"},
+      {key:"grammarLearn",label:"Grammatik lernen",unit:"Konjugationskarten"},
+      {key:"grammarTest",label:"Grammatiktest",unit:"Einzelformen"}
+    ];
     const cards=(data.students||[]).map(st=>{
       const weeks=(st.weeks||[]).map(w=>{
-        const target=w.requiredMinutes===null?'<span class="muted">Kein Wochenziel</span>':(w.completed?'<strong class="activity-done">'+w.requiredMinutes+' Min. Ziel erreicht</strong>':'<strong class="activity-open">'+Math.max(0,w.requiredMinutes-w.minutes)+' Min. bis zum Ziel</strong>');
-        const topics=(w.topics||[]).map(x=>{
-          const topic=grammarCatalog.find(entry=>String(entry.id)===String(x.group));
-          const label=x.type==="grammar"?(topic?(topic.group+" · "+topic.title):"Grammatik"):((activityFolderNames.get(String(x.group)))||"Vokabeln");
-          return '<span class="activity-topic">'+(x.type==="grammar"?"Grammatik":"Vokabeln")+': '+esc(label)+' · '+x.answers+' Karten ('+x.correct+' richtig, '+x.wrong+' falsch)</span>';
+        const categories=reportCategories.map(category=>{
+          const metric=w[category.key]||{answers:0,correct:0};
+          const answers=Number(metric.answers)||0,correct=Number(metric.correct)||0;
+          const result=answers
+            ? answers+" "+category.unit+" · "+correct+" von "+answers+" richtig ("+Math.round(correct*100/answers)+" %)"
+            : "Noch keine Antworten";
+          return '<div class="activity-category"><strong>'+category.label+'</strong><span>'+result+'</span></div>';
         }).join("");
-        return '<div class="activity-week"><div class="activity-student-head"><b>Woche ab '+fmtDate(w.weekStart)+'</b>'+target+'</div>'+
-          '<div class="activity-metrics"><span>Lernzeit: <b>'+w.minutes+' Min.</b></span><span>Vokabeln: '+w.vocab.answers+' Karten · '+w.vocab.correct+' richtig / '+w.vocab.wrong+' falsch</span><span>Grammatik: '+w.grammar.answers+' Karten · '+w.grammar.correct+' richtig / '+w.grammar.wrong+' falsch</span></div>'+
-          (w.topicNotes?'<div class="tiny">Vorgabe: '+esc(w.topicNotes)+'</div>':'')+(topics?'<div class="activity-topics">'+topics+'</div>':'')+'</div>';
+        return '<div class="activity-week"><div class="activity-student-head"><b>Woche ab '+fmtDate(w.weekStart)+'</b></div>'+
+          '<div class="activity-week-metrics"><span>Lernzeit</span><strong>'+w.minutes+' Min.</strong></div>'+
+          '<div class="activity-category-list">'+categories+'</div></div>';
       }).join("");
-      return '<article class="activity-student"><div class="activity-student-head"><strong>Schüler '+esc(st.studentNumber)+'</strong><strong>'+st.minutes+' Min. gesamt</strong></div>'+
-        '<div class="activity-metrics"><span>Vokabeln: '+st.vocab.answers+' Karten · '+st.vocab.correct+' richtig / '+st.vocab.wrong+' falsch</span><span>Grammatik: '+st.grammar.answers+' Karten · '+st.grammar.correct+' richtig / '+st.grammar.wrong+' falsch</span></div>'+
+      return '<article class="activity-student"><div class="activity-student-head"><strong>Schüler '+esc(st.studentNumber)+'</strong><strong>'+st.minutes+' Min. im Zeitraum</strong></div>'+
         '<details class="activity-week-details"><summary>Wochen einzeln anzeigen</summary>'+weeks+'</details></article>';
     }).join("");
     $("learningReports").innerHTML='<h3>'+esc(data.courseName)+' · '+fmtDate(data.startWeek)+' bis '+fmtDate(data.endWeek)+'</h3>'+
