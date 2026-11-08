@@ -7,7 +7,7 @@
 </style></head><body><main class="wrap">
 <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html?personalisiert=1" aria-label="Zur Lernstartseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza!"></a></header>
 <a class="home-link" href="uebung.html?personalisiert=1">← Zurück zum Lernbereich</a>
-<section class="panel hero"><h1>Lernfortschritt</h1><p>Deine Lernzeit und Karten-Ergebnisse – nach Wochen geordnet.</p><div id="summary" class="summary"><div class="metric"><span>Diese Woche</span><strong>…</strong></div></div></section>
+<section class="panel hero"><h1>Lernfortschritt</h1><p>Deine Lernzeit und Übungsergebnisse – nach Wochen geordnet.</p><div id="summary" class="summary"><div class="metric"><span>Diese Woche</span><strong>…</strong></div></div></section>
 <section class="panel"><h2>Deine Wochenberichte</h2><div id="weeks" class="week-list"><div class="loading">Deine Lernzeiten und Ergebnisse werden geladen …</div></div><div id="error" class="error"></div></section>
 </main><script>
 const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
@@ -28,7 +28,7 @@ function listHtml(items){return items.length?'<ul class="items">'+items.map(x=>'
 function render(report){
  const weeks=report.weeks||[],current=weeks[weeks.length-1],summary=document.getElementById("summary");
  const totalAnswers=Number(current?.answers||0),correct=Number(current?.correct||0),minutes=Number(current?.activeMinutes||0),goal=current?.requiredMinutes;
- summary.innerHTML='<div class="metric"><span>Lernzeit diese Woche</span><strong>'+minutes+' Min.</strong></div><div class="metric"><span>Karten bearbeitet</span><strong>'+totalAnswers+'</strong></div><div class="metric"><span>Richtig</span><strong>'+(current?.accuracyPercent==null?'–':current.accuracyPercent+' %')+'</strong></div><div class="metric"><span>Bis zum Wochenziel</span><strong>'+(goal==null?'kein Ziel':Math.max(0,goal-minutes)+' Min.')+'</strong></div>';
+ summary.innerHTML='<div class="metric"><span>Lernzeit diese Woche</span><strong>'+minutes+' Min.</strong></div><div class="metric"><span>Antworten</span><strong>'+totalAnswers+'</strong></div><div class="metric"><span>Richtig</span><strong>'+(current?.accuracyPercent==null?'–':current.accuracyPercent+' %')+'</strong></div><div class="metric"><span>Bis zum Wochenziel</span><strong>'+(goal==null?'kein Ziel':Math.max(0,goal-minutes)+' Min.')+'</strong></div>';
  const root=document.getElementById("weeks");
  if(!weeks.length){root.innerHTML='<p class="empty">Noch keine Wochenwerte vorhanden.</p>';return}
  const visibleWeeks=weeks.filter((w,index)=>index===weeks.length-1||w.activeMinutes>0||w.answers>0||w.requiredMinutes!==null);
@@ -57,7 +57,7 @@ async function load(){
  ]);
  if(me.error||me.data?.error)throw new Error(me.data?.error||me.error?.message||"Konto konnte nicht geladen werden.");
  if(report.error||report.data?.error)throw new Error(report.data?.error||report.error?.message||"Bericht konnte nicht geladen werden.");
- document.querySelector(".hero p").textContent=(me.data.courseName||"Dein Kurs")+" · Deine Lernzeit und Karten-Ergebnisse – nach Wochen geordnet.";
+ document.querySelector(".hero p").textContent=(me.data.courseName||"Dein Kurs")+" · Deine Lernzeit und Übungsergebnisse – nach Wochen geordnet.";
  render(report.data);
 }
 load().catch(error=>{document.getElementById("weeks").innerHTML="";document.getElementById("error").textContent=error.message});
