@@ -44,7 +44,7 @@ async function startTrackedActivity(activityType,mode,groupKey){
 async function stopTrackedActivity(){
   const id=currentActivitySessionId;currentActivitySessionId=null;
   if(activityHeartbeat){clearInterval(activityHeartbeat);activityHeartbeat=null}
-  if(id)await studentClient.functions.invoke("learning-activity",{body:{action:"end",sessionId:id}});
+  if(id)await studentClient.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"&&Date.now()-activityLastInteraction<=90000}});
 }
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden")void stopTrackedActivity();
