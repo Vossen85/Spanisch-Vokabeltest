@@ -231,7 +231,8 @@
   .activity-student-head,.activity-metrics{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   .activity-metrics{margin-top:9px;color:#475569;font-size:.95rem}
   .activity-done{color:#15803d}.activity-open{color:#b45309}
-  .activity-topics{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.activity-topic{background:#eff6ff;border-radius:8px;padding:5px 8px;font-size:.85rem}\n</style>
+  .activity-topics{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.activity-topic{background:#eff6ff;border-radius:8px;padding:5px 8px;font-size:.85rem}
+  .activity-week{border-top:1px solid #dbe2ea;padding:10px 0}.activity-week-details{margin-top:12px}.activity-week-details summary{cursor:pointer;font-weight:700;padding:8px 0}\n</style>
 </head>
 <body>
 <div class="wrap">
@@ -311,7 +312,8 @@
       <button class="navBtn secondary" data-view="create">Test erstellen</button>
       <button class="navBtn secondary" data-view="practice">Schülerbereich teilen</button>
       <button class="navBtn secondary" data-view="courses">Kurse verwalten</button>
-      <button class="navBtn secondary" data-view="activity">Lernaktivität</button>
+      <button class="navBtn secondary" data-view="activity">Wochenaufgabe</button>
+      <button class="navBtn secondary" data-view="reports">Lernberichte</button>
       <button id="adminNavBtn" class="navBtn secondary hidden" data-view="admin">Kollegen verwalten</button>
     </div>
 
@@ -507,20 +509,35 @@
 
     <section id="view-activity" class="view hidden">
       <div class="card">
-        <h2>Lernaktivität und Wochenaufgabe</h2>
-        <p class="tiny">Lege für einen Kurs eine wöchentliche Mindestlernzeit fest. Themen sind optional. Die Übersicht zeigt aktive Übungszeit und bearbeitete Karten pro Schüler.</p>
+        <h2>Wochenaufgabe festlegen</h2>
+        <p class="tiny">Speichere pro Kurs eine Wochenvorgabe. Sie erscheint bei den persönlich angemeldeten Schülern in der gewählten Woche zusammen mit ihrer bisher erfassten Lernzeit.</p>
         <div class="row">
-          <div><label for="activityCourse">Kurs</label><select id="activityCourse"><option value="">Kurse werden geladen …</option></select></div>
-          <div><label for="activityWeek">Woche ab (Montag)</label><input id="activityWeek" type="date"></div>
+          <div><label for="assignmentCourse">Kurs</label><select id="assignmentCourse"><option value="">Kurse werden geladen …</option></select></div>
+          <div><label for="assignmentWeek">Woche ab (Montag)</label><input id="assignmentWeek" type="date"></div>
         </div>
         <div class="row">
           <div><label for="requiredMinutes">Pflichtzeit pro Woche (Minuten)</label><input id="requiredMinutes" type="number" min="1" max="600" value="60"></div>
           <div><label for="topicNotes">Themenfelder (optional)</label><input id="topicNotes" type="text" maxlength="1000" placeholder="z. B. Unidad 4 und Gerundio"></div>
         </div>
-        <div class="actions"><button id="saveWeeklyAssignmentBtn" class="primary" type="button">Wochenaufgabe speichern</button><button id="refreshActivityBtn" class="secondary" type="button">Übersicht aktualisieren</button></div>
-        <div id="activityMsg" class="msg"></div>
-        <div id="activityReport"></div>
-        <p class="tiny">Zeit zählt während sichtbarer Übungsseiten mit regelmäßiger Aktivität. Bearbeitete und richtig/falsch markierte Karten werden zusätzlich gezählt. Das ist ein Lernnachweis, keine technische Garantie für Aufmerksamkeit.</p>
+        <div class="actions"><button id="saveWeeklyAssignmentBtn" class="primary" type="button">Wochenaufgabe speichern</button></div>
+        <div id="assignmentMsg" class="msg"></div>
+        <p class="tiny">Schüler sehen das Wochenziel im persönlichen Lernbereich. Die allgemeine Schülerseite ohne Code speichert keine persönliche Lernzeit.</p>
+      </div>
+    </section>
+
+    <section id="view-reports" class="view hidden">
+      <div class="card">
+        <h2>Lernberichte</h2>
+        <p class="tiny">Sieh dir Lernzeit und bearbeitete Karten pro Schüler für eine Woche oder einen mehrwöchigen Zeitraum an. Die Erfassung beginnt ab Einführung dieser Funktion; ältere Wochen werden nicht nachträglich ergänzt.</p>
+        <div class="row">
+          <div><label for="reportCourse">Kurs</label><select id="reportCourse"><option value="">Kurse werden geladen …</option></select></div>
+          <div><label for="reportFromWeek">Von Woche ab (Montag)</label><input id="reportFromWeek" type="date"></div>
+          <div><label for="reportToWeek">Bis Woche ab (Montag)</label><input id="reportToWeek" type="date"></div>
+        </div>
+        <div class="actions"><button id="loadReportsBtn" class="primary" type="button">Bericht anzeigen</button></div>
+        <div id="reportsMsg" class="msg"></div>
+        <div id="learningReports"></div>
+        <p class="tiny">Erfasst werden aktive persönliche Vokabel- und Grammatik-Karteikartenübungen samt richtig/falsch markierten Antworten.</p>
       </div>
     </section>
 
@@ -592,62 +609,86 @@
   }
   let activityCourseCache=[];
   let activityFolderNames=new Map();
-  async function loadLearningActivity(){
-    if(!$("activityWeek").value)$("activityWeek").value=localMonday();
+  let activityCoursesLoaded=false;
+  function mondayWeeksAgo(count){
+    const d=new Date(localMonday()+"T12:00:00");d.setDate(d.getDate()-7*count);
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  async function loadActivityCourses(){
+    if(activityCoursesLoaded)return;
     const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list"}});
-    if(error||data?.error){showMsg($("activityMsg"),responseError(error,data,"Kurse konnten nicht geladen werden."),"err");return}
+    if(error||data?.error){showMsg($("assignmentMsg"),responseError(error,data,"Kurse konnten nicht geladen werden."),"err");showMsg($("reportsMsg"),responseError(error,data,"Kurse konnten nicht geladen werden."),"err");return}
     activityCourseCache=data.courses||[];
     const {data:folders,error:foldersError}=await supabase.from("vocab_folders").select("id,title").eq("active",true);
     if(!foldersError)activityFolderNames=new Map((folders||[]).map(folder=>[String(folder.id),folder.title]));
-    const select=$("activityCourse"),old=select.value;
-    select.innerHTML=activityCourseCache.length?activityCourseCache.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>').join(""):'<option value="">Noch keine Kurse angelegt</option>';
-    if(activityCourseCache.some(c=>c.id===old))select.value=old;
-    if(select.value)await loadActivityReport();
+    for(const id of ["assignmentCourse","reportCourse"]){
+      const select=$(id),old=select.value;
+      select.innerHTML=activityCourseCache.length?activityCourseCache.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>').join(""):'<option value="">Noch keine Kurse angelegt</option>';
+      if(activityCourseCache.some(c=>c.id===old))select.value=old;
+    }
+    activityCoursesLoaded=true;
   }
-  async function loadActivityReport(){
-    const courseId=$("activityCourse").value,weekStart=$("activityWeek").value;
-    if(!courseId||!weekStart){$("activityReport").innerHTML="";return}
-    $("activityReport").innerHTML='<div class="muted">Wochenübersicht wird geladen …</div>';
-    const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"report",courseId,weekStart}});
-    if(error||data?.error){$("activityReport").innerHTML="";showMsg($("activityMsg"),responseError(error,data,"Die Lernübersicht konnte nicht geladen werden."),"err");return}
-    hideMsg($("activityMsg"));
+  async function loadAssignment(){
+    const courseId=$("assignmentCourse").value,weekStart=$("assignmentWeek").value;
+    if(!courseId||!weekStart)return;
+    $("requiredMinutes").value="60";$("topicNotes").value="";
+    const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"get_assignment",courseId,weekStart}});
+    if(error||data?.error){showMsg($("assignmentMsg"),responseError(error,data,"Die Wochenaufgabe konnte nicht geladen werden."),"err");return}
+    hideMsg($("assignmentMsg"));
     if(data.assignment){$("requiredMinutes").value=data.assignment.required_minutes;$("topicNotes").value=data.assignment.topic_notes||""}
-    else{$("topicNotes").value="";}
-    const assignment=data.assignment;
-    const target=assignment?Number(assignment.required_minutes):0;
-    const notes=assignment?.topic_notes?'<div class="tiny">Themenvorgabe: '+esc(assignment.topic_notes)+'</div>':'';
+  }
+  async function loadLearningActivity(){
+    if(!$("assignmentWeek").value)$("assignmentWeek").value=localMonday();
+    await loadActivityCourses();
+    await loadAssignment();
+  }
+  async function loadLearningReports(){
+    if(!$("reportFromWeek").value)$("reportFromWeek").value=mondayWeeksAgo(3);
+    if(!$("reportToWeek").value)$("reportToWeek").value=localMonday();
+    await loadActivityCourses();
+    if($("reportCourse").value)await loadReportRange();
+  }
+  async function loadReportRange(){
+    const courseId=$("reportCourse").value,startWeek=$("reportFromWeek").value,endWeek=$("reportToWeek").value;
+    if(!courseId||!startWeek||!endWeek){$("learningReports").innerHTML="";return}
+    $("learningReports").innerHTML='<div class="muted">Lernberichte werden geladen …</div>';
+    const {data,error}=await supabase.functions.invoke("learning-activity",{body:{action:"report_range",courseId,startWeek,endWeek}});
+    if(error||data?.error){$("learningReports").innerHTML="";showMsg($("reportsMsg"),responseError(error,data,"Der Bericht konnte nicht geladen werden."),"err");return}
+    hideMsg($("reportsMsg"));
     const cards=(data.students||[]).map(st=>{
-      const status=assignment?(st.completed?'<strong class="activity-done">Vorgabe erreicht</strong>':'<strong class="activity-open">Noch '+Math.max(0,target-st.minutes)+' Min. offen</strong>'):'<strong class="muted">Keine Wochenvorgabe</strong>';
-      const topics=(st.topics||[]).map(x=>{
-        const topic=grammarCatalog.find(entry=>String(entry.id)===String(x.group));
-        const title=x.type==="grammar"
-          ? (topic?(topic.group+" · "+topic.title):"Grammatikbereich")
-          : (activityFolderNames.get(String(x.group))||"Vokabelordner");
-        return '<span class="activity-topic">'+(x.type==="grammar"?"Grammatik":"Vokabeln")+': '+esc(title)+' · '+x.answers+' Karten ('+x.correct+' richtig, '+x.wrong+' falsch)</span>';
+      const weeks=(st.weeks||[]).map(w=>{
+        const target=w.requiredMinutes===null?'<span class="muted">Kein Wochenziel</span>':(w.completed?'<strong class="activity-done">'+w.requiredMinutes+' Min. Ziel erreicht</strong>':'<strong class="activity-open">'+Math.max(0,w.requiredMinutes-w.minutes)+' Min. bis zum Ziel</strong>');
+        const topics=(w.topics||[]).map(x=>{
+          const topic=grammarCatalog.find(entry=>String(entry.id)===String(x.group));
+          const label=x.type==="grammar"?(topic?(topic.group+" · "+topic.title):"Grammatik"):((activityFolderNames.get(String(x.group)))||"Vokabeln");
+          return '<span class="activity-topic">'+(x.type==="grammar"?"Grammatik":"Vokabeln")+': '+esc(label)+' · '+x.answers+' Karten ('+x.correct+' richtig, '+x.wrong+' falsch)</span>';
+        }).join("");
+        return '<div class="activity-week"><div class="activity-student-head"><b>Woche ab '+fmtDate(w.weekStart)+'</b>'+target+'</div>'+
+          '<div class="activity-metrics"><span>Lernzeit: <b>'+w.minutes+' Min.</b></span><span>Vokabeln: '+w.vocab.answers+' Karten · '+w.vocab.correct+' richtig / '+w.vocab.wrong+' falsch</span><span>Grammatik: '+w.grammar.answers+' Karten · '+w.grammar.correct+' richtig / '+w.grammar.wrong+' falsch</span></div>'+
+          (w.topicNotes?'<div class="tiny">Vorgabe: '+esc(w.topicNotes)+'</div>':'')+(topics?'<div class="activity-topics">'+topics+'</div>':'')+'</div>';
       }).join("");
-      return '<article class="activity-student"><div class="activity-student-head"><strong>Schüler '+esc(st.studentNumber)+'</strong>'+status+'</div>'+
-        '<div class="activity-metrics"><span>Aktive Übungszeit: <b>'+st.minutes+' Min.</b></span><span>Vokabeln: '+st.vocab.answers+' Karten · '+st.vocab.correct+' richtig / '+st.vocab.wrong+' falsch</span><span>Grammatik: '+st.grammar.answers+' Karten · '+st.grammar.correct+' richtig / '+st.grammar.wrong+' falsch</span></div>'+
-        (topics?'<div class="activity-topics">'+topics+'</div>':'<div class="tiny">Noch keine markierten Karten in dieser Woche.</div>')+'</article>';
+      return '<article class="activity-student"><div class="activity-student-head"><strong>Schüler '+esc(st.studentNumber)+'</strong><strong>'+st.minutes+' Min. gesamt</strong></div>'+
+        '<div class="activity-metrics"><span>Vokabeln: '+st.vocab.answers+' Karten · '+st.vocab.correct+' richtig / '+st.vocab.wrong+' falsch</span><span>Grammatik: '+st.grammar.answers+' Karten · '+st.grammar.correct+' richtig / '+st.grammar.wrong+' falsch</span></div>'+
+        '<details class="activity-week-details"><summary>Wochen einzeln anzeigen</summary>'+weeks+'</details></article>';
     }).join("");
-    $("activityReport").innerHTML='<h3>'+esc(data.courseName)+' · Woche ab '+fmtDate(data.weekStart)+'</h3>'+notes+
-      (assignment?'<p class="tiny">Wochenziel: '+target+' Minuten</p>':'<p class="tiny">Für diese Woche wurde noch keine Pflichtzeit gespeichert.</p>')+
+    $("learningReports").innerHTML='<h3>'+esc(data.courseName)+' · '+fmtDate(data.startWeek)+' bis '+fmtDate(data.endWeek)+'</h3>'+
       (cards||'<div class="empty">In diesem Kurs gibt es noch keine aktiven Schülerkonten.</div>');
   }
   $("saveWeeklyAssignmentBtn").addEventListener("click",async()=>{
     const button=$("saveWeeklyAssignmentBtn");
     button.disabled=true;button.textContent="Wird gespeichert …";
     const {data,error}=await supabase.functions.invoke("learning-activity",{body:{
-      action:"save_assignment",courseId:$("activityCourse").value,weekStart:$("activityWeek").value,
+      action:"save_assignment",courseId:$("assignmentCourse").value,weekStart:$("assignmentWeek").value,
       requiredMinutes:Number($("requiredMinutes").value),topicNotes:$("topicNotes").value.trim()
     }});
     button.disabled=false;button.textContent="Wochenaufgabe speichern";
-    if(error||data?.error){showMsg($("activityMsg"),responseError(error,data,"Die Wochenaufgabe konnte nicht gespeichert werden."),"err");return}
-    showMsg($("activityMsg"),"Wochenaufgabe für "+data.courseName+" gespeichert.","ok");
-    await loadActivityReport();
+    if(error||data?.error){showMsg($("assignmentMsg"),responseError(error,data,"Die Wochenaufgabe konnte nicht gespeichert werden."),"err");return}
+    showMsg($("assignmentMsg"),"Wochenaufgabe für "+data.courseName+" gespeichert.","ok");
   });
-  $("refreshActivityBtn").addEventListener("click",loadActivityReport);
-  $("activityCourse").addEventListener("change",loadActivityReport);
-  $("activityWeek").addEventListener("change",loadActivityReport);
+  $("assignmentCourse").addEventListener("change",loadAssignment);
+  $("assignmentWeek").addEventListener("change",loadAssignment);
+  $("loadReportsBtn").addEventListener("click",loadReportRange);
+  $("reportCourse").addEventListener("change",loadReportRange);
 
   function setView(name){
     currentView=name;
@@ -659,6 +700,7 @@
     if(name==="practice") renderPracticeShare();
     if(name==="courses") loadCourses();
     if(name==="activity") loadLearningActivity();
+    if(name==="reports") loadLearningReports();
     if(name==="admin" && currentUserRole==="admin") loadTeachers();
   }
 
