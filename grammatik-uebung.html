@@ -199,4 +199,5 @@ $("repeatBtn").addEventListener("click",async()=>{if(!lastConfig)return;$("repea
 $("newSelectionBtn").addEventListener("click",showSetup);$("backBtn").addEventListener("click",()=>location.href="uebung.html");
 (async()=>{try{const res=await fetch(new URL("grammatik-themen.json",location.href),{cache:"no-store"});if(!res.ok)throw new Error();const data=await res.json();catalog=Array.isArray(data.topics)?data.topics:[];renderCatalog();const old=sessionStorage.getItem(storageKey);if(old)await resume(old)}catch{showMsg($("setupMsg"),"Die Grammatikbereiche konnten nicht geladen werden.","err");$("startBtn").disabled=true}})();
 </script>
+<script src="./student-progress-widget.js"></script>
 </body></html>
