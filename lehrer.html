@@ -591,11 +591,14 @@
     return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
   }
   let activityCourseCache=[];
+  let activityFolderNames=new Map();
   async function loadLearningActivity(){
     if(!$("activityWeek").value)$("activityWeek").value=localMonday();
     const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list"}});
     if(error||data?.error){showMsg($("activityMsg"),responseError(error,data,"Kurse konnten nicht geladen werden."),"err");return}
     activityCourseCache=data.courses||[];
+    const {data:folders,error:foldersError}=await supabase.from("vocab_folders").select("id,title").eq("active",true);
+    if(!foldersError)activityFolderNames=new Map((folders||[]).map(folder=>[String(folder.id),folder.title]));
     const select=$("activityCourse"),old=select.value;
     select.innerHTML=activityCourseCache.length?activityCourseCache.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>').join(""):'<option value="">Noch keine Kurse angelegt</option>';
     if(activityCourseCache.some(c=>c.id===old))select.value=old;
@@ -615,7 +618,13 @@
     const notes=assignment?.topic_notes?'<div class="tiny">Themenvorgabe: '+esc(assignment.topic_notes)+'</div>':'';
     const cards=(data.students||[]).map(st=>{
       const status=assignment?(st.completed?'<strong class="activity-done">Vorgabe erreicht</strong>':'<strong class="activity-open">Noch '+Math.max(0,target-st.minutes)+' Min. offen</strong>'):'<strong class="muted">Keine Wochenvorgabe</strong>';
-      const topics=(st.topics||[]).map(x=>'<span class="activity-topic">'+(x.type==="grammar"?"Grammatik":"Vokabeln")+': '+esc(x.group||"Bereich")+' · '+x.answers+' Karten ('+x.correct+' richtig, '+x.wrong+' falsch)</span>').join("");
+      const topics=(st.topics||[]).map(x=>{
+        const topic=grammarCatalog.find(entry=>String(entry.id)===String(x.group));
+        const title=x.type==="grammar"
+          ? (topic?(topic.group+" · "+topic.title):"Grammatikbereich")
+          : (activityFolderNames.get(String(x.group))||"Vokabelordner");
+        return '<span class="activity-topic">'+(x.type==="grammar"?"Grammatik":"Vokabeln")+': '+esc(title)+' · '+x.answers+' Karten ('+x.correct+' richtig, '+x.wrong+' falsch)</span>';
+      }).join("");
       return '<article class="activity-student"><div class="activity-student-head"><strong>Schüler '+esc(st.studentNumber)+'</strong>'+status+'</div>'+
         '<div class="activity-metrics"><span>Aktive Übungszeit: <b>'+st.minutes+' Min.</b></span><span>Vokabeln: '+st.vocab.answers+' Karten · '+st.vocab.correct+' richtig / '+st.vocab.wrong+' falsch</span><span>Grammatik: '+st.grammar.answers+' Karten · '+st.grammar.correct+' richtig / '+st.grammar.wrong+' falsch</span></div>'+
         (topics?'<div class="activity-topics">'+topics+'</div>':'<div class="tiny">Noch keine markierten Karten in dieser Woche.</div>')+'</article>';
