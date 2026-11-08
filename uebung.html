@@ -1295,7 +1295,8 @@
   $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
   $("cardModeTopicBtn").addEventListener("click",()=>{vocabTopicSelectionOpen=true;setVocabMode("cards");$("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});});
   $("cardModeErrorsBtn").addEventListener("click",()=>startCardPractice("errors"));
-  $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));\n  $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
+  $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));
+  $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
   $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
   $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);
   $("quizFlashcard").addEventListener("click",()=>{if(!cardSession)return;if($("quizFlashcard").classList.contains("is-flipped"))return;revealCardAnswer()});
