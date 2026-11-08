@@ -1347,9 +1347,10 @@
 
     const corrections=result.corrections||[];
     const mistakes=corrections.filter(x=>Number(x.points)<1);
-    wrongRepeatQueue=corrections.filter(x=>Number(x.points)<1&&Array.isArray(x.acceptedAnswers)&&x.acceptedAnswers.length);
+    wrongRepeatQueue=corrections.filter(x=>Number(x.points)<1);
     wrongRepeatMissed=[];
     wrongRepeatIndex=0;
+    wrongRepeatRound=0;
     $("wrongRepeatBtn").classList.toggle("hidden",wrongRepeatQueue.length===0);
     $("wrongRepeatArea").classList.add("hidden");
     $("wrongRepeatFeedback").className="msg";
