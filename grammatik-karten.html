@@ -30,6 +30,7 @@ const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
 const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 let PERSONALIZED_MODE=new URLSearchParams(location.search).get("personalisiert")==="1";
 const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
+window.avanzaStudentClient=studentClient;
 let studentAccountProfile=null;
 async function studentProgress(body){const {data,error}=await studentClient.functions.invoke("student-progress",{body});if(error||data?.error)throw new Error(data?.error||error?.message||"Lernfortschritt konnte nicht gespeichert werden.");return data}
 let currentActivitySessionId=null,activityContext=null,activityHeartbeat=null,activityLastInteraction=Date.now();
@@ -222,4 +223,5 @@ function finish(){void stopTrackedActivity();document.getElementById("quizPanel"
 document.getElementById("beginBtn").addEventListener("click",startTopic);document.getElementById("quizBtn").addEventListener("click",()=>startQuiz(session.current,"group"));document.getElementById("flipBtn").addEventListener("click",flipQuiz);document.getElementById("quizCard").addEventListener("click",flipQuiz);async function recordGrammarAnswer(correct){const r=session?.quiz[session.index];if(!PERSONALIZED_MODE||!r||!studentAccountProfile)return;try{await studentProgress({action:"record",itemType:"grammar",groupKey:String(r.topicId),itemKey:String(r.topicId)+":"+r.verb,itemLabel:r.verb,correct,sessionId:currentActivitySessionId||undefined});document.getElementById("saveStatus").textContent="Lernfortschritt gespeichert."}catch(error){document.getElementById("saveStatus").textContent="Lernfortschritt konnte gerade nicht gespeichert werden.";console.warn(error)}}
 document.getElementById("correctBtn").addEventListener("click",async()=>{await recordGrammarAnswer(true);session.index++;renderQuiz()});document.getElementById("wrongBtn").addEventListener("click",async()=>{session.wrong.push(session.quiz[session.index]);await recordGrammarAnswer(false);session.index++;renderQuiz()});document.getElementById("studyBackBtn").addEventListener("click",()=>{void stopTrackedActivity();document.getElementById("studyPanel").classList.add("hidden");document.getElementById("selectPanel").classList.remove("hidden")});document.getElementById("doneBackBtn").addEventListener("click",()=>{document.getElementById("donePanel").classList.add("hidden");document.getElementById("selectPanel").classList.remove("hidden")});document.getElementById("backBtn").addEventListener("click",()=>location.href=PERSONALIZED_MODE?"uebung.html?personalisiert=1":"uebung.html");
 init();refreshStudentAccount();
-</script></body></html>
+</script><script src="./student-progress-widget.js"></script>
+</body></html>
