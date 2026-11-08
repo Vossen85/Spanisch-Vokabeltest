@@ -324,9 +324,27 @@
 
     <div class="actions">
       <a id="printLink" class="btn primary" href="#" target="_blank" rel="noopener">Korrektur öffnen / drucken</a>
+      <button id="wrongRepeatBtn" class="secondary hidden" type="button">Nur falsche Vokabeln wiederholen</button>
       <button id="repeatBtn" class="secondary">Noch einmal mit derselben Auswahl</button>
       <button id="newSelectionBtn" class="secondary">Neue Auswahl</button>
     </div>
+
+    <section id="wrongRepeatArea" class="note hidden" aria-live="polite">
+      <h2>Falsche Vokabeln wiederholen</h2>
+      <p id="wrongRepeatProgress" class="tiny"></p>
+      <div id="wrongRepeatPrompt" class="question"></div>
+      <label class="field" for="wrongRepeatInput">Deine spanische Übersetzung</label>
+      <input id="wrongRepeatInput" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Antwort eingeben">
+      <div class="actions">
+        <button id="wrongRepeatCheckBtn" class="primary" type="button">Antwort prüfen</button>
+        <button id="wrongRepeatNextBtn" class="secondary hidden" type="button">Weiter</button>
+      </div>
+      <p id="wrongRepeatFeedback" class="msg"></p>
+      <div id="wrongRepeatFinished" class="hidden">
+        <p id="wrongRepeatFinishedText"></p>
+        <button id="wrongRepeatAgainBtn" class="secondary hidden" type="button">Noch einmal die noch falschen Wörter üben</button>
+      </div>
+    </section>
   </section>
 
   <section id="fatalCard" class="card hidden">
@@ -348,6 +366,9 @@
 
   let catalog=[];
   let questions=[];
+  let wrongRepeatQueue=[];
+  let wrongRepeatMissed=[];
+  let wrongRepeatIndex=0;
   let accessToken="";
   let deadlineAt=null;
   let timerHandle=null;
@@ -1264,7 +1285,14 @@
     $("doneOP").textContent=s.upperSchoolPoints??"—";
     $("printLink").href="uebung-korrektur.html#token="+encodeURIComponent(accessToken);
 
-    const mistakes=(result.corrections||[]).filter(x=>Number(x.points)<1);
+    const corrections=result.corrections||[];
+    const mistakes=corrections.filter(x=>Number(x.points)<1);
+    wrongRepeatQueue=corrections.filter(x=>Number(x.points)===0&&Array.isArray(x.acceptedAnswers)&&x.acceptedAnswers.length);
+    wrongRepeatMissed=[];
+    wrongRepeatIndex=0;
+    $("wrongRepeatBtn").classList.toggle("hidden",wrongRepeatQueue.length===0);
+    $("wrongRepeatArea").classList.add("hidden");
+    $("wrongRepeatFinished").classList.add("hidden");
     $("mistakes").innerHTML="";
     if(!mistakes.length){
       $("mistakes").innerHTML='<div class="msg show ok">Alles richtig – stark! Du hast in dieser Simulation keinen Fehler gemacht.</div>';
@@ -1285,6 +1313,78 @@
     }
     window.scrollTo({top:0,behavior:"instant"});
   }
+
+  function normalizeRetryAnswer(value){
+    return String(value??"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase()
+      .replace(/[¿?¡!.,;:]/g," ").replace(/\\s+/g," ").trim();
+  }
+
+  function renderWrongRepeatQuestion(){
+    const input=$("wrongRepeatInput");
+    const feedback=$("wrongRepeatFeedback");
+    $("wrongRepeatFinished").classList.add("hidden");
+    feedback.className="msg";
+    $("wrongRepeatNextBtn").classList.add("hidden");
+    $("wrongRepeatCheckBtn").classList.remove("hidden");
+    if(wrongRepeatIndex>=wrongRepeatQueue.length){
+      $("wrongRepeatProgress").textContent="";
+      $("wrongRepeatPrompt").textContent="";
+      input.classList.add("hidden");
+      $("wrongRepeatCheckBtn").classList.add("hidden");
+      $("wrongRepeatFinished").classList.remove("hidden");
+      $("wrongRepeatFinishedText").textContent=wrongRepeatMissed.length
+        ? "Einige Wörter waren noch nicht richtig. Wir wiederholen jetzt nur diese Wörter."
+        : "Geschafft! Du hast alle zuvor falschen Vokabeln richtig beantwortet.";
+      $("wrongRepeatAgainBtn").classList.toggle("hidden",wrongRepeatMissed.length===0);
+      return;
+    }
+    input.classList.remove("hidden");
+    input.value="";
+    input.disabled=false;
+    $("wrongRepeatPrompt").textContent=wrongRepeatQueue[wrongRepeatIndex].sourceText||"";
+    $("wrongRepeatProgress").textContent="Wort "+(wrongRepeatIndex+1)+" von "+wrongRepeatQueue.length;
+    input.focus();
+  }
+
+  function startWrongRepeat(items=wrongRepeatQueue){
+    wrongRepeatQueue=[...items];
+    wrongRepeatMissed=[];
+    wrongRepeatIndex=0;
+    $("wrongRepeatArea").classList.remove("hidden");
+    $("wrongRepeatArea").scrollIntoView({behavior:"smooth",block:"start"});
+    renderWrongRepeatQuestion();
+  }
+
+  $("wrongRepeatBtn").addEventListener("click",()=>startWrongRepeat());
+  $("wrongRepeatCheckBtn").addEventListener("click",()=>{
+    const item=wrongRepeatQueue[wrongRepeatIndex];
+    if(!item)return;
+    const answer=normalizeRetryAnswer($("wrongRepeatInput").value);
+    if(!answer){
+      $("wrongRepeatFeedback").textContent="Gib zuerst eine Antwort ein.";
+      $("wrongRepeatFeedback").className="msg show err";
+      return;
+    }
+    const accepted=(item.acceptedAnswers||[]).map(normalizeRetryAnswer);
+    const correct=accepted.includes(answer);
+    const feedback=$("wrongRepeatFeedback");
+    feedback.className="msg show "+(correct?"ok":"err");
+    feedback.textContent=correct
+      ? "Richtig!"
+      : "Noch nicht richtig. Richtige Lösung: "+(item.acceptedAnswers||[]).join(" / ");
+    if(!correct)wrongRepeatMissed.push(item);
+    $("wrongRepeatInput").disabled=true;
+    $("wrongRepeatCheckBtn").classList.add("hidden");
+    $("wrongRepeatNextBtn").classList.remove("hidden");
+  });
+  $("wrongRepeatInput").addEventListener("keydown",event=>{
+    if(event.key==="Enter"&&!$("wrongRepeatCheckBtn").classList.contains("hidden"))$("wrongRepeatCheckBtn").click();
+  });
+  $("wrongRepeatNextBtn").addEventListener("click",()=>{
+    wrongRepeatIndex++;
+    renderWrongRepeatQuestion();
+  });
+  $("wrongRepeatAgainBtn").addEventListener("click",()=>startWrongRepeat(wrongRepeatMissed));
 
   function showSetup(config=lastConfig){
     stopTimers();
