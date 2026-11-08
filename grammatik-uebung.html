@@ -32,9 +32,18 @@ input[type=number]{width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-
 .mistake{border:1px solid #fecaca;background:#fff;border-radius:12px;padding:12px;margin-top:10px}.mistake.almost{border-color:#fde68a}.mistake-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.mistake-title{font-weight:850}.answer-line{font-size:.92rem;margin-top:5px}.wrong{color:#b91c1c;font-weight:750}.half{color:#9a6700;font-weight:750}.right{color:#166534;font-weight:750}
 a.btn{text-decoration:none;display:inline-block;border-radius:10px;padding:12px 16px;font-weight:750}
 @media(max-width:650px){body{padding:12px}.card{padding:16px}.row{grid-template-columns:1fr}.summary{grid-template-columns:1fr}.input-row{grid-template-columns:1fr;gap:5px}.topbar-inner{align-items:flex-start;flex-direction:column}.resultbox{grid-template-columns:1fr 1fr}.topic-head{align-items:flex-start;flex-direction:column}.topic-toggle{align-self:flex-start}}
-</style>
+
+  .avanza-home-header{margin:0 0 12px;line-height:0}
+  .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
+  .avanza-home-link img{display:block;width:50px;height:50px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px rgba(15,23,42,.16)}
+  .avanza-home-link:focus-visible{outline:3px solid #2563eb}
+  .avanza-home-link:hover img{transform:translateY(-1px)}
+  .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
+  @media print{.avanza-home-header{display:none!important}}
+  </style>
 </head>
 <body><div class="wrap">
+  <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
 <section id="setupCard" class="card">
 <div class="backline"><button id="backBtn" class="secondary" type="button">← Zurück zum Schülerbereich</button></div>
 <h1>Spanisch – Grammatiktraining</h1>
