@@ -1291,6 +1291,7 @@
 
   let testProgressSavingToken="";
   async function saveVocabTestProgress(result,corrections,statusNode){
+    if(!studentAccountProfile)await refreshStudentAccount();
     if(!PERSONALIZED_MODE||!studentAccountProfile||!accessToken)return;
     const savedKey="spanischVocabTestRecorded:"+accessToken;
     if(sessionStorage.getItem(savedKey)==="saved"||testProgressSavingToken===accessToken)return;
