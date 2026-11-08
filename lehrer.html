@@ -1357,8 +1357,7 @@
       '<p class="rubric-note">Vollständig richtige Lösung: 1 Punkt. Ein Fehler nur bei Akzent oder Groß-/Kleinschreibung: 0,5 Punkte. Sonstige falsche oder fehlende Antwort: 0 Punkte.</p>';
   }
 
-  function createdTestHtml(solutionOnly,includeSolutions=false){
-    const item=createdTestDocument;
+  function createdTestHtml(solutionOnly,includeSolutions=false,item=createdTestDocument){
     const isGrammar=item.testType==="grammar";
     const questions=item.questions||[];
     const maxPoints=questions.reduce((sum,q)=>sum+printQuestionMaxPoints(q,isGrammar),0);
@@ -1384,9 +1383,10 @@
       '.vocab-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:9mm;align-items:start}.vocab-item{display:flex;gap:2mm;break-inside:avoid;border-bottom:1px solid #ddd;padding:2.2mm 0;min-height:13mm}.number{width:7mm;flex:0 0 7mm;font-weight:bold}.vocab-content{min-width:0;flex:1}.prompt{font-weight:600;line-height:1.25}.write-line{height:5.5mm;border-bottom:1px solid #777;margin-top:1.7mm}.answer-text{display:block;line-height:1.3;margin-top:1mm;font-weight:600;overflow-wrap:anywhere}'+
       '.grammar-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm 5mm;align-items:start}.verb-card{border:1px solid #9ca3af;padding:3mm;border-radius:2mm;break-inside:avoid}.verb-card-head{display:flex;justify-content:space-between;gap:2mm;align-items:baseline;font-size:10pt}.points{font-size:8pt;white-space:nowrap}.topic-label{font-size:7.5pt;color:#555;margin:1mm 0 2mm}.grammar-row{display:grid;grid-template-columns:31mm 1fr;gap:2mm;align-items:end;min-height:6mm;border-top:1px solid #e5e7eb;padding:1mm 0;font-size:8.4pt}.row-label{font-size:7.7pt;color:#333;overflow-wrap:anywhere}.grammar-row .write-line{height:4mm;margin:0}.grammar-row .answer-text{margin:0;font-size:8.1pt}'+
       '.solution-section{break-before:page;page-break-before:always}.solution-title{font-size:30pt;font-weight:900;letter-spacing:.04em;margin:0 0 3mm}.solution-subtitle{border-bottom:2px solid #111;padding-bottom:3mm}.rubric{width:100%;border-collapse:collapse;font-size:8.5pt;margin:2mm 0 3mm}.rubric th,.rubric td{border:1px solid #777;text-align:left;vertical-align:top;padding:2mm}.rubric th{background:#eee}.rubric td:last-child,.rubric th:last-child{white-space:nowrap;width:16%}.rubric-note,.solution-note{font-size:8pt;color:#333;margin:2mm 0 4mm}.answer-key-title{margin-top:7mm}'+
-      '@media screen{body{max-width:210mm;margin:18px auto;padding:12mm;box-shadow:0 1px 12px #bbb;background:white}}'+
-      '</style></head><body>'+testHeading+solutionHeading+
-      '<script>window.addEventListener("load",function(){setTimeout(function(){window.focus();window.print()},250)});<\/script>'+
+      '.print-toolbar{position:sticky;top:0;z-index:10;display:flex;gap:8px;flex-wrap:wrap;margin:0 0 5mm;padding:2mm 0;background:white}.print-toolbar button{border:0;border-radius:6px;padding:8px 12px;font:700 10pt Arial,sans-serif;cursor:pointer}.return-button{background:#334155;color:white}.manual-print-button{background:#2563eb;color:white}'+
+      '@media screen{body{max-width:210mm;margin:18px auto;padding:12mm;box-shadow:0 1px 12px #bbb;background:white}}@media print{.no-print{display:none!important}}'+
+      '</style></head><body><div class="print-toolbar no-print"><button class="return-button" type="button" onclick="returnToTeacher()">← Zurück zur Lehrerseite</button><button class="manual-print-button" type="button" onclick="window.print()">Drucken / als PDF sichern</button></div>'+testHeading+solutionHeading+
+      '<script>function returnToTeacher(){var target="lehrer.html";try{if(window.opener&&!window.opener.closed){target=window.opener.location.href;window.opener.focus();window.close();setTimeout(function(){if(!window.closed)window.location.replace(target)},300);return}}catch(e){}if(history.length>1)history.back();else window.location.href=target}window.addEventListener("load",function(){setTimeout(function(){window.focus();window.print()},250)});<\/script>'+
       '</body></html>';
   }
 
@@ -1397,6 +1397,33 @@
     printWindow.document.open();
     printWindow.document.write(createdTestHtml(solutionOnly,includeSolutions));
     printWindow.document.close();
+  }
+
+  async function openFolderTestPrint(test,solutionOnly,panel,button){
+    const status=panel.querySelector(".folderPdfMsg");
+    const printWindow=window.open("","_blank");
+    if(!printWindow){status.textContent="Das PDF-Fenster wurde blockiert. Bitte Pop-ups erlauben und erneut klicken.";return}
+    if(button)button.disabled=true;
+    status.textContent="Gespeicherte Testaufgaben werden geladen …";
+    printWindow.document.open();
+    printWindow.document.write("<!doctype html><html lang='de'><meta charset='utf-8'><title>Test wird geladen</title><body style='font:16px Arial;padding:24px'>Testaufgaben werden geladen …</body></html>");
+    printWindow.document.close();
+    const {data:questions,error}=await supabase.from("test_questions")
+      .select("position,source_snapshot,accepted_answers_snapshot,question_meta")
+      .eq("test_id",test.id).order("position");
+    if(error||!questions?.length){
+      const message=error?"Die gespeicherten Testaufgaben konnten nicht geladen werden.":"Für diesen Test wurden keine Aufgaben gefunden.";
+      status.textContent=message;
+      printWindow.document.body.innerHTML="<p>"+esc(message)+"</p>";
+      if(button)button.disabled=false;
+      return;
+    }
+    const item={testId:test.id,testType:test.test_type,title:test.title,testDate:test.test_date,durationMinutes:test.duration_minutes,questions};
+    printWindow.document.open();
+    printWindow.document.write(createdTestHtml(solutionOnly,!solutionOnly,item));
+    printWindow.document.close();
+    status.textContent=solutionOnly?"Lösungs-PDF ist bereit.":"Test-PDF mit Lösungen ist bereit.";
+    if(button)button.disabled=false;
   }
 
   function renderCreatedSolution(){
@@ -1856,6 +1883,10 @@
           '<div class="actions"><button class="secondary copyFolderLink">Link kopieren</button></div>'+
         '</div>'+
       '</div>'+
+      '<div class="actions folder-pdf-actions">'+
+        '<button class="secondary folderPdfBtn printFolderTestBtn" type="button">Test + Lösungen als PDF speichern / drucken</button>'+
+        '<button class="secondary folderPdfBtn printFolderSolutionBtn" type="button">Lösung als PDF speichern / drucken</button>'+
+      '</div><p class="tiny folderPdfMsg" aria-live="polite"></p>'+
       '<h3 style="margin-top:20px">Auswertung</h3>'+
       (submitted.length?submissionTable(submitted,t):'<div class="empty">Noch keine abgegebenen Tests.</div>')+
       '<div class="submission-detail"></div>';
@@ -1865,6 +1896,8 @@
       await navigator.clipboard.writeText(url);e.currentTarget.textContent="Kopiert ✓";
       setTimeout(()=>e.currentTarget.textContent="Link kopieren",1300);
     });
+    panel.querySelector(".printFolderTestBtn").addEventListener("click",e=>openFolderTestPrint(t,false,panel,e.currentTarget));
+    panel.querySelector(".printFolderSolutionBtn").addEventListener("click",e=>openFolderTestPrint(t,true,panel,e.currentTarget));
     panel.querySelectorAll(".openSubmissionBtn").forEach(btn=>{
       btn.addEventListener("click",()=>{
         const sid=btn.dataset.submissionId;
