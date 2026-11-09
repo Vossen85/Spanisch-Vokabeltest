@@ -383,6 +383,7 @@
 
     <div class="nav">
       <button class="navBtn secondary" data-view="tests">Meine Tests</button>
+      <button class="navBtn secondary" data-view="analog-import">Analoge Tests importieren</button>
       <button class="navBtn secondary" data-view="students">Nach Schülern</button>
       <button class="navBtn secondary" data-view="create">Test erstellen</button>
       <button class="navBtn secondary" data-view="practice">Schülerbereich teilen</button>
@@ -535,6 +536,33 @@
       </div>
     </section>
 
+    <section id="view-analog-import" class="view hidden">
+      <div class="card">
+        <h2>Analoge Tests importieren</h2>
+        <p>Wähle den bereits in Avanza angelegten Test und Kurs aus und lade die transkribierte CSV-Datei hoch.</p>
+        <p class="tiny">Die Datei wird nur zum Import verarbeitet. Avanza speichert keine Fotos der Arbeiten. Spalten: Schülernummer, Aufgabe, Feld, Schülerantwort; optionale Spalten: Schülername und Hinweis.</p>
+        <div class="row">
+          <label for="analogTestSelect">Test
+            <select id="analogTestSelect"><option value="">Tests werden geladen …</option></select>
+          </label>
+          <label for="analogCourseSelect">Kurs
+            <select id="analogCourseSelect"><option value="">Kurse werden geladen …</option></select>
+          </label>
+        </div>
+        <label for="analogCsvFile">Transkription als CSV-Datei</label>
+        <input id="analogCsvFile" type="file" accept=".csv,text/csv">
+        <div id="analogCsvMsg" class="msg"></div>
+        <div id="analogCsvPreview" class="hidden">
+          <div id="analogCsvSummary" class="stats"></div>
+          <div id="analogCsvWarnings" class="tiny"></div>
+          <div class="actions">
+            <button id="analogImportBtn" class="primary" type="button" disabled>Abgaben importieren</button>
+            <button id="analogResetBtn" class="secondary" type="button">Datei entfernen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="view-students" class="view hidden">
       <div class="card">
         <div class="topline">
@@ -673,6 +701,9 @@
   let preparedGrammarPlan = [];
   let preparedGrammarSignature = "";
   let createdTestDocument = null;
+  let analogCsvData = null;
+  let analogCsvHints = [];
+  let analogCourseCache = [];
 
   function showMsg(el,text,type="info"){el.textContent=text;el.className="msg show "+type}
   function hideMsg(el){el.textContent="";el.className="msg"}
@@ -879,6 +910,7 @@
     $("view-"+name).classList.remove("hidden");
     document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
     if(name==="tests") loadDashboard();
+    if(name==="analog-import") loadAnalogImportOptions();
     if(name==="students") loadDashboard();
     if(name==="practice") renderPracticeShare();
     if(name==="courses") loadCourses();
@@ -926,6 +958,133 @@
     if(!course){showMsg(messageNode,"Bitte einen Kurs für den Test auswählen.","err");return null}
     if(!Number.isInteger(quarterNumber)||quarterNumber<1||quarterNumber>4){showMsg(messageNode,"Bitte das Quartal auswählen.","err");return null}
     return {courseId,courseName:course.name,quarterNumber};
+  }
+
+  function analogKey(value){
+    return String(value??"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase("de").replace(/[^a-z0-9]/g,"");
+  }
+
+  function parseAnalogCsv(text){
+    const source=String(text||"").replace(/^\\uFEFF/,"");
+    const firstLine=source.split(/\\r?\\n/,1)[0]||"";
+    const countOutsideQuotes=(line,delimiter)=>{
+      let count=0,quoted=false;
+      for(let i=0;i<line.length;i++){
+        if(line[i]==='"'){if(quoted&&line[i+1]==='"'){i++;continue}quoted=!quoted}
+        else if(!quoted&&line[i]===delimiter)count++;
+      }
+      return count;
+    };
+    const delimiter=countOutsideQuotes(firstLine,";")>countOutsideQuotes(firstLine,",")?";":",";
+    const rows=[];let row=[],field="",quoted=false;
+    for(let i=0;i<source.length;i++){
+      const ch=source[i];
+      if(quoted){
+        if(ch==='"'&&source[i+1]==='"'){field+='"';i++}
+        else if(ch==='"')quoted=false;
+        else field+=ch;
+      }else if(ch==='"'&&field.length===0)quoted=true;
+      else if(ch===delimiter){row.push(field);field=""}
+      else if(ch==="\\n"||ch==="\\r"){
+        if(ch==="\\r"&&source[i+1]==="\\n")i++;
+        row.push(field);field="";if(row.some(v=>String(v).trim()))rows.push(row);row=[];
+      }else field+=ch;
+    }
+    row.push(field);if(row.some(v=>String(v).trim()))rows.push(row);
+    if(rows.length<2)throw new Error("Die CSV enthält keine Antwortzeilen.");
+    const headers=rows.shift().map(h=>analogKey(h));
+    const idx=(...names)=>headers.findIndex(h=>names.includes(h));
+    const studentCol=idx("schulernummer","studentnumber","studentcode");
+    const questionCol=idx("aufgabe","aufgabennummer","question","questionposition");
+    const fieldCol=idx("feld","teil","answerfield");
+    const answerCol=idx("schulerantwort","antwort","answer","response");
+    const hintCol=idx("hinweis","anmerkung","note");
+    if(studentCol<0||questionCol<0||answerCol<0)throw new Error("Spalten fehlen. Benötigt werden Schülernummer, Aufgabe und Schülerantwort.");
+    const grouped=new Map(),seen=new Set(),errors=[],hints=[];
+    rows.forEach((values,rowIndex)=>{
+      const studentNumber=String(values[studentCol]||"").trim();
+      const position=Number(String(values[questionCol]||"").trim());
+      const answer=String(values[answerCol]??"").trim();
+      const fieldName=fieldCol>=0?String(values[fieldCol]||"").trim():"Antwort";
+      const hint=hintCol>=0?String(values[hintCol]||"").trim():"";
+      const line=rowIndex+2;
+      if(!/^\\d{1,3}$/.test(studentNumber)){errors.push("Zeile "+line+": ungültige Schülernummer.");return}
+      if(!Number.isInteger(position)||position<1){errors.push("Zeile "+line+": ungültige Aufgabennummer.");return}
+      if(!fieldName){errors.push("Zeile "+line+": Feldname fehlt.");return}
+      const key=studentNumber+"|"+position+"|"+analogKey(fieldName);
+      if(seen.has(key)){errors.push("Zeile "+line+": Schüler "+studentNumber+", Aufgabe "+position+", Feld „"+fieldName+"“ ist doppelt.");return}
+      seen.add(key);
+      if(!grouped.has(studentNumber))grouped.set(studentNumber,new Map());
+      const answers=grouped.get(studentNumber);
+      if(!answers.has(position))answers.set(position,{position,fields:{}});
+      answers.get(position).fields[fieldName]=answer;
+      if(hint)hints.push("Schüler "+studentNumber+", Aufgabe "+position+": "+hint);
+    });
+    const students=[...grouped.entries()].map(([studentNumber,answers])=>({studentNumber,answers:[...answers.values()]}));
+    return {students,errors,hints,rowCount:rows.length,answerCount:seen.size,delimiter};
+  }
+
+  function updateAnalogImportButton(){
+    const testId=$("analogTestSelect")?.value||"",courseId=$("analogCourseSelect")?.value||"";
+    $("analogImportBtn").disabled=!analogCsvData||analogCsvData.errors.length>0||!testId||!courseId;
+  }
+
+  async function loadAnalogImportOptions(){
+    const testSelect=$("analogTestSelect"),courseSelect=$("analogCourseSelect");
+    testSelect.innerHTML='<option value="">Tests werden geladen …</option>';
+    courseSelect.innerHTML='<option value="">Kurse werden geladen …</option>';
+    await loadDashboard();
+    await loadTestCourseOptions();
+    const tests=testsCache.filter(t=>t.test_type==="grammar"||t.test_type==="vocab");
+    testSelect.innerHTML='<option value="">Test auswählen</option>'+tests.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.title||(t.test_type==="grammar"?"Grammatiktest":"Vokabeltest"))+' · '+fmtDate(t.test_date)+' · '+t.question_count+' Aufgaben</option>').join("");
+    const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list"}});
+    if(error||data?.error){courseSelect.innerHTML='<option value="">Kurse nicht verfügbar</option>';showMsg($("analogCsvMsg"),responseError(error,data,"Die Kurse konnten nicht geladen werden."),"err");updateAnalogImportButton();return}
+    analogCourseCache=(data.courses||[]).filter(course=>course.active!==false);
+    courseSelect.innerHTML='<option value="">Kurs auswählen</option>'+analogCourseCache.map(course=>'<option value="'+esc(course.id)+'">'+esc(course.name)+'</option>').join("");
+    if(analogCourseCache.length===1)courseSelect.value=analogCourseCache[0].id;
+    if(!tests.length)showMsg($("analogCsvMsg"),"Es gibt noch keinen Test. Erstelle zuerst einen Test und wähle ihn dann hier aus.","err");
+    else hideMsg($("analogCsvMsg"));
+    updateAnalogImportButton();
+  }
+
+  async function readAnalogCsv(file){
+    hideMsg($("analogCsvMsg"));
+    try{
+      const parsed=parseAnalogCsv(await file.text());
+      analogCsvData=parsed;
+      $("analogCsvPreview").classList.remove("hidden");
+      $("analogCsvSummary").innerHTML=
+        '<div class="stat"><span class="tiny">Schüler</span><strong>'+parsed.students.length+'</strong></div>'+
+        '<div class="stat"><span class="tiny">Antwortfelder</span><strong>'+parsed.answerCount+'</strong></div>'+
+        '<div class="stat"><span class="tiny">CSV-Zeilen</span><strong>'+parsed.rowCount+'</strong></div>';
+      $("analogCsvWarnings").innerHTML=
+        (parsed.errors.length?'<div class="msg show err">'+parsed.errors.slice(0,8).map(esc).join("<br>")+(parsed.errors.length>8?"<br>…":"")+'</div>':'')+
+        (parsed.hints.length?'<p><strong>Hinweise aus der Transkription</strong><br>'+parsed.hints.map(esc).join("<br>")+'</p>':'')+
+        (!parsed.errors.length&&!parsed.hints.length?'<p>CSV geprüft. Wähle Test und Kurs und importiere die Abgaben.</p>':'');
+      updateAnalogImportButton();
+    }catch(error){
+      analogCsvData=null;$("analogCsvPreview").classList.add("hidden");
+      showMsg($("analogCsvMsg"),String(error?.message||"CSV konnte nicht gelesen werden."),"err");
+      updateAnalogImportButton();
+    }
+  }
+
+  async function importAnalogCsv(){
+    if(!analogCsvData)return;
+    const testId=$("analogTestSelect").value,courseId=$("analogCourseSelect").value;
+    if(!testId||!courseId){showMsg($("analogCsvMsg"),"Bitte Test und Kurs auswählen.","err");return}
+    const button=$("analogImportBtn");button.disabled=true;button.textContent="Import läuft …";
+    showMsg($("analogCsvMsg"),"Die Abgaben werden geprüft und importiert. Das kann einen Moment dauern.","info");
+    const {data,error}=await supabase.functions.invoke("import-analog-test",{body:{testId,courseId,students:analogCsvData.students}});
+    button.textContent="Abgaben importieren";
+    if(error||data?.error){showMsg($("analogCsvMsg"),responseError(error,data,"Import fehlgeschlagen."),"err");updateAnalogImportButton();return}
+    showMsg($("analogCsvMsg"),data.imported+" Testabgabe"+(data.imported===1?"":"n")+" erfolgreich importiert. Du findest die Ergebnisse im Testordner unter „Meine Tests“.","ok");
+    await loadDashboard();
+    updateAnalogImportButton();
+  }
+
+  function resetAnalogImport(){
+    analogCsvData=null;$("analogCsvFile").value="";$("analogCsvPreview").classList.add("hidden");hideMsg($("analogCsvMsg"));updateAnalogImportButton();
   }
 
   async function loadCourses(){
@@ -2433,6 +2592,11 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
 
   document.querySelectorAll(".navBtn").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
+  $("analogTestSelect").addEventListener("change",()=>{updateAnalogImportButton();});
+  $("analogCourseSelect").addEventListener("change",updateAnalogImportButton);
+  $("analogCsvFile").addEventListener("change",e=>{const file=e.currentTarget.files?.[0];if(file)readAnalogCsv(file)});
+  $("analogImportBtn").addEventListener("click",importAnalogCsv);
+  $("analogResetBtn").addEventListener("click",resetAnalogImport);
   $("refreshStudentsBtn").addEventListener("click",loadDashboard);
   $("refreshTeachersBtn").addEventListener("click",loadTeachers);
   $("createVocabModeBtn").addEventListener("click",()=>showCreateMode("vocab"));
