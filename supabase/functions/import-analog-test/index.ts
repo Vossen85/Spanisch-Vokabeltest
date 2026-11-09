@@ -115,7 +115,7 @@ Deno.serve(async (req: Request) => {
     if(existingError)throw existingError;
     if(existing?.length)return json({error:"Für folgende Schülernummern gibt es zu diesem Test bereits eine Abgabe: "+existing.map((x:any)=>x.student_code).join(", ")+". Es wurde nichts importiert."},409);
 
-    const maxPoints=(questions as any[]).reduce((sum,q)=>sum+(Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot.length:0),0);
+    const maxPoints=type==="grammar"?(questions as any[]).reduce((sum,q)=>sum+(Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot.length:0),0):(questions as any[]).length;
     const parsedDate=new Date(String(test.test_date)+"T12:00:00.000Z");
     const startedAt=new Date(parsedDate.getTime()-Math.max(1,Number(test.duration_minutes)||35)*60000).toISOString();
     const submittedAt=parsedDate.toISOString();
