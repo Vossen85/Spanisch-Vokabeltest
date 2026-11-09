@@ -2047,7 +2047,7 @@
   }
 
   async function deleteSubmission(sub,t){
-    const warning='Nur die Abgabe von Schülernummer '+sub.student_code+' für „'+(t.title||"Test")+'“ vom '+fmtDate(t.test_date)+' endgültig löschen?\\n\\nDie Antworten, Korrekturen und Note dieser Abgabe werden auch aus dem Schülerkonto entfernt. Der Test und die Abgaben der anderen Schüler bleiben erhalten. Das kann nicht rückgängig gemacht werden.';
+    const warning='Nur die Abgabe von Schülernummer '+sub.student_code+' für „'+(t.title||"Test")+'“ vom '+fmtDate(t.test_date)+' endgültig löschen?\n\nDie Antworten, Korrekturen und Note dieser Abgabe werden auch aus dem Schülerkonto entfernt. Der Test und die Abgaben der anderen Schüler bleiben erhalten. Das kann nicht rückgängig gemacht werden.';
     if(!confirm(warning))return;
 
     const scrollY=window.scrollY;
