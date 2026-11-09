@@ -9,20 +9,20 @@ function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 }
 function normalize(s: unknown) {
-  return String(s ?? "").normalize("NFC").trim().replace(/,/g, " ").replace(/\\s*\\/\\s*/g, " ").replace(/\\s+/g, " ").replace(/^[¿¡"'“”‘’\\s]+|[?!.,"'“”‘’\\s]+$/g, "");
+  return String(s ?? "").normalize("NFC").trim().replace(/,/g, " ").replace(/\s*\/\s*/g, " ").replace(/\s+/g, " ").replace(/^[¿¡"'“”‘’\s]+|[?!.,"'“”‘’\s]+$/g, "");
 }
 function fold(s: string) {
   return s.replace(/[áÁ]/g,m=>m==="Á"?"A":"a").replace(/[éÉ]/g,m=>m==="É"?"E":"e").replace(/[íÍ]/g,m=>m==="Í"?"I":"i").replace(/[óÓ]/g,m=>m==="Ó"?"O":"o").replace(/[úÚ]/g,m=>m==="Ú"?"U":"u").replace(/[üÜ]/g,m=>m==="Ü"?"U":"u").toLocaleLowerCase("es");
 }
 function variantsFromExpected(expected: string) {
   const set = new Set<string>();
-  for (const part of (expected.includes(" / ") ? expected.split(/\\s+\\/\\s+/) : [expected])) {
+  for (const part of (expected.includes(" / ") ? expected.split(/\s+\/\s+/) : [expected])) {
     const t=part.trim(); if(!t)continue; set.add(normalize(t));
-    const m=t.match(/^(.*?)\\s*\\(([^()]*)\\)\\s*(.*)$/);
+    const m=t.match(/^(.*?)\s*\(([^()]*)\)\s*(.*)$/);
     if(m){
       const before=m[1].trim(),inside=m[2].trim(),after=m[3].trim();
       const without=[before,after].filter(Boolean).join(" ").trim();if(without)set.add(normalize(without));
-      const ci=inside.replace(/^\\+\\s*/,"").trim();
+      const ci=inside.replace(/^\+\s*/,"").trim();
       if(ci&&!ci.includes("/")){const withInside=[before,ci,after].filter(Boolean).join(" ").trim();if(withInside)set.add(normalize(withInside))}
     }
   }
@@ -37,19 +37,19 @@ function scoreVocab(typed:string,expected:string[]) {
   const t=normalize(typed);if(!t)return 0;
   const set=new Set(expected.flatMap(x=>variantsFromExpected(String(x))));
   if(set.has(t)||[...set].some(e=>genderShort(t,e)))return 1;
-  const ft=fold(t);return [...set].some(e=>fold(e)===ft||genderShort(ft,fold(e)))?.5:0;
+  const ft=fold(t);return [...set].some(e=>fold(e)===ft||genderShort(ft,fold(e))) ? 0.5 : 0;
 }
 function scoreField(typed:string,expected:string) {
   const t=normalize(typed);if(!t)return 0;
-  const options=expected.split(/\\s*\\/\\s*/).map(normalize).filter(Boolean);
+  const options=expected.split(/\s*\/\s*/).map(normalize).filter(Boolean);
   if(options.includes(t))return 1;
-  return options.some(x=>fold(x)===fold(t))?.5:0;
+  return options.some(x=>fold(x)===fold(t)) ? 0.5 : 0;
 }
 function pointsForPercent(p:number) {
   if(p>=95)return 15;if(p>=90)return 14;if(p>=85)return 13;if(p>=80)return 12;if(p>=75)return 11;if(p>=70)return 10;if(p>=65)return 9;if(p>=60)return 8;if(p>=55)return 7;if(p>=50)return 6;if(p>=45)return 5;if(p>=39)return 4;if(p>=33)return 3;if(p>=27)return 2;if(p>=20)return 1;return 0;
 }
 function gradeForPoints(p:number) { return ["6","5-","5","5+","4-","4","4+","3-","3","3+","2-","2","2+","1-","1","1+"][p]||"6"; }
-function labelKey(s:unknown) { return String(s??"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase("de").replace(/[^a-z0-9]/g,""); }
+function labelKey(s:unknown) { return String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("de").replace(/[^a-z0-9]/g,""); }
 function cleanText(s:unknown,max=300) { return String(s??"").slice(0,max); }
 
 Deno.serve(async (req: Request) => {
@@ -95,7 +95,7 @@ Deno.serve(async (req: Request) => {
     const validated:any[]=[];
     for(const student of students){
       const code=String(student?.studentNumber??"").trim();
-      if(!/^\\d{1,3}$/.test(code))return json({error:"Eine Schülernummer fehlt oder ist ungültig."},400);
+      if(!/^\d{1,3}$/.test(code))return json({error:"Eine Schülernummer fehlt oder ist ungültig."},400);
       const rosterStudent=rosterMap.get(String(Number(code)));
       if(!rosterStudent)return json({error:"Schülernummer "+code+" ist im ausgewählten Kurs nicht aktiv angelegt."},400);
       if(inputCodes.includes(String(Number(code))))return json({error:"Die CSV enthält Schülernummer "+code+" mehrfach."},400);
