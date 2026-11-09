@@ -1921,14 +1921,27 @@
     });
     panel.querySelector(".printFolderTestBtn").addEventListener("click",e=>openFolderTestPrint(t,false,panel,e.currentTarget));
     panel.querySelector(".printFolderSolutionBtn").addEventListener("click",e=>openFolderTestPrint(t,true,panel,e.currentTarget));
-    panel.querySelectorAll(".openSubmissionBtn").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        const sid=btn.dataset.submissionId;
-        const sub=submissionsCache.find(s=>s.id===sid);
-        if(t.test_type==="grammar") openGrammarSubmissionDetail(sub,t,panel.querySelector(".submission-detail"));
-        else openSubmissionDetail(sub,t,panel.querySelector(".submission-detail"));
-      });
-    });
+    panel.onclick=async event=>{
+      const btn=event.target.closest(".openSubmissionBtn");
+      if(!btn||!panel.contains(btn))return;
+      event.preventDefault();
+      const sub=submissionsCache.find(s=>String(s.id)===String(btn.dataset.submissionId));
+      const detailRoot=panel.querySelector(".submission-detail");
+      if(!sub||!detailRoot){
+        if(detailRoot)detailRoot.innerHTML='<div class="msg show err">Diese Testabgabe konnte nicht gefunden werden. Bitte die Testübersicht aktualisieren.</div>';
+        return;
+      }
+      btn.disabled=true;
+      try{
+        if(String(t.test_type).toLowerCase()==="grammar")await openGrammarSubmissionDetail(sub,t,detailRoot);
+        else await openSubmissionDetail(sub,t,detailRoot);
+      }catch(error){
+        console.error("Korrektur konnte nicht geöffnet werden:",error);
+        detailRoot.innerHTML='<div class="msg show err">Die Korrektur konnte nicht geöffnet werden. Bitte erneut versuchen oder die Testübersicht aktualisieren.</div>';
+      }finally{
+        btn.disabled=false;
+      }
+    };
   }
 
   function submissionTable(subs,t){
