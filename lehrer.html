@@ -2592,7 +2592,11 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
 
   document.querySelectorAll(".navBtn").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
-  $("analogTestSelect").addEventListener("change",()=>{updateAnalogImportButton();});
+  $("analogTestSelect").addEventListener("change",()=>{
+    const selected=testsCache.find(t=>String(t.id)===$("analogTestSelect").value);
+    if(selected?.course_id)$("analogCourseSelect").value=String(selected.course_id);
+    updateAnalogImportButton();
+  });
   $("analogCourseSelect").addEventListener("change",updateAnalogImportButton);
   $("analogCsvFile").addEventListener("change",e=>{const file=e.currentTarget.files?.[0];if(file)readAnalogCsv(file)});
   $("analogImportBtn").addEventListener("click",importAnalogCsv);
