@@ -114,7 +114,7 @@
     .student-group{border:1px solid #dbe2ea;border-radius:14px;padding:15px;background:#fff;margin-bottom:12px}
     .detail-panel{margin-top:14px;border-top:1px solid #e2e8f0;padding-top:14px}
     .answer-card{border:1px solid #dbe2ea;border-radius:12px;padding:13px;margin:9px 0;background:#fafafa}
-    .grammar-answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+    .grammar-answer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
     .grammar-answer-card{min-width:0;margin:0;background:#fff}
     .grammar-answer-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:9px;border-bottom:1px solid #dbe2ea}
     .grammar-question-score{white-space:nowrap}
@@ -125,13 +125,14 @@
     .grammar-part-review.is-wrong{background:#fff0ef;border-color:#df3d36}
     .grammar-part-review-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:.9rem}
     .grammar-part-points{font-weight:800;white-space:nowrap}
-    .grammar-part-values{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+    .grammar-part-values{display:grid;grid-template-columns:1fr;gap:6px;margin-top:7px}
     .grammar-part-value{min-width:0;display:grid;gap:2px}
-    .grammar-part-value span{font-size:.72rem;color:#64748b}
-    .grammar-part-value strong{font-size:.88rem;overflow-wrap:anywhere}
-    .grammar-answer-correct{color:#087a37}
-    .grammar-answer-partial{color:#a95800}
-    .grammar-answer-wrong{color:#b42318}
+    .grammar-part-value span{font-size:.76rem;color:#64748b}
+    .grammar-part-value strong{font-size:1.06rem;line-height:1.25;overflow-wrap:anywhere}
+    .grammar-answer-correct{color:#087a37;font-size:1.14rem!important;font-weight:850}
+    .grammar-answer-partial{color:#a95800;font-size:1.14rem!important;font-weight:850}
+    .grammar-answer-wrong{color:#b42318;font-size:1.14rem!important;font-weight:850}
+    .grammar-part-value strong:not(.grammar-answer-correct):not(.grammar-answer-partial):not(.grammar-answer-wrong){font-size:1.08rem;color:#172033}
     .grammar-part-auto{margin-top:5px}
     .grammar-review-controls{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
     .grammar-review-controls button{padding:6px 8px;font-size:.76rem}
@@ -182,7 +183,10 @@
     .quarter-title{display:block;color:#64748b;font-size:.88rem;font-weight:600;margin-top:2px}
     .quarter-toggle{padding:7px 9px;background:#e2e8f0;color:#334155;font-size:.82rem;white-space:nowrap}
     .quarter-children{border-top:1px solid #e2e8f0;margin-top:8px;padding-top:7px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 12px}
-    @media(max-width:760px){
+    @media(max-width:980px){
+      .grammar-answer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:620px){
       .grammar-answer-grid{grid-template-columns:1fr}
       body{padding:12px}.row,.qrgrid,.auth-choice,.test-type-switch{grid-template-columns:1fr}.stats,.grammar-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
       .grammar-topic-head{align-items:flex-start;flex-direction:column}.grammar-topic-toggle{align-self:flex-start}.grammar-topic-children{padding-left:14px}.grammar-verb-grid{grid-template-columns:1fr}
