@@ -2046,6 +2046,34 @@
     await loadDashboard();
   }
 
+  async function deleteSubmission(sub,t){
+    const warning='Nur die Abgabe von Schülernummer '+sub.student_code+' für „'+(t.title||"Test")+'“ vom '+fmtDate(t.test_date)+' endgültig löschen?\\n\\nDie Antworten, Korrekturen und Note dieser Abgabe werden auch aus dem Schülerkonto entfernt. Der Test und die Abgaben der anderen Schüler bleiben erhalten. Das kann nicht rückgängig gemacht werden.';
+    if(!confirm(warning))return;
+
+    const scrollY=window.scrollY;
+    const {data,error}=await supabase.from("submissions").delete()
+      .eq("id",sub.id).eq("test_id",t.id).select("id").maybeSingle();
+    if(error||!data){
+      const message=error?.message||"Die Abgabe wurde nicht gelöscht. Prüfe, ob du als zuständige Lehrkraft angemeldet bist.";
+      alert("Die Abgabe konnte nicht gelöscht werden. "+message);
+      return;
+    }
+
+    currentOpenSubmission=null;
+    await loadDashboard();
+    const folder=document.querySelector('.folder[data-test-id="'+CSS.escape(String(t.id))+'"]');
+    if(folder){
+      const dateTests=folder.closest(".date-tests");
+      if(dateTests?.classList.contains("hidden")){
+        dateTests.classList.remove("hidden");
+        const toggle=dateTests.previousElementSibling?.querySelector(".toggleDateBtn");
+        if(toggle)toggle.textContent="Zuklappen";
+      }
+      toggleTestFolder(t,folder);
+    }
+    requestAnimationFrame(()=>window.scrollTo(0,scrollY));
+  }
+
   function toggleTestFolder(t,folder){
     const panel=folder.querySelector(".test-detail");
     const btn=folder.querySelector(".openFolderBtn");
@@ -2087,6 +2115,13 @@
     panel.querySelector(".printFolderTestBtn").addEventListener("click",e=>openFolderTestPrint(t,false,panel,e.currentTarget));
     panel.querySelector(".printFolderSolutionBtn").addEventListener("click",e=>openFolderTestPrint(t,true,panel,e.currentTarget));
     panel.onclick=async event=>{
+      const deleteBtn=event.target.closest(".deleteSubmissionBtn");
+      if(deleteBtn&&panel.contains(deleteBtn)){
+        event.preventDefault();
+        const deleteSub=submissionsCache.find(s=>String(s.id)===String(deleteBtn.dataset.submissionId));
+        if(deleteSub)await deleteSubmission(deleteSub,t);
+        return;
+      }
       const btn=event.target.closest(".openSubmissionBtn");
       if(!btn||!panel.contains(btn))return;
       event.preventDefault();
@@ -2124,7 +2159,8 @@
         '<td data-label="Note">'+esc(s.grade_text||"—")+'</td>'+
         '<td data-label="OP"><strong>'+n(s.upper_school_points)+'</strong></td>'+
         '<td data-label="Abgabe">'+fmtTime(s.submitted_at)+'</td>'+
-        '<td><button class="secondary openSubmissionBtn" data-submission-id="'+esc(s.id)+'">Details / Nachkorrektur</button></td>'+
+        '<td><button class="secondary openSubmissionBtn" data-submission-id="'+esc(s.id)+'">Details / Nachkorrektur</button>'+
+          '<button class="badbtn deleteSubmissionBtn" data-submission-id="'+esc(s.id)+'" type="button">Abgabe löschen</button></td>'+
         '</tr><tr class="submission-detail-row" hidden><td colspan="7"><div class="submission-detail"></div></td></tr>').join("")+
       '</tbody></table></div>';
   }
