@@ -128,13 +128,10 @@
     .grammar-part-values{display:grid;grid-template-columns:1fr;gap:6px;margin-top:7px}
     .grammar-part-value{min-width:0;display:grid;gap:2px}
     .grammar-part-value span{font-size:.76rem;color:#64748b}
-    .grammar-part-value strong{font-size:1.06rem;line-height:1.25;overflow-wrap:anywhere}
-    .grammar-answer-correct{color:#087a37;font-size:1.14rem!important;font-weight:850}
-    .grammar-answer-partial{color:#a95800;font-size:1.14rem!important;font-weight:850}
-    .grammar-answer-wrong{color:#b42318;font-size:1.14rem!important;font-weight:850}
-    .grammar-part-value strong:not(.grammar-answer-correct):not(.grammar-answer-partial):not(.grammar-answer-wrong){font-size:1.08rem;color:#172033}
+    .grammar-part-value strong{font-size:1.08rem;line-height:1.25;overflow-wrap:anywhere;color:#111;font-weight:850}
+    .grammar-answer-correct,.grammar-answer-partial,.grammar-answer-wrong{color:#111;font-size:1.08rem!important;font-weight:850}
     .grammar-part-auto{margin-top:5px}
-    .grammar-review-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:auto;padding-top:7px}
+    .grammar-review-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:auto;padding-top:7px}
     .grammar-review-controls button{width:100%;min-width:0;min-height:34px;padding:5px 3px;font-size:.68rem;line-height:1.15;white-space:normal;overflow-wrap:anywhere}
     .answer-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .answer-prompt{font-weight:800}
@@ -2063,7 +2060,6 @@
 
       const partsRoot=card.querySelector(".grammar-review-parts");
       parts.forEach((part,index)=>{
-        const autoPoint=grammarReviewAutoPoint(part.typed,part.expected);
         const mode=grammarReviewMode(adjustments,index);
         const effective=effectivePoints[index];
         const state=effective===1?"is-correct":effective===0.5?"is-partial":"is-wrong";
@@ -2077,7 +2073,6 @@
             '<div class="grammar-part-value"><span>Schülerantwort</span><strong class="'+answerState+'">'+esc(part.typed||"—")+'</strong></div>'+
             '<div class="grammar-part-value"><span>Lösung</span><strong>'+esc(part.expected||"—")+'</strong></div>'+
           '</div>'+
-          '<div class="grammar-part-auto tiny">Automatik: '+grammarReviewPointText(autoPoint)+' P.</div>'+
           '<div class="grammar-review-controls">'+
             '<button class="autobtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="auto">Automatik'+(mode==="auto"?" ✓":"")+'</button>'+
             '<button class="goodbtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="correct">1 Punkt'+(mode==="correct"?" ✓":"")+'</button>'+
