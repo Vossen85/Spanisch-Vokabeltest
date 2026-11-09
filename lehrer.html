@@ -114,6 +114,27 @@
     .student-group{border:1px solid #dbe2ea;border-radius:14px;padding:15px;background:#fff;margin-bottom:12px}
     .detail-panel{margin-top:14px;border-top:1px solid #e2e8f0;padding-top:14px}
     .answer-card{border:1px solid #dbe2ea;border-radius:12px;padding:13px;margin:9px 0;background:#fafafa}
+    .grammar-answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+    .grammar-answer-card{min-width:0;margin:0;background:#fff}
+    .grammar-answer-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:9px;border-bottom:1px solid #dbe2ea}
+    .grammar-question-score{white-space:nowrap}
+    .grammar-review-parts{display:grid;gap:8px;margin-top:9px}
+    .grammar-part-review{min-width:0;padding:9px;border:1px solid;border-left-width:5px;border-radius:10px}
+    .grammar-part-review.is-correct{background:#edf9f0;border-color:#20a35a}
+    .grammar-part-review.is-partial{background:#fff6e6;border-color:#e58a00}
+    .grammar-part-review.is-wrong{background:#fff0ef;border-color:#df3d36}
+    .grammar-part-review-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:.9rem}
+    .grammar-part-points{font-weight:800;white-space:nowrap}
+    .grammar-part-values{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+    .grammar-part-value{min-width:0;display:grid;gap:2px}
+    .grammar-part-value span{font-size:.72rem;color:#64748b}
+    .grammar-part-value strong{font-size:.88rem;overflow-wrap:anywhere}
+    .grammar-answer-correct{color:#087a37}
+    .grammar-answer-partial{color:#a95800}
+    .grammar-answer-wrong{color:#b42318}
+    .grammar-part-auto{margin-top:5px}
+    .grammar-review-controls{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+    .grammar-review-controls button{padding:6px 8px;font-size:.76rem}
     .answer-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .answer-prompt{font-weight:800}
     .answer-text{margin:8px 0}
@@ -162,6 +183,7 @@
     .quarter-toggle{padding:7px 9px;background:#e2e8f0;color:#334155;font-size:.82rem;white-space:nowrap}
     .quarter-children{border-top:1px solid #e2e8f0;margin-top:8px;padding-top:7px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 12px}
     @media(max-width:760px){
+      .grammar-answer-grid{grid-template-columns:1fr}
       body{padding:12px}.row,.qrgrid,.auth-choice,.test-type-switch{grid-template-columns:1fr}.stats,.grammar-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
       .grammar-topic-head{align-items:flex-start;flex-direction:column}.grammar-topic-toggle{align-self:flex-start}.grammar-topic-children{padding-left:14px}.grammar-verb-grid{grid-template-columns:1fr}
       table{font-size:.9rem}th,td{padding:8px 5px}
@@ -1986,12 +2008,12 @@
       '<div class="tiny">'+esc(t.title||"Grammatiktest")+' · '+fmtDate(t.test_date)+' · abgegeben '+fmtTime(sub.submitted_at)+'</div></div>'+
       '<div class="actions" style="margin-top:0"><button class="primary printGrammarCorrectionBtn" type="button">Korrektur als PDF speichern / drucken</button>'+
       '<button class="secondary closeDetailBtn">Details schließen</button></div></div>'+
-      '<div class="summarybar"><span class="summarypill">'+n(sub.raw_points)+' / '+n(sub.max_points)+' Punkte</span>'+
-      '<span class="summarypill">'+n(sub.percent).toFixed(1)+' %</span><span class="summarypill">Note '+esc(sub.grade_text||"—")+'</span>'+
-      '<span class="summarypill">'+n(sub.upper_school_points)+' OP</span>'+
+      '<div class="summarybar"><span class="summarypill summaryPoints">'+n(sub.raw_points)+' / '+n(sub.max_points)+' Punkte</span>'+
+      '<span class="summarypill summaryPercent">'+n(sub.percent).toFixed(1)+' %</span><span class="summarypill summaryGrade">Note '+esc(sub.grade_text||"—")+'</span>'+
+      '<span class="summarypill summaryOP">'+n(sub.upper_school_points)+' OP</span>'+
       (adjustedParts?'<span class="summarypill">'+adjustedParts+' manuell nachkorrigierte '+(adjustedParts===1?"Teilantwort":"Teilantworten")+'</span>':'')+
-      '</div><div class="tiny" style="margin-bottom:10px">Jede Übersetzung und jede Verbform kann einzeln nachkorrigiert werden. „Automatik“ stellt die automatische Bewertung für diese Teilantwort wieder her.</div>'+
-      '<div class="answersRoot"></div>';
+      '</div><div class="tiny" style="margin-bottom:10px">Jede Übersetzung und jede Verbform kann einzeln nachkorrigiert werden. Die farbige Antwort zeigt die aktuelle Bewertung.</div>'+
+      '<div class="answersRoot grammar-answer-grid"></div>';
     root.querySelector(".closeDetailBtn").addEventListener("click",()=>{root.innerHTML="";root.className="submission-detail"});
     root.querySelector(".printGrammarCorrectionBtn").addEventListener("click",()=>printGrammarSubmission(sub,t,answers));
 
@@ -2011,29 +2033,33 @@
       });
       const total=effectivePoints.reduce((sum,pt)=>sum+n(pt),0);
 
-      const card=document.createElement("div");
-      card.className="answer-card";
+      const card=document.createElement("article");
+      card.className="answer-card grammar-answer-card";
       card.innerHTML=
-        '<div class="answer-head"><div><div class="tiny">Aufgabe '+esc(q.position||"")+'</div>'+
+        '<div class="grammar-answer-card-head"><div><div class="tiny">Aufgabe '+esc(q.position||"")+'</div>'+
         '<div class="answer-prompt">'+esc(q.source_snapshot||"")+'</div>'+
         '<div class="tiny">'+esc((m.topicGroup||"")+(m.topicTitle?" – "+m.topicTitle:""))+'</div></div>'+
-        '<div class="score">'+grammarReviewPointText(total)+' / '+expected.length+' P.</div></div>'+
-        '<div class="grammarPartsRoot"></div>';
+        '<div class="score grammar-question-score">'+grammarReviewPointText(total)+' / '+expected.length+' P.</div></div>'+
+        '<div class="grammar-review-parts"></div>';
 
-      const partsRoot=card.querySelector(".grammarPartsRoot");
+      const partsRoot=card.querySelector(".grammar-review-parts");
       parts.forEach((part,index)=>{
         const autoPoint=grammarReviewAutoPoint(part.typed,part.expected);
         const mode=grammarReviewMode(adjustments,index);
         const effective=effectivePoints[index];
-        const row=document.createElement("div");
-        row.style.cssText="border-top:1px solid #e2e8f0;padding:11px 0 2px;margin-top:10px";
+        const state=effective===1?"is-correct":effective===0.5?"is-partial":"is-wrong";
+        const answerState=effective===1?"grammar-answer-correct":effective===0.5?"grammar-answer-partial":"grammar-answer-wrong";
+        const row=document.createElement("section");
+        row.className="grammar-part-review "+state;
         row.innerHTML=
-          '<div class="answer-head"><div><strong>'+esc(part.label)+'</strong></div>'+
-          '<div class="'+(effective===1?"correct":effective===0.5?"manual":"wrong")+'">'+grammarReviewPointText(effective)+' / 1 Punkt</div></div>'+
-          '<div class="answer-text"><strong>Antwort:</strong> '+esc(part.typed||"—")+'</div>'+
-          '<div class="answer-solution"><strong>Hinterlegte Lösung:</strong> '+esc(part.expected||"—")+
-          ' <span class="tiny">· Automatik: '+grammarReviewPointText(autoPoint)+' P.</span></div>'+
-          '<div class="actions">'+
+          '<div class="grammar-part-review-head"><strong>'+esc(part.label)+'</strong>'+
+          '<span class="grammar-part-points">'+grammarReviewPointText(effective)+' / 1 P.</span></div>'+
+          '<div class="grammar-part-values">'+
+            '<div class="grammar-part-value"><span>Schülerantwort</span><strong class="'+answerState+'">'+esc(part.typed||"—")+'</strong></div>'+
+            '<div class="grammar-part-value"><span>Lösung</span><strong>'+esc(part.expected||"—")+'</strong></div>'+
+          '</div>'+
+          '<div class="grammar-part-auto tiny">Automatik: '+grammarReviewPointText(autoPoint)+' P.</div>'+
+          '<div class="grammar-review-controls">'+
             '<button class="autobtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="auto">Automatik'+(mode==="auto"?" ✓":"")+'</button>'+
             '<button class="goodbtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="correct">1 Punkt'+(mode==="correct"?" ✓":"")+'</button>'+
             '<button class="autobtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="half">0,5 Punkt'+(mode==="half"?" ✓":"")+'</button>'+
@@ -2100,6 +2126,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
   }
 
   async function adjustGrammarPart(answerId,partIndex,mode,sub,t,root){
+    const scrollX=window.scrollX,scrollY=window.scrollY;
     root.querySelectorAll("button").forEach(b=>b.disabled=true);
     const {data,error}=await supabase.functions.invoke("teacher-results",{
       body:{action:"adjust-grammar-part",answerId,partIndex,mode}
@@ -2122,6 +2149,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
     }
     await openGrammarSubmissionDetail(sub,t,root);
     updateVisibleSubmissionRow(sub);
+    requestAnimationFrame(()=>window.scrollTo(scrollX,scrollY));
   }
 
   async function openSubmissionDetail(sub,t,root){
