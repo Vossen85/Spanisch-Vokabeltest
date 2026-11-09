@@ -116,7 +116,7 @@
     .answer-card{border:1px solid #dbe2ea;border-radius:12px;padding:13px;margin:9px 0;background:#fafafa}
     .grammar-answer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
     .grammar-answer-card{min-width:0;margin:0;background:#fff}
-    .grammar-answer-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:9px;border-bottom:1px solid #dbe2ea}
+    .grammar-answer-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;min-height:140px;padding-bottom:9px;border-bottom:1px solid #dbe2ea}
     .grammar-question-score{white-space:nowrap}
     .grammar-review-parts{display:grid;gap:8px;margin-top:9px}
     .grammar-part-review{min-width:0;padding:9px;border:1px solid;border-left-width:5px;border-radius:10px}
@@ -188,6 +188,7 @@
     }
     @media(max-width:620px){
       .grammar-answer-grid{grid-template-columns:1fr}
+      .grammar-answer-card-head{min-height:0}
       body{padding:12px}.row,.qrgrid,.auth-choice,.test-type-switch{grid-template-columns:1fr}.stats,.grammar-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
       .grammar-topic-head{align-items:flex-start;flex-direction:column}.grammar-topic-toggle{align-self:flex-start}.grammar-topic-children{padding-left:14px}.grammar-verb-grid{grid-template-columns:1fr}
       table{font-size:.9rem}th,td{padding:8px 5px}
