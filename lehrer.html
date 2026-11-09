@@ -540,7 +540,7 @@
       <div class="card">
         <h2>Analoge Tests importieren</h2>
         <p>Wähle den bereits in Avanza angelegten Test und Kurs aus und lade die transkribierte CSV-Datei hoch.</p>
-        <p class="tiny">Die Datei wird nur zum Import verarbeitet. Avanza speichert keine Fotos der Arbeiten. Spalten: Schülernummer, Aufgabe, Feld, Schülerantwort; optionale Spalten: Schülername und Hinweis.</p>
+        <p class="tiny">Die Datei wird nur zum Import verarbeitet. Avanza speichert keine Fotos der Arbeiten. CSV-Spalten: Schülernummer, Aufgabe, Feld, Schülerantwort; optional Schülername und Hinweis. Bei einer einzelnen Abgabe kannst du die Schülernummer auch hier eingeben.</p>
         <div class="row">
           <label for="analogTestSelect">Test
             <select id="analogTestSelect"><option value="">Tests werden geladen …</option></select>
@@ -549,6 +549,9 @@
             <select id="analogCourseSelect"><option value="">Kurse werden geladen …</option></select>
           </label>
         </div>
+        <label for="analogStudentNumber">Schülernummer (optional; überschreibt die Nummer aus der CSV)</label>
+        <input id="analogStudentNumber" type="number" min="1" max="999" step="1" inputmode="numeric" placeholder="z. B. 10">
+        <div class="tiny">Für eine einzelne Schülerabgabe. Bei mehreren Schülern müssen die Nummern in der CSV stehen.</div>
         <label for="analogCsvFile">Transkription als CSV-Datei</label>
         <input id="analogCsvFile" type="file" accept=".csv,text/csv">
         <div id="analogCsvMsg" class="msg"></div>
@@ -702,6 +705,7 @@
   let preparedGrammarSignature = "";
   let createdTestDocument = null;
   let analogCsvData = null;
+  let analogCsvFileObject = null;
   let analogCsvHints = [];
   let analogCourseCache = [];
 
@@ -964,7 +968,7 @@
     return String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("de").replace(/[^a-z0-9]/g,"");
   }
 
-  function parseAnalogCsv(text){
+  function parseAnalogCsv(text,manualStudentNumber=""){
     const source=String(text||"").replace(/^\uFEFF/,"");
     const firstLine=source.split(/\r?\n/,1)[0]||"";
     const countOutsideQuotes=(line,delimiter)=>{
@@ -999,10 +1003,15 @@
     const fieldCol=idx("feld","teil","answerfield");
     const answerCol=idx("schulerantwort","antwort","answer","response");
     const hintCol=idx("hinweis","anmerkung","note");
-    if(studentCol<0||questionCol<0||answerCol<0)throw new Error("Spalten fehlen. Benötigt werden Schülernummer, Aufgabe und Schülerantwort.");
+    if(questionCol<0||answerCol<0)throw new Error("Spalten fehlen. Benötigt werden Aufgabe und Schülerantwort.");
+    const manual=String(manualStudentNumber||"").trim();
+    if(studentCol<0&&!manual)throw new Error("Die Schülernummer fehlt. Trage sie oben ein oder ergänze die Spalte Schülernummer in der CSV.");
+    const csvNumbers=new Set(studentCol>=0?rows.map(values=>String(values[studentCol]||"").trim()).filter(Boolean):[]);
     const grouped=new Map(),seen=new Set(),errors=[],hints=[];
+    if(manual&&!/^\d{1,3}$/.test(manual))errors.push("Die manuelle Schülernummer muss aus 1 bis 3 Ziffern bestehen.");
+    if(manual&&csvNumbers.size>1)errors.push("Eine manuelle Schülernummer kann nur für eine einzelne Schülerabgabe verwendet werden. Bei mehreren Schülern nutze die Nummern aus der CSV.");
     rows.forEach((values,rowIndex)=>{
-      const studentNumber=String(values[studentCol]||"").trim();
+      const studentNumber=manual||String(studentCol>=0?values[studentCol]||"":"").trim();
       const position=Number(String(values[questionCol]||"").trim());
       const answer=String(values[answerCol]??"").trim();
       const fieldName=fieldCol>=0?String(values[fieldCol]||"").trim():"Antwort";
@@ -1048,9 +1057,10 @@
   }
 
   async function readAnalogCsv(file){
+    analogCsvFileObject=file;
     hideMsg($("analogCsvMsg"));
     try{
-      const parsed=parseAnalogCsv(await file.text());
+      const parsed=parseAnalogCsv(await file.text(),$("analogStudentNumber").value);
       analogCsvData=parsed;
       $("analogCsvPreview").classList.remove("hidden");
       $("analogCsvSummary").innerHTML=
@@ -1084,7 +1094,7 @@
   }
 
   function resetAnalogImport(){
-    analogCsvData=null;$("analogCsvFile").value="";$("analogCsvPreview").classList.add("hidden");hideMsg($("analogCsvMsg"));updateAnalogImportButton();
+    analogCsvData=null;analogCsvFileObject=null;$("analogCsvFile").value="";$("analogCsvPreview").classList.add("hidden");hideMsg($("analogCsvMsg"));updateAnalogImportButton();
   }
 
   async function loadCourses(){
@@ -2635,6 +2645,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
   });
   $("analogCourseSelect").addEventListener("change",updateAnalogImportButton);
   $("analogCsvFile").addEventListener("change",e=>{const file=e.currentTarget.files?.[0];if(file)readAnalogCsv(file)});
+  $("analogStudentNumber").addEventListener("input",()=>{if(analogCsvFileObject)readAnalogCsv(analogCsvFileObject)});
   $("analogImportBtn").addEventListener("click",importAnalogCsv);
   $("analogResetBtn").addEventListener("click",resetAnalogImport);
   $("refreshStudentsBtn").addEventListener("click",loadDashboard);
