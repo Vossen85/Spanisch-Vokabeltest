@@ -99,6 +99,9 @@
     th{font-size:.87rem;color:#475569}
     .score{font-weight:850}
     .submission-table-wrap{width:100%;min-width:0;overflow-x:auto}
+    .submission-detail-row[hidden]{display:none!important}
+    .submission-table .submission-detail-row>td{padding:0;border:0}
+    .submission-detail-row .submission-detail{margin:0 0 12px;padding:14px;border:1px solid #dbe2ea;border-radius:12px;background:#f8fafc}
     @media(max-width:650px){
       .submission-table-wrap{overflow:visible}
       .submission-table{display:block;width:100%;table-layout:fixed}
@@ -110,6 +113,9 @@
       .submission-table td:last-child{grid-column:1/-1;padding-top:9px}
       .submission-table td:last-child::before{content:none}
       .submission-table td button{width:100%;white-space:normal;line-height:1.25}
+      .submission-table tr.submission-detail-row{display:block;grid-column:1/-1;width:100%;padding:0;border:0;background:transparent}
+      .submission-table tr.submission-detail-row>td{display:block!important;width:100%;padding:0;border:0}
+      .submission-table tr.submission-detail-row>td::before{content:none}
     }
     .student-group{border:1px solid #dbe2ea;border-radius:14px;padding:15px;background:#fff;margin-bottom:12px}
     .detail-panel{margin-top:14px;border-top:1px solid #e2e8f0;padding-top:14px}
@@ -1912,8 +1918,7 @@
         '<button class="secondary folderPdfBtn printFolderSolutionBtn" type="button">Lösungen als PDF speichern / drucken</button>'+
       '</div><p class="tiny folderPdfMsg" aria-live="polite"></p>'+
       '<h3 style="margin-top:20px">Auswertung</h3>'+
-      (submitted.length?submissionTable(submitted,t):'<div class="empty">Noch keine abgegebenen Tests.</div>')+
-      '<div class="submission-detail"></div>';
+      (submitted.length?submissionTable(submitted,t):'<div class="empty">Noch keine abgegebenen Tests.</div>');
 
     new QRCode(panel.querySelector(".qr-target"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
     panel.querySelector(".copyFolderLink").addEventListener("click",async e=>{
@@ -1927,12 +1932,15 @@
       if(!btn||!panel.contains(btn))return;
       event.preventDefault();
       const sub=submissionsCache.find(s=>String(s.id)===String(btn.dataset.submissionId));
-      const detailRoot=panel.querySelector(".submission-detail");
-      if(!sub||!detailRoot){
-        if(detailRoot)detailRoot.innerHTML='<div class="msg show err">Diese Testabgabe konnte nicht gefunden werden. Bitte die Testübersicht aktualisieren.</div>';
-        return;
-      }
+      const summaryRow=btn.closest("tr");
+      const detailRow=summaryRow?.nextElementSibling;
+      const detailRoot=detailRow?.querySelector(".submission-detail");
+      if(!sub||!detailRow||!detailRoot)return;
+      if(!detailRow.hidden){closeSubmissionRowDetail(detailRoot);return}
+      panel.querySelectorAll(".submission-detail-row:not([hidden]) .submission-detail").forEach(openRoot=>closeSubmissionRowDetail(openRoot));
+      detailRow.hidden=false;
       btn.disabled=true;
+      btn.textContent="Details schließen";
       try{
         if(String(t.test_type).toLowerCase()==="grammar")await openGrammarSubmissionDetail(sub,t,detailRoot);
         else await openSubmissionDetail(sub,t,detailRoot);
@@ -1958,8 +1966,8 @@
         '<td data-label="OP"><strong>'+n(s.upper_school_points)+'</strong></td>'+
         '<td data-label="Abgabe">'+fmtTime(s.submitted_at)+'</td>'+
         '<td><button class="secondary openSubmissionBtn" data-submission-id="'+esc(s.id)+'">Details / Nachkorrektur</button></td>'+
-      '</tr>').join("")+
-      '</tbody></table></div>';
+        '</tr><tr class="submission-detail-row" hidden><td colspan="7"><div class="submission-detail"></div></td></tr>').join("")+
+
   }
 
   function grammarReviewNormalize(value){
@@ -2002,6 +2010,16 @@
     return "wrong";
   }
 
+  function closeSubmissionRowDetail(root){
+    const detailRow=root?.closest(".submission-detail-row");
+    if(!detailRow)return;
+    detailRow.hidden=true;
+    root.innerHTML="";
+    root.className="submission-detail";
+    const button=detailRow.previousElementSibling?.querySelector(".openSubmissionBtn");
+    if(button){button.disabled=false;button.textContent="Details / Nachkorrektur"}
+  }
+
   async function openGrammarSubmissionDetail(sub,t,root){
     if(!sub)return;
     currentOpenSubmission=sub.id;
@@ -2028,7 +2046,7 @@
       (adjustedParts?'<span class="summarypill">'+adjustedParts+' manuell nachkorrigierte '+(adjustedParts===1?"Teilantwort":"Teilantworten")+'</span>':'')+
       '</div><div class="tiny" style="margin-bottom:10px">Jede Übersetzung und jede Verbform kann einzeln nachkorrigiert werden. Die farbige Antwort zeigt die aktuelle Bewertung.</div>'+
       '<div class="answersRoot grammar-answer-grid"></div>';
-    root.querySelector(".closeDetailBtn").addEventListener("click",()=>{root.innerHTML="";root.className="submission-detail"});
+    root.querySelector(".closeDetailBtn").addEventListener("click",()=>closeSubmissionRowDetail(root));
     root.querySelector(".printGrammarCorrectionBtn").addEventListener("click",()=>printGrammarSubmission(sub,t,answers));
 
     const ar=root.querySelector(".answersRoot");
@@ -2190,7 +2208,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
       '</div>'+
       '<div class="answersRoot"></div>';
 
-    root.querySelector(".closeDetailBtn").addEventListener("click",()=>{root.innerHTML="";root.className="submission-detail"});
+    root.querySelector(".closeDetailBtn").addEventListener("click",()=>closeSubmissionRowDetail(root));
     const correctionUrl=new URL("korrektur.html",window.location.href);
     correctionUrl.hash="token="+encodeURIComponent(sub.access_token||"");
     root.querySelector(".teacherCorrectionLink").href=correctionUrl.toString();
