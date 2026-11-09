@@ -123,14 +123,12 @@
     .grammar-part-review.is-correct{background:#edf9f0;border-color:#20a35a}
     .grammar-part-review.is-partial{background:#fff6e6;border-color:#e58a00}
     .grammar-part-review.is-wrong{background:#fff0ef;border-color:#df3d36}
-    .grammar-part-review-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:.9rem}
-    .grammar-part-points{font-weight:800;white-space:nowrap}
-    .grammar-part-values{display:grid;grid-template-columns:1fr;gap:6px;margin-top:7px}
-    .grammar-part-value{min-width:0;display:grid;gap:2px}
-    .grammar-part-value span{font-size:.76rem;color:#64748b}
-    .grammar-part-value strong{font-size:1.08rem;line-height:1.25;overflow-wrap:anywhere;color:#111;font-weight:850}
-    .grammar-answer-correct,.grammar-answer-partial,.grammar-answer-wrong{color:#111;font-size:1.08rem!important;font-weight:850}
-    .grammar-part-auto{margin-top:5px}
+    .grammar-part-review-head{display:flex;justify-content:flex-end;gap:8px;align-items:baseline;font-size:.9rem;margin-bottom:3px}
+    .grammar-part-points{font-weight:800;white-space:nowrap;color:#111}
+    .grammar-part-lines{display:grid;gap:6px}
+    .grammar-part-line{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;min-width:0}
+    .grammar-part-line-value{min-width:0;color:#111;font-size:1.08rem;line-height:1.25;font-weight:850;overflow-wrap:anywhere}
+    .grammar-part-line-label{font-size:.76rem;font-weight:400;color:#475569;text-align:right;white-space:nowrap}
     .grammar-review-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:auto;padding-top:7px}
     .grammar-review-controls button{width:100%;min-width:0;min-height:34px;padding:5px 3px;font-size:.68rem;line-height:1.15;white-space:normal;overflow-wrap:anywhere}
     .answer-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -2063,15 +2061,13 @@
         const mode=grammarReviewMode(adjustments,index);
         const effective=effectivePoints[index];
         const state=effective===1?"is-correct":effective===0.5?"is-partial":"is-wrong";
-        const answerState=effective===1?"grammar-answer-correct":effective===0.5?"grammar-answer-partial":"grammar-answer-wrong";
         const row=document.createElement("section");
         row.className="grammar-part-review "+state;
         row.innerHTML=
-          '<div class="grammar-part-review-head"><strong>'+esc(part.label)+'</strong>'+
-          '<span class="grammar-part-points">'+grammarReviewPointText(effective)+' / 1 P.</span></div>'+
-          '<div class="grammar-part-values">'+
-            '<div class="grammar-part-value"><span>Schülerantwort</span><strong class="'+answerState+'">'+esc(part.typed||"—")+'</strong></div>'+
-            '<div class="grammar-part-value"><span>Lösung</span><strong>'+esc(part.expected||"—")+'</strong></div>'+
+          '<div class="grammar-part-review-head"><span class="grammar-part-points">'+grammarReviewPointText(effective)+' / 1 P.</span></div>'+
+          '<div class="grammar-part-lines">'+
+            '<div class="grammar-part-line"><strong class="grammar-part-line-value">'+esc(part.typed||"—")+'</strong><span class="grammar-part-line-label">Schülerantwort</span></div>'+
+            '<div class="grammar-part-line"><strong class="grammar-part-line-value">'+esc(part.expected||"—")+'</strong><span class="grammar-part-line-label">Lösung</span></div>'+
           '</div>'+
           '<div class="grammar-review-controls">'+
             '<button class="autobtn grammarAdjustBtn" data-part-index="'+index+'" data-mode="auto">Automatik'+(mode==="auto"?" ✓":"")+'</button>'+
