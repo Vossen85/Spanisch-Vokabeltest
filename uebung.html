@@ -267,7 +267,7 @@
       </button>
       <button id="chooseVocabPairsBtn" class="choice-btn mode-btn grammar-card-pairs" type="button" aria-pressed="false">
         🧩 Vokabel-Paare
-        <span>Finde in einer Minute möglichst viele passende spanische und deutsche Wörter.</span>
+        <span>Finde in der gewählten Zeit möglichst viele passende spanische und deutsche Wörter.</span>
       </button>
       <button id="chooseVocabTestBtn" class="choice-btn mode-btn grammar-card-tests" type="button" aria-pressed="true">
         📝 Testsimulation
@@ -1245,7 +1245,7 @@
       try{vocabPairsSession.bestScore=Number(localStorage.getItem(localKey)||0)}catch{}
       $("vocabPairsBest").textContent=String(vocabPairsSession.bestScore);
       $("vocabPairsScore").textContent="0";
-      $("vocabPairsActiveSettings").textContent=(selection.unitKeys.length+selection.folderIds.length)+" Vokabelbereiche · "+pairsPerBoard+" Paare gleichzeitig";
+      $("vocabPairsActiveSettings").textContent=pairsPerBoard+" Paare gleichzeitig";
       $("vocabPairsTimer").textContent=String(Math.floor(durationSeconds/60)).padStart(2,"0")+":"+String(durationSeconds%60).padStart(2,"0");
       $("vocabPairsTimer").classList.remove("warn","danger");
       $("setupCard").classList.add("hidden");
