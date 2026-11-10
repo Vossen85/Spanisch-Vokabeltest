@@ -111,7 +111,8 @@
     .quick-review-card{position:relative;z-index:1;width:100%;min-height:112px;margin:0 auto;display:flex;flex-direction:column;gap:8px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.1rem}
     .quick-review-card.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
     #quizFlashcard{width:calc((100% - 12px)/2);min-height:112px;margin:18px auto;padding:16px;font-size:1.1rem}
-    #quizFlashcard,#quickReviewFlashcard{touch-action:pan-y;user-select:none;-webkit-user-select:none;will-change:transform;transition:transform .18s ease,opacity .18s ease;position:relative;overflow:hidden}
+    #quizFlashcard,#quickReviewFlashcard{touch-action:pan-y;user-select:none;-webkit-user-select:none;will-change:transform;transition:transform .34s cubic-bezier(.2,.8,.2,1),opacity .34s ease;position:relative;overflow:hidden}
+    #quizFlashcard.is-swipe-exit,#quickReviewFlashcard.is-swipe-exit{pointer-events:none}
     #quizFlashcard.is-dragging,#quickReviewFlashcard.is-dragging{transition:none;cursor:grabbing}
     #quizFlashcard.swipe-mark-right,#quickReviewFlashcard.swipe-mark-right{border-color:#16a34a}
     #quizFlashcard.swipe-mark-left,#quickReviewFlashcard.swipe-mark-left{border-color:#e11d48}
@@ -1417,9 +1418,10 @@
     let pointer=null,suppressClickUntil=0,grading=false;
     const resetDrag=()=>{
       pointer=null;
-      card.classList.remove("is-dragging","swipe-mark-right","swipe-mark-left");
+      card.classList.remove("is-dragging","swipe-mark-right","swipe-mark-left","is-swipe-exit");
       card.style.transform="";
       card.style.opacity="";
+      card.style.transition="";
     };
     const submit=async correct=>{
       if(grading)return;
@@ -1432,34 +1434,41 @@
     });
     card.addEventListener("pointerdown",event=>{
       if(!event.isPrimary||event.button!==0)return;
-      pointer={id:event.pointerId,x:event.clientX,y:event.clientY};
+      pointer={id:event.pointerId,x:event.clientX,y:event.clientY,lastX:event.clientX,lastY:event.clientY};
       try{card.setPointerCapture(event.pointerId)}catch{}
     });
     card.addEventListener("pointermove",event=>{
       if(!pointer||pointer.id!==event.pointerId)return;
+      pointer.lastX=event.clientX;pointer.lastY=event.clientY;
       const dx=event.clientX-pointer.x,dy=event.clientY-pointer.y;
       if(!isFlipped()||Math.abs(dx)<12||Math.abs(dx)<Math.abs(dy)*1.15)return;
       card.classList.add("is-dragging");
       card.classList.toggle("swipe-mark-right",dx>0);
       card.classList.toggle("swipe-mark-left",dx<0);
-      card.style.transform="translateX("+dx+"px) rotate("+Math.max(-12,Math.min(12,dx*.035))+"deg)";
+      card.style.transform="translateX("+dx+"px) rotate("+Math.max(-14,Math.min(14,dx*.045))+"deg)";
     });
-    const finish=event=>{
+    const finish=(event,canceled=false)=>{
       if(!pointer||pointer.id!==event.pointerId)return;
-      const dx=event.clientX-pointer.x,dy=event.clientY-pointer.y;
-      const commit=isFlipped()&&Math.abs(dx)>=58&&Math.abs(dx)>Math.abs(dy)*1.2;
+      const endX=canceled?pointer.lastX:(Number.isFinite(event.clientX)?event.clientX:pointer.lastX);
+      const endY=canceled?pointer.lastY:(Number.isFinite(event.clientY)?event.clientY:pointer.lastY);
+      const dx=endX-pointer.x,dy=endY-pointer.y;
+      const threshold=Math.max(65,Math.min(card.clientWidth*.72,window.innerWidth*.28));
+      const commit=isFlipped()&&Math.abs(dx)>=threshold&&Math.abs(dx)>Math.abs(dy)*1.2;
       pointer=null;
       if(!commit){resetDrag();return}
       const direction=dx>0?1:-1;
       suppressClickUntil=Date.now()+900;
       card.classList.remove("is-dragging");
+      card.classList.add("is-swipe-exit");
       card.classList.toggle("swipe-mark-right",direction>0);
       card.classList.toggle("swipe-mark-left",direction<0);
-      card.style.transform="translateX("+direction*130+"%) rotate("+direction*12+"deg)";
-      window.setTimeout(()=>{resetDrag();void submit(direction>0)},190);
+      card.style.transition="transform .34s cubic-bezier(.2,.8,.2,1), opacity .34s ease";
+      card.style.transform="translateX("+(direction*(window.innerWidth+card.getBoundingClientRect().width))+"px) rotate("+direction*18+"deg)";
+      card.style.opacity="0";
+      window.setTimeout(()=>{resetDrag();void submit(direction>0)},350);
     };
-    card.addEventListener("pointerup",finish);
-    card.addEventListener("pointercancel",resetDrag);
+    card.addEventListener("pointerup",event=>finish(event,false));
+    card.addEventListener("pointercancel",event=>finish(event,true));
     card.addEventListener("keydown",event=>{
       if(!isFlipped()||!["ArrowLeft","ArrowRight"].includes(event.key))return;
       event.preventDefault();
