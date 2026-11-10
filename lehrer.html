@@ -150,9 +150,10 @@
     .test-type-btn{border:1px solid #cbd5e1;background:#f8fafc;color:#172033;padding:15px;border-radius:14px}
     .test-type-btn.active{background:#172033;color:#fff;border-color:#172033}
     .grammar-groups{display:grid;gap:16px;margin-top:12px}
-    .grammar-group-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 8px}
+    .grammar-group-head{display:flex;justify-content:flex-start;align-items:center;gap:10px;margin:4px 0 8px}
     .grammar-group-title{font-size:1.05rem;font-weight:850;margin:0}
-    .grammar-group-select{padding:7px 10px;font-size:.82rem;white-space:nowrap}
+    .grammar-group-select{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:9px;font-size:1.05rem;line-height:1;white-space:nowrap}
+    .grammar-group-select.is-selected{background:#dcfce7;color:#166534}
     .grammar-topic{border:1px solid #cbd5e1;border-radius:14px;background:#fafafa;overflow:hidden;margin-bottom:8px}
     .grammar-topic-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px}
     .grammar-topic-main{display:flex;gap:10px;align-items:flex-start;margin:0;cursor:pointer;flex:1}
@@ -1710,14 +1711,17 @@
     for(const [group,topics] of groups){
       const block=document.createElement("div");
       block.className="grammar-group";
-      block.innerHTML='<div class="grammar-group-head"><div class="grammar-group-title">'+esc(group)+'</div><button type="button" class="secondary grammar-group-select">Alle Unterthemen auswählen</button></div><div class="grammar-group-topics"></div>';
+      block.innerHTML='<div class="grammar-group-head"><div class="grammar-group-title">'+esc(group)+'</div><button type="button" class="secondary grammar-group-select" title="Alle Unterthemen auswählen" aria-label="Alle Unterthemen auswählen">＋</button></div><div class="grammar-group-topics"></div>';
       const holder=block.querySelector(".grammar-group-topics");
       const groupSelect=block.querySelector(".grammar-group-select");
       const refreshGroup=()=>{
         const checks=[...holder.querySelectorAll(".grammar-topic-source")];
         const all=checks.length>0&&checks.every(x=>x.checked);
-        groupSelect.textContent=all?"Auswahl aufheben":"Alle Unterthemen auswählen";
+        groupSelect.textContent=all?"✓":"＋";
+        groupSelect.title=all?"Auswahl aufheben":"Alle Unterthemen auswählen";
+        groupSelect.setAttribute("aria-label",all?"Auswahl aufheben":"Alle Unterthemen auswählen");
         groupSelect.setAttribute("aria-pressed",String(all));
+        groupSelect.classList.toggle("is-selected",all);
       };
       groupSelect.addEventListener("click",()=>{
         const topicBoxes=[...holder.querySelectorAll(".grammar-topic")];
