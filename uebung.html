@@ -115,6 +115,10 @@
     .vocab-self-check{display:flex;justify-content:center;gap:12px;margin-top:12px}
     .vocab-self-check button{flex:1;max-width:230px;min-height:52px;font-size:1rem}
     .vocab-self-check button:disabled{opacity:.48;cursor:not-allowed}
+    .vocab-self-check #cardCorrectBtn,.vocab-self-check #quickReviewCorrectBtn{background:#22c55e;color:#fff}
+    .vocab-self-check #cardWrongBtn,.vocab-self-check #quickReviewWrongBtn{background:#ef4444;color:#fff}
+    .vocab-self-check #cardCorrectBtn:hover,.vocab-self-check #quickReviewCorrectBtn:hover{background:#16a34a}
+    .vocab-self-check #cardWrongBtn:hover,.vocab-self-check #quickReviewWrongBtn:hover{background:#dc2626}
     .quick-review-side-label{font-size:.9rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;opacity:.78}
     .quick-review-card-text{font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:850;line-height:1.25;overflow-wrap:anywhere}
     @media(max-width:600px){#quizFlashcard,.quick-review-card{min-height:95px;padding:12px;font-size:1rem}.quick-review-options{gap:8px}}
@@ -451,8 +455,8 @@
     </div>
     <div id="cardsQuizArea" class="hidden">
       <div id="quizProgress" class="tiny"></div>
+      <p id="cardFlipInstruction" class="tiny">Tippe die Karte an, um sie jederzeit umzudrehen.</p>
       <button id="quizFlashcard" class="flashcard quiz-flashcard" type="button" aria-label="Vokabelkarte umdrehen" aria-pressed="false"></button>
-      <p id="cardFlipInstruction" class="tiny">Tippe die Karte an, um die spanische Seite zu sehen. Danach bewertest du dich selbst.</p>
       <div id="selfCheckControls" class="actions vocab-self-check">
         <button id="cardCorrectBtn" class="good" type="button">Richtig</button>
         <button id="cardWrongBtn" class="bad" type="button">Wiederholen</button>
