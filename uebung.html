@@ -110,6 +110,13 @@
     .quick-review-stack::after{transform:rotate(-2deg) translateY(6px)}
     .quick-review-card{position:relative;z-index:1;width:100%;min-height:240px;display:flex;flex-direction:column;gap:12px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.2rem}
     .quick-review-card.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+    #quizFlashcard,#quickReviewFlashcard{touch-action:pan-y;user-select:none;-webkit-user-select:none;will-change:transform;transition:transform .18s ease,opacity .18s ease;position:relative;overflow:hidden}
+    #quizFlashcard.is-dragging,#quickReviewFlashcard.is-dragging{transition:none;cursor:grabbing}
+    #quizFlashcard.swipe-mark-right,#quickReviewFlashcard.swipe-mark-right{border-color:#16a34a}
+    #quizFlashcard.swipe-mark-left,#quickReviewFlashcard.swipe-mark-left{border-color:#e11d48}
+    #quizFlashcard::after,#quickReviewFlashcard::after{position:absolute;top:16px;left:16px;padding:7px 11px;border:3px solid currentColor;border-radius:10px;font-size:.92rem;font-weight:900;letter-spacing:.04em;opacity:0;pointer-events:none;transform:rotate(-8deg)}
+    #quizFlashcard.swipe-mark-right::after,#quickReviewFlashcard.swipe-mark-right::after{content:"✓ GEWUSST";color:#15803d;opacity:1}
+    #quizFlashcard.swipe-mark-left::after,#quickReviewFlashcard.swipe-mark-left::after{content:"↺ NOCH ÜBEN";color:#be123c;opacity:1}
     .quick-review-side-label{font-size:.9rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;opacity:.78}
     .quick-review-card-text{font-size:clamp(1.6rem,6vw,2.2rem);font-weight:850;line-height:1.25;overflow-wrap:anywhere}
     @media(max-width:600px){.quick-review-card{min-height:210px}.quick-review-options{gap:8px}}
@@ -447,13 +454,7 @@
     <div id="cardsQuizArea" class="hidden">
       <div id="quizProgress" class="tiny"></div>
       <button id="quizFlashcard" class="flashcard quiz-flashcard" type="button" aria-label="Vokabelkarte umdrehen" aria-pressed="false"></button>
-      <div class="actions">
-        <button id="revealCardAnswerBtn" class="secondary" type="button">Spanische Lösung aufdecken</button>
-      </div>
-      <div id="selfCheckControls" class="actions hidden">
-        <button id="cardCorrectBtn" class="good" type="button">Richtig</button>
-        <button id="cardWrongBtn" class="bad" type="button">Falsch</button>
-      </div>
+      <p id="cardSwipeInstruction" class="tiny">Tippe zum Umdrehen. Danach nach rechts wischen oder ziehen = richtig; nach links = falsch und später wiederholen. Mit Tastatur: → oder ←.</p>
       <div id="quizFeedback" class="note hidden"></div>
     </div>
     <div id="cardsDoneArea" class="hidden">
@@ -474,10 +475,7 @@
       </button>
     </div>
     <p id="quickReviewInstruction" class="tiny">Tippe die Karte an, um die andere Seite aufzudecken.</p>
-    <div id="quickReviewControls" class="actions hidden">
-      <button id="quickReviewCorrectBtn" class="good" type="button">✅ Richtig</button>
-      <button id="quickReviewWrongBtn" class="bad" type="button">❌ Falsch – kommt zurück</button>
-    </div>
+    <p id="quickReviewControls" class="tiny hidden">Nach rechts wischen oder ziehen = gewusst · nach links = kommt zurück. Mit Tastatur: → oder ←.</p>
     <div id="quickReviewDone" class="hidden">
       <div id="quickReviewDoneMessage" class="note good"></div>
       <div class="actions"><button id="quickReviewDoneBackBtn" class="primary" type="button">Weitere Vokabeln auswählen</button></div>
@@ -1414,6 +1412,60 @@
     $("quickReviewProgress").textContent="Noch "+(session.queue.length+1)+" im Stapel · "+session.correct+" richtig · "+session.wrongIds.size+" kommen zurück";
   }
 
+  function bindSwipeCard(card,{flip,isFlipped,grade}){
+    let pointer=null,suppressClickUntil=0,grading=false;
+    const resetDrag=()=>{
+      pointer=null;
+      card.classList.remove("is-dragging","swipe-mark-right","swipe-mark-left");
+      card.style.transform="";
+      card.style.opacity="";
+    };
+    const submit=async correct=>{
+      if(grading)return;
+      grading=true;
+      try{await grade(correct)}finally{grading=false}
+    };
+    card.addEventListener("click",event=>{
+      if(Date.now()<suppressClickUntil){event.preventDefault();event.stopImmediatePropagation();return}
+      if(!grading)flip();
+    });
+    card.addEventListener("pointerdown",event=>{
+      if(!event.isPrimary||event.button!==0)return;
+      pointer={id:event.pointerId,x:event.clientX,y:event.clientY};
+      try{card.setPointerCapture(event.pointerId)}catch{}
+    });
+    card.addEventListener("pointermove",event=>{
+      if(!pointer||pointer.id!==event.pointerId)return;
+      const dx=event.clientX-pointer.x,dy=event.clientY-pointer.y;
+      if(!isFlipped()||Math.abs(dx)<12||Math.abs(dx)<Math.abs(dy)*1.15)return;
+      card.classList.add("is-dragging");
+      card.classList.toggle("swipe-mark-right",dx>0);
+      card.classList.toggle("swipe-mark-left",dx<0);
+      card.style.transform="translateX("+dx+"px) rotate("+Math.max(-12,Math.min(12,dx*.035))+"deg)";
+    });
+    const finish=event=>{
+      if(!pointer||pointer.id!==event.pointerId)return;
+      const dx=event.clientX-pointer.x,dy=event.clientY-pointer.y;
+      const commit=isFlipped()&&Math.abs(dx)>=58&&Math.abs(dx)>Math.abs(dy)*1.2;
+      pointer=null;
+      if(!commit){resetDrag();return}
+      const direction=dx>0?1:-1;
+      suppressClickUntil=Date.now()+900;
+      card.classList.remove("is-dragging");
+      card.classList.toggle("swipe-mark-right",direction>0);
+      card.classList.toggle("swipe-mark-left",direction<0);
+      card.style.transform="translateX("+direction*130+"%) rotate("+direction*12+"deg)";
+      window.setTimeout(()=>{resetDrag();void submit(direction>0)},190);
+    };
+    card.addEventListener("pointerup",finish);
+    card.addEventListener("pointercancel",resetDrag);
+    card.addEventListener("keydown",event=>{
+      if(!isFlipped()||!["ArrowLeft","ArrowRight"].includes(event.key))return;
+      event.preventDefault();
+      void submit(event.key==="ArrowRight");
+    });
+  }
+
   function flipQuickReviewCard(){
     if(!quickReviewSession?.current)return;
     const card=$("quickReviewFlashcard");
@@ -1426,15 +1478,14 @@
       ?(quickReviewSession.side==="de"?(quickReviewSession.current.acceptedAnswers||[]).join(" / "):String(quickReviewSession.current.sourceText||""))
       :(quickReviewSession.side==="de"?String(quickReviewSession.current.sourceText||""):(quickReviewSession.current.acceptedAnswers||[]).join(" / "));
     $("quickReviewControls").classList.toggle("hidden",!flipped);
-    $("quickReviewInstruction").textContent=flipped?"Bewerte die Karte mit Haken oder Kreuz.":"Tippe die Karte an, um die andere Seite aufzudecken.";
+    $("quickReviewInstruction").textContent=flipped?"Wische oder ziehe die Karte: rechts = gewusst · links = kommt zurück. Tastatur: → / ←.":"Tippe die Karte an, um die andere Seite aufzudecken.";
   }
 
   async function gradeQuickReview(correct){
     const session=quickReviewSession;
-    if(!session?.current)return;
+    if(!session?.current||session.isGrading)return;
+    session.isGrading=true;
     const current=session.current;
-    const buttons=[$("quickReviewCorrectBtn"),$("quickReviewWrongBtn")];
-    buttons.forEach(button=>button.disabled=true);
     if(PERSONALIZED_MODE&&studentAccountProfile){
       try{
         const folderIds=(current.folderIds||[]).map(Number);
@@ -1461,7 +1512,7 @@
       session.queue.push(current);
     }
     session.current=null;
-    buttons.forEach(button=>button.disabled=false);
+    session.isGrading=false;
     renderQuickReviewCard();
   }
 
@@ -1822,10 +1873,9 @@
     $("cardsQuizArea").classList.remove("hidden");
     $("cardsDoneArea").classList.add("hidden");
     $("cardsTitle").textContent=cardSession.folderTitle;
-    $("selfCheckControls").classList.add("hidden");
-    $("revealCardAnswerBtn").classList.remove("hidden");
     $("quizFlashcard").classList.remove("is-flipped");
     $("quizFlashcard").setAttribute("aria-pressed","false");
+    $("quizFlashcard").setAttribute("aria-label","Karte umdrehen; nach rechts gewusst, nach links falsch");
     $("quizFeedback").classList.add("hidden");
     const total=cardSession.quizRows.length;
     const row=cardSession.quizRows[cardSession.quizIndex];
@@ -1844,12 +1894,12 @@
     $("quizFlashcard").classList.add("is-flipped");
     $("quizFlashcard").setAttribute("aria-pressed","true");
     $("quizFlashcard").textContent=$("quizFlashcard").dataset.spanish;
-    $("revealCardAnswerBtn").classList.add("hidden");
-    $("selfCheckControls").classList.remove("hidden");
+    $("quizFlashcard").setAttribute("aria-label","Antwort aufgedeckt; nach rechts richtig, nach links falsch");
   }
 
   async function answerCard(correct){
-    if(!cardSession)return;
+    if(!cardSession||cardSession.isAnswering)return;
+    cardSession.isAnswering=true;
     const current=cardSession.quizRows[cardSession.quizIndex];
     if(PERSONALIZED_MODE&&studentAccountProfile&&current){
       try{
@@ -1865,6 +1915,7 @@
       if(current)cardSession.roundWrongRows.push(current);
     }
     cardSession.quizIndex++;
+    cardSession.isAnswering=false;
     renderCardQuizQuestion();
   }
 
@@ -2521,9 +2572,11 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("vocabPairsResultBackBtn").addEventListener("click",backToVocabPairSetup);
 
   $("startQuickReviewBtn").addEventListener("click",()=>startQuickReview());
-  $("quickReviewFlashcard").addEventListener("click",flipQuickReviewCard);
-  $("quickReviewCorrectBtn").addEventListener("click",()=>{void gradeQuickReview(true)});
-  $("quickReviewWrongBtn").addEventListener("click",()=>{void gradeQuickReview(false)});
+  bindSwipeCard($("quickReviewFlashcard"),{
+    flip:flipQuickReviewCard,
+    isFlipped:()=>$("quickReviewFlashcard").classList.contains("is-flipped"),
+    grade:gradeQuickReview
+  });
   $("quickReviewBackBtn").addEventListener("click",closeQuickReview);
   $("quickReviewDoneBackBtn").addEventListener("click",closeQuickReview);
   $("cardModeTopicBtn").addEventListener("click",()=>{vocabTopicSelectionOpen=true;setVocabMode("cards");$("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});});
@@ -2531,10 +2584,11 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));
   $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
   $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
-  $("revealCardAnswerBtn").addEventListener("click",revealCardAnswer);
-  $("quizFlashcard").addEventListener("click",()=>{if(!cardSession)return;if($("quizFlashcard").classList.contains("is-flipped"))return;revealCardAnswer()});
-  $("cardCorrectBtn").addEventListener("click",()=>answerCard(true));
-  $("cardWrongBtn").addEventListener("click",()=>answerCard(false));
+  bindSwipeCard($("quizFlashcard"),{
+    flip:()=>{if(cardSession&&!$("quizFlashcard").classList.contains("is-flipped"))revealCardAnswer()},
+    isFlipped:()=>$("quizFlashcard").classList.contains("is-flipped"),
+    grade:answerCard
+  });
   $("cardsBackBtn").addEventListener("click",closeCardPractice);
   $("cardsDoneBackBtn").addEventListener("click",closeCardPractice);
   $("showVocabListBtn").addEventListener("click",showVocabList);
