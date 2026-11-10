@@ -29,7 +29,7 @@ select,input[type=number]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;
 .game-timer.warn{color:#b45309}.game-timer.danger{color:#b91c1c}
 .board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
 .match-card{min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;line-height:1.2;overflow-wrap:anywhere;word-break:break-word;border:2px solid transparent;padding:10px 8px}
-.match-card .person{font-size:.78rem;font-weight:700;opacity:.8}.match-card .value{font-size:1.06rem;font-weight:850}
+.match-card .value{font-size:1.1rem;font-weight:850}
 .match-card.es{background:#dbeafe;color:#173b6c;border-color:#bfdbfe}.match-card.de{background:#ffedd5;color:#7c3e10;border-color:#fed7aa}
 .match-card.selected{outline:3px solid #172033;outline-offset:1px}.match-card.wrong{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
 .match-card.matched{visibility:hidden;pointer-events:none}
@@ -272,11 +272,11 @@ function randomUnused(exclude){
 function renderBoard(){
  const root=$("board");root.innerHTML="";
  const cards=[];
- for(const p of boardPairs){cards.push({pair:p,lang:"es",small:p.person,value:p.spanish});cards.push({pair:p,lang:"de",small:p.topic,value:p.german})}
+ for(const p of boardPairs){cards.push({pair:p,lang:"es",value:p.spanish});cards.push({pair:p,lang:"de",value:p.german})}
  for(const card of shuffle(cards)){
   const b=document.createElement("button");b.type="button";b.className="match-card "+card.lang;
   b.dataset.pairId=card.pair.id;b.dataset.lang=card.lang;
-  b.innerHTML="<span class='person'>"+escapeHtml(card.small)+"</span><span class='value'>"+escapeHtml(card.value)+"</span>";
+  b.innerHTML="<span class='value'>"+escapeHtml(card.value)+"</span>";
   b.addEventListener("click",()=>selectCard(b));root.appendChild(b);
  }
 }
