@@ -454,8 +454,8 @@
       <button id="quizFlashcard" class="flashcard quiz-flashcard" type="button" aria-label="Vokabelkarte umdrehen" aria-pressed="false"></button>
       <p id="cardFlipInstruction" class="tiny">Tippe die Karte an, um die spanische Seite zu sehen. Danach bewertest du dich selbst.</p>
       <div id="selfCheckControls" class="actions vocab-self-check">
-        <button id="cardCorrectBtn" class="good" type="button" disabled>Richtig</button>
-        <button id="cardWrongBtn" class="bad" type="button" disabled>Wiederholen</button>
+        <button id="cardCorrectBtn" class="good" type="button">Richtig</button>
+        <button id="cardWrongBtn" class="bad" type="button">Wiederholen</button>
       </div>
       <div id="quizFeedback" class="note hidden"></div>
     </div>
@@ -478,8 +478,8 @@
       </button>
     </div>
     <div id="quickReviewControls" class="actions vocab-self-check">
-      <button id="quickReviewCorrectBtn" class="good" type="button" disabled>Richtig</button>
-      <button id="quickReviewWrongBtn" class="bad" type="button" disabled>Wiederholen</button>
+      <button id="quickReviewCorrectBtn" class="good" type="button">Richtig</button>
+      <button id="quickReviewWrongBtn" class="bad" type="button">Wiederholen</button>
     </div>
     <div id="quickReviewDone" class="hidden">
       <div id="quickReviewDoneMessage" class="note good"></div>
@@ -1407,15 +1407,15 @@
       return;
     }
     session.current=session.queue.shift();
-    session.hasSeenCurrent=false;
     const card=$("quickReviewFlashcard");
-    card.classList.remove("is-flipped","swipe-mark-right","swipe-mark-left","is-swipe-exit","is-dragging");
+    card.classList.remove("is-flipped");
+    card.style.transform="";card.style.opacity="";card.style.transition="";
     card.style.transform="";card.style.opacity="";card.style.transition="";
     card.setAttribute("aria-pressed","false");
     card.setAttribute("aria-label","Karte antippen zum Umdrehen");
     $("quickReviewControls").classList.remove("hidden");
-    $("quickReviewCorrectBtn").disabled=true;
-    $("quickReviewWrongBtn").disabled=true;
+    $("quickReviewCorrectBtn").disabled=false;
+    $("quickReviewWrongBtn").disabled=false;
     $("quickReviewInstruction").classList.remove("hidden");
     $("quickReviewSideLabel").textContent=session.side==="de"?"Deutsch":"Spanisch";
     $("quickReviewCardText").textContent=session.side==="de"
@@ -1435,9 +1435,6 @@
     $("quickReviewCardText").textContent=flipped
       ?(quickReviewSession.side==="de"?(quickReviewSession.current.acceptedAnswers||[]).join(" / "):String(quickReviewSession.current.sourceText||""))
       :(quickReviewSession.side==="de"?String(quickReviewSession.current.sourceText||""):(quickReviewSession.current.acceptedAnswers||[]).join(" / "));
-    if(flipped)quickReviewSession.hasSeenCurrent=true;
-    $("quickReviewCorrectBtn").disabled=!quickReviewSession.hasSeenCurrent;
-    $("quickReviewWrongBtn").disabled=!quickReviewSession.hasSeenCurrent;
     card.setAttribute("aria-label",flipped?"Antwort aufgedeckt; Karte erneut antippen zum Zurückdrehen":"Karte antippen zum Umdrehen");
     $("quickReviewInstruction").textContent="Tippe die Karte an, um sie umzudrehen. Danach wählst du Richtig oder Wiederholen.";
   }
@@ -1839,9 +1836,8 @@
     $("quizFlashcard").classList.remove("is-flipped");
     $("quizFlashcard").setAttribute("aria-pressed","false");
     $("quizFlashcard").setAttribute("aria-label","Karte antippen zum Umdrehen");
-    $("quizFlashcard").dataset.revealed="false";
-    $("cardCorrectBtn").disabled=true;
-    $("cardWrongBtn").disabled=true;
+    $("cardCorrectBtn").disabled=false;
+    $("cardWrongBtn").disabled=false;
     $("quizFeedback").classList.add("hidden");
     const total=cardSession.quizRows.length;
     const row=cardSession.quizRows[cardSession.quizIndex];
@@ -1861,15 +1857,14 @@
     const flipped=card.classList.toggle("is-flipped");
     card.setAttribute("aria-pressed",String(flipped));
     card.textContent=flipped?card.dataset.spanish:card.dataset.german;
-    if(flipped)card.dataset.revealed="true";
     card.setAttribute("aria-label",flipped?"Antwort aufgedeckt; Karte erneut antippen zum Zurückdrehen":"Karte antippen zum Umdrehen");
-    $("cardCorrectBtn").disabled=card.dataset.revealed!=="true";
-    $("cardWrongBtn").disabled=card.dataset.revealed!=="true";
   }
 
   async function answerCard(correct){
     if(!cardSession||cardSession.isAnswering)return;
     cardSession.isAnswering=true;
+    $("cardCorrectBtn").disabled=true;
+    $("cardWrongBtn").disabled=true;
     const current=cardSession.quizRows[cardSession.quizIndex];
     if(PERSONALIZED_MODE&&studentAccountProfile&&current){
       try{
