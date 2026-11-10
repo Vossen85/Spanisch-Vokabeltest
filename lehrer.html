@@ -150,7 +150,9 @@
     .test-type-btn{border:1px solid #cbd5e1;background:#f8fafc;color:#172033;padding:15px;border-radius:14px}
     .test-type-btn.active{background:#172033;color:#fff;border-color:#172033}
     .grammar-groups{display:grid;gap:16px;margin-top:12px}
-    .grammar-group-title{font-size:1.05rem;font-weight:850;margin:4px 0 8px}
+    .grammar-group-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 0 8px}
+    .grammar-group-title{font-size:1.05rem;font-weight:850;margin:0}
+    .grammar-group-select{padding:7px 10px;font-size:.82rem;white-space:nowrap}
     .grammar-topic{border:1px solid #cbd5e1;border-radius:14px;background:#fafafa;overflow:hidden;margin-bottom:8px}
     .grammar-topic-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px}
     .grammar-topic-main{display:flex;gap:10px;align-items:flex-start;margin:0;cursor:pointer;flex:1}
@@ -1708,8 +1710,29 @@
     for(const [group,topics] of groups){
       const block=document.createElement("div");
       block.className="grammar-group";
-      block.innerHTML='<div class="grammar-group-title">'+esc(group)+'</div><div class="grammar-group-topics"></div>';
+      block.innerHTML='<div class="grammar-group-head"><div class="grammar-group-title">'+esc(group)+'</div><button type="button" class="secondary grammar-group-select">Alle Unterthemen auswählen</button></div><div class="grammar-group-topics"></div>';
       const holder=block.querySelector(".grammar-group-topics");
+      const groupSelect=block.querySelector(".grammar-group-select");
+      const refreshGroup=()=>{
+        const checks=[...holder.querySelectorAll(".grammar-topic-source")];
+        const all=checks.length>0&&checks.every(x=>x.checked);
+        groupSelect.textContent=all?"Auswahl aufheben":"Alle Unterthemen auswählen";
+        groupSelect.setAttribute("aria-pressed",String(all));
+      };
+      groupSelect.addEventListener("click",()=>{
+        const topicBoxes=[...holder.querySelectorAll(".grammar-topic")];
+        const checks=topicBoxes.map(box=>box.querySelector(".grammar-topic-source"));
+        const clear=checks.length>0&&checks.every(x=>x.checked);
+        topicBoxes.forEach(box=>{
+          box.querySelector(".grammar-topic-source").checked=!clear;
+          if(clear){
+            box.querySelectorAll(".grammar-verb-check").forEach(input=>input.checked=false);
+            box.querySelector(".grammar-fixed-count").textContent="0 fest ausgewählt";
+          }
+        });
+        updateGrammarSummary();
+        refreshGroup();
+      });
 
       for(const topic of topics){
         const box=document.createElement("div");
@@ -1750,9 +1773,10 @@
           fixedCount.textContent=n+" fest ausgewählt";
           if(n>0)source.checked=true;
           updateGrammarSummary();
+          refreshGroup();
         };
 
-        source.addEventListener("change",updateGrammarSummary);
+        source.addEventListener("change",()=>{updateGrammarSummary();refreshGroup();});
         toggle.addEventListener("click",()=>{
           const hidden=children.classList.toggle("hidden");
           toggle.textContent=hidden?"Verben auswählen ▾":"Verben ausblenden ▴";
@@ -1766,6 +1790,7 @@
         });
         holder.appendChild(box);
       }
+      refreshGroup();
       root.appendChild(block);
     }
     updateGrammarSummary();
