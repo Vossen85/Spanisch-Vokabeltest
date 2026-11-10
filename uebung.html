@@ -696,7 +696,7 @@
     const monday=plannerWeekStart;
     const friday=plannerDateForDay(4);
     const year=new Intl.DateTimeFormat("de-DE",{year:"numeric"}).format(friday);
-    return plannerDayDateLabel(monday)+"–"+plannerDayDateLabel(friday)+"."+year;
+    return plannerDayDateLabel(monday)+"–"+plannerDayDateLabel(friday)+year;
   }
   function plannerLocalKey(weekKey){
     return "avanza-week-plan-guest:"+weekKey;
