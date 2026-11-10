@@ -91,6 +91,14 @@
     .choice-progress:focus-visible{outline:3px solid #f9a8d4;outline-offset:3px}
     .choice-learn{background:#0f766e;color:#fff}
     .choice-test{background:#c2410c;color:#fff}
+    .grammar-card-conjugations{background:linear-gradient(135deg,#0891b2,#2563eb);color:#fff}
+    .grammar-card-tests{background:linear-gradient(135deg,#f97316,#dc2626);color:#fff}
+    .grammar-card-flashcards{background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff}
+    .grammar-card-pairs{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}
+    .grammar-choice-title{display:flex;align-items:center;gap:12px;font-size:1.25rem;font-weight:800;line-height:1.2}
+    .grammar-choice-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;width:52px;height:52px;border:1px solid rgba(255,255,255,.36);border-radius:16px;background:rgba(255,255,255,.2);font-size:1.7rem!important;opacity:1!important}
+    .grammar-choice-label{font-size:1.25rem!important;font-weight:800!important;opacity:1!important}
+    .grammar-choice-copy{font-size:.92rem!important;font-weight:550!important;}
     .backline{margin-bottom:14px}
     .backline button{padding:9px 12px;font-size:.92rem}
     @media(max-width:700px){
@@ -185,21 +193,21 @@
     <h1>Grammatik</h1>
     <p class="sub">Wähle, wie du mit den Verbformen arbeiten möchtest.</p>
     <div class="choice-grid">
-      <button id="openConjugationsBtn" class="choice-btn choice-learn" type="button">
-        📖 Konjugationen lernen
-        <span>Fertige Verbformen ansehen und ausgewählte Bereiche als PDF speichern</span>
+      <button id="openConjugationsBtn" class="choice-btn choice-learn grammar-card-conjugations" type="button">
+        <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">📖</span><span class="grammar-choice-label">Konjugationen lernen</span></span>
+        <span class="grammar-choice-copy">Fertige Verbformen ansehen und ausgewählte Bereiche als PDF speichern</span>
       </button>
-      <button id="openGrammarTestsBtn" class="choice-btn choice-test" type="button">
-        ✅ Grammatiktests
-        <span>Konjugationen selbst eingeben und überprüfen</span>
+      <button id="openGrammarTestsBtn" class="choice-btn choice-test grammar-card-tests" type="button">
+        <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">✅</span><span class="grammar-choice-label">Grammatiktests</span></span>
+        <span class="grammar-choice-copy">Konjugationen selbst eingeben und überprüfen</span>
       </button>
-      <button id="openGrammarCardsBtn" class="choice-btn choice-learn" type="button">
-        🃏 Grammatik-Karteikarten
-        <span>Übe einen Grammatikunterteil in Sechserstapeln</span>
+      <button id="openGrammarCardsBtn" class="choice-btn choice-learn grammar-card-flashcards" type="button">
+        <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">🃏</span><span class="grammar-choice-label">Grammatik-Karteikarten</span></span>
+        <span class="grammar-choice-copy">Übe einen Grammatikunterteil in Sechserstapeln</span>
       </button>
-      <button id="openGrammarPairsBtn" class="choice-btn choice-learn" type="button">
-        🧩 Konjugations-Paare
-        <span>Verbinde spanische und deutsche Formen in einem Spiel auf Zeit</span>
+      <button id="openGrammarPairsBtn" class="choice-btn choice-learn grammar-card-pairs" type="button">
+        <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">🧩</span><span class="grammar-choice-label">Konjugations-Paare</span></span>
+        <span class="grammar-choice-copy">Verbinde spanische und deutsche Formen in einem Spiel auf Zeit</span>
       </button>
     </div>
     <div id="grammarChoiceMsg" class="msg"></div>
