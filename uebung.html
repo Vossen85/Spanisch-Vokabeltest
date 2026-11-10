@@ -110,6 +110,8 @@
     .quick-review-stack::after{transform:rotate(-2deg) translateY(6px)}
     .quick-review-card{position:relative;z-index:1;width:100%;min-height:240px;display:flex;flex-direction:column;gap:12px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.2rem}
     .quick-review-card.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+    #quizFlashcard{width:100%;min-height:240px;padding:24px;font-size:1.4rem}
+    @media(max-width:600px){#quizFlashcard{min-height:210px;padding:18px;font-size:1.2rem}}
     #quizFlashcard,#quickReviewFlashcard{touch-action:pan-y;user-select:none;-webkit-user-select:none;will-change:transform;transition:transform .18s ease,opacity .18s ease;position:relative;overflow:hidden}
     #quizFlashcard.is-dragging,#quickReviewFlashcard.is-dragging{transition:none;cursor:grabbing}
     #quizFlashcard.swipe-mark-right,#quickReviewFlashcard.swipe-mark-right{border-color:#16a34a}
