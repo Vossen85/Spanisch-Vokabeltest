@@ -82,6 +82,23 @@
     .flashcard-question{margin-top:18px;border:1px solid #dbe2ea;border-radius:16px;padding:20px;background:#fff}
     .quiz-german{font-size:1.5rem;font-weight:850;margin-top:8px;overflow-wrap:anywhere}
     .quiz-spanish{margin-top:18px;padding:14px;border-radius:12px;background:#ecfdf5;color:#166534;font-size:1.25rem;font-weight:800;overflow-wrap:anywhere}
+    .vocab-mode-quick{background:#2563eb!important;color:#fff!important;background-image:none!important}
+    .vocab-pairs-settings{margin:16px 0}
+    .vocab-pairs-game-top{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;padding-right:135px}
+    .vocab-pairs-stats{display:flex;gap:10px;flex-wrap:wrap}
+    .vocab-pairs-stat{padding:8px 11px;background:#f1f5f9;border-radius:10px;font-weight:750}
+    .vocab-pairs-timer{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:1000;background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:9px 13px;font-size:1.1rem;font-weight:900;font-variant-numeric:tabular-nums;box-shadow:0 4px 14px rgba(15,23,42,.18)}
+    .vocab-pairs-timer.warn{color:#b45309}.vocab-pairs-timer.danger{color:#b91c1c}
+    .vocab-pairs-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+    .vocab-pairs-tile{min-height:88px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;overflow-wrap:anywhere;word-break:break-word;border:2px solid transparent;padding:10px 8px}
+    .vocab-pairs-tile .value{font-size:1.1rem;font-weight:850}
+    .vocab-pairs-tile.es{background:#dbeafe;color:#173b6c;border-color:#bfdbfe}
+    .vocab-pairs-tile.de{background:#ffedd5;color:#7c3e10;border-color:#fed7aa}
+    .vocab-pairs-tile.selected{outline:3px solid #172033;outline-offset:1px}
+    .vocab-pairs-tile.wrong{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important}
+    .vocab-pairs-tile.matched{visibility:hidden;pointer-events:none}
+    .vocab-pairs-end-score{font-size:1.45rem;font-weight:900;margin:12px 0}
+    @media(max-width:700px){.vocab-pairs-settings{grid-template-columns:1fr}.vocab-pairs-board{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.vocab-pairs-tile{min-height:74px}.vocab-pairs-game-top{padding-right:100px}}
     .quick-review-choice{background:#f72585;color:#fff}
     .quick-review-options{display:flex;flex-wrap:wrap;gap:12px 18px;margin:14px 0;padding:12px 14px;border:1px solid #cbd5e1;border-radius:12px}
     .quick-review-options legend{padding:0 5px;font-weight:800}
@@ -244,9 +261,13 @@
         🃏 Karteikarten-Training
         <span>Übe einen Lernordner mit Karteikarten und gemischter Abfrage.</span>
       </button>
-      <button id="chooseQuickReviewBtn" class="choice-btn mode-btn grammar-card-pairs" type="button" aria-pressed="false">
+      <button id="chooseQuickReviewBtn" class="choice-btn mode-btn vocab-mode-quick" type="button" aria-pressed="false">
         ⚡ Schnellwiederholung
         <span>Vorderseite wählen, umdrehen und mit ✓ oder ✕ bewerten. Falsche Karten kommen zurück.</span>
+      </button>
+      <button id="chooseVocabPairsBtn" class="choice-btn mode-btn grammar-card-pairs" type="button" aria-pressed="false">
+        🧩 Vokabel-Paare
+        <span>Finde in einer Minute möglichst viele passende spanische und deutsche Wörter.</span>
       </button>
       <button id="chooseVocabTestBtn" class="choice-btn mode-btn grammar-card-tests" type="button" aria-pressed="true">
         📝 Testsimulation
@@ -295,6 +316,17 @@
       </fieldset>
       <div class="actions"><button id="startQuickReviewBtn" class="primary" type="button">Kartenstapel starten</button></div>
       <div id="quickReviewSetupMsg" class="msg"></div>
+    </div>
+
+    <div id="vocabPairsSetup" class="hidden">
+      <h2 style="margin-top:24px">2. Vokabel-Paare</h2>
+      <p class="tiny">Finde passende spanische und deutsche Wörter. Für jedes Paar, das du findest, kommt ein neues aufs Spielfeld.</p>
+      <div class="row vocab-pairs-settings">
+        <div><label class="field" for="vocabPairsDuration">Spielzeit</label><select id="vocabPairsDuration"><option value="30">30 Sekunden</option><option value="60" selected>1 Minute</option><option value="120">2 Minuten</option><option value="180">3 Minuten</option><option value="300">5 Minuten</option></select></div>
+        <div><label class="field" for="vocabPairsCount">Paare gleichzeitig</label><select id="vocabPairsCount"><option value="5">5 Paare</option><option value="6" selected>6 Paare</option></select></div>
+      </div>
+      <div class="actions"><button id="startVocabPairsBtn" class="primary" type="button">Spiel starten</button></div>
+      <div id="vocabPairsSetupMsg" class="msg"></div>
     </div>
 
     <div id="vocabListActions" class="hidden">
@@ -382,6 +414,28 @@
     <div id="quickReviewDone" class="hidden">
       <div id="quickReviewDoneMessage" class="note good"></div>
       <div class="actions"><button id="quickReviewDoneBackBtn" class="primary" type="button">Weitere Vokabeln auswählen</button></div>
+    </div>
+  </section>
+
+  <section id="vocabPairsArea" class="card hidden">
+    <div class="backline"><button id="vocabPairsBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
+    <div id="vocabPairsGameView" class="hidden">
+      <div class="vocab-pairs-game-top">
+        <div><h1>Vokabel-Paare</h1><p id="vocabPairsActiveSettings" class="tiny"></p></div>
+        <div class="vocab-pairs-stats"><div class="vocab-pairs-stat">Paare: <span id="vocabPairsScore">0</span></div><div class="vocab-pairs-stat">Rekord: <span id="vocabPairsBest">0</span></div></div>
+      </div>
+      <div id="vocabPairsTimer" class="vocab-pairs-timer">01:00</div>
+      <p class="sub">Tippe ein spanisches und das passende deutsche Wort an.</p>
+      <div id="vocabPairsBoard" class="vocab-pairs-board"></div>
+    </div>
+    <div id="vocabPairsResultView" class="hidden">
+      <h1>Zeit abgelaufen!</h1>
+      <div id="vocabPairsResultScore" class="vocab-pairs-end-score"></div>
+      <p id="vocabPairsResultRecord" class="sub"></p>
+      <div class="actions">
+        <button id="vocabPairsAgainBtn" class="primary" type="button">Noch einmal spielen</button>
+        <button id="vocabPairsResultBackBtn" class="secondary" type="button">Auswahl ändern</button>
+      </div>
     </div>
   </section>
 
@@ -487,6 +541,10 @@
   let vocabListCache=null;
   let cardSession=null;
   let quickReviewSession=null;
+  let vocabPairsSession=null;
+  let vocabPairsTimerHandle=null;
+  let vocabPairsDeadline=0;
+
   let vocabTopicSelectionOpen=false;
   let studentAccountProfile=null;
   let studentTestHistoryRefresh=null;
@@ -724,6 +782,7 @@
     $("vocabListActions").classList.toggle("hidden",mode!=="list");
     $("cardPracticeOptions").classList.toggle("hidden",mode!=="cards");
     $("quickReviewSetup").classList.toggle("hidden",mode!=="quick");
+    $("vocabPairsSetup").classList.toggle("hidden",mode!=="pairs");
     const showTopicTree=mode!=="cards"||vocabTopicSelectionOpen;
     $("selectionHeading").classList.toggle("hidden",!showTopicTree);
     $("selectionHelp").classList.toggle("hidden",!showTopicTree);
@@ -733,6 +792,7 @@
     $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
     $("chooseCardPracticeBtn").setAttribute("aria-pressed",String(mode==="cards"));
     $("chooseQuickReviewBtn").setAttribute("aria-pressed",String(mode==="quick"));
+    $("chooseVocabPairsBtn").setAttribute("aria-pressed",String(mode==="pairs"));
     $("cardModeErrorsBtn").disabled=!PERSONALIZED_MODE;
     $("cardModeMixBtn").disabled=!PERSONALIZED_MODE;
     $("cardPersonalNote").classList.toggle("hidden",PERSONALIZED_MODE);
@@ -1059,6 +1119,206 @@
     session.current=null;
     buttons.forEach(button=>button.disabled=false);
     renderQuickReviewCard();
+  }
+
+  function makeVocabPairsPool(rows){
+    const unique=new Map();
+    for(const row of rows){
+      const german=String(row.sourceText||"").trim();
+      const spanish=String(row.acceptedAnswers?.[0]||"").split(" / ")[0].trim();
+      if(!german||!spanish)continue;
+      const key=spanish.toLocaleLowerCase()+"\u0000"+german.toLocaleLowerCase();
+      if(!unique.has(key))unique.set(key,{id:key,spanish,german});
+    }
+    const pairs=[...unique.values()];
+    const spanishCounts=new Map(),germanCounts=new Map();
+    for(const pair of pairs){
+      const es=pair.spanish.toLocaleLowerCase(),de=pair.german.toLocaleLowerCase();
+      spanishCounts.set(es,(spanishCounts.get(es)||0)+1);
+      germanCounts.set(de,(germanCounts.get(de)||0)+1);
+    }
+    return pairs.filter(pair=>spanishCounts.get(pair.spanish.toLocaleLowerCase())===1&&germanCounts.get(pair.german.toLocaleLowerCase())===1);
+  }
+
+  function vocabPairsRecordKey(){
+    const session=vocabPairsSession;
+    return "avanza-vocab-matching:"+session.selectionKey+":"+session.durationSeconds+":"+session.pairsPerBoard;
+  }
+
+  function renderVocabPairsBoard(){
+    const session=vocabPairsSession;
+    const root=$("vocabPairsBoard");
+    root.innerHTML="";
+    const tiles=[];
+    for(const pair of session.boardPairs){
+      tiles.push({pair,lang:"es",value:pair.spanish});
+      tiles.push({pair,lang:"de",value:pair.german});
+    }
+    for(const item of shuffleItems(tiles)){
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="vocab-pairs-tile "+item.lang;
+      button.dataset.pairId=item.pair.id;
+      button.dataset.lang=item.lang;
+      const value=document.createElement("span");
+      value.className="value";
+      value.textContent=item.value;
+      button.appendChild(value);
+      button.addEventListener("click",()=>selectVocabPairTile(button));
+      root.appendChild(button);
+    }
+  }
+
+  function nextVocabPair(exclude){
+    const session=vocabPairsSession;
+    let available=session.pool.filter(pair=>!exclude.has(pair.id)&&!session.usedIds.has(pair.id));
+    if(!available.length){
+      session.usedIds.clear();
+      available=session.pool.filter(pair=>!exclude.has(pair.id));
+    }
+    if(!available.length)return null;
+    const pair=available[Math.floor(Math.random()*available.length)];
+    session.usedIds.add(pair.id);
+    return pair;
+  }
+
+  function selectVocabPairTile(button){
+    const session=vocabPairsSession;
+    if(!session||!vocabPairsTimerHandle||session.locked||button.classList.contains("matched")||button.classList.contains("selected"))return;
+    if(session.chosenTiles.length&&session.chosenTiles[0].dataset.lang===button.dataset.lang)return;
+    button.classList.add("selected");
+    session.chosenTiles.push(button);
+    if(session.chosenTiles.length<2)return;
+    const [first,second]=session.chosenTiles;
+    session.locked=true;
+    if(first.dataset.pairId===second.dataset.pairId){
+      session.score++;
+      $("vocabPairsScore").textContent=String(session.score);
+      first.classList.add("matched");
+      second.classList.add("matched");
+      session.boardPairs=session.boardPairs.filter(pair=>pair.id!==first.dataset.pairId);
+      const exclude=new Set(session.boardPairs.map(pair=>pair.id));
+      const next=nextVocabPair(exclude);
+      if(next)session.boardPairs.push(next);
+      session.chosenTiles=[];
+      setTimeout(()=>{renderVocabPairsBoard();session.locked=false},220);
+    }else{
+      first.classList.add("wrong");
+      second.classList.add("wrong");
+      setTimeout(()=>{
+        first.classList.remove("selected","wrong");
+        second.classList.remove("selected","wrong");
+        session.chosenTiles=[];
+        session.locked=false;
+      },450);
+    }
+  }
+
+  async function startVocabPairs(){
+    const button=$("startVocabPairsBtn");
+    button.disabled=true;
+    const oldText=button.textContent;
+    button.textContent="Paare werden vorbereitet …";
+    hideMsg($("vocabPairsSetupMsg"));
+    try{
+      const selection=collectSelection();
+      const data=await getVocabList();
+      const pool=makeVocabPairsPool(data.vocabulary||[]);
+      const durationSeconds=Number($("vocabPairsDuration").value)||60;
+      const pairsPerBoard=Number($("vocabPairsCount").value)||6;
+      if(pool.length<pairsPerBoard)throw new Error("Für diese Auswahl gibt es nur "+pool.length+" eindeutige Paare. Wähle weitere Vokabelbereiche oder 5 Paare gleichzeitig.");
+      const selectionKey=selectionSignature(selection);
+      vocabPairsSession={
+        pool,
+        selectionKey,
+        durationSeconds,
+        pairsPerBoard,
+        boardPairs:shuffleItems(pool).slice(0,pairsPerBoard),
+        chosenTiles:[],
+        usedIds:new Set(),
+        score:0,
+        bestScore:0,
+        locked:false
+      };
+      vocabPairsSession.boardPairs.forEach(pair=>vocabPairsSession.usedIds.add(pair.id));
+      const localKey=vocabPairsRecordKey();
+      try{vocabPairsSession.bestScore=Number(localStorage.getItem(localKey)||0)}catch{}
+      $("vocabPairsBest").textContent=String(vocabPairsSession.bestScore);
+      $("vocabPairsScore").textContent="0";
+      $("vocabPairsActiveSettings").textContent=(selection.unitKeys.length+selection.folderIds.length)+" Vokabelbereiche · "+pairsPerBoard+" Paare gleichzeitig";
+      $("vocabPairsTimer").textContent=String(Math.floor(durationSeconds/60)).padStart(2,"0")+":"+String(durationSeconds%60).padStart(2,"0");
+      $("vocabPairsTimer").classList.remove("warn","danger");
+      $("setupCard").classList.add("hidden");
+      $("vocabPairsResultView").classList.add("hidden");
+      $("vocabPairsGameView").classList.remove("hidden");
+      $("vocabPairsArea").classList.remove("hidden");
+      renderVocabPairsBoard();
+      vocabPairsDeadline=Date.now()+durationSeconds*1000;
+      tickVocabPairs();
+      vocabPairsTimerHandle=setInterval(tickVocabPairs,250);
+      await startTrackedActivity("vocab","matching",selectionKey);
+    }catch(error){
+      showMsg($("vocabPairsSetupMsg"),error.message||"Das Paare-Spiel konnte nicht gestartet werden.","err");
+    }finally{
+      button.disabled=false;
+      button.textContent=oldText;
+    }
+  }
+
+  function tickVocabPairs(){
+    if(!vocabPairsSession||!vocabPairsTimerHandle&&Date.now()<vocabPairsDeadline)return;
+    const left=Math.max(0,Math.ceil((vocabPairsDeadline-Date.now())/1000));
+    const timer=$("vocabPairsTimer");
+    timer.textContent=String(Math.floor(left/60)).padStart(2,"0")+":"+String(left%60).padStart(2,"0");
+    timer.classList.toggle("warn",left<=15&&left>5);
+    timer.classList.toggle("danger",left<=5);
+    if(left<=0){
+      clearInterval(vocabPairsTimerHandle);
+      vocabPairsTimerHandle=null;
+      void finishTrackedActivity();
+      finishVocabPairs();
+    }
+  }
+
+  function finishVocabPairs(){
+    const session=vocabPairsSession;
+    if(!session)return;
+    const key=vocabPairsRecordKey();
+    if(session.score>session.bestScore){
+      session.bestScore=session.score;
+      try{localStorage.setItem(key,String(session.bestScore))}catch{}
+    }
+    $("vocabPairsResultScore").textContent=session.score+" Paare in "+formatVocabPairDuration(session.durationSeconds)+".";
+    $("vocabPairsResultRecord").textContent=session.bestScore>0?"Dein Rekord für diese Auswahl: "+session.bestScore+" Paare in "+formatVocabPairDuration(session.durationSeconds)+" · auf diesem Gerät gespeichert.":"";
+    $("vocabPairsGameView").classList.add("hidden");
+    $("vocabPairsResultView").classList.remove("hidden");
+  }
+
+  function formatVocabPairDuration(seconds){
+    const minutes=Math.floor(seconds/60),rest=seconds%60;
+    return minutes?minutes+" min"+(rest?" "+rest+" s":""):rest+" s";
+  }
+
+  function closeVocabPairs(){
+    if(vocabPairsTimerHandle){clearInterval(vocabPairsTimerHandle);vocabPairsTimerHandle=null}
+    void finishTrackedActivity();
+    vocabPairsSession=null;
+    $("vocabPairsArea").classList.add("hidden");
+    $("setupCard").classList.remove("hidden");
+    $("vocabPairsResultView").classList.add("hidden");
+    $("vocabPairsGameView").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  function backToVocabPairSetup(){
+    if(vocabPairsTimerHandle){clearInterval(vocabPairsTimerHandle);vocabPairsTimerHandle=null}
+    void finishTrackedActivity();
+    $("vocabPairsArea").classList.add("hidden");
+    $("setupCard").classList.remove("hidden");
+    $("vocabPairsSetup").classList.remove("hidden");
+    $("vocabPairsGameView").classList.remove("hidden");
+    $("vocabPairsResultView").classList.add("hidden");
+    window.scrollTo({top:0,behavior:"instant"});
   }
 
   function closeQuickReview(){
@@ -1910,6 +2170,12 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
   $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
   $("chooseQuickReviewBtn").addEventListener("click",()=>setVocabMode("quick"));
+  $("chooseVocabPairsBtn").addEventListener("click",()=>setVocabMode("pairs"));
+  $("startVocabPairsBtn").addEventListener("click",()=>{void startVocabPairs()});
+  $("vocabPairsBackBtn").addEventListener("click",closeVocabPairs);
+  $("vocabPairsAgainBtn").addEventListener("click",backToVocabPairSetup);
+  $("vocabPairsResultBackBtn").addEventListener("click",backToVocabPairSetup);
+
   $("startQuickReviewBtn").addEventListener("click",()=>startQuickReview());
   $("quickReviewFlashcard").addEventListener("click",flipQuickReviewCard);
   $("quickReviewCorrectBtn").addEventListener("click",()=>{void gradeQuickReview(true)});
