@@ -189,20 +189,18 @@ function germanPhrase(raw,mode,index,spanishPerson){
   const finite=forms[index];
   return (mode==="subjPresent"?"dass ":"")+subject+refl+" "+finite;
  }
- if(mode==="perfect"||mode==="subjPerfect"){
-  const prefix=mode==="subjPerfect"?"dass ":"";
-  const auxword=mode==="subjPerfect"?(aux==="sein"?(["sei","seiest","sei","seien","seiet","seien"][index]):(["habe","habest","habe","haben","habet","haben"][index])):auxPresent(aux,index);
-  return prefix+subject+" "+auxword+refl+" "+partOf(lemma);
+ if(mode==="perfect")return subject+" "+auxPresent(aux,index)+refl+" "+partOf(lemma);
+ if(mode==="subjPerfect"){
+  const auxword=aux==="sein"?["sei","seiest","sei","seien","seiet","seien"][index]:["habe","habest","habe","haben","habet","haben"][index];
+  return "dass "+subject+refl+" "+partOf(lemma)+" "+auxword;
  }
- if(mode==="pluperfect"||mode==="subjPluperfect"||mode==="conditionalPerfect"){
-  const prefix=mode==="pluperfect"?"": "dass ";
-  const auxword=mode==="pluperfect"?auxPast(aux,index):(aux==="sein"?["wäre","wärst","wäre","wären","wärt","wären"][index]:["hätte","hättest","hätte","hätten","hättet","hätten"][index]);
-  return prefix+subject+" "+partOf(lemma)+refl+" "+auxword;
- }
+ if(mode==="pluperfect")return subject+" "+auxPast(aux,index)+refl+" "+partOf(lemma);
+ if(mode==="conditionalPerfect")return subject+" "+(aux==="sein"?["wäre","wärst","wäre","wären","wärt","wären"][index]:["hätte","hättest","hätte","hätten","hättet","hätten"][index])+refl+" "+partOf(lemma);
+ if(mode==="subjPluperfect")return "dass "+subject+refl+" "+partOf(lemma)+" "+(aux==="sein"?["wäre","wärst","wäre","wären","wärt","wären"][index]:["hätte","hättest","hätte","hätten","hättet","hätten"][index]);
  if(mode==="future")return subject+" "+auxPresent("werden",index)+refl+" "+inf;
  if(mode==="futurePerfect")return subject+" "+auxPresent("werden",index)+refl+" "+partOf(lemma)+" "+aux;
  if(mode==="conditional")return subject+" "+["würde","würdest","würde","würden","würdet","würden"][index]+refl+" "+inf;
- if(mode==="subjImperfect")return "dass "+subject+" "+["würde","würdest","würde","würden","würdet","würden"][index]+refl+" "+inf;
+ if(mode==="subjImperfect")return "dass "+subject+refl+" "+inf+" "+["würde","würdest","würde","würden","würdet","würden"][index];
  if(mode==="impTu"||mode==="impVos"||mode==="impUsted"||mode==="impNeg"){
   let impIndex=index,subjectLabel=impIndex===4?"ihr":(impIndex===2||impIndex===5)?"Sie":"du";
   const strong={sein:"sei",haben:"hab",werden:"werde",nehmen:"nimm",geben:"gib",sehen:"sieh",lesen:"lies",fahren:"fahr",gehen:"geh",essen:"iss",sprechen:"sprich",helfen:"hilf",schlafen:"schlaf",wissen:"wisse",wollen:"woll",kommen:"komm",sein:"sei",tun:"tu"};
