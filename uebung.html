@@ -104,14 +104,13 @@
     .quick-review-options legend{padding:0 5px;font-weight:800}
     .quick-review-options label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:#f8fafc;font-weight:750;cursor:pointer}
     .quick-review-options input{width:18px;height:18px;margin:0;accent-color:#db2777}
-    .quick-review-stack{position:relative;max-width:720px;margin:26px auto 18px;isolation:isolate}
+    .quick-review-stack{position:relative;width:100%;margin:26px auto 18px;isolation:isolate}
     .quick-review-stack::before,.quick-review-stack::after{content:"";position:absolute;inset:5px 8px -5px;border:2px solid #99f6e4;border-radius:18px;background:#d1fae5;z-index:0}
     .quick-review-stack::before{transform:rotate(2deg) translateY(3px)}
     .quick-review-stack::after{transform:rotate(-2deg) translateY(6px)}
-    .quick-review-card{position:relative;z-index:1;width:100%;min-height:240px;display:flex;flex-direction:column;gap:12px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.2rem}
+    .quick-review-card{position:relative;z-index:1;width:calc((100% - 12px)/2);min-height:112px;margin:0 auto;display:flex;flex-direction:column;gap:8px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.1rem}
     .quick-review-card.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
-    #quizFlashcard{width:100%;min-height:240px;padding:24px;font-size:1.4rem}
-    @media(max-width:600px){#quizFlashcard{min-height:210px;padding:18px;font-size:1.2rem}}
+    #quizFlashcard{width:calc((100% - 12px)/2);min-height:112px;margin:18px auto;padding:16px;font-size:1.1rem}
     #quizFlashcard,#quickReviewFlashcard{touch-action:pan-y;user-select:none;-webkit-user-select:none;will-change:transform;transition:transform .18s ease,opacity .18s ease;position:relative;overflow:hidden}
     #quizFlashcard.is-dragging,#quickReviewFlashcard.is-dragging{transition:none;cursor:grabbing}
     #quizFlashcard.swipe-mark-right,#quickReviewFlashcard.swipe-mark-right{border-color:#16a34a}
@@ -120,8 +119,8 @@
     #quizFlashcard.swipe-mark-right::after,#quickReviewFlashcard.swipe-mark-right::after{content:"✓ GEWUSST";color:#15803d;opacity:1}
     #quizFlashcard.swipe-mark-left::after,#quickReviewFlashcard.swipe-mark-left::after{content:"↺ NOCH ÜBEN";color:#be123c;opacity:1}
     .quick-review-side-label{font-size:.9rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;opacity:.78}
-    .quick-review-card-text{font-size:clamp(1.6rem,6vw,2.2rem);font-weight:850;line-height:1.25;overflow-wrap:anywhere}
-    @media(max-width:600px){.quick-review-card{min-height:210px}.quick-review-options{gap:8px}}
+    .quick-review-card-text{font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:850;line-height:1.25;overflow-wrap:anywhere}
+    @media(max-width:600px){#quizFlashcard,.quick-review-card{min-height:95px;padding:12px;font-size:1rem}.quick-review-options{gap:8px}}
     @media(max-width:600px){.flashcard{min-height:95px;padding:12px;font-size:1rem}.flashcard-question{padding:15px}.quiz-german{font-size:1.3rem}}
     @media(max-width:600px){.vocab-preview{padding:12px}.vocab-preview th,.vocab-preview td{padding:7px 4px;font-size:.9rem}}
     .choice-vocab{background:#2563eb;color:#fff}
