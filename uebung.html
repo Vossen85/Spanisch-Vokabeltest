@@ -477,7 +477,6 @@
     <p id="quickReviewInstruction" class="tiny">Tippe die Karte an, um sie umzudrehen. Danach wählst du Richtig oder Wiederholen.</p>
     <div id="quickReviewStack" class="quick-review-stack">
       <button id="quickReviewFlashcard" class="flashcard quick-review-card" type="button" aria-label="Karte umdrehen" aria-pressed="false">
-        <span id="quickReviewSideLabel" class="quick-review-side-label">Deutsch</span>
         <span id="quickReviewCardText" class="quick-review-card-text"></span>
       </button>
     </div>
@@ -1421,7 +1420,6 @@
     $("quickReviewCorrectBtn").disabled=false;
     $("quickReviewWrongBtn").disabled=false;
     $("quickReviewInstruction").classList.remove("hidden");
-    $("quickReviewSideLabel").textContent=session.side==="de"?"Deutsch":"Spanisch";
     $("quickReviewCardText").textContent=session.side==="de"
       ?String(session.current.sourceText||"")
       :(session.current.acceptedAnswers||[]).join(" / ");
@@ -1433,9 +1431,6 @@
     const card=$("quickReviewFlashcard");
     const flipped=card.classList.toggle("is-flipped");
     card.setAttribute("aria-pressed",String(flipped));
-    $("quickReviewSideLabel").textContent=flipped
-      ?(quickReviewSession.side==="de"?"Spanisch":"Deutsch")
-      :(quickReviewSession.side==="de"?"Deutsch":"Spanisch");
     $("quickReviewCardText").textContent=flipped
       ?(quickReviewSession.side==="de"?(quickReviewSession.current.acceptedAnswers||[]).join(" / "):String(quickReviewSession.current.sourceText||""))
       :(quickReviewSession.side==="de"?String(quickReviewSession.current.sourceText||""):(quickReviewSession.current.acceptedAnswers||[]).join(" / "));
