@@ -172,7 +172,7 @@ const DE_IMP_SINGULAR={sein:"sei",haben:"hab",werden:"werde",nehmen:"nimm",geben
 function germanImperative(raw,mode,index){
  const info=normalizeGerman(raw);
  const de=info.text;
- const lemma=de.split(/\\s+/).filter(Boolean).pop()||de;
+ const lemma=de.split(/\s+/).filter(Boolean).pop()||de;
  const [prefix,core]=splitSeparable(lemma);
  const isNegative=mode==="impNeg";
  let person;
