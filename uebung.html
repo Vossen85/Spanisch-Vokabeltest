@@ -82,6 +82,20 @@
     .flashcard-question{margin-top:18px;border:1px solid #dbe2ea;border-radius:16px;padding:20px;background:#fff}
     .quiz-german{font-size:1.5rem;font-weight:850;margin-top:8px;overflow-wrap:anywhere}
     .quiz-spanish{margin-top:18px;padding:14px;border-radius:12px;background:#ecfdf5;color:#166534;font-size:1.25rem;font-weight:800;overflow-wrap:anywhere}
+    .quick-review-choice{background:#f72585;color:#fff}
+    .quick-review-options{display:flex;flex-wrap:wrap;gap:12px 18px;margin:14px 0;padding:12px 14px;border:1px solid #cbd5e1;border-radius:12px}
+    .quick-review-options legend{padding:0 5px;font-weight:800}
+    .quick-review-options label{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:#f8fafc;font-weight:750;cursor:pointer}
+    .quick-review-options input{width:18px;height:18px;margin:0;accent-color:#db2777}
+    .quick-review-stack{position:relative;max-width:720px;margin:26px auto 18px;isolation:isolate}
+    .quick-review-stack::before,.quick-review-stack::after{content:"";position:absolute;inset:5px 8px -5px;border:2px solid #99f6e4;border-radius:18px;background:#d1fae5;z-index:-1}
+    .quick-review-stack::before{transform:rotate(2deg) translateY(3px)}
+    .quick-review-stack::after{transform:rotate(-2deg) translateY(6px)}
+    .quick-review-card{position:relative;width:100%;min-height:240px;display:flex;flex-direction:column;gap:12px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.2rem}
+    .quick-review-card.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+    .quick-review-side-label{font-size:.9rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;opacity:.78}
+    .quick-review-card-text{font-size:clamp(1.6rem,6vw,2.2rem);font-weight:850;line-height:1.25;overflow-wrap:anywhere}
+    @media(max-width:600px){.quick-review-card{min-height:210px}.quick-review-options{gap:8px}}
     @media(max-width:600px){.flashcard{min-height:95px;padding:12px;font-size:1rem}.flashcard-question{padding:15px}.quiz-german{font-size:1.3rem}}
     @media(max-width:600px){.vocab-preview{padding:12px}.vocab-preview th,.vocab-preview td{padding:7px 4px;font-size:.9rem}}
     .choice-vocab{background:#2563eb;color:#fff}
@@ -234,6 +248,10 @@
         🃏 Extra-Übungsoption
         <span>Übe einen Lernordner mit Karteikarten und gemischter Abfrage.</span>
       </button>
+      <button id="chooseQuickReviewBtn" class="choice-btn choice-learn mode-btn quick-review-choice" type="button" aria-pressed="false">
+        ⚡ Schnellwiederholung
+        <span>Vorderseite wählen, umdrehen und mit ✓ oder ✕ bewerten. Falsche Karten kommen zurück.</span>
+      </button>
     </div>
 
     <h2 id="selectionHeading" style="margin-top:24px">1. Vokabelbereiche auswählen</h2>
@@ -265,6 +283,18 @@
         </div>
       </div>
       <div id="cardPracticeMsg" class="msg"></div>
+    </div>
+
+    <div id="quickReviewSetup" class="hidden">
+      <h2 style="margin-top:24px">2. Schnellwiederholung</h2>
+      <p class="tiny">Wähle einen oder mehrere Bereiche. Richtige Karten scheiden aus dem Stapel aus; falsche kommen hinten wieder hinein.</p>
+      <fieldset class="quick-review-options">
+        <legend>Welche Seite soll zuerst oben liegen?</legend>
+        <label><input type="radio" name="quickReviewSide" value="de" checked> Deutsch</label>
+        <label><input type="radio" name="quickReviewSide" value="es"> Spanisch</label>
+      </fieldset>
+      <div class="actions"><button id="startQuickReviewBtn" class="primary" type="button">Kartenstapel starten</button></div>
+      <div id="quickReviewSetupMsg" class="msg"></div>
     </div>
 
     <div id="vocabListActions" class="hidden">
@@ -330,6 +360,28 @@
     <div id="cardsDoneArea" class="hidden">
       <div id="cardsDoneMessage" class="note good"></div>
       <div class="actions"><button id="cardsDoneBackBtn" class="primary" type="button">Anderen Lernordner auswählen</button></div>
+    </div>
+  </section>
+
+  <section id="quickReviewArea" class="card hidden">
+    <div class="backline"><button id="quickReviewBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
+    <h1 id="quickReviewTitle">Schnellwiederholung</h1>
+    <p id="quickReviewSubtitle" class="sub"></p>
+    <div id="quickReviewProgress" class="tiny" aria-live="polite"></div>
+    <div id="quickReviewStack" class="quick-review-stack">
+      <button id="quickReviewFlashcard" class="flashcard quick-review-card" type="button" aria-label="Karte umdrehen" aria-pressed="false">
+        <span id="quickReviewSideLabel" class="quick-review-side-label">Deutsch</span>
+        <span id="quickReviewCardText" class="quick-review-card-text"></span>
+      </button>
+    </div>
+    <p id="quickReviewInstruction" class="tiny">Tippe die Karte an, um die andere Seite aufzudecken.</p>
+    <div id="quickReviewControls" class="actions hidden">
+      <button id="quickReviewCorrectBtn" class="good" type="button">✅ Richtig</button>
+      <button id="quickReviewWrongBtn" class="bad" type="button">❌ Falsch – kommt zurück</button>
+    </div>
+    <div id="quickReviewDone" class="hidden">
+      <div id="quickReviewDoneMessage" class="note good"></div>
+      <div class="actions"><button id="quickReviewDoneBackBtn" class="primary" type="button">Weitere Vokabeln auswählen</button></div>
     </div>
   </section>
 
@@ -434,6 +486,7 @@
   let vocabMode="test";
   let vocabListCache=null;
   let cardSession=null;
+  let quickReviewSession=null;
   let vocabTopicSelectionOpen=false;
   let studentAccountProfile=null;
   let studentTestHistoryRefresh=null;
@@ -670,6 +723,7 @@
     $("testOptions").classList.toggle("hidden",mode!=="test");
     $("vocabListActions").classList.toggle("hidden",mode!=="list");
     $("cardPracticeOptions").classList.toggle("hidden",mode!=="cards");
+    $("quickReviewSetup").classList.toggle("hidden",mode!=="quick");
     const showTopicTree=mode!=="cards"||vocabTopicSelectionOpen;
     $("selectionHeading").classList.toggle("hidden",!showTopicTree);
     $("selectionHelp").classList.toggle("hidden",!showTopicTree);
@@ -678,12 +732,14 @@
     $("chooseVocabTestBtn").setAttribute("aria-pressed",String(mode==="test"));
     $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
     $("chooseCardPracticeBtn").setAttribute("aria-pressed",String(mode==="cards"));
+    $("chooseQuickReviewBtn").setAttribute("aria-pressed",String(mode==="quick"));
     $("cardModeErrorsBtn").disabled=!PERSONALIZED_MODE;
     $("cardModeMixBtn").disabled=!PERSONALIZED_MODE;
     $("cardPersonalNote").classList.toggle("hidden",PERSONALIZED_MODE);
     hideMsg($("setupMsg"));
     hideMsg($("vocabListMsg"));
     hideMsg($("cardPracticeMsg"));
+    hideMsg($("quickReviewSetupMsg"));
     $("vocabPreview").classList.add("hidden");
   }
 
@@ -883,6 +939,134 @@
       [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
     }
     return shuffled;
+  }
+
+  async function startQuickReview(){
+    const button=$("startQuickReviewBtn");
+    button.disabled=true;
+    const oldText=button.textContent;
+    button.textContent="Stapel wird vorbereitet …";
+    hideMsg($("quickReviewSetupMsg"));
+    try{
+      const selection=collectSelection();
+      const data=await getVocabList();
+      const rows=(data.vocabulary||[]).filter(row=>row&&row.sourceText&&Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length);
+      if(!rows.length)throw new Error("Für diese Auswahl wurden keine passenden Vokabeln gefunden.");
+      const side=document.querySelector('input[name="quickReviewSide"]:checked')?.value==="es"?"es":"de";
+      quickReviewSession={
+        folderTitle:"Schnellwiederholung",
+        rows,
+        queue:shuffleItems(rows),
+        current:null,
+        side,
+        total:rows.length,
+        correct:0,
+        wrongAttempts:0,
+        wrongIds:new Set(),
+        selectionKey:selectionSignature(selection)
+      };
+      $("setupCard").classList.add("hidden");
+      $("cardPracticeArea").classList.add("hidden");
+      $("quickReviewArea").classList.remove("hidden");
+      $("quickReviewTitle").textContent="Schnellwiederholung";
+      $("quickReviewSubtitle").textContent=rows.length+" Vokabeln · "+(side==="de"?"Deutsch":"Spanisch")+" zuerst";
+      $("quickReviewDone").classList.add("hidden");
+      $("quickReviewStack").classList.remove("hidden");
+      await startTrackedActivity("vocab","extra",quickReviewSession.selectionKey);
+      renderQuickReviewCard();
+    }catch(error){
+      showMsg($("quickReviewSetupMsg"),error.message||"Die Schnellwiederholung konnte nicht gestartet werden.","err");
+    }finally{
+      button.disabled=false;
+      button.textContent=oldText;
+    }
+  }
+
+  function renderQuickReviewCard(){
+    const session=quickReviewSession;
+    if(!session)return;
+    if(!session.queue.length){
+      session.current=null;
+      finishTrackedActivity();
+      $("quickReviewStack").classList.add("hidden");
+      $("quickReviewInstruction").classList.add("hidden");
+      $("quickReviewControls").classList.add("hidden");
+      $("quickReviewProgress").textContent=session.correct+" von "+session.total+" Vokabeln sicher";
+      const returned=session.wrongIds.size;
+      $("quickReviewDoneMessage").textContent="Geschafft! Du hast alle "+session.total+" Vokabeln richtig beantwortet."+(returned?" "+returned+" "+(returned===1?"Vokabel":"Vokabeln")+" kamen nach einem Fehler noch einmal.":"");
+      $("quickReviewDone").classList.remove("hidden");
+      return;
+    }
+    session.current=session.queue.shift();
+    const card=$("quickReviewFlashcard");
+    card.classList.remove("is-flipped");
+    card.setAttribute("aria-pressed","false");
+    $("quickReviewControls").classList.add("hidden");
+    $("quickReviewInstruction").classList.remove("hidden");
+    $("quickReviewSideLabel").textContent=session.side==="de"?"Deutsch":"Spanisch";
+    $("quickReviewCardText").textContent=session.side==="de"
+      ?String(session.current.sourceText||"")
+      :(session.current.acceptedAnswers||[]).join(" / ");
+    $("quickReviewProgress").textContent="Noch "+(session.queue.length+1)+" im Stapel · "+session.correct+" richtig · "+session.wrongIds.size+" kommen zurück";
+  }
+
+  function flipQuickReviewCard(){
+    if(!quickReviewSession?.current)return;
+    const card=$("quickReviewFlashcard");
+    const flipped=card.classList.toggle("is-flipped");
+    card.setAttribute("aria-pressed",String(flipped));
+    $("quickReviewSideLabel").textContent=flipped
+      ?(quickReviewSession.side==="de"?"Spanisch":"Deutsch")
+      :(quickReviewSession.side==="de"?"Deutsch":"Spanisch");
+    $("quickReviewCardText").textContent=flipped
+      ?(quickReviewSession.side==="de"?(quickReviewSession.current.acceptedAnswers||[]).join(" / "):String(quickReviewSession.current.sourceText||""))
+      :(quickReviewSession.side==="de"?String(quickReviewSession.current.sourceText||""):(quickReviewSession.current.acceptedAnswers||[]).join(" / "));
+    $("quickReviewControls").classList.toggle("hidden",!flipped);
+    $("quickReviewInstruction").textContent=flipped?"Bewerte die Karte mit Haken oder Kreuz.":"Tippe die Karte an, um die andere Seite aufzudecken.";
+  }
+
+  async function gradeQuickReview(correct){
+    const session=quickReviewSession;
+    if(!session?.current)return;
+    const current=session.current;
+    const buttons=[$("quickReviewCorrectBtn"),$("quickReviewWrongBtn")];
+    buttons.forEach(button=>button.disabled=true);
+    if(PERSONALIZED_MODE&&studentAccountProfile){
+      try{
+        const folderIds=(current.folderIds||[]).map(Number);
+        const groupId=String(current.progressGroupKey||folderIds[0]||"quick-review");
+        await studentProgress({
+          action:"record",
+          itemType:"vocab",
+          groupKey:groupId,
+          itemKey:String(current.progressItemKey||groupId+":"+String(current.sourceText||"")),
+          itemLabel:String(current.sourceText||""),
+          correct,
+          sessionId:currentActivitySessionId||undefined
+        });
+        $("cardsSaveStatus").textContent="Lernfortschritt gespeichert.";
+      }catch(error){
+        $("cardsSaveStatus").textContent="Der Lernfortschritt konnte gerade nicht gespeichert werden.";
+        console.warn(error);
+      }
+    }
+    if(correct)session.correct++;
+    else{
+      session.wrongAttempts++;
+      session.wrongIds.add(String(current.sourceText||current.acceptedAnswers?.[0]||""));
+      session.queue.push(current);
+    }
+    session.current=null;
+    buttons.forEach(button=>button.disabled=false);
+    renderQuickReviewCard();
+  }
+
+  function closeQuickReview(){
+    void finishTrackedActivity();
+    quickReviewSession=null;
+    $("quickReviewArea").classList.add("hidden");
+    $("setupCard").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"instant"});
   }
 
   async function startCardPractice(mode="topic"){
@@ -1725,6 +1909,13 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("chooseVocabTestBtn").addEventListener("click",()=>setVocabMode("test"));
   $("chooseVocabListBtn").addEventListener("click",()=>setVocabMode("list"));
   $("chooseCardPracticeBtn").addEventListener("click",()=>setVocabMode("cards"));
+  $("chooseQuickReviewBtn").addEventListener("click",()=>setVocabMode("quick"));
+  $("startQuickReviewBtn").addEventListener("click",()=>startQuickReview());
+  $("quickReviewFlashcard").addEventListener("click",flipQuickReviewCard);
+  $("quickReviewCorrectBtn").addEventListener("click",()=>{void gradeQuickReview(true)});
+  $("quickReviewWrongBtn").addEventListener("click",()=>{void gradeQuickReview(false)});
+  $("quickReviewBackBtn").addEventListener("click",closeQuickReview);
+  $("quickReviewDoneBackBtn").addEventListener("click",closeQuickReview);
   $("cardModeTopicBtn").addEventListener("click",()=>{vocabTopicSelectionOpen=true;setVocabMode("cards");$("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});});
   $("cardModeErrorsBtn").addEventListener("click",()=>startCardPractice("errors"));
   $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));
