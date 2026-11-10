@@ -19,6 +19,9 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
 .primary{background:#0f766e;color:#fff}.secondary{background:#e2e8f0;color:#172033}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .topic-group{border-top:1px solid #e2e8f0;padding-top:16px;margin-top:16px}
+.topic-group-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.topic-group-head input{width:19px;height:19px;flex:0 0 auto;margin:0;accent-color:#2563eb;cursor:pointer}
+.topic-group-head h2{margin:0}
 .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:9px}
 .topic{display:flex;gap:10px;align-items:flex-start;border:1px solid #dbe2ea;border-radius:12px;padding:11px 12px;background:#fafafa;cursor:pointer}
 .topic:hover{background:#f1f5f9}.topic input{width:19px;height:19px;margin-top:1px}
@@ -452,11 +455,25 @@ for(const t of TOPICS){if(!byGroup.has(t.group))byGroup.set(t.group,[]);byGroup.
 const list=document.getElementById("topicList");
 for(const [group,topics] of byGroup){
   const sec=document.createElement("div");sec.className="topic-group";
-  sec.innerHTML="<h2>"+group+"</h2><div class='topic-grid'></div>";
+  sec.innerHTML="<div class='topic-group-head'><input type='checkbox' class='topic-group-check' aria-label='Alle Unterthemen auswählen'><h2>"+group+"</h2></div><div class='topic-grid'></div>";
   const grid=sec.querySelector(".topic-grid");
+  const groupCheck=sec.querySelector(".topic-group-check");
+  const refreshGroup=()=>{
+    const checks=[...grid.querySelectorAll(".topic input")];
+    const all=checks.length>0&&checks.every(x=>x.checked),some=checks.some(x=>x.checked);
+    groupCheck.checked=all;
+    groupCheck.indeterminate=some&&!all;
+    groupCheck.title=all?"Auswahl aufheben":"Alle Unterthemen auswählen";
+    groupCheck.setAttribute("aria-label",all?"Auswahl aufheben":"Alle Unterthemen auswählen");
+  };
+  groupCheck.addEventListener("change",()=>{
+    grid.querySelectorAll(".topic input").forEach(x=>x.checked=groupCheck.checked);
+    refreshGroup();
+  });
   for(const t of topics){
     const lab=document.createElement("label");lab.className="topic";
     lab.innerHTML="<input type='checkbox' value='"+t.id+"'><span><strong>"+t.title+"</strong><span>"+t.verbs.length+" Verb"+(t.verbs.length===1?"":"en")+"</span></span>";
+    lab.querySelector("input").addEventListener("change",refreshGroup);
     grid.appendChild(lab);
   }
   list.appendChild(sec);
@@ -527,8 +544,8 @@ function downloadPdf(){
 }
 document.getElementById("showBtn").addEventListener("click",render);
 document.getElementById("pdfBtn").addEventListener("click",downloadPdf);
-document.getElementById("allBtn").addEventListener("click",()=>document.querySelectorAll(".topic input").forEach(x=>x.checked=true));
-document.getElementById("noneBtn").addEventListener("click",()=>document.querySelectorAll(".topic input").forEach(x=>x.checked=false));
+document.getElementById("allBtn").addEventListener("click",()=>{document.querySelectorAll(".topic input").forEach(x=>x.checked=true);document.querySelectorAll(".topic-group-check").forEach(x=>{x.checked=true;x.indeterminate=false})});
+document.getElementById("noneBtn").addEventListener("click",()=>{document.querySelectorAll(".topic input").forEach(x=>x.checked=false);document.querySelectorAll(".topic-group-check").forEach(x=>{x.checked=false;x.indeterminate=false})});
 document.getElementById("backBtn").addEventListener("click",()=>location.href="uebung.html");
 </script>
 <script src="./student-progress-widget.js"></script>
