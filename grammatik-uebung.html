@@ -18,7 +18,7 @@ button,input{font:inherit}button{border:0;border-radius:10px;padding:12px 16px;f
 input[type=number]{width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff}
 .note{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-top:14px}.msg{padding:11px 13px;border-radius:10px;margin-top:12px;display:none}.msg.show{display:block}.err{background:#fef2f2;color:#991b1b}.ok{background:#ecfdf5;color:#166534}
 .backline{margin-bottom:14px}.groups{display:grid;gap:0;margin-top:14px}.group{border:0;border-top:1px solid #4b5563;border-radius:0;background:transparent;padding:16px 0 0;margin-top:18px}
-.group-title{font-size:1.55rem;font-weight:850;margin:18px 0 10px}.topics{display:grid;gap:9px}.topic{border:1px solid #4b5563;border-radius:12px;background:transparent;overflow:hidden}
+.group-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 10px}.group-title{font-size:1.55rem;font-weight:850;margin:0}.group-select-all{padding:8px 11px;font-size:.88rem;white-space:nowrap}.topics{display:grid;gap:9px}.topic{border:1px solid #4b5563;border-radius:12px;background:transparent;overflow:hidden}
 .topic-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:14px 16px}.topic-main{display:flex;gap:12px;align-items:flex-start;flex:1;cursor:pointer;min-width:0}.topic-main input{width:19px;height:19px;margin-top:2px;flex:none;accent-color:#0f766e}
 .topic-title{font-weight:800;line-height:1.25}.topic-meta{display:block;font-size:.9rem;color:#aab4c5;margin-top:3px}.topic-toggle{padding:8px 10px;background:#3f4650;color:#f1f5f9;border:1px solid #5b6470;flex:0 0 auto}
 .topic:has(.topic-check:checked){border-color:#0f766e}.topic-children{border-top:1px solid #4b5563;padding:10px 12px}.verb-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px}.verb-tools button{padding:7px 10px}
@@ -31,7 +31,7 @@ input[type=number]{width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-
 .resultbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}.resultbox div{background:#f8fafc;border-radius:10px;padding:12px}.resultbox strong{display:block;font-size:1.2rem}
 .mistake{border:1px solid #fecaca;background:#fff;border-radius:12px;padding:12px;margin-top:10px}.mistake.almost{border-color:#fde68a}.mistake-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.mistake-title{font-weight:850}.answer-line{font-size:.92rem;margin-top:5px}.wrong{color:#b91c1c;font-weight:750}.half{color:#9a6700;font-weight:750}.right{color:#166534;font-weight:750}
 a.btn{text-decoration:none;display:inline-block;border-radius:10px;padding:12px 16px;font-weight:750}
-@media(max-width:650px){body{padding:12px}.card{padding:16px}.row{grid-template-columns:1fr}.summary{grid-template-columns:1fr}.input-row{grid-template-columns:1fr;gap:5px}.topbar-inner{align-items:flex-start;flex-direction:column}.resultbox{grid-template-columns:1fr 1fr}.topic-head{align-items:flex-start;flex-direction:column}.topic-toggle{align-self:flex-start}}
+@media(max-width:650px){body{padding:12px}.card{padding:16px}.row{grid-template-columns:1fr}.summary{grid-template-columns:1fr}.input-row{grid-template-columns:1fr;gap:5px}.topbar-inner{align-items:flex-start;flex-direction:column}.resultbox{grid-template-columns:1fr 1fr}.group-head{align-items:flex-start;flex-direction:column}.group-select-all{align-self:flex-start}.topic-head{align-items:flex-start;flex-direction:column}.topic-toggle{align-self:flex-start}}
 
   .avanza-home-header{margin:0 0 12px;line-height:0}
   .avanza-home-link{display:inline-flex;align-items:center;justify-content:center;border-radius:13px;line-height:0;outline-offset:3px}
@@ -138,21 +138,24 @@ function renderCatalog(){
  const root=$("groups");root.innerHTML="";const groups=new Map();
  for(const t of catalog){if(!groups.has(t.group))groups.set(t.group,[]);groups.get(t.group).push(t)}
  for(const [name,topics] of groups){
-  const g=document.createElement("div");g.className="group";g.innerHTML='<div class="group-title">'+esc(name)+'</div><div class="topics"></div>';const holder=g.querySelector(".topics");
+  const g=document.createElement("div");g.className="group";g.innerHTML='<div class="group-head"><h3 class="group-title">'+esc(name)+'</h3><button type="button" class="secondary group-select-all">Alle Unterthemen auswählen</button></div><div class="topics"></div>';const holder=g.querySelector(".topics");
+  const groupButton=g.querySelector(".group-select-all");
+  const refreshGroup=()=>{const checks=[...holder.querySelectorAll(".topic-check")],all=checks.length>0&&checks.every(x=>x.checked);groupButton.textContent=all?"Auswahl aufheben":"Alle Unterthemen auswählen";groupButton.setAttribute("aria-pressed",String(all))};
+  groupButton.addEventListener("click",()=>{const boxes=[...holder.querySelectorAll(".topic")],checks=boxes.map(x=>x.querySelector(".topic-check")),clear=checks.length>0&&checks.every(x=>x.checked);boxes.forEach(box=>{box.querySelector(".topic-check").checked=!clear;if(clear){box.querySelectorAll(".verb-check").forEach(x=>x.checked=false);box.querySelector(".fixed-count").textContent="0 fest ausgewählt"}});updateSummary();refreshGroup()});
   for(const topic of topics){
    const box=document.createElement("div");box.className="topic";box.dataset.topicId=topic.id;
    box.innerHTML='<div class="topic-head"><label class="topic-main"><input type="checkbox" class="topic-check"><span><span class="topic-title">'+esc(topic.title)+'</span><span class="topic-meta">'+topic.verbs.length+' Verben · <span class="fixed-count">0 fest ausgewählt</span></span></span></label><button type="button" class="topic-toggle">Verben auswählen ▾</button></div>'+
    '<div class="topic-children hidden"><div class="verb-tools"><button type="button" class="secondary all-fixed">Alle fest auswählen</button><button type="button" class="secondary clear-fixed">Auswahl löschen</button></div><div class="verb-grid">'+
    topic.verbs.map(v=>'<label class="verb-row"><input type="checkbox" class="verb-check" data-verb="'+esc(v.verb)+'"><span>'+esc(v.verb)+'<small>'+esc(v.de)+'</small></span></label>').join("")+'</div></div>';
    const check=box.querySelector(".topic-check"),children=box.querySelector(".topic-children"),toggle=box.querySelector(".topic-toggle"),verbs=[...box.querySelectorAll(".verb-check")],counter=box.querySelector(".fixed-count");
-   const refresh=()=>{const n=verbs.filter(x=>x.checked).length;counter.textContent=n+" fest ausgewählt";if(n)check.checked=true;updateSummary()};
-   check.addEventListener("change",updateSummary);verbs.forEach(v=>v.addEventListener("change",refresh));
+   const refresh=()=>{const n=verbs.filter(x=>x.checked).length;counter.textContent=n+" fest ausgewählt";if(n)check.checked=true;updateSummary();refreshGroup()};
+   check.addEventListener("change",()=>{updateSummary();refreshGroup()});verbs.forEach(v=>v.addEventListener("change",refresh));
    toggle.addEventListener("click",()=>{children.classList.toggle("hidden");toggle.textContent=children.classList.contains("hidden")?"Verben auswählen ▾":"Verben ausblenden ▴"});
    box.querySelector(".all-fixed").addEventListener("click",()=>{verbs.forEach(x=>x.checked=true);refresh()});
    box.querySelector(".clear-fixed").addEventListener("click",()=>{verbs.forEach(x=>x.checked=false);refresh()});
    holder.appendChild(box);
   }
-  root.appendChild(g);
+  refreshGroup();root.appendChild(g);
  }
  updateSummary();
 }
