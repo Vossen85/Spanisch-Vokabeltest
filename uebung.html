@@ -91,14 +91,15 @@
     .choice-progress:focus-visible{outline:3px solid #f9a8d4;outline-offset:3px}
     .choice-learn{background:#0f766e;color:#fff}
     .choice-test{background:#c2410c;color:#fff}
-    .grammar-card-conjugations,.grammar-card-tests,.grammar-card-flashcards,.grammar-card-pairs{position:relative;isolation:isolate;overflow:hidden;border:2px solid rgba(255,255,255,.24);box-shadow:0 10px 26px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.22)}
-    .grammar-card-conjugations{background:linear-gradient(135deg,#00c8d7,#007f86);color:#fff}
-    .grammar-card-tests{background:linear-gradient(135deg,#ff6b00,#d90429);color:#fff}
-    .grammar-card-flashcards{background:linear-gradient(135deg,#c77dff,#7209b7);color:#fff}
-    .grammar-card-pairs{background:linear-gradient(135deg,#f72585,#b5179e);color:#fff}
-    .grammar-card-conjugations::before,.grammar-card-tests::before,.grammar-card-flashcards::before,.grammar-card-pairs::before{content:"";position:absolute;z-index:-1;top:0;left:0;right:0;height:11px;background:repeating-linear-gradient(90deg,#ffbe0b 0 12px,#fb5607 12px 24px,#f72585 24px 36px,#8338ec 36px 48px,#3a86ff 48px 60px,#06d6a0 60px 72px)}
+    .grammar-card-conjugations,.grammar-card-tests,.grammar-card-flashcards,.grammar-card-pairs{position:relative;isolation:isolate;overflow:hidden;color-scheme:light;color-scheme:only light;forced-color-adjust:none;border:2px solid rgba(255,255,255,.55);box-shadow:0 9px 22px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.32)}
+    .grammar-card-conjugations{background:linear-gradient(135deg,#10d7c0,#00a9dc);color:#fff}
+    .grammar-card-tests{background:linear-gradient(135deg,#ff9d00,#ff4d2e);color:#fff}
+    .grammar-card-flashcards{background:linear-gradient(135deg,#d000f5,#8b35ff);color:#fff}
+    .grammar-card-pairs{background:linear-gradient(135deg,#ff1687,#ff5b35);color:#fff}
+    .grammar-card-conjugations::before,.grammar-card-tests::before,.grammar-card-flashcards::before,.grammar-card-pairs::before{content:"";position:absolute;z-index:0;top:0;left:0;right:0;height:18px;background:repeating-conic-gradient(#ffbe0b 0 25%,#f72585 0 50%,#06d6a0 0 75%,#4361ee 0 100%) 0/22px 22px;box-shadow:0 2px 5px rgba(0,0,0,.15)}
+    .grammar-card-conjugations>*,.grammar-card-tests>*,.grammar-card-flashcards>*,.grammar-card-pairs>*{position:relative;z-index:1}
     .grammar-choice-title{display:flex;align-items:center;gap:12px;font-size:1.25rem;font-weight:800;line-height:1.2}
-    .grammar-choice-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;width:52px;height:52px;border:2px solid rgba(255,255,255,.7);border-radius:16px;background:#ffd60a;color:#172033;box-shadow:0 3px 12px rgba(0,0,0,.2);font-size:1.7rem!important;opacity:1!important}
+    .grammar-choice-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;width:52px;height:52px;border:2px solid #fff;border-radius:16px;background:#ffe600;color:#172033;box-shadow:0 3px 10px rgba(0,0,0,.18);font-size:1.7rem!important;opacity:1!important}
     .grammar-card-tests .grammar-choice-icon{background:#00f5d4}
     .grammar-card-flashcards .grammar-choice-icon{background:#ffbe0b}
     .grammar-card-pairs .grammar-choice-icon{background:#caff00}
