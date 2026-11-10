@@ -182,12 +182,12 @@ function germanPhrase(raw,mode,index,spanishPerson){
  const sep=splitSeparable(lemma)[0];
  const inf=de;
  const aux=auxFor(lemma,info.reflexive);
- if(mode==="gerund")return subject+refl+" "+finiteForms(lemma,"present")[index]+" gerade";
+ if(mode==="gerund")return subject+" "+finiteForms(lemma,"present")[index]+refl+" gerade";
  if(mode==="present"||mode==="indef"||mode==="imperfect"||mode==="subjPresent"){
   const ten=mode==="indef"||mode==="imperfect"?"past":"present";
   const forms=finiteForms(lemma,ten);
   const finite=forms[index];
-  return (mode==="subjPresent"?"dass ":"")+subject+refl+" "+finite;
+  return mode==="subjPresent"?"dass "+subject+refl+" "+finite:subject+" "+finite+refl;
  }
  if(mode==="perfect")return subject+" "+auxPresent(aux,index)+refl+" "+partOf(lemma);
  if(mode==="subjPerfect"){
