@@ -168,6 +168,29 @@ function partOf(lemma){
 function auxFor(lemma,reflexive){return reflexive?"haben":SEIN_AUX.has(lemma)?"sein":"haben"}
 function auxPresent(aux,i){return (DE_PRESENT[aux]||finiteForms(aux,"present"))[i]}
 function auxPast(aux,i){return (DE_PAST[aux]||finiteForms(aux,"past"))[i]}
+const DE_IMP_SINGULAR={sein:"sei",haben:"hab",werden:"werde",nehmen:"nimm",geben:"gib",sehen:"sieh",lesen:"lies",fahren:"fahr",gehen:"geh",essen:"iss",sprechen:"sprich",helfen:"hilf",schlafen:"schlaf",wissen:"wisse",wollen:"woll",kommen:"komm",tun:"tu",laufen:"lauf",tragen:"trag",treffen:"triff",empfehlen:"empfiehl",sterben:"stirb",wachsen:"wachs",brechen:"brich",halten:"halt",lassen:"lass"};
+function germanImperative(raw,mode,index){
+ const info=normalizeGerman(raw);
+ const de=info.text;
+ const lemma=de.split(/\\s+/).filter(Boolean).pop()||de;
+ const [prefix,core]=splitSeparable(lemma);
+ const isNegative=mode==="impNeg";
+ let person;
+ if(mode==="impTu"||(isNegative&&index===1))person="du";
+ else if(mode==="impVos"||(isNegative&&index===4))person="plural";
+ else person="formal";
+ let verb;
+ if(person==="du")verb=DE_IMP_SINGULAR[core]||finiteForms(core,"present")[1].replace(/st$/,"");
+ else if(person==="plural")verb=finiteForms(core,"present")[4];
+ else verb=core==="sein"?"seien":core;
+ const parts=[verb];
+ if(person==="formal")parts.push("Sie");
+ if(info.reflexive)parts.push(person==="du"?"dich":person==="plural"?"euch":"sich");
+ if(isNegative)parts.push("nicht");
+ if(prefix)parts.push(prefix);
+ const phrase=parts.join(" ");
+ return phrase.charAt(0).toLocaleUpperCase("de-DE")+phrase.slice(1)+"!";
+}
 function germanPhrase(raw,mode,index,spanishPerson){
  const info=normalizeGerman(raw);let de=info.text;
  if(de==="geboren werden"){
@@ -201,16 +224,7 @@ function germanPhrase(raw,mode,index,spanishPerson){
  if(mode==="futurePerfect")return subject+" "+auxPresent("werden",index)+refl+" "+partOf(lemma)+" "+aux;
  if(mode==="conditional")return subject+" "+["würde","würdest","würde","würden","würdet","würden"][index]+refl+" "+inf;
  if(mode==="subjImperfect")return "dass "+subject+refl+" "+inf+" "+["würde","würdest","würde","würden","würdet","würden"][index];
- if(mode==="impTu"||mode==="impVos"||mode==="impUsted"||mode==="impNeg"){
-  let impIndex=index,subjectLabel=impIndex===4?"ihr":(impIndex===2||impIndex===5)?"Sie":"du";
-  const strong={sein:"sei",haben:"hab",werden:"werde",nehmen:"nimm",geben:"gib",sehen:"sieh",lesen:"lies",fahren:"fahr",gehen:"geh",essen:"iss",sprechen:"sprich",helfen:"hilf",schlafen:"schlaf",wissen:"wisse",wollen:"woll",kommen:"komm",sein:"sei",tun:"tu"};
-  let form;
-  if(subjectLabel==="Sie")form=inf.charAt(0).toUpperCase()+inf.slice(1)+" Sie";
-  else if(subjectLabel==="ihr")form=finiteForms(lemma,"present")[4]+(sep?" "+sep:"");
-  else {form=strong[lemma]||finiteForms(lemma,"present")[1].replace(/st$/,"");if(sep)form+=" "+sep}
-  const negative=mode==="impNeg"?"nicht ":"";
-  return subjectLabel+": "+(negative?negative.charAt(0).toUpperCase()+negative.slice(1):"")+form+(info.reflexive?" "+REFLEXIVE[impIndex]:"")+"!";
- }
+ if(mode==="impTu"||mode==="impVos"||mode==="impUsted"||mode==="impNeg")return germanImperative(raw,mode,index);
  return subject+refl+" "+finiteForms(lemma,"present")[index];
 }
 function shuffle(items){const a=items.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
