@@ -161,6 +161,50 @@
   
     .quarter-label>span{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
     .quarter-title{display:block;color:#64748b;font-family:inherit;font-size:.88rem;font-style:normal;font-weight:600;line-height:1.35;margin-top:2px}
+    .weekly-planner{margin:16px 0 22px;padding:18px;border:2px solid #d6e4e6;border-radius:20px;background:#fff;box-shadow:0 8px 22px rgba(15,23,42,.07)}
+    .weekly-planner-heading h2{margin:0 0 5px;font-size:1.45rem}
+    .weekly-planner-intro{margin:0;color:#64748b;line-height:1.45}
+    .weekly-planner-navigation{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;margin:16px 0}
+    .weekly-planner-navigation>button{padding:9px 12px;font-size:.88rem;white-space:nowrap}
+    .weekly-planner-week-display{text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px}
+    #plannerWeekLabel{font-size:1rem}
+    .planner-this-week{padding:4px 8px;background:transparent;color:#2563eb;font-size:.82rem}
+    .weekly-planner-summary{margin:12px 0 16px;padding:12px 14px;border-radius:13px;background:#f1f5f9}
+    .weekly-planner-summary-text{font-size:.92rem;font-weight:750}
+    .weekly-planner-progress{height:9px;margin-top:8px;border-radius:999px;background:#dbe2ea;overflow:hidden}
+    .weekly-planner-progress span{display:block;width:0;height:100%;border-radius:inherit;background:#00a89f;transition:width .2s ease}
+    .weekly-planner-days{display:grid;gap:12px}
+    .weekly-planner-day{--planner-day:#00a89f;--planner-day-soft:#e6fffb;border:1px solid #dbe2ea;border-left:7px solid var(--planner-day);border-radius:15px;padding:12px;background:#fff}
+    .weekly-planner-day.monday{--planner-day:#00a89f;--planner-day-soft:#e6fffb}
+    .weekly-planner-day.tuesday{--planner-day:#e67500;--planner-day-soft:#fff2df}
+    .weekly-planner-day.wednesday{--planner-day:#d80075;--planner-day-soft:#fff0f7}
+    .weekly-planner-day.thursday{--planner-day:#7134df;--planner-day-soft:#f2edff}
+    .weekly-planner-day.friday{--planner-day:#1664d9;--planner-day-soft:#eaf2ff}
+    .weekly-planner-day-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;padding:8px 10px;border-radius:11px;background:var(--planner-day-soft)}
+    .weekly-planner-day-title{margin:0;color:var(--planner-day);font-size:1.05rem;font-weight:850}
+    .weekly-planner-day-date{margin-left:6px;color:#64748b;font-size:.82rem;font-weight:650}
+    .weekly-planner-day-total{flex:0 0 auto;color:#475569;font-size:.82rem;font-weight:750}
+    .weekly-planner-task-list{display:grid;gap:7px}
+    .weekly-planner-task{display:grid;grid-template-columns:34px minmax(0,1fr) 96px 34px;align-items:center;gap:7px}
+    .weekly-planner-check{width:25px;height:25px;margin:0;accent-color:var(--planner-day);cursor:pointer}
+    .weekly-planner-topic,.weekly-planner-minutes{width:100%;min-width:0;padding:9px 10px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#172033;font:inherit}
+    .weekly-planner-topic{font-size:.95rem}
+    .weekly-planner-minutes{padding:9px 6px;text-align:center;font-size:.9rem}
+    .weekly-planner-topic:focus,.weekly-planner-minutes:focus{outline:3px solid color-mix(in srgb,var(--planner-day) 30%,white);border-color:var(--planner-day)}
+    .weekly-planner-task.is-done .weekly-planner-topic{text-decoration:line-through;color:#64748b;background:#f8fafc}
+    .weekly-planner-remove{padding:6px 0;background:transparent;color:#64748b;font-size:1.2rem}
+    .weekly-planner-remove:hover{background:#f1f5f9;color:#b91c1c}
+    .weekly-planner-add{margin-top:9px;padding:7px 10px;border-radius:9px;background:var(--planner-day-soft);color:var(--planner-day);font-size:.85rem}
+    .weekly-planner-save-status{min-height:1.35em;margin-top:12px;color:#64748b;font-size:.82rem}
+    .weekly-planner-save-status.is-saved{color:#087443}
+    .weekly-planner-save-status.is-error{color:#b91c1c}
+    @media(max-width:600px){
+      .weekly-planner{padding:13px}.weekly-planner-navigation{grid-template-columns:1fr 1fr;gap:6px}
+      .weekly-planner-week-display{grid-column:1/-1;grid-row:1}.weekly-planner-navigation>button{width:100%;font-size:.8rem;padding:8px 5px}
+      .weekly-planner-task{grid-template-columns:30px minmax(0,1fr) 72px 28px;gap:5px}
+      .weekly-planner-topic,.weekly-planner-minutes{padding:8px 6px;font-size:.85rem}
+      .weekly-planner-day{padding:9px}.weekly-planner-day-header{padding:7px 8px}
+    }
     .student-account-box{margin:16px 0 20px;padding:16px;border:1px solid #5eead4;border-radius:16px;background:#ccfbf1;color:#134e4a}
     #studentAccountBox .tiny{color:#115e59}
     #studentAccountName{display:inline-block;margin-bottom:4px;font-size:1.05rem}
@@ -186,12 +230,29 @@
   <section id="portalCard" class="card">
     <h1>Spanisch – Lernen & Testen</h1>
     <p class="sub">Was möchtest du üben?</p>
-    <div id="studentAccountBox" class="student-account-box">
-      <div id="guestAccountLink"><p class="tiny">Möchtest du deinen Lernfortschritt speichern und falsche Karteikarten später wiederholen?</p><a class="button secondary" href="konto.html?v=20261107-2">Zum persönlichen Lernbereich mit Zugangscode</a></div>
-      <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p>
-        <div id="weeklyAssignmentNotice" class="tiny"></div><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
-      <div id="studentAccountMsg" class="msg"></div>
-    </div>
+    <section id="weeklyPlanner" class="weekly-planner" aria-labelledby="weeklyPlannerTitle">
+      <div class="weekly-planner-heading">
+        <div>
+          <h2 id="weeklyPlannerTitle">Mein Wochenlernplan</h2>
+          <p class="weekly-planner-intro">Plane, was du an den einzelnen Tagen lernen möchtest. Trage die Minuten ein und hake ab, was du erledigt hast.</p>
+        </div>
+      </div>
+      <div class="weekly-planner-navigation">
+        <button id="plannerPrevWeekBtn" class="secondary" type="button" aria-label="Vorherige Woche">← Vorwoche</button>
+        <div class="weekly-planner-week-display">
+          <strong id="plannerWeekLabel"></strong>
+          <button id="plannerThisWeekBtn" class="planner-this-week" type="button">Diese Woche</button>
+        </div>
+        <button id="plannerNextWeekBtn" class="secondary" type="button" aria-label="Nächste Woche">Nächste Woche →</button>
+      </div>
+      <div class="weekly-planner-summary" aria-live="polite">
+        <div class="weekly-planner-summary-text" id="plannerSummaryText"></div>
+        <div class="weekly-planner-progress" role="progressbar" aria-label="Geplante Lernzeit erledigt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="plannerProgressBar"></span></div>
+      </div>
+      <div id="plannerDays" class="weekly-planner-days"></div>
+      <div id="plannerSaveStatus" class="weekly-planner-save-status" role="status" aria-live="polite"></div>
+    </section>
+
     <div class="choice-grid">
       <button id="openVocabBtn" class="choice-btn choice-vocab" type="button">
         📚 Vokabeln
@@ -209,6 +270,12 @@
         📈 Lernfortschritt
         <span>Wochenberichte mit Lernzeit, richtigen Antworten und Karten zum Wiederholen</span>
       </button>
+    </div>
+    <div id="studentAccountBox" class="student-account-box">
+      <div id="guestAccountLink"><p class="tiny">Möchtest du deinen Lernfortschritt speichern und falsche Karteikarten später wiederholen?</p><a class="button secondary" href="konto.html?v=20261107-2">Zum persönlichen Lernbereich mit Zugangscode</a></div>
+      <div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p>
+        <div id="weeklyAssignmentNotice" class="tiny"></div><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div>
+      <div id="studentAccountMsg" class="msg"></div>
     </div>
   </section>
 
@@ -548,6 +615,19 @@
   let vocabTopicSelectionOpen=false;
   let studentAccountProfile=null;
   let studentTestHistoryRefresh=null;
+  const WEEK_PLANNER_DAYS=[
+    {key:"monday",label:"Montag",className:"monday"},
+    {key:"tuesday",label:"Dienstag",className:"tuesday"},
+    {key:"wednesday",label:"Mittwoch",className:"wednesday"},
+    {key:"thursday",label:"Donnerstag",className:"thursday"},
+    {key:"friday",label:"Freitag",className:"friday"}
+  ];
+  let plannerWeekStart=getPlannerMonday(new Date());
+  let plannerEntries=createBlankPlannerEntries();
+  let plannerSaveTimer=null;
+  let plannerSaveQueue=Promise.resolve();
+  let plannerLoadSequence=0;
+
 
   async function studentProgress(body){
     const {data,error}=await studentClient.functions.invoke("student-progress",{body});
@@ -592,9 +672,271 @@
   });
   window.addEventListener("pagehide",()=>{void stopTrackedActivity()});
 
+  function plannerDateKey(date){
+    return date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0")+"-"+String(date.getDate()).padStart(2,"0");
+  }
+  function getPlannerMonday(date){
+    const monday=new Date(date);
+    monday.setHours(12,0,0,0);
+    monday.setDate(monday.getDate()-((monday.getDay()+6)%7));
+    return monday;
+  }
+  function plannerWeekKey(){
+    return plannerDateKey(plannerWeekStart);
+  }
+  function plannerDateForDay(index){
+    const date=new Date(plannerWeekStart);
+    date.setDate(date.getDate()+index);
+    return date;
+  }
+  function plannerDayDateLabel(date){
+    return new Intl.DateTimeFormat("de-DE",{day:"2-digit",month:"2-digit"}).format(date);
+  }
+  function plannerRangeLabel(){
+    const monday=plannerWeekStart;
+    const friday=plannerDateForDay(4);
+    const year=new Intl.DateTimeFormat("de-DE",{year:"numeric"}).format(friday);
+    return plannerDayDateLabel(monday)+"–"+plannerDayDateLabel(friday)+"."+year;
+  }
+  function plannerLocalKey(weekKey){
+    return "avanza-week-plan-guest:"+weekKey;
+  }
+  function newPlannerEntry(){
+    return {id:"task-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),topic:"",minutes:"",done:false};
+  }
+  function createBlankPlannerEntries(){
+    return Object.fromEntries(WEEK_PLANNER_DAYS.map(day=>[day.key,[newPlannerEntry()]]));
+  }
+  function normalizePlannerEntries(plan){
+    const source=plan&&typeof plan==="object"&&plan.days&&typeof plan.days==="object"?plan.days:{};
+    return Object.fromEntries(WEEK_PLANNER_DAYS.map(day=>{
+      const rows=Array.isArray(source[day.key])?source[day.key]:[];
+      const normalized=rows.slice(0,20).map(row=>({
+        id:String(row?.id||newPlannerEntry().id),
+        topic:String(row?.topic||"").slice(0,120),
+        minutes:row?.minutes===""||row?.minutes==null?"":String(Math.max(0,Math.min(600,Number(row.minutes)||0))),
+        done:row?.done===true
+      }));
+      return [day.key,normalized.length?normalized:[newPlannerEntry()]];
+    }));
+  }
+  function readLocalPlanner(weekKey){
+    try{
+      const raw=localStorage.getItem(plannerLocalKey(weekKey));
+      return raw?normalizePlannerEntries(JSON.parse(raw)):createBlankPlannerEntries();
+    }catch{return createBlankPlannerEntries()}
+  }
+  function plannerSnapshot(){
+    return {days:Object.fromEntries(WEEK_PLANNER_DAYS.map(day=>[
+      day.key,(plannerEntries[day.key]||[]).map(row=>({id:row.id,topic:row.topic,minutes:row.minutes,done:row.done}))
+    ]))};
+  }
+  function plannerStatus(message,state=""){
+    const status=$("plannerSaveStatus");
+    status.textContent=message;
+    status.classList.toggle("is-saved",state==="saved");
+    status.classList.toggle("is-error",state==="error");
+  }
+  function updatePlannerSummary(){
+    const tasks=WEEK_PLANNER_DAYS.flatMap(day=>plannerEntries[day.key]||[])
+      .filter(row=>String(row.topic||"").trim()||Number(row.minutes)>0);
+    const planned=tasks.reduce((total,row)=>total+(Number(row.minutes)||0),0);
+    const doneMinutes=tasks.filter(row=>row.done).reduce((total,row)=>total+(Number(row.minutes)||0),0);
+    const doneCount=tasks.filter(row=>row.done).length;
+    $("plannerSummaryText").textContent=tasks.length
+      ?doneCount+" von "+tasks.length+" Lernaufgaben erledigt · "+doneMinutes+" von "+planned+" Min. abgehakt"
+      :"Noch nichts geplant. Trage Lernbereich und Minuten ein.";
+    const percent=planned?Math.round(doneMinutes*100/planned):0;
+    $("plannerProgressBar").style.width=percent+"%";
+    $("plannerProgressBar").parentElement.setAttribute("aria-valuenow",String(percent));
+  }
+  function renderPlannerTask(day,row){
+    const task=document.createElement("div");
+    task.className="weekly-planner-task"+(row.done?" is-done":"");
+    const check=document.createElement("input");
+    check.className="weekly-planner-check";
+    check.type="checkbox";
+    check.checked=row.done;
+    check.setAttribute("aria-label",day.label+": erledigt");
+    check.addEventListener("change",()=>{
+      row.done=check.checked;
+      task.classList.toggle("is-done",row.done);
+      updatePlannerSummary();
+      schedulePlannerSave();
+    });
+    const topic=document.createElement("input");
+    topic.className="weekly-planner-topic";
+    topic.type="text";
+    topic.maxLength=120;
+    topic.placeholder="Was lernst du?";
+    topic.value=row.topic;
+    topic.setAttribute("aria-label",day.label+": Lernbereich oder Aufgabe");
+    topic.addEventListener("input",()=>{
+      row.topic=topic.value;
+      updatePlannerSummary();
+      schedulePlannerSave();
+    });
+    const minutesWrap=document.createElement("label");
+    minutesWrap.className="weekly-planner-minutes-wrap";
+    const minutes=document.createElement("input");
+    minutes.className="weekly-planner-minutes";
+    minutes.type="number";
+    minutes.min="0";
+    minutes.max="600";
+    minutes.step="5";
+    minutes.inputMode="numeric";
+    minutes.placeholder="Min.";
+    minutes.value=row.minutes;
+    minutes.setAttribute("aria-label",day.label+": Lernminuten");
+    minutes.addEventListener("input",()=>{
+      row.minutes=minutes.value===""?"":String(Math.max(0,Math.min(600,Number(minutes.value)||0)));
+      updatePlannerSummary();
+      schedulePlannerSave();
+    });
+    minutesWrap.appendChild(minutes);
+    const remove=document.createElement("button");
+    remove.className="weekly-planner-remove";
+    remove.type="button";
+    remove.textContent="×";
+    remove.title="Eintrag entfernen";
+    remove.setAttribute("aria-label",day.label+": Lernaufgabe entfernen");
+    remove.addEventListener("click",()=>{
+      const rows=plannerEntries[day.key];
+      if(rows.length===1){rows[0].topic="";rows[0].minutes="";rows[0].done=false}
+      else plannerEntries[day.key]=rows.filter(item=>item.id!==row.id);
+      renderWeeklyPlanner();
+      schedulePlannerSave();
+    });
+    task.append(check,topic,minutesWrap,remove);
+    return task;
+  }
+  function renderWeeklyPlanner(){
+    $("plannerWeekLabel").textContent=plannerRangeLabel();
+    const root=$("plannerDays");
+    root.innerHTML="";
+    WEEK_PLANNER_DAYS.forEach((day,index)=>{
+      const section=document.createElement("section");
+      section.className="weekly-planner-day "+day.className;
+      const head=document.createElement("div");
+      head.className="weekly-planner-day-header";
+      const title=document.createElement("h3");
+      title.className="weekly-planner-day-title";
+      title.textContent=day.label;
+      const date=document.createElement("span");
+      date.className="weekly-planner-day-date";
+      date.textContent=plannerDayDateLabel(plannerDateForDay(index));
+      title.appendChild(date);
+      const total=document.createElement("span");
+      total.className="weekly-planner-day-total";
+      const rows=plannerEntries[day.key]||[];
+      const minutes=rows.reduce((sum,row)=>sum+(Number(row.minutes)||0),0);
+      total.textContent=minutes+" Min.";
+      head.append(title,total);
+      const list=document.createElement("div");
+      list.className="weekly-planner-task-list";
+      rows.forEach(row=>list.appendChild(renderPlannerTask(day,row)));
+      const add=document.createElement("button");
+      add.className="weekly-planner-add";
+      add.type="button";
+      add.textContent="+ Lernaufgabe";
+      add.addEventListener("click",()=>{
+        plannerEntries[day.key].push(newPlannerEntry());
+        renderWeeklyPlanner();
+        schedulePlannerSave();
+        $("plannerDays").lastElementChild?.querySelector(".weekly-planner-topic:last-of-type")?.focus();
+      });
+      section.append(head,list,add);
+      root.appendChild(section);
+    });
+    updatePlannerSummary();
+  }
+  async function loadWeeklyPlanner(){
+    const sequence=++plannerLoadSequence;
+    const weekKey=plannerWeekKey();
+    const sessionResult=await studentClient.auth.getSession();
+    const session=sessionResult.data?.session;
+    if(!studentAccountProfile||!session){
+      plannerEntries=readLocalPlanner(weekKey);
+      plannerStatus("Plan wird auf diesem Gerät gespeichert. Mit Schülercode bleibt er in deinem Konto erhalten.");
+      if(sequence===plannerLoadSequence)renderWeeklyPlanner();
+      return;
+    }
+    plannerStatus("Wochenplan wird geladen …");
+    const {data,error}=await studentClient.from("student_weekly_plans").select("plan")
+      .eq("student_user_id",session.user.id).eq("week_start",weekKey).maybeSingle();
+    if(sequence!==plannerLoadSequence)return;
+    if(error){
+      plannerEntries=readLocalPlanner(weekKey);
+      plannerStatus("Cloudspeicherung gerade nicht erreichbar · Änderungen bleiben vorerst auf diesem Gerät.", "error");
+      renderWeeklyPlanner();
+      return;
+    }
+    plannerEntries=normalizePlannerEntries(data?.plan);
+    plannerStatus(data?.plan?"Plan in deinem Schülerkonto gespeichert.":"Noch kein Plan für diese Woche gespeichert.",data?.plan?"saved":"");
+    renderWeeklyPlanner();
+  }
+  async function persistWeeklyPlanner(weekKey,snapshot){
+    try{
+      const {data,error}=await studentClient.auth.getSession();
+      if(error)throw error;
+      if(studentAccountProfile&&data?.session){
+        const {error:saveError}=await studentClient.from("student_weekly_plans").upsert({
+          student_user_id:data.session.user.id,
+          week_start:weekKey,
+          plan:snapshot,
+          updated_at:new Date().toISOString()
+        },{onConflict:"student_user_id,week_start"});
+        if(saveError)throw saveError;
+        if(weekKey===plannerWeekKey())plannerStatus("In deinem Schülerkonto gespeichert.","saved");
+      }else{
+        localStorage.setItem(plannerLocalKey(weekKey),JSON.stringify(snapshot));
+        if(weekKey===plannerWeekKey())plannerStatus("Auf diesem Gerät gespeichert · mit Schülercode kontoübergreifend verfügbar.");
+      }
+    }catch(error){
+      if(weekKey===plannerWeekKey())plannerStatus("Speichern fehlgeschlagen: "+(error?.message||"Bitte später erneut versuchen."),"error");
+    }
+  }
+  function schedulePlannerSave(){
+    const weekKey=plannerWeekKey();
+    const snapshot=plannerSnapshot();
+    if(studentAccountProfile)plannerStatus("Wird gespeichert …");
+    else plannerStatus("Wird auf diesem Gerät gespeichert …");
+    if(plannerSaveTimer)clearTimeout(plannerSaveTimer);
+    plannerSaveTimer=setTimeout(()=>{
+      plannerSaveTimer=null;
+      plannerSaveQueue=plannerSaveQueue.catch(()=>{}).then(()=>persistWeeklyPlanner(weekKey,snapshot));
+    },450);
+  }
+  async function flushWeeklyPlannerSave(){
+    if(plannerSaveTimer){
+      clearTimeout(plannerSaveTimer);
+      plannerSaveTimer=null;
+      const weekKey=plannerWeekKey();
+      const snapshot=plannerSnapshot();
+      plannerSaveQueue=plannerSaveQueue.catch(()=>{}).then(()=>persistWeeklyPlanner(weekKey,snapshot));
+    }
+    await plannerSaveQueue;
+  }
+  async function changePlannerWeek(offset){
+    await flushWeeklyPlannerSave();
+    plannerWeekStart.setDate(plannerWeekStart.getDate()+offset*7);
+    const weekKey=plannerWeekKey();
+    plannerEntries=readLocalPlanner(weekKey);
+    renderWeeklyPlanner();
+    await loadWeeklyPlanner();
+  }
+  $("plannerPrevWeekBtn").addEventListener("click",()=>{void changePlannerWeek(-1)});
+  $("plannerNextWeekBtn").addEventListener("click",()=>{void changePlannerWeek(1)});
+  $("plannerThisWeekBtn").addEventListener("click",async()=>{
+    await flushWeeklyPlannerSave();
+    plannerWeekStart=getPlannerMonday(new Date());
+    plannerEntries=readLocalPlanner(plannerWeekKey());
+    renderWeeklyPlanner();
+    await loadWeeklyPlanner();
+  });
   async function refreshStudentAccount(){
     const {data}=await studentClient.auth.getSession();
-    if(!data?.session){studentAccountProfile=null;$("studentLoggedIn").classList.add("hidden");$("guestAccountLink").classList.remove("hidden");if(PERSONALIZED_MODE)location.replace("konto.html?v=20261107-2");return}
+    if(!data?.session){studentAccountProfile=null;$("studentLoggedIn").classList.add("hidden");$("guestAccountLink").classList.remove("hidden");void loadWeeklyPlanner();if(PERSONALIZED_MODE)location.replace("konto.html?v=20261107-2");return}
     try{
       const me=await studentProgress({action:"me"});
       studentAccountProfile=me;PERSONALIZED_MODE=true;
@@ -603,9 +945,11 @@
       notice.innerHTML=weekly?'<strong>Wochenziel:</strong> '+Number(weekly.required_minutes||0)+' Minuten'+(weekly.topic_notes?'<br>Themen: '+htmlSafe(weekly.topic_notes):''):'Für diese Woche ist kein Wochenziel eingetragen.';
       $("studentLoggedIn").classList.remove("hidden");$("guestAccountLink").classList.add("hidden");
       $("studentAccountMsg").className="msg";
+      void loadWeeklyPlanner();
       if(!$("testsChoiceCard").classList.contains("hidden"))loadStudentTestHistory();
     }catch(error){
       studentAccountProfile=null;
+      void loadWeeklyPlanner();
       $("studentAccountMsg").textContent=error.message;$("studentAccountMsg").className="msg show err";
       if(PERSONALIZED_MODE)location.replace("konto.html?v=20261107-2");else $("guestAccountLink").classList.remove("hidden");
     }
@@ -2205,6 +2549,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
   $("openGrammarPairsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-paare.html?personalisiert=1":"grammatik-paare.html"; });
+  renderWeeklyPlanner();
   refreshStudentAccount();
   if(location.hash==="#tests"){ $("portalCard").classList.add("hidden");$("testsChoiceCard").classList.remove("hidden");$("openTestsBtn").setAttribute("aria-expanded","true");setTimeout(openTestsView,0); }
 
