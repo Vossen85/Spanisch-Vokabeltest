@@ -26,10 +26,12 @@ function normalize(s: unknown) {
   return String(s ?? "")
     .normalize("NFC")
     .trim()
+    .replace(/[(){}\[\]]/g, " ")
     .replace(/,/g, " ")
     .replace(/\s*\/\s*/g, " ")
     .replace(/\s+/g, " ")
-    .replace(/^[¿¡"'“”‘’\s]+|[?!.,"'“”‘’\s]+$/g, "");
+    .replace(/^[¿¡"'“”‘’\s]+|[?!.,"'“”‘’\s]+$/g, "")
+    .trim();
 }
 
 function accentCaseFold(s: string) {
