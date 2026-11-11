@@ -2212,6 +2212,19 @@
     };
   }
 
+  function splitUpperSchoolPoints(gradeText){
+    const match=String(gradeText||"").match(/^Vokabeln:\s*(.*?)\s*·\s*Grammatik:\s*(.*?)\s*$/);
+    if(!match)return null;
+    const scale=["6","5-","5","5+","4-","4","4+","3-","3","3+","2-","2","2+","1-","1","1+"];
+    const vocabulary=scale.indexOf(match[1].trim()),grammar=scale.indexOf(match[2].trim());
+    return vocabulary<0||grammar<0?null:[vocabulary,grammar];
+  }
+
+  function submissionOPText(sub){
+    const split=splitUpperSchoolPoints(sub.grade_text);
+    return split?split.join(" / "):String(n(sub.upper_school_points));
+  }
+
   function submissionTable(subs,t){
     const sorted=[...subs].sort((a,b)=>String(a.student_code).localeCompare(String(b.student_code),undefined,{numeric:true}));
     return '<div class="submission-table-wrap"><table class="submission-table"><thead><tr>'+
@@ -2222,7 +2235,7 @@
         '<td data-label="Punkte" class="score">'+n(s.raw_points)+' / '+n(s.max_points)+'</td>'+
         '<td data-label="%">'+n(s.percent).toFixed(1)+' %</td>'+
         '<td data-label="Note">'+esc(s.grade_text||"—")+'</td>'+
-        '<td data-label="OP"><strong>'+n(s.upper_school_points)+'</strong></td>'+
+        '<td data-label="OP"><strong title="'+(splitUpperSchoolPoints(s.grade_text)?"Vokabelteil / Grammatikteil":"Oberstufenpunkte")+'">'+submissionOPText(s)+'</strong>'+(splitUpperSchoolPoints(s.grade_text)?'<span class="tiny">Vok. / Gram.</span>':'')+'</td>'+
         '<td data-label="Abgabe">'+fmtTime(s.submitted_at)+'</td>'+
         '<td><button class="secondary openSubmissionBtn" data-submission-id="'+esc(s.id)+'">Details / Nachkorrektur</button>'+
           '<button class="badbtn deleteSubmissionBtn" data-submission-id="'+esc(s.id)+'" type="button">Abgabe löschen</button></td>'+
@@ -2302,7 +2315,7 @@
       '<button class="secondary closeDetailBtn">Details schließen</button></div></div>'+
       '<div class="summarybar"><span class="summarypill summaryPoints">'+n(sub.raw_points)+' / '+n(sub.max_points)+' Punkte</span>'+
       '<span class="summarypill summaryPercent">'+n(sub.percent).toFixed(1)+' %</span><span class="summarypill summaryGrade">Note '+esc(sub.grade_text||"—")+'</span>'+
-      '<span class="summarypill summaryOP">'+n(sub.upper_school_points)+' OP</span>'+
+      '<span class="summarypill summaryOP">'+(splitUpperSchoolPoints(sub.grade_text)?submissionOPText(sub)+' OP (Vok. / Gram.)':n(sub.upper_school_points)+' OP')+'</span>'+
       (adjustedParts?'<span class="summarypill">'+adjustedParts+' manuell nachkorrigierte '+(adjustedParts===1?"Teilantwort":"Teilantworten")+'</span>':'')+
       '</div><div class="tiny" style="margin-bottom:10px">Jede Übersetzung und jede Verbform kann einzeln nachkorrigiert werden. Die farbige Antwort zeigt die aktuelle Bewertung.</div>'+
       '<div class="answersRoot grammar-answer-grid"></div>';
