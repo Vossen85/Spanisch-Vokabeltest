@@ -40,7 +40,7 @@ a.btn{text-decoration:none;display:inline-block;border-radius:10px;padding:12px 
   .avanza-home-link:hover img{transform:translateY(-1px)}
   .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
   @media print{.avanza-home-header{display:none!important}}
-  .tense-heading{font-size:1rem;font-weight:850;color:#4f46e5;margin-top:2px}
+  .tense-heading{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:900;line-height:1.1;color:#4f46e5;margin:0 0 6px}
   </style>
 </head>
 <body><div class="wrap">
@@ -72,7 +72,7 @@ a.btn{text-decoration:none;display:inline-block;border-radius:10px;padding:12px 
 
 <section id="testArea" class="hidden">
 <div class="topbar">
-<div class="topbar-inner"><div><strong>Grammatik-Testsimulation</strong><div id="exerciseTimes" class="tense-heading" aria-live="polite"></div><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
+<div class="topbar-inner"><div><h1 id="exerciseTimes" class="tense-heading" aria-live="polite"></h1><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
 <div id="chars" class="chars"><button type="button">á</button><button type="button">é</button><button type="button">í</button><button type="button">ó</button><button type="button">ú</button><button type="button">ü</button><button type="button">ñ</button><button type="button">¿</button><button type="button">¡</button></div>
 </div>
 <section class="card"><h2>Dein Test</h2><p class="tiny">Das spanische Verb und die Zeit/Form sind vorgegeben. Trage die deutsche Bedeutung und anschließend die verlangten Formen ein.</p><div id="questions"></div>
