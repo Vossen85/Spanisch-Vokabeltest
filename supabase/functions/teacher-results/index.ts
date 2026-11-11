@@ -24,8 +24,9 @@ function gradeForPoints(p: number) {
 }
 function normalize(s: unknown) {
   return String(s ?? "").normalize("NFC").trim()
+    .replace(/[(){}\[\]]/g, " ")
     .replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g, "")
-    .replace(/\s+/g, " ");
+    .replace(/\s+/g, " ").trim();
 }
 function accentCaseFold(s: string) {
   return s.replace(/[áÁ]/g,m=>m==="Á"?"A":"a").replace(/[éÉ]/g,m=>m==="É"?"E":"e")
