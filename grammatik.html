@@ -51,7 +51,7 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
   .avanza-home-link:hover img{transform:translateY(-1px)}
   .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
   @media print{.avanza-home-header{display:none!important}}
-  .tense-heading{margin:2px 0 6px;color:#4f46e5;font-size:1.15rem;font-weight:850}
+  .tense-heading{margin:0 0 8px;color:#4f46e5;font-size:clamp(1.8rem,5vw,2.5rem);font-weight:900;line-height:1.1}
 </style>
 </head>
 <body>
@@ -76,8 +76,7 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
 <section id="previewCard" class="card hidden">
   <div class="preview-head">
     <div>
-      <h1>Deine Konjugationen</h1>
-      <p id="timeHeading" class="tense-heading"></p>
+      <h1 id="timeHeading" class="tense-heading"></h1>
       <p id="selectionInfo" class="sub"></p>
     </div>
   </div>
