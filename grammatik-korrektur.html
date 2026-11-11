@@ -87,10 +87,10 @@ async function load(){
   for(const x of (r.corrections||[])){
    const q=document.createElement("section");q.className="question";
    const rows=[];
-   const tp=Number(x.translationPoint)||0,ts=status(tp);
-   rows.push("<tr><td><strong>Deutsche Bedeutung</strong></td><td>"+answerText(x.translation)+"</td><td>"+esc(x.expectedTranslation||"—")+"</td><td class='pts'>"+pointText(tp)+"</td><td class='status "+ts.cls+"'>"+ts.txt+"</td></tr>");
+   const tp=Number(x.translationPoint)||0,ts=status(tp),isVocab=x.questionKind==="vocab";
+   rows.push("<tr><td><strong>"+(isVocab?"Spanische Übersetzung":"Deutsche Bedeutung")+"</strong></td><td>"+answerText(x.translation)+"</td><td>"+esc(x.expectedTranslation||"—")+"</td><td class='pts'>"+pointText(tp)+"</td><td class='status "+ts.cls+"'>"+ts.txt+"</td></tr>");
    (x.labels||[]).forEach((lab,i)=>{const p=Number(x.formPoints?.[i])||0,s=status(p);rows.push("<tr><td><strong>"+esc(lab)+"</strong></td><td>"+answerText(x.forms?.[i])+"</td><td>"+esc(x.expectedForms?.[i]||"—")+"</td><td class='pts'>"+pointText(p)+"</td><td class='status "+s.cls+"'>"+s.txt+"</td></tr>")});
-   q.innerHTML="<div class='qhead'><div><div class='tense'>"+esc(tenseLabel(x.mode,x.topicGroup))+"</div><div class='verb'>"+esc(x.position+". "+x.sourceText)+"</div></div><div class='qscore'>"+pointText(x.points)+" / "+x.maxPoints+" P.</div></div>"+
+   q.innerHTML="<div class='qhead'><div><div class='tense'>"+(isVocab?"Vokabel":esc(tenseLabel(x.mode,x.topicGroup)))+"</div><div class='verb'>"+esc(x.position+". "+x.sourceText)+"</div></div><div class='qscore'>"+pointText(x.points)+" / "+x.maxPoints+" P.</div></div>"+
     "<div style='overflow-x:auto'><table><thead><tr><th>Teil</th><th>Deine Antwort</th><th>Richtige Lösung</th><th>Punkte</th><th class='hide-mobile'>Bewertung</th></tr></thead><tbody>"+rows.join("")+"</tbody></table></div>";
    root.appendChild(q);
   }
