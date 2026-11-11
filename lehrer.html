@@ -2060,8 +2060,8 @@
         folder.dataset.testId=t.id;
         folder.innerHTML=
           '<div class="folder-head"><div>'+
-            '<div class="folder-title">'+esc(t.title||(t.test_type==="grammar"?"Grammatiktest":"Vokabeltest"))+'</div>'+
-            '<div class="folder-meta">'+(testCourseNameCache.get(String(t.course_id))||"Kurs nicht zugeordnet")+(t.quarter_number?' · Quartal '+t.quarter_number:'')+' · '+t.question_count+' '+(t.test_type==="grammar"?"Verb-Aufgaben":"Vokabeln")+' · '+t.duration_minutes+' Minuten</div>'+
+            '<div class="folder-title">'+esc(t.title||(t.test_type==="grammar"?"Grammatiktest":t.test_type==="combined"?"Gemischter Test":"Vokabeltest"))+'</div>'+
+            '<div class="folder-meta">'+(testCourseNameCache.get(String(t.course_id))||"Kurs nicht zugeordnet")+(t.quarter_number?' · Quartal '+t.quarter_number:'')+' · '+t.question_count+' '+(t.test_type==="grammar"?"Verb-Aufgaben":t.test_type==="combined"?"gemischte Aufgaben":"Vokabeln")+' · '+t.duration_minutes+' Minuten</div>'+
             '<div class="badges">'+
               (units.length?units.map(u=>'<span class="badge">'+esc(u)+'</span>').join(""):'')+
               '<span class="badge">'+st.submitted.length+' Abgaben</span>'+
@@ -2159,7 +2159,7 @@
       '<div class="qrgrid">'+
         '<div><div class="qrbox qr-target"></div></div>'+
         '<div>'+
-          '<h3>'+esc(t.title||(t.test_type==="grammar"?"Grammatiktest":"Vokabeltest"))+'</h3>'+
+          '<h3>'+esc(t.title||(t.test_type==="grammar"?"Grammatiktest":t.test_type==="combined"?"Gemischter Test":"Vokabeltest"))+'</h3>'+
           '<div class="tiny">Testcode: '+esc(t.public_code)+'</div>'+
           '<div class="linkbox">'+esc(url)+'</div>'+
           '<div class="actions"><button class="secondary copyFolderLink">Link kopieren</button></div>'+
