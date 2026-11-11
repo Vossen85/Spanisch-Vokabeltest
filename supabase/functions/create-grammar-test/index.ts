@@ -107,6 +107,9 @@ Deno.serve(async(req:Request)=>{
 
   const body=await req.json();
   const plan=Array.isArray(body?.plan)?body.plan:[];
+  const vocabulary=body?.vocabulary&&typeof body.vocabulary==="object"?body.vocabulary:null;
+  const combined=Boolean(vocabulary);
+  const gradingMode=body?.gradingMode==="overall"?"overall":"separate";
   const durationMinutes=Number(body?.durationMinutes),testDate=String(body?.testDate||""),title=String(body?.title||"").trim();
   const courseId=String(body?.courseId||"").trim(),quarterNumber=Number(body?.quarterNumber);
   if(!courseId)return json({error:"Bitte einen Kurs auswählen."},400);
@@ -115,6 +118,14 @@ Deno.serve(async(req:Request)=>{
   if(courseError)throw courseError;
   if(!course)return json({error:"Der ausgewählte Kurs ist nicht verfügbar."},400);
   if(!plan.length||plan.length>100)return json({error:"Der Grammatiktest muss zwischen 1 und 100 Verb-Aufgaben enthalten."},400);
+  let vocabCount=0,unitKeys:string[]=[],folderIds:number[]=[];
+  if(combined){
+    unitKeys=Array.isArray(vocabulary.unitKeys)?[...new Set(vocabulary.unitKeys.map((x:unknown)=>String(x).trim()).filter(Boolean))]:[];
+    folderIds=Array.isArray(vocabulary.folderIds)?[...new Set(vocabulary.folderIds.map((x:unknown)=>Number(x)).filter((x:number)=>Number.isInteger(x)&&x>0))]:[];
+    vocabCount=Number(vocabulary.questionCount);
+    if(!unitKeys.length&&!folderIds.length)return json({error:"Bitte mindestens eine Unidad oder einen Unterordner für den Vokabelteil auswählen."},400);
+    if(!Number.isInteger(vocabCount)||vocabCount<1||vocabCount>500)return json({error:"Die Anzahl der Vokabeln muss zwischen 1 und 500 liegen."},400);
+  }
   if(!Number.isInteger(durationMinutes)||durationMinutes<1||durationMinutes>300)return json({error:"Die Bearbeitungszeit muss zwischen 1 und 300 Minuten liegen."},400);
   if(!/^\d{4}-\d{2}-\d{2}$/.test(testDate))return json({error:"Bitte ein gültiges Testdatum wählen."},400);
 
@@ -125,12 +136,52 @@ Deno.serve(async(req:Request)=>{
     if(!verb||!de||!forms.length)return json({error:"Eine ausgewählte Grammatikaufgabe konnte nicht verarbeitet werden."},400);
     questions.push({
       position:i+1,source_snapshot:verb,accepted_answers_snapshot:[de,...forms.map(x=>x[1])],
-      question_meta:{kind:"grammar",topicId:String(x.topicId||""),topicGroup:String(x.topicGroup||""),topicTitle:String(x.topicTitle||""),mode,verb,labels:forms.map(x=>x[0]),maxPoints:1+forms.length}
+      question_meta:{kind:"grammar",topicId:String(x.topicId||""),topicGroup:String(x.topicGroup||""),topicTitle:String(x.topicTitle||""),mode,verb,labels:forms.map(x=>x[0]),maxPoints:1+forms.length,...(combined?{gradingMode}:{})}
     });
   }
-  const maxPoints=questions.reduce((s,q)=>s+Number(q.question_meta.maxPoints||0),0);
+  let maxPoints=questions.reduce((s,q)=>s+Number(q.question_meta.maxPoints||0),0);
   for(let attempt=0;attempt<5;attempt++){
     const publicCode=randomCode(8);
+    let combinedTestId:string|null=null,publicCodeForReturn=publicCode;
+    let actualVocabCount=0;
+    if(combined){
+      const {data:testId,error:rpcError}=await admin.rpc("create_vocabulary_test_v2",{
+        p_owner:userData.user.id,p_unit_keys:unitKeys,p_folder_ids:folderIds,p_question_count:vocabCount,
+        p_test_date:testDate,p_duration_minutes:durationMinutes,p_title:title||"Gemischter Test",p_public_code:publicCode
+      });
+      if(rpcError){
+        const msg=rpcError.message||"";
+        if(msg.includes("NOT_ENOUGH_VOCAB:")){
+          const available=Number(msg.split("NOT_ENOUGH_VOCAB:")[1]?.match(/\d+/)?.[0]||0);
+          return json({error:`In der gewählten Auswahl stehen nur ${available} unterschiedliche Vokabelaufgaben zur Verfügung.`,available},400);
+        }
+        if(msg.toLowerCase().includes("duplicate")&&msg.toLowerCase().includes("public_code"))continue;
+        throw rpcError;
+      }
+      combinedTestId=String(testId);publicCodeForReturn=publicCode;
+      const {data:vocabRows,error:vocabError}=await admin.from("test_questions")
+        .select("id,position,source_snapshot,accepted_answers_snapshot,question_meta")
+        .eq("test_id",combinedTestId).order("position");
+      if(vocabError){await admin.from("tests").delete().eq("id",combinedTestId);throw vocabError}
+      actualVocabCount=(vocabRows||[]).length;
+      if(!actualVocabCount){await admin.from("tests").delete().eq("id",combinedTestId);return json({error:"Der Vokabelteil enthält keine Aufgaben."},400)}
+      for(const q of vocabRows||[]){
+        const {error:metaError}=await admin.from("test_questions").update({question_meta:{...(q.question_meta||{}),kind:"vocab",gradingMode}}).eq("id",q.id);
+        if(metaError){await admin.from("tests").delete().eq("id",combinedTestId);throw metaError}
+      }
+      for(let i=0;i<questions.length;i++)questions[i].position=actualVocabCount+i+1;
+      const combinedMax=actualVocabCount+maxPoints;
+      const {error:updateError}=await admin.from("tests").update({
+        test_type:"combined",course_id:courseId,quarter_number:quarterNumber,question_count:actualVocabCount+questions.length,
+        title:title||"Gemischter Test"
+      }).eq("id",combinedTestId).eq("owner_id",userData.user.id);
+      if(updateError){await admin.from("tests").delete().eq("id",combinedTestId);throw updateError}
+      const grammarRows=questions.map(q=>({...q,test_id:combinedTestId,vocabulary_id:null}));
+      const {error:insertGrammarError}=await admin.from("test_questions").insert(grammarRows);
+      if(insertGrammarError){await admin.from("tests").delete().eq("id",combinedTestId);throw insertGrammarError}
+      return json({ok:true,testId:combinedTestId,publicCode:publicCodeForReturn,title:title||"Gemischter Test",testDate,questionCount:actualVocabCount+questions.length,
+        vocabularyCount:actualVocabCount,grammarCount:questions.length,durationMinutes,maxPoints:combinedMax,courseId,courseName:course.name,quarterNumber,gradingMode});
+    }
     const {data:test,error:testError}=await admin.from("tests").insert({
       owner_id:userData.user.id,public_code:publicCode,title:title||"Grammatiktest",test_date:testDate,
       question_count:questions.length,duration_minutes:durationMinutes,status:"open",test_type:"grammar",
