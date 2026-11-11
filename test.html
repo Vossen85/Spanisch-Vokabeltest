@@ -31,8 +31,9 @@
     .err{background:#fef2f2;color:#991b1b}
     .topbar{position:sticky;top:0;z-index:20;background:rgba(245,247,251,.96);backdrop-filter:blur(8px);padding:10px 0}
     .topbar-inner{background:#fff;border:1px solid #dbe2ea;border-radius:14px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px;box-shadow:0 3px 14px rgba(15,23,42,.07)}
-    .timer{font-size:1.3rem;font-weight:850;font-variant-numeric:tabular-nums}
-    #timer{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:1000;padding:8px 12px;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#172033;box-shadow:0 4px 14px rgba(15,23,42,.18)}
+    .test-heading-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .test-heading-row>strong{min-width:0}
+    .timer{font-size:1.3rem;font-weight:850;font-variant-numeric:tabular-nums;flex:0 0 auto;padding:8px 12px;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#172033;box-shadow:0 4px 14px rgba(15,23,42,.12);white-space:nowrap}
     .timer.warn{color:#b45309}
     .timer.danger{color:#b91c1c}
     #timer.warn{color:#b45309}
@@ -94,7 +95,7 @@
     <div class="topbar">
       <div class="topbar-inner">
         <div>
-          <strong id="testTitle">Vokabeltest</strong>
+          <div class="test-heading-row"><strong id="testTitle">Vokabeltest</strong><div id="timer" class="timer">00:00</div></div>
           <div class="identity">
             <span><strong>Kurs:</strong> <span id="testCourseLabelHeader"></span></span>
             <span><strong>Schülernummer:</strong> <span id="testStudentName"></span></span>
@@ -104,7 +105,6 @@
           <div class="tiny" id="saveState">Noch nicht gespeichert</div>
         </div>
         <div class="progress"><span id="answeredCount">0</span> / <span id="totalCount">0</span> beantwortet</div>
-        <div id="timer" class="timer">00:00</div>
       </div>
       <div class="chars" id="chars">
         <button type="button">á</button><button type="button">é</button><button type="button">í</button>
