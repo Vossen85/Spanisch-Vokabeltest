@@ -2245,8 +2245,9 @@
 
   function grammarReviewNormalize(value){
     return String(value??"").normalize("NFC").trim()
+      .replace(/[(){}\[\]]/g," ")
       .replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g,"")
-      .replace(/\s+/g," ");
+      .replace(/\s+/g," ").trim();
   }
 
   function grammarReviewFold(value){
