@@ -146,7 +146,7 @@
     .manual{color:#7c3aed;font-weight:800}
     .summarybar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
     .summarypill{background:#f1f5f9;border-radius:999px;padding:7px 11px;font-weight:750}
-    .test-type-switch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 22px}
+    .test-type-switch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 22px}@media(max-width:700px){.test-type-switch{grid-template-columns:1fr}}
     .test-type-btn{border:1px solid #cbd5e1;background:#f8fafc;color:#172033;padding:15px;border-radius:14px}
     .test-type-btn.active{background:#172033;color:#fff;border-color:#172033}
     .grammar-groups{display:grid;gap:16px;margin-top:12px}
@@ -398,11 +398,12 @@
     <section id="view-create" class="view hidden">
       <div class="card">
         <h2>Test erstellen</h2>
-        <div class="tiny">Wähle zuerst, ob du einen Vokabel- oder Grammatiktest erstellen möchtest.</div>
+        <div class="tiny">Wähle, ob du einen Vokabeltest, Grammatiktest oder gemischten Test erstellen möchtest.</div>
 
         <div class="test-type-switch">
           <button id="createVocabModeBtn" type="button" class="test-type-btn active">📚 Vokabeltest</button>
           <button id="createGrammarModeBtn" type="button" class="test-type-btn">✏️ Grammatiktest</button>
+          <button id="createCombinedModeBtn" type="button" class="test-type-btn">🧩 Gemischter Test</button>
         </div>
 
         <div class="row">
@@ -416,6 +417,18 @@
           <label>Vokabelbereiche auswählen</label>
           <div class="tiny">Du kannst eine ganze Unidad auswählen oder sie aufklappen und nur einzelne Unterordner anklicken.</div>
           <div id="unitsBox" class="units"></div>
+
+          <div id="combinedGrammarSection" class="card hidden" style="margin:16px 0;padding:16px">
+            <h3>Grammatikteil hinzufügen</h3>
+            <p class="tiny">Wähle zusätzlich Grammatikaufgaben. Die Gesamtzeit gilt für beide Testteile.</p>
+            <div class="row">
+              <div><label for="combinedGrammarCount">Anzahl der Grammatikaufgaben</label><input id="combinedGrammarCount" type="number" min="1" max="100" value="5"></div>
+              <div><label for="combinedGradingMode">Notengebung</label><select id="combinedGradingMode"><option value="separate">Zwei Noten: Vokabeln und Grammatik getrennt</option><option value="overall">Eine gemeinsame Note</option></select></div>
+            </div>
+            <label>Grammatikbereiche auswählen</label>
+            <div class="tiny">Aufgaben werden gleichmäßig aus den ausgewählten Bereichen zusammengestellt. Einzelne Verben kannst du bei Bedarf festlegen.</div>
+            <div id="combinedGrammarTopicsBox" class="grammar-groups"><div class="empty">Grammatikbereiche werden geladen …</div></div>
+          </div>
 
           <div class="row">
             <div>
@@ -1047,7 +1060,7 @@
     await loadDashboard();
     await loadTestCourseOptions();
     const tests=testsCache.filter(t=>t.test_type==="grammar"||t.test_type==="vocab");
-    testSelect.innerHTML='<option value="">Test auswählen</option>'+tests.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.title||(t.test_type==="grammar"?"Grammatiktest":"Vokabeltest"))+' · '+fmtDate(t.test_date)+' · '+t.question_count+' Aufgaben</option>').join("");
+    testSelect.innerHTML='<option value="">Test auswählen</option>'+tests.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.title||(t.test_type==="grammar"?"Grammatiktest":t.test_type==="combined"?"Gemischter Test":"Vokabeltest"))+' · '+fmtDate(t.test_date)+' · '+t.question_count+' Aufgaben</option>').join("");
     const {data,error}=await supabase.functions.invoke("teacher-courses",{body:{action:"list"}});
     if(error||data?.error){courseSelect.innerHTML='<option value="">Kurse nicht verfügbar</option>';showMsg($("analogCsvMsg"),responseError(error,data,"Die Kurse konnten nicht geladen werden."),"err");updateAnalogImportButton();return}
     analogCourseCache=(data.courses||[]).filter(course=>course.active!==false);
@@ -1524,9 +1537,14 @@
       (topic?'<div class="topic-label">'+esc(topic)+'</div>':'')+rows+'</section>';
   }
 
+  function createdVocabPrintCard(q,solution){
+    const answers=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
+    return '<section class="verb-card"><div class="verb-card-head"><strong>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</strong><span class="points">1 P.</span></div><div class="grammar-row"><span class="row-label">Spanisch</span>'+(solution?'<span class="answer-text">'+esc(answers.join(" / "))+'</span>':'<span class="write-line"></span>')+'</div></section>';
+  }
+
   function createdQuestionContent(questions,isGrammar,solution){
     if(isGrammar){
-      return '<div class="grammar-grid">'+questions.map(q=>grammarPrintCard(q,solution)).join("")+'</div>';
+      return '<div class="grammar-grid">'+questions.map(q=>(q.question_meta?.kind==="vocab"?createdVocabPrintCard(q,solution):grammarPrintCard(q,solution))).join("")+'</div>';
     }
     return '<div class="vocab-grid">'+questions.map(q=>{
       const answers=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
@@ -1542,13 +1560,14 @@
     if(isGrammar){
       const rows=questions.flatMap(q=>{
         const meta=q.question_meta||{},labels=Array.isArray(meta.labels)?meta.labels:[];
+        if(meta.kind==="vocab")return ['<tr><td>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</td><td>'+esc((q.accepted_answers_snapshot||[]).join(" / "))+'</td><td>1 P.</td></tr>'];
         return [
           '<tr><td>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</td><td>Bedeutung / Übersetzung</td><td>1 P.</td></tr>',
           ...labels.map(label=>'<tr><td>'+esc(q.position)+'. '+esc(q.source_snapshot)+'</td><td>'+esc(label)+'</td><td>1 P.</td></tr>')
         ];
       }).join("");
-      return '<table class="rubric"><thead><tr><th>Aufgabe</th><th>Bewertungskriterium</th><th>Maximal</th></tr></thead><tbody>'+rows+'</tbody></table>'+
-        '<p class="rubric-note">Jede geforderte Bedeutung und jede geforderte Verbform zählt jeweils 1 Punkt. Die erreichbare Gesamtpunktzahl pro Verb steht auch auf der jeweiligen Lösungsaufgabe.</p>';
+      return '<table class="rubric"><thead><tr><th>Aufgabe</th><th>Bewertungskriterium / Lösung</th><th>Maximal</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+        '<p class="rubric-note">Vokabelaufgaben zählen jeweils 1 Punkt. Bei Grammatikaufgaben zählen die Bedeutung und jede geforderte Verbform jeweils 1 Punkt.</p>';
     }
     const rows=questions.map(q=>{
       const answers=Array.isArray(q.accepted_answers_snapshot)?q.accepted_answers_snapshot:[];
@@ -1559,15 +1578,17 @@
   }
 
   function createdTestHtml(solutionOnly,includeSolutions=false,item=createdTestDocument){
-    const isGrammar=item.testType==="grammar";
+    const isGrammar=item.testType==="grammar"||item.testType==="combined";
     const questions=item.questions||[];
     const maxPoints=questions.reduce((sum,q)=>sum+printQuestionMaxPoints(q,isGrammar),0);
     const title=esc(item.title||(isGrammar?"Grammatiktest":"Vokabeltest"));
     const solutionContent=createdQuestionContent(questions,isGrammar,true);
     const testContent=createdQuestionContent(questions,isGrammar,false);
-    const meta=esc(fmtDate(item.testDate))+' · '+esc(item.durationMinutes)+' Minuten · '+questions.length+' '+(isGrammar?"Verb-Aufgaben":"Vokabeln")+' · '+maxPoints+' Punkte maximal';
+    const combined=item.testType==="combined";
+    const vocabCount=questions.filter(q=>q.question_meta?.kind==="vocab").length,grammarCount=questions.length-vocabCount;
+    const meta=esc(fmtDate(item.testDate))+' · '+esc(item.durationMinutes)+' Minuten · '+(combined?vocabCount+' Vokabeln + '+grammarCount+' Grammatikaufgaben':questions.length+' '+(isGrammar?"Verb-Aufgaben":"Vokabeln"))+' · '+maxPoints+' Punkte maximal';
     const testHeading=solutionOnly?'':'<section class="test-section"><h1>'+title+'</h1><div class="meta">'+meta+'</div>'+
-      '<p class="intro">'+(isGrammar?'Trage die deutsche Bedeutung und die geforderten Verbformen ein.':'Übersetze die deutschen Vorgaben vollständig ins Spanische.')+'</p>'+
+      '<p class="intro">'+(combined?'Bearbeite den Vokabelteil und die geforderten Verbformen.':isGrammar?'Trage die deutsche Bedeutung und die geforderten Verbformen ein.':'Übersetze die deutschen Vorgaben vollständig ins Spanische.')+'</p>'+
       '<div class="student-fields"><span>Name: __________________________________</span><span>Schülernummer: ______________</span></div>'+testContent+'</section>';
     const solutionHeading=solutionOnly||includeSolutions
       ? '<section class="solution-section"><h1 class="solution-title">LÖSUNGEN</h1><div class="solution-subtitle">'+title+' · '+meta+'</div>'+
@@ -1630,7 +1651,7 @@
   function renderCreatedSolution(){
     const root=$("createdSolutionPreview"),item=createdTestDocument;
     if(!item)return;
-    const isGrammar=item.testType==="grammar",questions=item.questions||[];
+    const isGrammar=item.testType==="grammar"||item.testType==="combined",questions=item.questions||[];
     if(isGrammar){
       root.innerHTML='<div class="grammar-grid">'+questions.map(q=>grammarPrintCard(q,true)).join("")+'</div>';
     }else{
@@ -1669,37 +1690,45 @@
     showMsg($("createdDocumentMsg"),"Test-PDF und Lösung sind bereit. Im Druckdialog kannst du „Als PDF speichern“ auswählen.","ok");
   }
 
+  let createMode="vocab";
   function showCreateMode(mode){
+    createMode=mode;
     const grammar=mode==="grammar";
+    const combined=mode==="combined";
     createdTestDocument=null;
     $("createdSolutionPreview").innerHTML="";
     $("createdSolutionPreview").classList.add("hidden");
     $("vocabCreateForm").classList.toggle("hidden",grammar);
     $("grammarCreateForm").classList.toggle("hidden",!grammar);
-    $("createVocabModeBtn").classList.toggle("active",!grammar);
+    $("combinedGrammarSection").classList.toggle("hidden",!combined);
+    $("createVocabModeBtn").classList.toggle("active",mode==="vocab");
     $("createGrammarModeBtn").classList.toggle("active",grammar);
+    $("createCombinedModeBtn").classList.toggle("active",combined);
     $("newTestCard").classList.add("hidden");
     $("grammarPlanCard").classList.add("hidden");
     if(grammar && !$("grammarTestDate").value){
       $("grammarTestDate").value=new Date().toISOString().slice(0,10);
     }
+    if(combined)loadGrammarCatalog();
   }
 
   async function loadGrammarCatalog(){
-    if(grammarCatalog.length)return;
+    if(grammarCatalog.length){renderGrammarCatalog();renderGrammarCatalog("combinedGrammarTopicsBox");return;}
     try{
       const res=await fetch(new URL("grammatik-themen.json",window.location.href),{cache:"no-store"});
       if(!res.ok)throw new Error("Katalog nicht erreichbar");
       const data=await res.json();
       grammarCatalog=Array.isArray(data?.topics)?data.topics:[];
       renderGrammarCatalog();
+      renderGrammarCatalog("combinedGrammarTopicsBox");
     }catch(e){
       $("grammarTopicsBox").innerHTML='<div class="empty">Die Grammatikbereiche konnten nicht geladen werden.</div>';
+      $("combinedGrammarTopicsBox").innerHTML='<div class="empty">Die Grammatikbereiche konnten nicht geladen werden.</div>';
     }
   }
 
-  function renderGrammarCatalog(){
-    const root=$("grammarTopicsBox");
+  function renderGrammarCatalog(rootId="grammarTopicsBox"){
+    const root=$(rootId);
     root.innerHTML="";
     const groups=new Map();
     for(const topic of grammarCatalog){
@@ -1797,10 +1826,10 @@
     updateGrammarSummary();
   }
 
-  function collectGrammarConfig(){
+  function collectGrammarConfig(rootId="grammarTopicsBox"){
     const selectedTopics=[];
     const fixed=[];
-    document.querySelectorAll(".grammar-topic").forEach(box=>{
+    $(rootId).querySelectorAll(".grammar-topic").forEach(box=>{
       const topicId=box.dataset.topicId;
       if(box.querySelector(".grammar-topic-source").checked)selectedTopics.push(topicId);
       box.querySelectorAll(".grammar-verb-check:checked").forEach(input=>{
@@ -2125,7 +2154,7 @@
   function renderTestFolder(t,panel){
     const subs=submissionsCache.filter(s=>s.test_id===t.id);
     const submitted=subs.filter(s=>s.status==="submitted");
-    const url=t.test_type==="grammar"?grammarStudentUrl(t.public_code):studentUrl(t.public_code);
+    const url=(t.test_type==="grammar"||t.test_type==="combined")?grammarStudentUrl(t.public_code):studentUrl(t.public_code);
     panel.innerHTML=
       '<div class="qrgrid">'+
         '<div><div class="qrbox qr-target"></div></div>'+
@@ -2172,7 +2201,7 @@
       btn.disabled=true;
       btn.textContent="Details schließen";
       try{
-        if(String(t.test_type).toLowerCase()==="grammar")await openGrammarSubmissionDetail(sub,t,detailRoot);
+        if(["grammar","combined"].includes(String(t.test_type).toLowerCase()))await openGrammarSubmissionDetail(sub,t,detailRoot);
         else await openSubmissionDetail(sub,t,detailRoot);
       }catch(error){
         console.error("Korrektur konnte nicht geöffnet werden:",error);
@@ -2286,10 +2315,10 @@
       let p={translation:"",forms:[]};try{p=JSON.parse(a.response_text||"{}")}catch{}
       const adjustments=a.teacher_adjustments&&typeof a.teacher_adjustments==="object"&&!Array.isArray(a.teacher_adjustments)?a.teacher_adjustments:{};
       const labels=Array.isArray(m.labels)?m.labels:[];
-      const parts=[
-        {label:"Deutsche Bedeutung",typed:p.translation||"",expected:expected[0]||""},
-        ...labels.map((lab,i)=>({label:lab,typed:p.forms?.[i]||"",expected:expected[i+1]||""}))
-      ];
+      const isVocab=m.kind==="vocab";
+      const parts=isVocab
+        ? [{label:"Spanische Übersetzung",typed:p.translation||"",expected:expected.join(" / ")}]
+        : [{label:"Deutsche Bedeutung",typed:p.translation||"",expected:expected[0]||""},...labels.map((lab,i)=>({label:lab,typed:p.forms?.[i]||"",expected:expected[i+1]||""}))];
       const effectivePoints=parts.map((part,index)=>{
         const auto=grammarReviewAutoPoint(part.typed,part.expected);
         return Object.prototype.hasOwnProperty.call(adjustments,String(index))?Number(adjustments[String(index)]):auto;
@@ -2302,7 +2331,7 @@
         '<div class="grammar-answer-card-head"><div><div class="tiny">Aufgabe '+esc(q.position||"")+'</div>'+
         '<div class="answer-prompt">'+esc(q.source_snapshot||"")+'</div>'+
         '<div class="tiny">'+esc((m.topicGroup||"")+(m.topicTitle?" – "+m.topicTitle:""))+'</div></div>'+
-        '<div class="score grammar-question-score">'+grammarReviewPointText(total)+' / '+expected.length+' P.</div></div>'+
+        '<div class="score grammar-question-score">'+grammarReviewPointText(total)+' / '+(isVocab?1:expected.length)+' P.</div></div>'+
         '<div class="grammar-review-parts"></div>';
 
       const partsRoot=card.querySelector(".grammar-review-parts");
@@ -2341,10 +2370,10 @@
       let response={translation:"",forms:[]};try{response=JSON.parse(a.response_text||"{}")}catch{}
       const labels=Array.isArray(m.labels)?m.labels:[];
       const adjustments=a.teacher_adjustments&&typeof a.teacher_adjustments==="object"&&!Array.isArray(a.teacher_adjustments)?a.teacher_adjustments:{};
-      const parts=[
-        {label:"Deutsche Bedeutung",typed:response.translation||"",expected:expected[0]||""},
-        ...labels.map((label,index)=>({label,typed:response.forms?.[index]||"",expected:expected[index+1]||""}))
-      ];
+      const isVocab=m.kind==="vocab";
+      const parts=isVocab
+        ? [{label:"Spanische Übersetzung",typed:response.translation||"",expected:expected.join(" / ")}]
+        : [{label:"Deutsche Bedeutung",typed:response.translation||"",expected:expected[0]||""},...labels.map((label,index)=>({label,typed:response.forms?.[index]||"",expected:expected[index+1]||""}))];
       const rows=parts.map((part,index)=>{
         const auto=grammarReviewAutoPoint(part.typed,part.expected);
         const points=Object.prototype.hasOwnProperty.call(adjustments,String(index))?Number(adjustments[String(index)]):auto;
@@ -2678,6 +2707,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
   $("refreshTeachersBtn").addEventListener("click",loadTeachers);
   $("createVocabModeBtn").addEventListener("click",()=>showCreateMode("vocab"));
   $("createGrammarModeBtn").addEventListener("click",()=>showCreateMode("grammar"));
+  $("createCombinedModeBtn").addEventListener("click",()=>showCreateMode("combined"));
   $("grammarVerbCount").addEventListener("input",updateGrammarSummary);
   $("prepareGrammarTestBtn").addEventListener("click",()=>{
     hideMsg($("grammarCreateMsg"));
@@ -2790,6 +2820,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
     hideMsg($("createMsg"));$("newTestCard").classList.add("hidden");
     const unitKeys=[];
     const folderIds=[];
+    const combined=createMode==="combined";
     document.querySelectorAll(".unit-group").forEach(group=>{
       const master=group.querySelector(".unit-master");
       if(master.checked && !master.indeterminate){
@@ -2809,8 +2840,24 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
     if(!Number.isInteger(durationMinutes)||durationMinutes<1){showMsg($("createMsg"),"Bitte die Bearbeitungszeit eingeben.","err");return}
     if(!testDate){showMsg($("createMsg"),"Bitte das Testdatum auswählen.","err");return}
 
-    $("createTestBtn").disabled=true;$("createTestBtn").textContent="Test wird erstellt …";
-    const {data,error}=await supabase.functions.invoke("create-test",{body:{unitKeys,folderIds,questionCount,durationMinutes,testDate,title,...assignment}});
+    let data,error;
+    if(combined){
+      const grammarCount=Number($("combinedGrammarCount").value);
+      const {selectedTopics,fixed}=collectGrammarConfig("combinedGrammarTopicsBox");
+      if(!Number.isInteger(grammarCount)||grammarCount<1||grammarCount>100){showMsg($("createMsg"),"Bitte 1 bis 100 Grammatikaufgaben eingeben.","err");return}
+      if(!selectedTopics.length){showMsg($("createMsg"),"Bitte mindestens einen Grammatikbereich auswählen.","err");return}
+      const plan=buildGrammarPlan(grammarCount,selectedTopics,fixed);
+      if(plan.length!==grammarCount){showMsg($("createMsg"),"Aus den gewählten Grammatikbereichen lassen sich nicht genügend unterschiedliche Aufgaben zusammenstellen.","err");return}
+      $("createTestBtn").disabled=true;$("createTestBtn").textContent="Gemischter Test wird erstellt …";
+      ({data,error}=await supabase.functions.invoke("create-grammar-test",{body:{
+        plan:plan.map(item=>({topicId:item.topic.id,topicGroup:item.topic.group,topicTitle:item.topic.title,mode:item.topic.mode,verb:item.verb.verb,de:item.verb.de})),
+        vocabulary:{unitKeys,folderIds,questionCount},gradingMode:$("combinedGradingMode").value,
+        durationMinutes,testDate,title,...assignment
+      }}));
+    }else{
+      $("createTestBtn").disabled=true;$("createTestBtn").textContent="Test wird erstellt …";
+      ({data,error}=await supabase.functions.invoke("create-test",{body:{unitKeys,folderIds,questionCount,durationMinutes,testDate,title,...assignment}}));
+    }
     $("createTestBtn").disabled=false;$("createTestBtn").textContent="Test erstellen";
     if(error||data?.error){
       let message=data?.error||"Der Test konnte nicht erstellt werden.";
@@ -2818,13 +2865,13 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
       showMsg($("createMsg"),message,"err");return;
     }
 
-    const url=studentUrl(data.publicCode);
+    const url=combined?grammarStudentUrl(data.publicCode):studentUrl(data.publicCode);
     $("newStudentLink").textContent=url;
-    $("newTestSummary").innerHTML='<p><strong>'+esc(data.title||"Vokabeltest")+'</strong><br>'+esc(data.courseName||"Kurs")+' · Quartal '+esc(data.quarterNumber)+'<br>'+fmtDate(data.testDate)+' · '+data.questionCount+' Vokabeln · '+data.durationMinutes+' Minuten</p>';
+    $("newTestSummary").innerHTML='<p><strong>'+esc(data.title||(combined?"Gemischter Test":"Vokabeltest"))+'</strong><br>'+esc(data.courseName||"Kurs")+' · Quartal '+esc(data.quarterNumber)+'<br>'+fmtDate(data.testDate)+' · '+(combined?data.vocabularyCount+" Vokabeln + "+data.grammarCount+" Grammatikaufgaben":data.questionCount+" Vokabeln")+' · '+data.durationMinutes+' Minuten</p>';
     $("newQr").innerHTML="";
     new QRCode($("newQr"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
     $("newTestCard").classList.remove("hidden");
-    await loadCreatedTestDocument(data,"vocab");
+    await loadCreatedTestDocument(data,combined?"combined":"vocab");
     showMsg($("createMsg"),"Der Test ist gespeichert. Test-PDF und Lösung sind bereit.","ok");
     await loadDashboard();
   });
