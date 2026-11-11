@@ -316,6 +316,10 @@
         <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">🧩</span><span class="grammar-choice-label">Konjugations-Paare</span></span>
         <span class="grammar-choice-copy">Verbinde spanische und deutsche Formen in einem Spiel auf Zeit</span>
       </button>
+      <button id="openGrammarFangBtn" class="choice-btn choice-learn grammar-card-pairs" type="button">
+        <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">⚡</span><span class="grammar-choice-label">Zeitformen-Fänger</span></span>
+        <span class="grammar-choice-copy">Erkenne fallende Verbformen und ordne sie unter Zeitdruck der richtigen Zeitform zu.</span>
+      </button>
       <button id="openGrammarTestsBtn" class="choice-btn choice-test grammar-card-tests" type="button">
         <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">✅</span><span class="grammar-choice-label">Grammatiktests</span></span>
         <span class="grammar-choice-copy">Konjugationen selbst eingeben und überprüfen</span>
@@ -2563,6 +2567,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
   $("openGrammarPairsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-paare.html?personalisiert=1":"grammatik-paare.html"; });
+  $("openGrammarFangBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-zeitenfaenger.html?personalisiert=1":"grammatik-zeitenfaenger.html"; });
   renderWeeklyPlanner();
   refreshStudentAccount();
   if(location.hash==="#tests"){ $("portalCard").classList.add("hidden");$("testsChoiceCard").classList.remove("hidden");$("openTestsBtn").setAttribute("aria-expanded","true");setTimeout(openTestsView,0); }
