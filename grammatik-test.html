@@ -26,7 +26,8 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:75
   .avanza-home-link:hover img{transform:translateY(-1px)}
   .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
   @media print{.avanza-home-header{display:none!important}}
-  </style>
+  #exerciseTimes{font-size:1rem;font-weight:850;color:#4f46e5;margin-top:2px}
+</style>
 </head>
 <body><div class="wrap">
   <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
@@ -38,7 +39,7 @@ button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:75
 <div class="actions"><button id="startBtn" class="primary">Test starten</button></div><div id="startMsg" class="msg"></div>
 </section>
 <section id="testArea" class="hidden">
-<div class="topbar"><div class="topbar-inner"><div><strong id="testTitle"></strong><div id="testIdentity" class="tiny"></div><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
+<div class="topbar"><div class="topbar-inner"><div><strong id="testTitle"></strong><div id="testIdentity" class="tiny"></div><div id="exerciseTimes" class="tiny" aria-live="polite"></div><div id="saveState" class="tiny">Noch nicht gespeichert</div></div><div><span id="answered">0</span> Felder ausgefüllt</div><div id="timer" class="timer">00:00</div></div>
 <div id="chars" class="chars"><button>á</button><button>é</button><button>í</button><button>ó</button><button>ú</button><button>ü</button><button>ñ</button><button>¿</button><button>¡</button></div></div>
 <section class="card"><h2>Aufgaben</h2><p class="tiny">Das spanische Verb ist vorgegeben. Trage zuerst die deutsche Bedeutung und anschließend die geforderten Formen ein.</p><div id="questions"></div>
 <div class="actions"><button id="submitBtn" class="primary">Test endgültig abgeben</button></div><div id="testMsg" class="msg"></div></section>
@@ -83,8 +84,9 @@ function grammarFormLabel(m){
  };
  return labels[m?.mode]||m?.topicGroup||"";
 }
+function selectedTenseNames(items){return [...new Set((items||[]).map(q=>grammarFormLabel(q.question_meta||q)).filter(Boolean))]}
 function render(data){
- questions=data.questions||[];deadlineAt=data.deadlineAt;token=data.accessToken;sessionStorage.setItem(storageKey,token);
+ questions=data.questions||[];$("exerciseTimes").textContent=selectedTenseNames(questions).join(" · ");deadlineAt=data.deadlineAt;token=data.accessToken;sessionStorage.setItem(storageKey,token);
  currentTestMeta={...(currentTestMeta||{}),...(data.test||{})};
  currentStudentCode=String(data.studentCode||$("studentCode").value||currentStudentCode);
  $("startCard").classList.add("hidden");$("testArea").classList.remove("hidden");$("testTitle").textContent=data.test?.title||"Grammatiktest";
