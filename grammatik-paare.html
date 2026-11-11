@@ -35,7 +35,7 @@ select,input[type=number]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;
 .match-card.matched{visibility:hidden;pointer-events:none}
 .end-score{font-size:1.45rem;font-weight:900;margin:12px 0}
 @media(max-width:700px){body{padding:11px}.card{padding:15px}.field-row{grid-template-columns:1fr}.board{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.match-card{min-height:74px}.game-top{padding-right:100px}}
-.active-times{font-size:1rem;font-weight:850;color:#6d28d9;margin:4px 0 2px}
+.active-times{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:900;line-height:1.1;color:#d946ef;margin:0 0 8px}
 </style>
 </head>
 <body>
@@ -58,7 +58,7 @@ select,input[type=number]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;
 </section>
 <section id="gameCard" class="card hidden">
 <div class="game-top">
-<div><h1>Konjugations-Paare</h1><p id="activeTimes" class="active-times" aria-live="polite"></p><p id="activeSettings" class="tiny"></p></div>
+<div><h1 id="activeTimes" class="active-times" aria-live="polite"></h1><p id="activeSettings" class="tiny"></p></div>
 <div class="game-stats"><div class="stat">Paare: <span id="score">0</span></div><div class="stat">Rekord: <span id="best">0</span></div></div>
 </div>
 <div id="timer" class="game-timer">01:00</div>
