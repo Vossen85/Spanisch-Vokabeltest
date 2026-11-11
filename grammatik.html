@@ -51,7 +51,8 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
   .avanza-home-link:hover img{transform:translateY(-1px)}
   .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
   @media print{.avanza-home-header{display:none!important}}
-  </style>
+  .tense-heading{margin:2px 0 6px;color:#4f46e5;font-size:1.15rem;font-weight:850}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -76,6 +77,7 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
   <div class="preview-head">
     <div>
       <h1>Deine Konjugationen</h1>
+      <p id="timeHeading" class="tense-heading"></p>
       <p id="selectionInfo" class="sub"></p>
     </div>
   </div>
@@ -490,12 +492,14 @@ function render(){
   preview.innerHTML="";
   if(!topics.length){
     document.getElementById("previewCard").classList.remove("hidden");
+    document.getElementById("timeHeading").textContent="";
     document.getElementById("selectionInfo").textContent="";
     preview.innerHTML="<div class='empty'>Bitte mindestens einen Grammatikbereich auswählen.</div>";
     return;
   }
   document.getElementById("previewCard").classList.remove("hidden");
   const total=topics.reduce((n,t)=>n+t.verbs.length,0);
+  document.getElementById("timeHeading").textContent=[...new Set(topics.map(t=>t.group))].join(" · ");
   document.getElementById("selectionInfo").textContent=topics.length+" Bereich(e) · "+total+" Konjugationen";
   for(const t of topics){
     const sec=document.createElement("section");sec.className="topic-preview";
