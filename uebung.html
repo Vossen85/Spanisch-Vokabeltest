@@ -190,6 +190,8 @@
     .weekly-planner-day.wednesday{--planner-day:#d80075;--planner-day-soft:#fff0f7}
     .weekly-planner-day.thursday{--planner-day:#7134df;--planner-day-soft:#f2edff}
     .weekly-planner-day.friday{--planner-day:#1664d9;--planner-day-soft:#eaf2ff}
+    .weekly-planner-day.saturday{--planner-day:#00a89f;--planner-day-soft:#e6fffb}
+    .weekly-planner-day.sunday{--planner-day:#e67500;--planner-day-soft:#fff2df}
     .weekly-planner-day-header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;padding:3px 6px;border-radius:8px;background:var(--planner-day-soft)}
     .weekly-planner-day-title{margin:0;color:var(--planner-day);font-size:.9rem;font-weight:850}
     .weekly-planner-day-date{margin-left:5px;color:#64748b;font-size:.74rem;font-weight:650}
@@ -630,7 +632,9 @@
     {key:"tuesday",label:"Dienstag",className:"tuesday"},
     {key:"wednesday",label:"Mittwoch",className:"wednesday"},
     {key:"thursday",label:"Donnerstag",className:"thursday"},
-    {key:"friday",label:"Freitag",className:"friday"}
+    {key:"friday",label:"Freitag",className:"friday"},
+    {key:"saturday",label:"Samstag",className:"saturday"},
+    {key:"sunday",label:"Sonntag",className:"sunday"}
   ];
   let plannerWeekStart=getPlannerMonday(new Date());
   let plannerEntries=createBlankPlannerEntries();
@@ -704,9 +708,9 @@
   }
   function plannerRangeLabel(){
     const monday=plannerWeekStart;
-    const friday=plannerDateForDay(4);
-    const year=new Intl.DateTimeFormat("de-DE",{year:"numeric"}).format(friday);
-    return plannerDayDateLabel(monday)+"–"+plannerDayDateLabel(friday)+year;
+    const sunday=plannerDateForDay(6);
+    const year=new Intl.DateTimeFormat("de-DE",{year:"numeric"}).format(sunday);
+    return plannerDayDateLabel(monday)+"–"+plannerDayDateLabel(sunday)+year;
   }
   function plannerLocalKey(weekKey){
     return "avanza-week-plan-guest:"+weekKey;
