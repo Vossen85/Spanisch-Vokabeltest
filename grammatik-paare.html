@@ -356,7 +356,7 @@ async function startActivity(){
  const {data:{session}}=await client.auth.getSession();if(!session)return;
  const {data,error}=await client.functions.invoke("learning-activity",{body:{action:"start",activityType:"grammar",mode:"extra",groupKey:"matching"}});
  if(error||data?.error||!data?.sessionId)return;
- if(generation!==activityGeneration){await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:data.sessionId,active:false}});return}
+ if(generation!==activityGeneration){if(document.visibilityState==="hidden")await pingActivity(data.sessionId);await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:data.sessionId,active:document.visibilityState==="visible"});return}
  activityId=data.sessionId;
  const id=activityId;
  if(activityHeartbeat)clearInterval(activityHeartbeat);
