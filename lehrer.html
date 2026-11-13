@@ -43,7 +43,16 @@
     .auth-form-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px}
     .backAuthBtn{background:transparent;color:#475569;padding:7px 0}
     .topline{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
-    .nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+    /* Lehrer-Hauptmenü: Tests allein, danach zwei feste Zweierspalten, Administration separat. */
+    .nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0 20px;align-items:stretch}
+    .nav .navBtn{display:flex;align-items:center;justify-content:center;min-width:0;width:100%;min-height:70px;text-align:center;line-height:1.22;overflow-wrap:break-word}
+    .nav #testsHubBtn{grid-column:1 / -1;max-width:100%;min-height:72px}
+    .nav #adminNavBtn{grid-column:1 / -1;max-width:100%;min-height:70px;margin-top:5px}
+    @media(max-width:480px){
+      .nav{gap:11px}
+      .nav .navBtn{padding:12px 7px;font-size:clamp(.87rem,3.9vw,1.05rem)}
+      .nav #testsHubBtn,.nav #adminNavBtn{font-size:1.08rem}
+    }
     button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer}
     button:disabled{opacity:.6;cursor:not-allowed}
     .primary{background:#2563eb;color:#fff}
@@ -477,8 +486,8 @@
 
     <nav class="nav" aria-label="Lehrer-Hauptmenü">
       <button id="testsHubBtn" class="navBtn secondary" type="button" data-view="tests" aria-controls="testSubnav" aria-expanded="false">Tests</button>
-      <button class="navBtn secondary" type="button" data-view="practice">Schülerbereich teilen</button>
       <button class="navBtn secondary" type="button" data-view="courses">Kurse verwalten</button>
+      <button class="navBtn secondary" type="button" data-view="practice">Schülerbereich teilen</button>
       <button class="navBtn secondary" type="button" data-view="activity">Wochenaufgabe</button>
       <button class="navBtn secondary" type="button" data-view="reports">Lernberichte</button>
       <button id="adminNavBtn" class="navBtn secondary hidden" type="button" data-view="admin">Kollegen verwalten</button>
