@@ -21,6 +21,7 @@ h1{margin:0 0 5px;font-size:clamp(1.8rem,5vw,2.55rem);line-height:1.18;font-weig
 .search-row:focus-within{box-shadow:0 0 0 4px #25d2b626}
 .search-symbol{font-size:1.25rem;margin-left:4px}
 #wordSearch{min-width:0;flex:1;border:0;outline:0;background:transparent;color:inherit;padding:8px 3px;font:inherit;font-size:1.15rem}
+#wordSearch::-webkit-search-cancel-button{display:none}
 #clearSearch{border:0;background:#e2e8f0;color:#344054;border-radius:8px;cursor:pointer;padding:7px 10px;font-size:1rem}
 #clearSearch[hidden]{display:none}
 .under{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 10px;color:#64748b;font-size:.83rem;margin:10px 2px 0}
@@ -103,7 +104,7 @@ h1{margin:0 0 5px;font-size:clamp(1.8rem,5vw,2.55rem);line-height:1.18;font-weig
 </div>
 <p class="note">Das Wörterbuch durchsucht nur hinterlegte Vokabeln und die Verben aus dem Grammatikbereich. Wörter aus „Grammatik in Sätzen üben“ werden nicht aufgenommen. Bei mehrdeutigen Wortformen werden mögliche Grundformen angezeigt.</p>
 </main>
-<script src="./woerterbuch-suche.js?v=20261113a"></script>
+<script src="./woerterbuch-suche.js?v=20261113b"></script>
 <script>
 (function(){
 "use strict";
