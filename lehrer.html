@@ -81,6 +81,16 @@
     .nav .navBtn.active:hover{filter:brightness(1.08) saturate(1.16)}
     .nav .navBtn:active{transform:translateY(0)}
     .nav .navBtn:focus-visible,#logoutBtn:focus-visible,#logoutPendingBtn:focus-visible{outline:3px solid #152d48;outline-offset:4px}
+    .test-subnav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:-4px 0 22px;padding:14px;border:2px solid #a5b4fc;border-radius:17px;background:rgba(99,102,241,.07)}
+    .test-sub-btn{--rainbow-from:#ef4662;--rainbow-to:#c62a52;--rainbow-text:#fff;position:relative;isolation:isolate;overflow:hidden;color-scheme:only light;color:var(--rainbow-text);background:linear-gradient(135deg,var(--rainbow-from),var(--rainbow-to));min-height:48px;border:2px solid rgba(255,255,255,.3);border-radius:12px;padding:10px 12px;font-weight:850;line-height:1.25;box-shadow:0 4px 11px rgba(15,23,42,.14);text-align:center}
+    .test-sub-btn[data-view="tests"]{--rainbow-from:#ff526d;--rainbow-to:#e52f61}
+    .test-sub-btn[data-view="create"]{--rainbow-from:#48d47c;--rainbow-to:#1aa866}
+    .test-sub-btn[data-view="students"]{--rainbow-from:#ffe65a;--rainbow-to:#f8c62b;--rainbow-text:#382700}
+    .test-sub-btn[data-view="analog-import"]{--rainbow-from:#ff9a32;--rainbow-to:#f36c18}
+    .test-sub-btn.active{box-shadow:0 0 0 2px #fff,0 0 0 5px var(--rainbow-to),0 5px 13px rgba(15,23,42,.23)}
+    .test-sub-btn:focus-visible{outline:3px solid #152d48;outline-offset:4px}
+    .test-sub-btn:hover{filter:brightness(1.08)}
+    @media(max-width:550px){.test-subnav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px}.test-sub-btn{min-height:55px;padding:9px 7px;font-size:.87rem}}
     #logoutBtn,#logoutPendingBtn{background:linear-gradient(135deg,#f2717c,#cd3d5b);color:#fff;border:2px solid rgba(255,255,255,.3);font-weight:850;border-radius:12px;box-shadow:0 4px 11px rgba(127,29,29,.16)}
     #logoutBtn:hover,#logoutPendingBtn:hover{filter:brightness(1.07)}
     /* Canvas-Farbflächen bleiben in Samsung Internet deutlich leuchtender als erzwungen abgedunkelte CSS-Verläufe. */
@@ -422,16 +432,19 @@
       <button id="logoutBtn" class="secondary">Abmelden</button>
     </div>
 
-    <div class="nav">
-      <button class="navBtn secondary" data-view="tests">Meine Tests</button>
-      <button class="navBtn secondary" data-view="analog-import">Analoge Tests importieren</button>
-      <button class="navBtn secondary" data-view="students">Nach Schülern</button>
-      <button class="navBtn secondary" data-view="create">Test erstellen</button>
-      <button class="navBtn secondary" data-view="practice">Schülerbereich teilen</button>
-      <button class="navBtn secondary" data-view="courses">Kurse verwalten</button>
-      <button class="navBtn secondary" data-view="activity">Wochenaufgabe</button>
-      <button class="navBtn secondary" data-view="reports">Lernberichte</button>
-      <button id="adminNavBtn" class="navBtn secondary hidden" data-view="admin">Kollegen verwalten</button>
+    <nav class="nav" aria-label="Lehrer-Hauptmenü">
+      <button id="testsHubBtn" class="navBtn secondary" type="button" data-view="tests" aria-controls="testSubnav" aria-expanded="false">Tests</button>
+      <button class="navBtn secondary" type="button" data-view="practice">Schülerbereich teilen</button>
+      <button class="navBtn secondary" type="button" data-view="courses">Kurse verwalten</button>
+      <button class="navBtn secondary" type="button" data-view="activity">Wochenaufgabe</button>
+      <button class="navBtn secondary" type="button" data-view="reports">Lernberichte</button>
+      <button id="adminNavBtn" class="navBtn secondary hidden" type="button" data-view="admin">Kollegen verwalten</button>
+    </nav>
+    <div id="testSubnav" class="test-subnav hidden" role="group" aria-label="Testverwaltung">
+      <button class="test-sub-btn" type="button" data-view="tests" aria-pressed="false">Meine Tests</button>
+      <button class="test-sub-btn" type="button" data-view="create" aria-pressed="false">Test erstellen</button>
+      <button class="test-sub-btn" type="button" data-view="students" aria-pressed="false">Nach Schülern</button>
+      <button class="test-sub-btn" type="button" data-view="analog-import" aria-pressed="false">Analoge Tests importieren</button>
     </div>
 
     <section id="view-create" class="view hidden">
@@ -767,7 +780,7 @@
       "admin":["#ff79c7","#e84aa0"],
       "logout":["#fb8990","#e35476"]
     };
-    const buttons=[...document.querySelectorAll(".nav .navBtn"),$("logoutBtn"),$("logoutPendingBtn")].filter(Boolean);
+    const buttons=[...document.querySelectorAll(".nav .navBtn"),...document.querySelectorAll(".test-sub-btn"),$("logoutBtn"),$("logoutPendingBtn")].filter(Boolean);
     const renderers=[];
     for(const button of buttons){
       const colors=palette[button.dataset.view||"logout"];
@@ -1045,12 +1058,22 @@
 
   function setView(name){
     currentView=name||null;
+    const testViews=["tests","create","students","analog-import"];
+    const inTestSection=testViews.includes(name);
     document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));
+    $("testSubnav").classList.toggle("hidden",!inTestSection);
+    $("testsHubBtn").setAttribute("aria-expanded",String(inTestSection));
     document.querySelectorAll(".navBtn").forEach(b=>{
-      const active=!!name&&b.dataset.view===name;
+      const active=!!name&&(b.id==="testsHubBtn"?inTestSection:b.dataset.view===name);
       b.classList.toggle("active",active);
       b.setAttribute("aria-pressed",String(active));
     });
+    document.querySelectorAll(".test-sub-btn").forEach(b=>{
+      const active=b.dataset.view===name;
+      b.classList.toggle("active",active);
+      b.setAttribute("aria-pressed",String(active));
+    });
+    refreshRainbowButtons();
     if(!name)return;
     $("view-"+name).classList.remove("hidden");
     if(name==="tests") loadDashboard();
@@ -2835,7 +2858,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
   $("logoutBtn").addEventListener("click",logout);
   $("logoutPendingBtn").addEventListener("click",logout);
 
-  document.querySelectorAll(".navBtn").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
+  document.querySelectorAll(".navBtn,.test-sub-btn").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
   $("analogTestSelect").addEventListener("change",()=>{
     const selected=testsCache.find(t=>String(t.id)===$("analogTestSelect").value);
