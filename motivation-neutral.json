@@ -1,459 +1,373 @@
 {
-  "version": 2,
+  "version": 3,
   "type": "neutral",
-  "attribution": "350 eigens für den Lehrerbereich formulierte, wertschätzende Impulse; 15 wörtliche, gemeinfreie Zitate mit Autoren- und Werknachweis.",
-  "sources": [
-    {
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)",
-      "url": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
-    },
-    {
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Ein Buch für die Jugend – Aphorismen",
-      "url": "https://projekt-gutenberg.org/authors/marie-von-ebner-eschenbach/books/ein-buch-fuer-die-jugend/chapter/17/"
-    },
-    {
-      "author": "Christian Morgenstern",
-      "work": "Stufen – Lebensweisheit und Kunst",
-      "url": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/12/"
-    },
-    {
-      "author": "Otto Julius Bierbaum",
-      "work": "Yankeedoodle-Fahrt (1909)",
-      "url": "https://www.quintus-verlag.de/Autoren/Bierbaum-Otto-Julius/"
-    },
-    {
-      "author": "Johann Wolfgang von Goethe",
-      "work": "Faust II (1832)",
-      "url": "https://www.literatpro.de/spruch/240816/es-muss-von-herzen-kommen-was-auf-herzen-wirken-soll"
-    }
-  ],
+  "attribution": "Sorgfältig ausgewählte und wortgetreu belegte gemeinfreie Originalzitate aus deutschsprachiger Literatur (keine generierten Motivationssprüche). Kürzere Passagen aus längeren Werken sind als Auszug markiert.",
   "sayings": [
+    {
+      "text": "Was uns an der sichtbaren Schönheit entzückt, ist ewig nur die unsichtbare.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Nicht da ist man daheim, wo man seinen Wohnsitz hat, sondern wo man verstanden wird.",
+      "author": "Christian Morgenstern",
+      "work": "Stufen – Psychologisches",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/14/"
+    },
+    {
+      "text": "Es lohnt sich doch, ein wenig lieb zu sein Und alles auf das Einfachste zu schrauben.",
+      "author": "Joachim Ringelnatz",
+      "work": "Es lohnt sich doch (1932), Anfangsverse",
+      "sourceUrl": "https://de.wikisource.org/wiki/Es_lohnt_sich_doch"
+    },
+    {
+      "text": "Welch Glück, geliebt zu werden! Und lieben, Götter, welch ein Glück!",
+      "author": "Johann Wolfgang von Goethe",
+      "work": "Willkommen und Abschied",
+      "sourceUrl": "https://www.aphorismen.de/suche?f_autor=1461_Johann+Wolfgang+von+Goethe"
+    },
+    {
+      "text": "Ein schlechter Regentag nimmt nichts, aber ein heller Sonntag gibt alles.",
+      "author": "Jean Paul",
+      "work": "Der Papierdrache, Freudenbüchlein (1845)",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/jean-paul/books/der-papierdrache-erster-theil/chapter/5/"
+    },
+    {
+      "text": "Du mußt das Leben nicht verstehen, dann wird es werden wie ein Fest.",
+      "author": "Rainer Maria Rilke",
+      "work": "Mir zur Feier (1898), Anfangsverse",
+      "sourceUrl": "https://www.aphorismen.de/gedicht/12368"
+    },
     {
       "text": "Vertrauen ist Muth, und Treue ist Kraft.",
       "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
     },
-    "Wie schön, dass es dich gibt. Nicht wegen deiner To-do-Liste, sondern einfach, weil du du bist.",
-    "Vielleicht war heute nicht alles leicht. Aber auch ein anstrengender Tag darf mit einem freundlichen Gedanken an dich selbst enden.",
-    "Ein freundlicher Blick von dir kann für jemanden der leichteste Moment eines schweren Schultags sein.",
-    "Du darfst dich ausruhen, ohne dir die Erlaubnis dafür erst verdienen zu müssen.",
-    "Manchmal tut ein liebevolles Wort mehr gut als zehn kluge Ratschläge.",
-    "Du darfst heute lachen, auch wenn noch Arbeit auf dich wartet. Die Freude braucht keinen freien Terminkalender.",
-    "Auch wenn heute mühsam war: Morgen darf ein ganz anderer Tag werden.",
-    "Du musst nicht alles allein tragen. Es ist schön, wenn Menschen einander unterstützen.",
-    "Heute darf ein bisschen mehr Ruhe in deine Gedanken einziehen.",
-    "Vielleicht wartet das schönste Stück des Tages in einer ganz unscheinbaren Minute.",
-    "Rede heute mit dir selbst so, wie du mit einem Menschen sprechen würdest, den du sehr magst.",
-    "Du darfst mutig sein, ohne alles unter Kontrolle zu haben.",
-    "Danke für deine Geduld – gerade an Tagen, an denen sie besonders gefordert ist.",
-    "Nach der letzten Stunde darf auch dein Herz in den Feierabend gehen.",
-    "Du bist so viel mehr als das, was heute von dir erwartet wird. Vergiss das bitte nicht.",
-    "Wenn heute viel zu viel los ist: Du darfst langsam atmen und trotzdem ein wunderbarer Mensch sein.",
-    "Nicht alles, was du bei jungen Menschen bewirkst, lässt sich sofort erkennen.",
-    "Eine Pause macht dich nicht weniger engagiert. Sie macht Platz für dich.",
-    "Es ist schön, wie viel Wärme in einer kleinen Geste stecken kann.",
-    "Manchmal hilft nur Kaffee. Und manchmal hilft ein gemeinsames Lachen noch ein bisschen mehr.",
-    "Es gibt mehr gute Möglichkeiten, als du an einem erschöpften Abend sehen kannst.",
-    "Ein gutes Kollegium beginnt oft mit kleinen Zeichen von Aufmerksamkeit.",
-    "Nicht alles Dringende ist auch das Wichtigste. Du darfst unterscheiden.",
-    "Ein Sonnenstrahl am Fenster ist noch kein gelöster Stundenplan – aber trotzdem schön.",
     {
-      "text": "In jede hohe Freude mischt sich eine Empfindung der Dankbarkeit.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "Du verdienst auch dann liebevolle Worte, wenn du einen Fehler gemacht hast.",
-    "Vielleicht staunst du heute darüber, was du dir schon alles zugetraut hast.",
-    "Du gibst jeden Tag Zeit, Aufmerksamkeit und Gedanken. Das verdient Anerkennung.",
-    "Die Schule hat heute viel von dir bekommen. Jetzt darf dein eigenes Leben wieder Platz einnehmen.",
-    "Die Welt wird nicht schöner, weil du perfekt bist, sondern weil du deine eigene Wärme mitbringst.",
-    "Ein chaotischer Vormittag ist kein Urteil über deine Fähigkeiten.",
-    "Du schenkst mehr als Wissen: manchmal auch Mut, Zutrauen und das Gefühl, gesehen zu werden.",
-    "Dein Feierabend gehört auch dir. Die Schule darf morgen wieder dran sein.",
-    "Vielleicht kannst du heute jemandem ein Lächeln schenken – und dir selbst gleich mit.",
-    "Wenn der Tag schon chaotisch ist, darf wenigstens dein Humor gut organisiert sein.",
-    "Du musst den ganzen Weg nicht kennen. Es reicht, wenn du heute freundlich mit dir weitergehst.",
-    "Vielleicht war heute dein Lächeln der freundlichste Moment für jemanden.",
-    "Vielleicht wird etwas leichter, wenn du nicht mehr gegen jede Unvollkommenheit kämpfst.",
-    "Du darfst einen guten Kaffee genießen, ohne dabei schon die nächste Aufgabe zu planen.",
-    "Es ist leichter, mutig zu sein, wenn man nicht ständig gegen sich selbst kämpft.",
-    "Nicht jede Herausforderung verlangt Heldentum. Manchmal genügt ein ehrliches Gespräch.",
-    "Vielleicht wird dir heute bewusst, wie viel Gutes du bereits in Bewegung gesetzt hast.",
-    "Ein Abend ohne Arbeitsblätter kann ein sehr gelungener Abend sein.",
-    "Du musst dir deinen Wert nicht jeden Morgen neu verdienen. Er ist längst da.",
-    "Manchmal ist es schon ein Erfolg, mit einem freundlichen Herzen durch einen lauten Tag zu kommen.",
-    "Es kann sein, dass sich jemand noch lange an ein gutes Wort von dir erinnert.",
-    "Manchmal ist Selbstfürsorge einfach, das Diensthandy beiseitezulegen.",
-    "Herzlichkeit ist keine Nebensache. Sie macht das Miteinander menschlich.",
-    "Eine ungeplante Pointe im Lehrerzimmer kann den ganzen Nachmittag retten.",
-    {
-      "text": "Wir sind für nichts so dankbar wie für Dankbarkeit.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "Manche schönen Wendungen kündigen sich nicht vorher an.",
-    "Gemeinsam über einen schwierigen Tag zu lachen, macht ihn manchmal ein Stück leichter.",
-    "Du musst nicht auf jedes Durcheinander mit noch mehr Tempo reagieren.",
-    "Manchmal reicht ein Lieblingslied, damit ein grauer Morgen ein bisschen Farbe bekommt.",
-    "Du musst dich nicht kleinmachen, um bescheiden zu sein.",
-    "Du darfst deiner eigenen Erfahrung mehr vertrauen, als du es manchmal tust.",
-    "Dass du dir so viele Gedanken machst, ist nicht selbstverständlich.",
-    "Nicht jede offene Aufgabe muss mit nach Hause kommen. Ein bisschen Unvollkommenheit darf bleiben.",
-    "Vielleicht hast du heute schon jemandem gutgetan, ohne es überhaupt zu bemerken.",
-    "Was heute schwer war, darf schwer gewesen sein. Du musst es nicht schönreden.",
-    "Du musst nicht jeden Menschen erreichen, um einzelnen Menschen sehr viel zu bedeuten.",
-    "Du darfst Nein sagen und trotzdem ein hilfsbereiter Mensch bleiben.",
-    "Du darfst dich heute von etwas Schönem berühren lassen, auch mitten im Alltag.",
-    "Nicht jede Unterrichtsstunde läuft nach Plan. Zum Glück entstehen daraus manchmal die besten Geschichten.",
-    "Es darf wieder leichter werden. Auch wenn es sich heute noch nicht so anfühlt.",
-    "Wer um Hilfe bittet, zeigt Vertrauen. Das ist etwas Gutes.",
-    "Ein ruhiger Atemzug kann dir gehören, selbst wenn es um dich herum laut ist.",
-    "Ein unerwartetes Kompliment darfst du heute ruhig zweimal im Herzen lesen.",
-    "Vielleicht kannst du dir heute etwas verzeihen, das du längst mit dir herumträgst.",
-    "Es ist schön, wenn du deinen Weg auf deine Weise gehen darfst.",
-    "Du musst nicht auf eine offizielle Würdigung warten, um auf deine Arbeit stolz zu sein.",
-    "Vielleicht ist heute der richtige Abend für eine Decke, ein Buch und überhaupt keinen Plan.",
-    "Du bist nicht erst dann liebenswert, wenn alle Aufgaben erledigt sind.",
-    "Auch nach einem Tag voller Unterbrechungen verdienst du einen ruhigen Feierabend.",
-    {
-      "text": "Die Gelassenheit ist eine anmuthige Form des Selbstbewußtseins.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "In einer Schule zählen auch die kleinen Begegnungen zwischen zwei Stunden.",
-    "Nicht jede Lücke im Stundenplan muss sofort mit Arbeit gefüllt werden.",
-    "Ein Mensch, der sich ehrlich freut, steckt andere oft ganz nebenbei an.",
-    "Auch ein Montag hat das Recht auf einen lustigen Moment.",
-    "Hoffnung heißt nicht, alles schönzureden, sondern dem Guten weiter einen Platz zu lassen.",
-    "Du darfst dich freuen, wenn jemand dir Arbeit abnimmt. Du musst dich dafür nicht rechtfertigen.",
-    "Du darfst Dinge auch einmal liegen lassen, ohne dich schuldig zu fühlen.",
-    "Du darfst das Schöne wahrnehmen, auch wenn nicht alles gut ist.",
-    "Freundlich zu dir zu sein ist keine Schwäche, sondern eine gute Gewohnheit.",
-    "Mut kann ganz leise sein – zum Beispiel, wenn du freundlich bei deiner Meinung bleibst.",
-    "Danke für die Freundlichkeit, die du selbst unter Zeitdruck nicht aufgibst.",
-    "Die schönste Hausaufgabe für Erwachsene lautet manchmal: Gut für sich sorgen.",
-    "Man darf dir ansehen, dass du Mensch bist. Genau das macht dich nahbar.",
-    "Falls heute niemand Danke gesagt hat: Deine Mühe ist trotzdem nicht umsonst.",
-    "Ein Kind, das sich bei dir sicher fühlt, hat schon etwas sehr Wertvolles gefunden.",
-    "Eine Tasse Tee in Ruhe ist kein Luxus, sondern manchmal genau das Richtige.",
-    "Es gibt Tage, an denen ein freundlicher Blick schon wie eine kleine Umarmung ist.",
-    "Du musst nicht jede Kleinigkeit ernst nehmen – schon gar nicht den Drucker.",
-    "Vielleicht ist gerade etwas im Wachsen, das du noch gar nicht erkennen kannst.",
-    "Ein ehrliches Dankeschön kann einen langen Arbeitstag überraschend hell machen.",
-    "Manchmal ist Gelassenheit die freundlichste Antwort auf einen hektischen Tag.",
-    "Vielleicht schenkt dir heute jemand ein Lächeln, das hängen bleibt.",
-    "Du darfst dich annehmen, auch wenn noch nicht alles so ist, wie du es dir wünschst.",
-    "Du musst nicht die lauteste Stimme haben, damit deine Worte Gewicht bekommen.",
-    {
-      "text": "Treue üben ist Tugend, Treue erfahren ist Glück.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "Es ist viel wert, wenn jemand seine Arbeit nicht nur erledigt, sondern mit Herz gestaltet.",
-    "Dein Sofa kennt keine Notenkonferenzen. Vielleicht freut es sich schon auf dich.",
-    "Dein Wert passt in keine Tabelle, keine Note und keinen Stundenplan.",
-    "Ein voller Schultag kann Kraft kosten. Bitte geh nachsichtig mit dir um.",
-    "Deine Arbeit besteht nicht nur aus Stoff und Aufgaben, sondern auch aus Menschlichkeit.",
-    "Du musst nicht für alles zuständig sein, was du bemerkst.",
-    "Du musst nicht die perfekten Worte finden, um Wärme zu schenken.",
-    "Wenn der Kopierer heute mitspielt, darfst du das als kleines Wunder feiern.",
-    "Du darfst mit guten Überraschungen rechnen.",
-    "Es ist schön, Kolleginnen und Kollegen zu haben, bei denen man einfach man selbst sein darf.",
-    "Deine innere Ruhe ist wertvoller als der Versuch, überall gleichzeitig zu sein.",
-    "Ein Spaziergang nach der Schule kann mehr sein als ein Weg von A nach B.",
-    "Ein Fehler nimmt dir weder deine Würde noch deine liebenswerten Seiten.",
-    "Auch ein kleiner Schritt aus einer schwierigen Situation verdient Anerkennung.",
-    "Nicht alle Menschen, denen du geholfen hast, können es dir sagen. Ihre Erleichterung war trotzdem echt.",
-    "Ein freier Kopf ist mehr wert als eine weitere perfekt sortierte Datei.",
-    "Du darfst heute freundlich auf dich schauen. Du hast es verdient.",
-    "Du musst nach einem anstrengenden Tag nicht auch noch streng mit dir selbst sein.",
-    "Ein Satz wie „Ich glaube an dich“ kann länger nachwirken als eine ganze Unterrichtsstunde.",
-    "Für andere da zu sein ist schön. Auch für dich selbst da zu sein ist wichtig.",
-    "Vielleicht wartet heute irgendwo ein überraschend schöner Augenblick auf dich.",
-    "Ein herzliches Lachen ist eine sehr angenehme Form der Teamarbeit.",
-    "Ein schweres Kapitel ist nicht die ganze Geschichte deines Lebens.",
-    "Manchmal ist eine geteilte Kaffeepause fast so wertvoll wie eine gute Idee.",
-    {
-      "text": "Wer Geduld sagt, sagt Muth, Ausdauer, Kraft.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "Auch wenn die Welt es eilig hat, darf dein Herz einen eigenen Rhythmus finden.",
-    "Manche Glücksmomente sind klein genug, um in eine Jackentasche zu passen.",
-    "Du darfst dich selbst ermutigen, statt dich nur anzutreiben.",
-    "Du hast schon manches geschafft, von dem du früher nicht wusstest, ob es gelingt.",
-    "Du darfst dir heute zugestehen: Ich habe etwas Gutes geleistet.",
-    "Du darfst deine Tasche abstellen und dich selbst gleich mit entlasten.",
-    "Es gibt Eigenschaften an dir, die leise wirken und trotzdem kostbar sind.",
-    "Heute lief vielleicht einiges anders als geplant. Du bist trotzdem auf einem guten Weg.",
-    "Du darfst dir bewusst machen, wie viel Geduld du Tag für Tag verschenkst.",
-    "Du darfst eine Grenze ziehen, ohne dabei deine Herzlichkeit zu verlieren.",
-    "Mitgefühl macht uns nicht schwach, sondern miteinander stark.",
-    "Vielleicht wird heute nicht alles perfekt. Aber vielleicht wird es überraschend komisch.",
-    "Wenn etwas nicht gelungen ist, ist noch lange nicht alles verloren.",
-    "Du kannst stark sein und dich trotzdem anlehnen.",
-    "Nicht jeder Gedanke braucht sofort deine volle Aufmerksamkeit.",
-    "Heute darfst du eine gute Nachricht feiern, auch wenn sie nur für dich groß ist.",
-    "Gib dir heute ein bisschen von dem Verständnis, das du anderen so großzügig schenkst.",
-    "Manchmal beginnt Stärke damit, dass du offen sagst, was du brauchst.",
-    "Danke für die vielen kleinen Entscheidungen, mit denen du anderen den Tag leichter machst.",
-    "Die Welt geht weiter, auch wenn du heute keine einzige E-Mail mehr beantwortest.",
-    "Du musst nicht besonders glänzen, um ein Lichtblick zu sein.",
-    "Es ist in Ordnung, wenn du dich heute nach Stille sehnst.",
-    "Manche Erfolge wachsen leise, während du längst die nächste Stunde vorbereitest.",
-    {
-      "text": "Wenn jeder dem andern helfen wollte, wäre allen geholfen.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Ein Buch für die Jugend"
-    },
-    "Nicht jede Nachricht verlangt eine Antwort am selben Abend.",
-    "Wenn du jemanden aufmunterst, darfst du dich selbst dabei nicht vergessen.",
-    "Du darfst dich über Kleinigkeiten freuen. Die großen Dinge sind schließlich nicht immer pünktlich.",
-    "Auch nach einer unruhigen Zeit darf wieder Gelassenheit einkehren.",
-    "Es tut gut, wenn jemand sagt: Ich sehe, wie viel du gerade leistest.",
-    "Du darfst mit dem beginnen, was jetzt wirklich wichtig ist.",
-    "Es ist wunderbar, dass das Leben zwischendurch ganz ohne Anlass freundlich sein kann.",
-    "Du musst nicht alles richtig machen, um richtig viel wert zu sein.",
-    "Du darfst unsicher sein und trotzdem eine gute Entscheidung treffen.",
-    "Du verdienst Menschen, die deine Mühe sehen – und auch deine Grenzen achten.",
-    "Manchmal ist die allerbeste Vorbereitung auf morgen ein erholsamer Abend.",
-    "Es ist schön, dass es deine Art zu lachen, zu denken und zu fühlen gibt.",
-    "Du kannst viel geben und trotzdem irgendwann eine Pause brauchen.",
-    "Eine freundliche Begrüßung kann mehr verändern, als ihr kurzer Moment vermuten lässt.",
-    "Deine Erholung verdient einen festen Platz zwischen all den Verpflichtungen.",
-    "Ein gutes Wort kann dort bleiben, wo man es am wenigsten erwartet.",
-    "Wenn das Leben Zitronen verteilt, darfst du erst einmal eine Pause mit Zitronenkuchen machen.",
-    "Ein neuer Morgen muss nichts beweisen. Er darf einfach neu sein.",
-    "Vielleicht braucht heute jemand ein offenes Ohr. Vielleicht bist du selbst dieser Jemand.",
-    "Manchmal hilft es, das Leben nicht schneller machen zu wollen, als es gerade geht.",
-    "Ein schön gedeckter Tisch kann manchmal sagen: Jetzt bist du dran.",
-    "Vielleicht darfst du aufhören, deinen schwierigsten Moment gegen dich zu verwenden.",
-    "Wer Grenzen kennt, kann seinen Mut klug einsetzen.",
-    {
-      "text": "Frieden kannst du nur haben, wenn du ihn gibst.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Ein Buch für die Jugend"
-    },
-    "Du bist nicht nur für Ergebnisse da. Deine Menschlichkeit zählt genauso.",
-    "Heute darfst du etwas tun, bei dem niemand deine Leistung bewertet.",
-    "Ein voller Kalender sagt nichts darüber aus, wie wertvoll ein Mensch ist.",
-    "Ein schwieriges Gespräch macht dich nicht zu einer schwierigen Person.",
-    "Du musst nicht jede Stunde zur Sternstunde machen. Auch Verlässlichkeit ist ein Geschenk.",
-    "Manchmal ist der beste Plan, erst einmal die Schultern sinken zu lassen.",
-    "Freundlichkeit darf ruhig großzügig verteilt werden – auch an dich.",
-    "Ein bisschen Unsinn mit netten Menschen kann erstaunlich gut tun.",
-    "Es ist schön, dass noch so viele ungelebte gute Momente vor dir liegen.",
-    "Du musst nicht immer die Person sein, die alles im Griff hat.",
-    "Ein stiller Moment kann ein guter Ort sein, um wieder bei dir anzukommen.",
-    "Du darfst dich auf etwas freuen, das überhaupt nichts mit Arbeit zu tun hat.",
-    "Ein freundlicher Blick auf dich selbst kann den ganzen Tag verändern.",
-    "Vielleicht gelingt dir heute etwas, das gestern noch schwer erschien.",
-    "Es ist schön, wenn jemand voller Überzeugung sagt: Auf dich kann man zählen.",
-    "Ein schöner Feierabend muss nicht produktiv sein. Gemütlich ist ein wunderbares Ziel.",
-    "Du bist kein Projekt, das ständig verbessert werden muss. Du bist ein Mensch, der Zuwendung verdient.",
-    "Falls dich heute etwas verletzt hat: Du verdienst Verständnis, nicht zusätzliche Härte.",
-    "Wer junge Menschen ernst nimmt, gibt ihnen etwas Kostbares mit.",
-    "Du bist keine unerschöpfliche Ressource. Du bist ein Mensch mit Bedürfnissen.",
-    "Nicht jedes Problem wird kleiner durch ein Lächeln. Aber manchmal fühlt man sich weniger allein.",
-    "Auch an Tagen mit drei Konferenzen darf die gute Laune kurz vorbeischauen.",
-    "Du darfst den Blick heute ein kleines Stück Richtung Zuversicht wenden.",
-    {
-      "text": "Späte Freuden sind die schönsten; sie stehen zwischen entschwundener Sehnsucht und kommendem Frieden.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "Ein freundliches Miteinander darf wichtiger sein als die perfekte Organisation.",
-    "Du brauchst heute nicht auf alles vorbereitet zu sein.",
-    "Vielleicht ist ein ruhiger Augenblick heute der schönste Erfolg.",
-    "Du bist auf deiner eigenen Seite besser aufgehoben als gegen dich.",
-    "Du darfst neue Wege versuchen, ohne den alten schlechtmachen zu müssen.",
-    "Du darfst dein eigenes Engagement wertschätzen, ohne es herunterzuspielen.",
-    "Schließ gedanklich die Klassenzimmertür. Dahinter darf alles bis morgen warten.",
-    "Wenn du heute nur eines über dich glauben kannst, dann dies: Du bist wichtig.",
-    "Du darfst müde sein und trotzdem stolz darauf, dass du da warst.",
-    "Vielleicht warst du heute genau der ruhige Mensch, den jemand gebraucht hat.",
-    "Es ist liebevoll, dir heute etwas weniger vorzunehmen.",
-    "Du darfst dich über andere freuen, ohne dich selbst mit ihnen zu vergleichen.",
-    "Du musst nicht immer vernünftig sein. Ein alberner Moment kann wunderbar erholsam sein.",
-    "Nicht alles, was sich verzögert, ist gescheitert.",
-    "Manche kleinen Gesten im Kollegium tragen durch erstaunlich große Tage.",
-    "Auch wenn um dich herum viel passiert, darf in dir ein ruhiger Platz bleiben.",
-    "Ein freundlicher Blick aus dem Fenster kann mehr bewirken als eine weitere Minute Grübeln.",
-    "Nicht jede Schwäche muss heute bearbeitet werden. Manche dürfen einfach mit dir sein.",
-    "Ein freundliches Nein kann genauso mutig sein wie ein begeistertes Ja.",
-    "Danke für das Mitdenken, für das Zuhören und für jeden wohlwollenden Blick.",
-    "Ein paar Stunden nur für dich sind kein schlechtes Gewissen wert.",
-    "Deine Herzlichkeit zählt auch an Tagen, an denen du wenig Kraft hast.",
-    "Ein Tag mit vielen Fragen braucht nicht auf alles eine Antwort.",
-    {
-      "text": "In einem guten Buche stehen mehr Wahrheiten, als sein Verfasser hinein zu schreiben meinte.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "Manchmal entsteht Vertrauen einfach dadurch, dass du immer wieder zuhörst.",
-    "Auch ein stiller Nachmittag kann ein richtig guter Tag sein.",
-    "Manche Menschen machen einen Raum heller, indem sie einfach aufmerksam sind.",
-    "Vielleicht hält der Tag heute eine Geschichte bereit, über die du morgen lachen wirst.",
-    "Manchmal braucht das Gute Zeit – und findet trotzdem seinen Weg.",
-    "Es braucht nicht immer eine Lösung. Manchmal genügt es, verstanden zu werden.",
-    "Es ist in Ordnung, wenn du Dinge erst nach einer Nacht Schlaf entscheidest.",
-    "Du musst die Freude nicht verschieben, bis alles erledigt ist.",
-    "Du darfst dich über dich selbst freuen, ohne einen besonderen Grund zu brauchen.",
-    "Du musst nicht alles heute beweisen. Dein Können ist nicht plötzlich verschwunden.",
-    "Ein großes Herz braucht nicht immer große Worte. Man erkennt es oft an kleinen Taten.",
-    "Vielleicht brauchst du heute nur etwas Leckeres, nette Menschen und einen ruhigen Abend.",
-    "Du darfst dich selbst mit denselben liebevollen Augen betrachten wie einen guten Freund.",
-    "Manchmal ist der mutigste Satz des Tages: Für heute reicht es.",
-    "Dein ehrliches Interesse an Menschen zählt, auch wenn du es nicht messen kannst.",
-    "Du darfst den Tag aus der Hand legen, bevor alles perfekt geworden ist.",
-    "Ein ehrliches „Wie geht es dir?“ ist manchmal ein kleines Geschenk.",
-    "Der schönste Sound des Lehrerzimmers ist manchmal einfach herzliches Gelächter.",
-    "Heute darfst du glauben, dass nicht jeder kommende Tag so schwer sein wird.",
-    "Du darfst dich über die Erfolge anderer freuen, ohne deine eigenen kleinzumachen.",
-    "Gelassen sein bedeutet nicht, dass dir etwas egal ist. Es bedeutet, dass auch du wichtig bist.",
-    "Es tut gut, wenn ein kleiner Moment einfach nur angenehm sein darf.",
-    "Deine Bedürfnisse verdienen genauso viel Respekt wie die der Menschen um dich herum.",
-    {
-      "text": "Das Verständniß reicht oft viel weiter als der Verstand.",
-      "author": "Marie von Ebner-Eschenbach",
-      "work": "Aphorismen (1893)"
-    },
-    "Es ist möglich, gleichzeitig empfindsam und entschlossen zu sein.",
-    "Du hast heute bestimmt mehr geleistet, als auf der Erledigt-Liste steht.",
-    "Nach einem langen Tag ist ein herzliches „Jetzt reicht’s“ manchmal echte Lebenskunst.",
-    "Manches Gute an dir ist so selbstverständlich geworden, dass du es kaum noch bemerkst.",
-    "Auch wer anderen Halt gibt, braucht manchmal jemanden, der kurz mitträgt.",
-    "Ein Lächeln auf dem Schulflur kann ein ziemlich guter Anfang sein.",
-    "Ein bewusstes Durchatmen kann ein kleiner Anfang von mehr Leichtigkeit sein.",
-    "Heute darfst du nach dem suchen, was Herzen öffnet statt sie schwerer zu machen.",
-    "Du darfst die kleinen Absurditäten des Schulalltags mit einem Augenzwinkern betrachten.",
-    "Es kann besser werden, ohne dass du alles allein verändern musst.",
-    "Ein gemeinsames Lachen kann aus vielen Einzelkämpfern wieder ein Team machen.",
-    "Du darfst einen Gedanken zu Ende denken, bevor der nächste an die Tür klopft.",
-    "Auch ein gewöhnlicher Dienstag kann etwas haben, das später zur schönen Erinnerung wird.",
-    "Es ist schön, wenn du dich selbst nicht nur kritisierst, sondern auch mal lobst.",
-    "Auch wenn du zweifelst, darfst du deiner eigenen Urteilskraft Raum geben.",
-    "Manchmal sind die wichtigsten Dinge die, für die niemand ein Häkchen setzt.",
-    "Deine Freizeit ist nicht der Rest, der nach der Arbeit übrig bleibt. Sie gehört zu deinem Leben.",
-    "Du bringst etwas in diese Welt, das niemand sonst ganz genauso mitbringt.",
-    "Wenn der Tag holprig beginnt, darf er trotzdem freundlich enden.",
-    "Du darfst in deinem Beruf auch Freude an den kleinen, unerwarteten Momenten haben.",
-    "Wer viel für andere gibt, darf sich selbst nicht ständig hinten anstellen.",
-    "Auch leise Menschen können viel Wärme ausstrahlen.",
-    "Manchmal ist ein freundliches Schulterzucken die eleganteste Reaktion.",
-    {
-      "text": "Schön ist eigentlich alles, was man mit Liebe betrachtet. Je mehr jemand die Welt liebt, desto schöner wird er sie finden.",
+      "text": "Es ist schön, zu denken, daß so viele Menschen heilig sind in den Augen derer, die sie lieben.",
       "author": "Christian Morgenstern",
-      "work": "Stufen (1918)"
+      "work": "Stufen – Psychologisches",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/14/"
     },
-    "Manche Türen öffnen sich, wenn du längst aufgehört hast, daran zu rütteln.",
-    "Es ist ein Geschenk, wenn Menschen freundlich miteinander umgehen, auch wenn es stressig wird.",
-    "Es muss nicht jede Kleinigkeit zum Tagesereignis werden.",
-    "Du darfst dich an Farben, Düften, Musik und schönen Worten erfreuen.",
-    "Du musst nicht deine größte kritische Stimme sein.",
-    "Du kannst viel bewirken, ohne deine Kraft ständig über ihre Grenzen zu treiben.",
-    "Deine Freude am Lernen und Lehren ist etwas, das anderen Mut machen kann.",
-    "Du darfst heute früh schlafen gehen und morgen trotzdem voller Ideen sein.",
-    "Es braucht keinen besonderen Anlass, um dich wertzuschätzen.",
-    "Du bist nicht allein mit der Erfahrung, dass Schule manchmal ganz schön viel verlangt.",
-    "Zwischen Kopierer, Pausenaufsicht und Unterricht passiert manchmal etwas wirklich Schönes.",
-    "Vielleicht ist heute der richtige Moment, etwas nur für dich zu tun.",
-    "Wer andere freundlich behandelt, verändert vielleicht keinen ganzen Tag – aber einen wichtigen Moment.",
-    "Ein Lächeln muss nicht erklären, warum der Tag trotzdem schön sein kann.",
-    "Auch ein kleines bisschen Hoffnung kann einem müden Herzen guttun.",
-    "Manchmal hilft ein kurzes „Du schaffst das“ genau im richtigen Moment.",
-    "Vielleicht darfst du heute ein bisschen weniger streng mit deinen Erwartungen sein.",
-    "Manchmal ist Glück ein kurzer Moment, in dem du nichts leisten musst.",
-    "Vielleicht ist heute ein guter Tag, dir selbst mehr Vertrauen zu schenken.",
-    "Manchmal ist der mutigste Schritt, jemandem um Unterstützung zu bitten.",
-    "Es tut gut, sich selbst ab und zu zu sagen: Das habe ich wirklich gut gemacht.",
-    "Nicht jede schöne Erinnerung entsteht im Beruf. Lass Platz für die anderen.",
-    "Du darfst zufrieden mit dir sein, auch ohne etwas Außergewöhnliches geleistet zu haben.",
+    {
+      "text": "Und es ist gar nicht Großmut zu verzeihn, Daß andere ganz anders als wir glauben.",
+      "author": "Joachim Ringelnatz",
+      "work": "Es lohnt sich doch (1932), Auszug",
+      "sourceUrl": "https://de.wikisource.org/wiki/Es_lohnt_sich_doch"
+    },
+    {
+      "text": "Glück macht Mut.",
+      "author": "Johann Wolfgang von Goethe",
+      "work": "Götz von Berlichingen, 4. Akt",
+      "sourceUrl": "https://www.aphorismen.de/suche?f_autor=1461_Johann+Wolfgang+von+Goethe"
+    },
+    {
+      "text": "Wenn Kleinigkeiten quälen, so müssen auch Kleinigkeiten beglücken",
+      "author": "Jean Paul",
+      "work": "Der Papierdrache, Freudenbüchlein (1845), Auszug",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/jean-paul/books/der-papierdrache-erster-theil/chapter/5/"
+    },
+    {
+      "text": "Und laß dir jeden Tag geschehen so wie ein Kind im Weitergehen von jedem Wehen sich viele Blüten schenken läßt.",
+      "author": "Rainer Maria Rilke",
+      "work": "Mir zur Feier (1898), Auszug",
+      "sourceUrl": "https://www.aphorismen.de/gedicht/12368"
+    },
+    {
+      "text": "Alt werden, heißt sehend werden.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Nein, unser Bestes sind nicht unsere Werke. Das liegt oft in einem Blick von uns, in einem Gedanken, um dessentwillen wir uns selber lieben möchten und um den doch niemand je weiß und erfährt, als wir selbst.",
+      "author": "Christian Morgenstern",
+      "work": "Stufen – Ethisches",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/11/"
+    },
+    {
+      "text": "Schenke herzlich und frei. Schenke dabei Was in dir wohnt An Meinung, Geschmack und Humor, So daß die eigene Freude zuvor Dich reichlich belohnt.",
+      "author": "Joachim Ringelnatz",
+      "work": "Schenken (1928), Auszug",
+      "sourceUrl": "https://de.wikisource.org/wiki/Schenken"
+    },
+    {
+      "text": "Heut ist mir alles herrlich; wenn's nur bliebe! Ich sehe heut durchs Augenglas der Liebe.",
+      "author": "Johann Wolfgang von Goethe",
+      "work": "West-östlicher Divan, Buch Suleika",
+      "sourceUrl": "https://www.aphorismen.de/suche?f_autor=1461_Johann+Wolfgang+von+Goethe"
+    },
+    {
+      "text": "Freude hebt das Leben, wenn Genuß es versinken läßt.",
+      "author": "Jean Paul",
+      "work": "Der Papierdrache, Freudenbüchlein (1845)",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/jean-paul/books/der-papierdrache-erster-theil/chapter/5/"
+    },
+    {
+      "text": "Leben Sie jetzt die Fragen.",
+      "author": "Rainer Maria Rilke",
+      "work": "Briefe an einen jungen Dichter (1903), Auszug",
+      "sourceUrl": "https://de.wikisource.org/wiki/Briefe_an_einen_jungen_Dichter"
+    },
+    {
+      "text": "Anmuth ist ein Ausströmen der inneren Harmonie.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Hinter die Oberfläche der Menschen sehen, hinter das ›Persönliche‹, das Leben selbst in ihnen lieben.",
+      "author": "Christian Morgenstern",
+      "work": "Stufen – Ethisches",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/11/"
+    },
+    {
+      "text": "Sei eingedenk, Daß dein Geschenk Du selber bist.",
+      "author": "Joachim Ringelnatz",
+      "work": "Schenken (1928), Schlussverse",
+      "sourceUrl": "https://de.wikisource.org/wiki/Schenken"
+    },
+    {
+      "text": "Man muß nur Ein Wesen recht von Grund aus lieben, da kommen einem die übrigen alle liebenswürdig vor!",
+      "author": "Johann Wolfgang von Goethe",
+      "work": "Die Wahlverwandtschaften, 1. Teil, 12. Kapitel",
+      "sourceUrl": "https://www.aphorismen.de/suche?f_autor=1461_Johann+Wolfgang+von+Goethe"
+    },
+    {
+      "text": "Wie weise muß man sein, um immer gut zu sein!",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Es gibt in Wahrheit kein letztes Verständnis ohne Liebe.",
+      "author": "Christian Morgenstern",
+      "work": "Stufen – Lebensweisheit",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/12/"
+    },
+    {
+      "text": "Freude soll nimmer schweigen. Freude soll offen sich zeigen.",
+      "author": "Joachim Ringelnatz",
+      "work": "Freude (1910), Anfangsverse",
+      "sourceUrl": "https://de.wikisource.org/wiki/Freude_%28Ringelnatz%29"
+    },
+    {
+      "text": "So eine wahre warme Freude ist nicht in der Welt, als eine große Seele zu sehen, die sich gegen einen öffnet.",
+      "author": "Johann Wolfgang von Goethe",
+      "work": "Die Leiden des jungen Werther, 26. November 1771",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/johann-wolfgang-von-goethe/books/die-leiden-des-jungen-werther/"
+    },
+    {
+      "text": "Wenn es einen Glauben giebt, der Berge versetzen kann, so ist es der Glaube an die eigene Kraft.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Das sind die zwei Blumen des Lebens: Das Schaffen und die Liebe.",
+      "author": "Christian Morgenstern",
+      "work": "Stufen – Lebensweisheit, Auszug",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/12/"
+    },
+    {
+      "text": "Freude soll lachen, glänzen und singen.",
+      "author": "Joachim Ringelnatz",
+      "work": "Freude (1910), Vers",
+      "sourceUrl": "https://de.wikisource.org/wiki/Freude_%28Ringelnatz%29"
+    },
+    {
+      "text": "Wo die Geselligkeit Unterhaltung findet, ist sie zu Hause.",
+      "author": "Johann Wolfgang von Goethe",
+      "work": "Tag- und Jahreshefte (1802)",
+      "sourceUrl": "https://www.aphorismen.de/suche?f_autor=1461_Johann+Wolfgang+von+Goethe"
+    },
+    {
+      "text": "Man muß das Gute thun, damit es in der Welt sei.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
     {
       "text": "Lachen und Lächeln sind Tor und Pforte, durch die viel Gutes in den Menschen hineinhuschen kann.",
       "author": "Christian Morgenstern",
-      "work": "Stufen (1918)"
+      "work": "Stufen – Lebensweisheit",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/12/"
     },
-    "Heute darf unvollendet bleiben, was morgen noch Zeit hat.",
-    "Du musst nicht alles reparieren. Manchmal ist es genug, freundlich anwesend zu sein.",
-    "Deine Kraft ist kostbar. Geh nicht so mit ihr um, als wäre sie selbstverständlich.",
-    "Du musst nicht laut sein, um jemanden zu erreichen.",
-    "Dein Humor darf heute eine kleine Pause vom Ernst des Lebens einlegen.",
-    "Nicht jeder Umweg war umsonst. Manches Schöne liegt abseits des Plans.",
-    "Wenn jemand heute aufmerksam zu dir war, darf dich das lange wärmen.",
-    "Du musst nicht überall deine Energie lassen. Such dir aus, was deine Aufmerksamkeit verdient.",
-    "Schöne Dinge dürfen klein sein. Ihre Wirkung muss es nicht.",
-    "Du darfst mit deiner eigenen Geschichte liebevoll umgehen.",
-    "Du darfst für dich einstehen und dabei freundlich bleiben.",
-    "Vielleicht möchte dir jemand schon lange sagen, wie wohltuend deine Art ist.",
-    "Ein Spaziergang ohne Ziel kann genau dorthin führen, wo du wieder zu dir findest.",
-    "Schönheit hat viele Gesichter. Eines davon ist ein Mensch, der aufmerksam und freundlich bleibt.",
-    "Ein Moment der Überforderung sagt nichts darüber aus, was du insgesamt kannst.",
-    "Die beste Erinnerung an eine Lehrkraft ist oft nicht die perfekte Erklärung, sondern echte Zugewandtheit.",
-    "Du darfst zu Hause ankommen, ohne gedanklich die nächste Konferenz mitzunehmen.",
-    "Ein bisschen Zuwendung kann aus einem gewöhnlichen Tag etwas Besonderes machen.",
-    "Wer über sich selbst schmunzeln kann, trägt oft ein bisschen weniger Gepäck.",
-    "Das Leben hält mehr bereit als die Herausforderungen dieser Woche.",
-    "Du musst niemanden beeindrucken, um dazuzugehören.",
-    "Ein freundliches Tempo ist manchmal das beste Tempo.",
-    "Vielleicht ist heute ein guter Tag für dein Lieblingsessen und einen frühen Feierabend.",
     {
-      "text": "Humor ist, wenn man trotzdem lacht.",
-      "author": "Otto Julius Bierbaum",
-      "work": "Yankeedoodle-Fahrt (1909)"
+      "text": "Freude soll dir die Seele durchschauern. Freude soll weiterschwingen. Freude soll dauern Ein Leben lang.",
+      "author": "Joachim Ringelnatz",
+      "work": "Freude (1910), Schlussverse",
+      "sourceUrl": "https://de.wikisource.org/wiki/Freude_%28Ringelnatz%29"
     },
-    "Ein müder Mensch braucht Zuwendung, keine innerliche Standpauke.",
-    "Es ist schön, wenn du dir selbst zutraust, auch mit Unerwartetem umgehen zu können.",
-    "Du bist ein Teil von vielen guten Geschichten, auch wenn du nicht alle kennst.",
-    "Heute Abend musst du keine Antworten für morgen haben.",
-    "Deine Güte wird nicht kleiner, wenn du selbst einmal Trost brauchst.",
-    "Vielleicht brauchst du heute keine neue Lösung, sondern erst einmal etwas Freundlichkeit.",
-    "Wenn du heute jemandem zugehört hast, war das keine Nebensache.",
-    "Es ist völlig in Ordnung, wenn deine Pläne für heute nur noch Gemütlichkeit heißen.",
-    "Es tut gut, wenn Menschen einander nicht nur funktionieren sehen, sondern wirklich wahrnehmen.",
-    "Ein überraschend lustiger Satz kann sogar eine lange Pause noch schöner machen.",
-    "Du musst noch nicht wissen, wie alles gut wird, um Hoffnung zu haben.",
-    "Gute Zusammenarbeit beginnt mit dem Gedanken: Wir sind Menschen, keine Maschinen.",
-    "Es tut gut, wenn ein Tag nicht nur aus Reaktionen besteht, sondern auch aus eigenen Momenten.",
-    "Ein gutes Gespräch kann einen Tag im Nachhinein wärmer machen.",
-    "Du darfst dich wertschätzen, selbst wenn heute niemand ausdrücklich Danke gesagt hat.",
-    "Deine Stimme darf gehört werden, auch wenn sie gerade ein bisschen zittert.",
-    "Danke, dass du auch an turbulenten Tagen versuchst, Menschen gerecht zu werden.",
-    "Vielleicht ist Glück heute, dass der Wecker noch ein bisschen Zeit hat.",
-    "Du bist nicht die Summe deiner Fehler. Du bist ein ganzer, wunderbarer Mensch.",
-    "Du musst aus einem schweren Tag keine Heldengeschichte machen. Er darf einfach vorbei sein.",
-    "Es gibt Tage, an denen deine Freundlichkeit wichtiger ist als dein perfekter Plan.",
-    "Du darfst dir Ruhe gönnen, bevor dir die Kraft ganz ausgeht.",
-    "Vielleicht darf heute jemand dir ein gutes Wort sagen. Nimm es ruhig an.",
     {
-      "text": "Denn es muß von Herzen gehen, Was auf Herzen wirken soll.",
-      "author": "Johann Wolfgang von Goethe",
-      "work": "Faust II (1832)"
+      "text": "Wir sollen immer verzeihen, dem Reuigen um seinetwillen, dem Reuelosen um unseretwillen.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
     },
-    "Du musst nicht erst Urlaub haben, um einen Moment Leichtigkeit zu erleben.",
-    "Vielleicht kommt heute etwas Freundliches auf dich zu, ganz ohne Vorankündigung.",
-    "Jemanden ernst zu nehmen ist eine stille Form der Wertschätzung.",
-    "Du darfst die Schultern entspannen. Du musst nicht alles zusammenhalten.",
-    "Du darfst dir kleine Freuden bewusst aussuchen statt auf Zufall zu warten.",
-    "Es ist kein Egoismus, dir einen schönen Tag zu wünschen.",
-    "Ein neuer Versuch braucht keine perfekte Sicherheit, nur eine faire Chance.",
-    "Manche Dinge gelingen, weil Menschen wie du sich nicht gleichgültig abwenden.",
-    "Auch deine Träume brauchen Raum jenseits des Stundenplans.",
-    "Es ist ein Geschenk, dass du da bist. Lass diesen Gedanken heute ruhig einmal stehen.",
-    "Lass die Schulglocke irgendwann auch in deinem Kopf Feierabend läuten.",
-    "Auch wenn nicht jeder Tag leicht ist: Deine Arbeit kann Spuren von Hoffnung hinterlassen.",
-    "Ein guter Arbeitstag braucht nicht bis in den späten Abend zu reichen.",
-    "Liebevolle Aufmerksamkeit ist eine Stärke, die man nicht unterschätzen sollte.",
-    "Falls heute alles durcheinandergeht: Vielleicht ist wenigstens die Geschichte darüber gut.",
-    "Für alles, was noch vor dir liegt, darfst du dir auch Leichtigkeit wünschen.",
-    "Du darfst Hilfe annehmen und sie später auf deine eigene Weise weitergeben.",
-    "Manchmal beginnt Frieden im Kleinen damit, dass du dir selbst keinen Druck mehr machst.",
-    "Es gibt Augenblicke, die keine Erklärung brauchen – nur ein bisschen Aufmerksamkeit.",
-    "Bitte vergiss nicht: Auch du bist ein Mensch, um den man sich kümmern darf.",
-    "Vielleicht bist du stärker, als sich dieser eine anstrengende Moment anfühlt.",
-    "Es darf heute auch einmal um das gehen, was du brauchst und was dir guttut.",
-    "Du darfst den Tag mit einem guten Gefühl beenden – selbst wenn nicht alles fertig ist."
+    {
+      "text": "Wie schön ist es, das Auge von einem schönen Buch, in das man versunken war, zu einer schönen Landschaft aufzuschlagen.",
+      "author": "Christian Morgenstern",
+      "work": "Stufen – Psychologisches, Auszug",
+      "sourceUrl": "https://projekt-gutenberg.org/authors/christian-morgenstern/books/stufen/chapter/14/"
+    },
+    {
+      "text": "In einem guten Buche stehen mehr Wahrheiten, als sein Verfasser hinein zu schreiben meinte.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Man kann viele Dinge kaufen, die unbezahlbar sind.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Die Menschen, denen wir eine Stütze sind, die geben uns den Halt im Leben.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Das Verständniß reicht oft viel weiter als der Verstand.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Wer Geduld sagt, sagt Muth, Ausdauer, Kraft.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Ein Gedanke kann nicht erwachen, ohne andere zu wecken.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Jung sein ist schön; alt sein ist bequem.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "In jede hohe Freude mischt sich eine Empfindung der Dankbarkeit.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Treue üben ist Tugend, Treue erfahren ist Glück.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Späte Freuden sind die schönsten; sie stehen zwischen entschwundener Sehnsucht und kommendem Frieden.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Der Spott endet, wo das Verständniß beginnt.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Wenn Jeder dem Andern helfen wollte, wäre Allen geholfen.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Die Gelassenheit ist eine anmuthige Form des Selbstbewußtseins.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Das Meiste haben wir gewöhnlich in der Zeit gethan, in der wir meinten, zu wenig zu thun.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Die allerstillste Liebe ist die Liebe zum Guten.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Was geschehen ist, so lange die Welt steht, braucht deshalb nicht zu geschehen, so lange sie noch stehen wird.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Die Katzen halten keinen für eloquent, der nicht miauen kann.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Gutmüthigkeit ist eine alltägliche Eigenschaft, Güte die höchste Tugend.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Man bleibt jung so lange man noch lernen, neue Gewohnheiten annehmen und einen Widerspruch ertragen kann.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Die Kraft verleiht Gewalt, die Liebe leiht Macht.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Frieden kannst Du nur haben, wenn Du ihn giebst.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Die Palme beugt sich, aber nicht der Pfahl.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "In der Jugend lernt, im Alter versteht man.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Was Du wirklich besitzest, das wurde Dir geschenkt.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Wenn man nicht aufhören will, die Menschen zu lieben, muß man nicht aufhören, ihnen Gutes zu thun.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    },
+    {
+      "text": "Die Herrschaft über den Augenblick ist die Herrschaft über das Leben.",
+      "author": "Marie von Ebner-Eschenbach",
+      "work": "Gesammelte Schriften, Aphorismen (1893)",
+      "sourceUrl": "https://www.gutenberg.org/files/77889/77889-h/77889-h.htm"
+    }
   ]
 }
