@@ -137,10 +137,19 @@ const SUBJ_STEM={hacer:"hag",tener:"teng",salir:"salg",caer:"caig",decir:"dig",o
 function subjPresent(v){let [base,ref]=splitReflexive(v);if(SUBJ_FULL[base])return addReflex([...SUBJ_FULL[base]],ref);const cls=base.endsWith("ar")?"ar":base.endsWith("er")?"er":"ir",endings=cls==="ar"?["e","es","e","emos","éis","en"]:["a","as","a","amos","áis","an"],forms=[];
  for(let i=0;i<6;i++){let r=base.slice(0,-2);if(SUBJ_STEM[base])r=SUBJ_STEM[base];else if(cls==="ir"&&EIE.has(base))r=changeLast(r,"e",(i===3||i===4)?"i":"ie");else if(cls==="ir"&&OUE.has(base))r=changeLast(r,"o",(i===3||i===4)?"u":"ue");else if(EI.has(base))r=changeLast(r,"e","i");else if((i===0||i===1||i===2||i===5)&&EIE.has(base))r=changeLast(r,"e","ie");else if((i===0||i===1||i===2||i===5)&&OUE.has(base))r=changeLast(r,"o","ue");else if((i===0||i===1||i===2||i===5)&&UUE.has(base))r=changeLast(r,"u","ue");
   if(!SUBJ_STEM[base]){if(base.endsWith("car"))r=r.slice(0,-1)+"qu";else if(base.endsWith("gar"))r=r.slice(0,-1)+"gu";else if(base.endsWith("guar"))r=r.slice(0,-2)+"gü";else if(base.endsWith("ger")||base.endsWith("gir"))r=r.slice(0,-1)+"j";else if(base.endsWith("guir"))r=r.slice(0,-2)+"g";else if(CZC.has(base))r=base.slice(0,-3)+"zc";else if(CZ.has(base))r=r.slice(0,-1)+"z";else if(base.endsWith("zar"))r=r.slice(0,-1)+"c";if(UIR.has(base))r=base.slice(0,-2)+"y"}forms.push(r+endings[i])}return addReflex(forms,ref)}
-function subjImperfect(v){let [base,ref]=splitReflexive(v);const ellos=indef(base)[5],stem=ellos.slice(0,-3),sAcc=accentLastVowel(stem);const ra=[stem+"ra",stem+"ras",stem+"ra",sAcc+"ramos",stem+"rais",stem+"ran"],se=[stem+"se",stem+"ses",stem+"se",sAcc+"semos",stem+"seis",stem+"sen"];return addReflex(ra.map((x,i)=>x+" / "+se[i]),ref)}
+function subjImperfect(v){
+  let [base,ref]=splitReflexive(v);
+  const ellos=indef(base)[5],stem=ellos.slice(0,-3),sAcc=accentLastVowel(stem);
+  return addReflex([stem+"ra",stem+"ras",stem+"ra",sAcc+"ramos",stem+"rais",stem+"ran"],ref);
+}
+
 const HABER={present:["he","has","ha","hemos","habéis","han"],imperfect:["había","habías","había","habíamos","habíais","habían"],subj:["haya","hayas","haya","hayamos","hayáis","hayan"],future:["habré","habrás","habrá","habremos","habréis","habrán"],conditional:["habría","habrías","habría","habríamos","habríais","habrían"]};
 function compound(v,aux){let [base,ref]=splitReflexive(v),part=participle(base);return HABER[aux].map((h,i)=>(ref?REFL[i]+" ":"")+h+" "+part)}
-function subjPluperfect(v){let [base,ref]=splitReflexive(v),part=participle(base),haber=subjImperfect("haber");return haber.map((h,i)=>(ref?REFL[i]+" ":"")+h.split(" / ")[0]+" "+part+" / "+h.split(" / ")[1]+" "+part)}
+function subjPluperfect(v){
+  let [base,ref]=splitReflexive(v),part=participle(base),haber=subjImperfect("haber");
+  return haber.map((h,i)=>(ref?REFL[i]+" ":"")+h+" "+part);
+}
+
 const FUT_ROOT={haber:"habr",caber:"cabr",poder:"podr",querer:"querr",saber:"sabr",poner:"pondr",tener:"tendr",valer:"valdr",venir:"vendr",salir:"saldr",decir:"dir",hacer:"har"};
 function future(v){let [base,ref]=splitReflexive(v),r=FUT_ROOT[base]||base;return addReflex(["é","ás","á","emos","éis","án"].map(x=>r+x),ref)}
 function conditional(v){let [base,ref]=splitReflexive(v),r=FUT_ROOT[base]||base;return addReflex(["ía","ías","ía","íamos","íais","ían"].map(x=>r+x),ref)}
