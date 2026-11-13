@@ -12,13 +12,15 @@ button,input,select,textarea{font:inherit}button,a.back{border:0;border-radius:1
 .back,.secondary{background:#e2e8f0;color:#172033}.back{display:inline-block;text-decoration:none}.primary{background:#f07a9d;color:#49202a}
 .topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.topic{border:2px solid #cbd5e1;border-radius:12px;padding:14px 12px;cursor:pointer;display:flex;gap:9px;align-items:center;font-weight:700}.topic:has(input:checked){background:#ffe8f0;border-color:#f07a9d}.topic input{width:20px;height:20px;accent-color:#bf3562;flex-shrink:0}
 .settings{display:flex;gap:12px;align-items:center;margin:22px 0}select{padding:10px;border:1px solid #94a3b8;border-radius:10px;background:transparent;color:inherit}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-.prompt{font-size:clamp(1.35rem,4.5vw,1.85rem);font-weight:800;margin:22px 0}.stats{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#64748b}progress{width:100%;height:8px;accent-color:#e6007e;margin:14px 0 0}
-.sentence-area{font-size:clamp(1.2rem,3.5vw,1.5rem);line-height:1.65;font-weight:650;margin:12px 0 18px;white-space:pre-wrap}
-.input-label{display:block;font-weight:800;margin:22px 0 9px}.correction-input{display:block;width:100%;border:2px solid #cad3df;border-radius:14px;min-height:118px;padding:15px;background:#fff;color:#172033;font-size:1.12rem;line-height:1.55;resize:vertical}.correction-input[readonly]{background:#f1f5f9}.chars{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chars button{background:#fff0f5;border:1px solid #ecb2c7;color:#6b2240;padding:8px 12px;min-height:40px}.chars button:disabled{opacity:.5}
+.prompt{font-size:clamp(1.35rem,4.5vw,1.85rem);font-weight:800;line-height:1.4;margin:24px 0 20px;color:#1d5fba}
+.sentence-area{font-size:clamp(1.2rem,3.5vw,1.55rem);line-height:1.55;font-weight:750;margin:0 0 24px;color:#b3366d;white-space:pre-wrap}
+.correction-input{display:block;width:100%;border:2px solid #cad3df;border-radius:14px;min-height:118px;padding:15px;background:#fff;color:#172033;font-size:1.12rem;line-height:1.55;resize:vertical}.correction-input[readonly]{background:#f1f5f9}
+.exercise-meta{margin:24px 0 0;padding-top:14px;border-top:1px solid #dbe2ea}.stats{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#64748b;font-size:.9rem}progress{width:100%;height:6px;accent-color:#e6007e;margin:10px 0 0}
+.grammar-info{margin:12px 0 0;color:#64748b;font-size:.9rem}.grammar-info summary{cursor:pointer}.grammar-info p{margin:9px 0 0}.grammar-info strong{font-weight:750}.chars{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chars button{background:#fff0f5;border:1px solid #ecb2c7;color:#6b2240;padding:8px 12px;min-height:40px}.chars button:disabled{opacity:.5}
 .feedback{margin-top:18px;line-height:1.55;font-weight:650;min-height:1em}.feedback.good,.good-text{color:#14733b}.feedback.bad,.bad-text{color:#b91c1c}.correct-answer{border-left:4px solid #168044;padding:10px 14px;background:#e9f9f0;margin-top:16px;border-radius:6px;color:#14532d;font-weight:700}.save{font-size:.85rem;color:#64748b;min-height:1.3em;margin:16px 0 0}.score{font-size:1.5rem;font-weight:800}.review{margin-top:24px}.review summary{cursor:pointer;font-weight:750;padding:12px 0}.review article{padding:16px 0;border-top:1px solid #cbd5e1}.review article p{margin:5px 0}.error{color:#b91c1c}
 .selection-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}.selection-actions button{padding:8px 12px;font-size:.9rem}.hint{margin:10px 0;color:#526a70}
 @media(max-width:650px){body{padding:12px}.panel{padding:18px}.topics{grid-template-columns:1fr}.topic{padding:12px}.settings{flex-wrap:wrap}.sentence-area{line-height:1.65}.correction-input{min-height:112px}}
-@media(prefers-color-scheme:dark){:root{background:#15151a;color:#eef0fa;color-scheme:dark}.panel{background:#202024;border-color:#50515a}.back,.secondary{background:#414650;color:#eef0fa}.muted,.stats,.save,.hint{color:#bdc5d3}.topic{border-color:#636875}.topic:has(input:checked){background:#5d2838;border-color:#f07a9d}.sentence-area{color:#eef0fa}.correction-input{background:#30343f;color:#eef0fa;border-color:#73798b}.correction-input[readonly]{background:#393a40}.chars button{background:#593143;color:#ffe6f0;border-color:#aa6380}.correct-answer{background:#1d4032;color:#93ebad}.primary{color-scheme:only light}}
+@media(prefers-color-scheme:dark){:root{background:#15151a;color:#eef0fa;color-scheme:dark}.panel{background:#202024;border-color:#50515a}.back,.secondary{background:#414650;color:#eef0fa}.muted,.stats,.save,.hint{color:#bdc5d3}.topic{border-color:#636875}.topic:has(input:checked){background:#5d2838;border-color:#f07a9d}.prompt{color:#91c4ff}.sentence-area{color:#ff9abb}.exercise-meta{border-color:#50515a}.correction-input{background:#30343f;color:#eef0fa;border-color:#73798b}.correction-input[readonly]{background:#393a40}.chars button{background:#593143;color:#ffe6f0;border-color:#aa6380}.correct-answer{background:#1d4032;color:#93ebad}.primary{color-scheme:only light}}
 </style>
 </head>
 <body><main>
@@ -35,15 +37,9 @@ button,input,select,textarea{font:inherit}button,a.back{border:0;border-radius:1
 </section>
 <section id="exercise" class="panel" hidden>
 <button id="finishBtn" class="back" type="button">Runde beenden</button>
-<h1 id="topicHeading" tabindex="-1"></h1>
-<p id="phenomenon" class="muted small"></p>
-<div class="stats"><span id="position"></span><span id="correctCount"></span></div><progress id="progress" value="0" max="10" aria-label="Bearbeitete Aufgaben"></progress>
-<p id="prompt" class="prompt" lang="de"></p>
-<h2>Spanischer Satz mit einem Verbfehler</h2>
-<p id="spanishSentence" class="sentence-area" aria-label="Fehlerhafter spanischer Satz" lang="es"></p>
-<p class="hint small">Finde den Verbfehler und schreibe den <strong>gesamten spanischen Satz</strong> unten richtig neu.</p>
-<label class="input-label" for="correctionInput">Dein vollständiger korrigierter Satz</label>
-<textarea id="correctionInput" class="correction-input" rows="3" lang="es" autocapitalize="sentences" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Schreibe hier den ganzen Satz korrekt neu …" aria-describedby="inputHint"></textarea>
+<p id="prompt" class="prompt" lang="de" tabindex="-1"></p>
+<p id="spanishSentence" class="sentence-area" aria-label="Spanischer Satz mit einem Verbfehler" lang="es"></p>
+<textarea id="correctionInput" class="correction-input" rows="3" lang="es" aria-label="Schreibe den vollständigen korrigierten spanischen Satz" autocapitalize="sentences" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Schreibe hier den ganzen Satz korrekt neu …" aria-describedby="inputHint"></textarea>
 <p id="inputHint" class="muted small">Akzente zählen. Groß- und Kleinschreibung, Satzzeichen und zusätzliche Leerzeichen werden nicht bewertet.</p>
 <div id="chars" class="chars" role="group" aria-label="Spanische Sonderzeichen">
 <button type="button" data-char="á" disabled>á</button><button type="button" data-char="é" disabled>é</button><button type="button" data-char="í" disabled>í</button><button type="button" data-char="ó" disabled>ó</button><button type="button" data-char="ú" disabled>ú</button><button type="button" data-char="ñ" disabled>ñ</button><button type="button" data-char="ü" disabled>ü</button>
@@ -51,6 +47,14 @@ button,input,select,textarea{font:inherit}button,a.back{border:0;border-radius:1
 <div class="actions"><button id="checkBtn" class="primary" type="button" disabled>Prüfen</button><button id="resetBtn" class="secondary" type="button" disabled>Zurücksetzen</button><button id="nextBtn" class="primary" type="button" hidden>Weiter</button></div>
 <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
 <div id="solution" class="correct-answer" lang="es" hidden></div>
+<div class="exercise-meta">
+<div class="stats"><span id="position"></span><span id="correctCount"></span></div>
+<progress id="progress" value="0" max="10" aria-label="Bearbeitete Aufgaben"></progress>
+<details class="grammar-info">
+<summary>Grammatikthema anzeigen</summary>
+<p><strong id="topicHeading"></strong> · <span id="phenomenon"></span></p>
+</details>
+</div>
 </section>
 <section id="result" class="panel" hidden>
 <button id="selectionBtn" class="back" type="button">← Zurück zur Auswahl</button>
@@ -61,6 +65,6 @@ button,input,select,textarea{font:inherit}button,a.back{border:0;border-radius:1
 <p id="saveStatus" class="save" role="status"></p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="grammatik-saetze-fehler.js?v=20261113-fullsentence"></script>
+<script src="grammatik-saetze-fehler.js?v=20261113-simple-layout"></script>
 <script src="student-progress-widget.js"></script>
 </body></html>
