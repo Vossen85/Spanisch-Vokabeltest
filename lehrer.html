@@ -48,11 +48,6 @@
     .nav .navBtn{display:flex;align-items:center;justify-content:center;min-width:0;width:100%;min-height:70px;text-align:center;line-height:1.22;overflow-wrap:break-word}
     .nav #testsHubBtn{grid-column:1 / -1;max-width:100%;min-height:72px}
     .nav #adminNavBtn{grid-column:1 / -1;max-width:100%;min-height:70px;margin-top:5px}
-    @media(max-width:480px){
-      .nav{gap:11px}
-      .nav .navBtn{padding:12px 7px;font-size:clamp(.87rem,3.9vw,1.05rem)}
-      .nav #testsHubBtn,.nav #adminNavBtn{font-size:1.08rem}
-    }
     button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer}
     button:disabled{opacity:.6;cursor:not-allowed}
     .primary{background:#2563eb;color:#fff}
@@ -90,6 +85,12 @@
     .nav .navBtn.active:hover{filter:brightness(1.08) saturate(1.16)}
     .nav .navBtn:active{transform:translateY(0)}
     .nav .navBtn:focus-visible,#logoutBtn:focus-visible,#logoutPendingBtn:focus-visible{outline:3px solid #152d48;outline-offset:4px}
+    /* Auch auf schmalen Smartphones zwei gut lesbare Spalten. */
+    @media(max-width:480px){
+      .nav{gap:11px}
+      .nav .navBtn{padding:12px 7px;font-size:clamp(.87rem,3.9vw,1.05rem)}
+      .nav #testsHubBtn,.nav #adminNavBtn{font-size:1.08rem}
+    }
     .test-subnav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:-4px 0 22px;padding:14px;border:2px solid #a5b4fc;border-radius:17px;background:rgba(99,102,241,.07)}
     .test-sub-btn{--rainbow-from:#ef4662;--rainbow-to:#c62a52;--rainbow-text:#fff;position:relative;isolation:isolate;overflow:hidden;color-scheme:only light;color:var(--rainbow-text);background:linear-gradient(135deg,var(--rainbow-from),var(--rainbow-to));min-height:48px;border:2px solid rgba(255,255,255,.3);border-radius:12px;padding:10px 12px;font-weight:850;line-height:1.25;box-shadow:0 4px 11px rgba(15,23,42,.14);text-align:center}
     .test-sub-btn[data-view="tests"]{--rainbow-from:#ff526d;--rainbow-to:#e52f61}
