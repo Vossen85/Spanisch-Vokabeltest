@@ -5,6 +5,7 @@ const personalized=new URLSearchParams(location.search).get('personalisiert')===
 const back='uebung.html'+(personalized?'?personalisiert=1':'')+'#grammatik';
 $('homeLink').href=back;$('backLink').href=back;
 $('orderLink').href='grammatik-saetze-ordnen.html'+(personalized?'?personalisiert=1':'');
+$('errorLink').href='grammatik-saetze-fehler.html'+(personalized?'?personalisiert=1':'');
 const client=window.supabase?.createClient('https://jzolxrqrrljwpmjbdxmo.supabase.co','sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj',{auth:{storageKey:'avanza-student-auth-token',persistSession:true,autoRefreshToken:true}});
 if(client)window.avanzaStudentClient=client;
 let bank=[],round=[],index=0,history=[],locked=false,running=false,sessionId=null,loggedIn=false,lastInteraction=Date.now();
