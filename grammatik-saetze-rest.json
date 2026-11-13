@@ -927,15 +927,15 @@
       "de": "Hilf mir nicht bei den Hausaufgaben.",
       "es": "No me ayudes con la tarea.",
       "opts": [
-        "No ayúdame con la tarea.",
+        "No me ayudas con la tarea.",
         "No me ayudes con la tarea.",
-        "No ayudar me ayudes con la tarea."
+        "No me ayudar con la tarea."
       ],
       "answer": "B",
-      "wrong1": "No ayúdame con la tarea.",
-      "wrong2": "No ayudar me ayudes con la tarea.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No me ayudas con la tarea.",
+      "wrong2": "No me ayudar con la tarea.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-003",
@@ -964,14 +964,14 @@
       "es": "No beban agua después del deporte.",
       "opts": [
         "No beban agua después del deporte.",
-        "No Beber agua después del deporte.",
-        "No beber beban agua después del deporte."
+        "No beben agua después del deporte.",
+        "No beber agua después del deporte."
       ],
       "answer": "A",
-      "wrong1": "No Beber agua después del deporte.",
-      "wrong2": "No beber beban agua después del deporte.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No beben agua después del deporte.",
+      "wrong2": "No beber agua después del deporte.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-005",
@@ -999,15 +999,15 @@
       "de": "Öffnet das Fenster nicht.",
       "es": "No abráis la ventana.",
       "opts": [
-        "No abrid la ventana.",
-        "No abrir abráis la ventana.",
+        "No abrís la ventana.",
+        "No abrir la ventana.",
         "No abráis la ventana."
       ],
       "answer": "C",
-      "wrong1": "No abrid la ventana.",
-      "wrong2": "No abrir abráis la ventana.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No abrís la ventana.",
+      "wrong2": "No abrir la ventana.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-007",
@@ -1032,18 +1032,18 @@
       "topic": "Imperativo",
       "lemma": "decir",
       "phen": "Verneinter Imperativ",
-      "de": "Sag nicht die Wahrheit.",
-      "es": "No digas la verdad.",
+      "de": "Sag noch nichts.",
+      "es": "No digas nada todavía.",
       "opts": [
-        "No di la verdad.",
-        "No digas la verdad.",
-        "No decir digas la verdad."
+        "No dices nada todavía.",
+        "No digas nada todavía.",
+        "No decir nada todavía."
       ],
       "answer": "B",
-      "wrong1": "No di la verdad.",
-      "wrong2": "No decir digas la verdad.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No dices nada todavía.",
+      "wrong2": "No decir nada todavía.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-009",
@@ -1072,14 +1072,14 @@
       "es": "No haga los deberes hoy.",
       "opts": [
         "No haga los deberes hoy.",
-        "No Hacer los deberes hoy.",
-        "No hacer haga los deberes hoy."
+        "No hace los deberes hoy.",
+        "No hacer los deberes hoy."
       ],
       "answer": "A",
-      "wrong1": "No Hacer los deberes hoy.",
-      "wrong2": "No hacer haga los deberes hoy.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No hace los deberes hoy.",
+      "wrong2": "No hacer los deberes hoy.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-011",
@@ -1107,15 +1107,15 @@
       "de": "Geh morgen nicht zum Arzt.",
       "es": "No vayas al médico mañana.",
       "opts": [
-        "No ve al médico mañana.",
-        "No ir vayas al médico mañana.",
+        "No vas al médico mañana.",
+        "No ir al médico mañana.",
         "No vayas al médico mañana."
       ],
       "answer": "C",
-      "wrong1": "No ve al médico mañana.",
-      "wrong2": "No ir vayas al médico mañana.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No vas al médico mañana.",
+      "wrong2": "No ir al médico mañana.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-013",
@@ -1143,15 +1143,15 @@
       "de": "Deckt den Tisch nicht.",
       "es": "No pongáis la mesa.",
       "opts": [
-        "No poned la mesa.",
+        "No ponéis la mesa.",
         "No pongáis la mesa.",
-        "No poner pongáis la mesa."
+        "No poner la mesa."
       ],
       "answer": "B",
-      "wrong1": "No poned la mesa.",
-      "wrong2": "No poner pongáis la mesa.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No ponéis la mesa.",
+      "wrong2": "No poner la mesa.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-015",
@@ -1180,14 +1180,14 @@
       "es": "No salgas de casa temprano.",
       "opts": [
         "No salgas de casa temprano.",
-        "No sal de casa temprano.",
-        "No salir salgas de casa temprano."
+        "No sales de casa temprano.",
+        "No salir de casa temprano."
       ],
       "answer": "A",
-      "wrong1": "No sal de casa temprano.",
-      "wrong2": "No salir salgas de casa temprano.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No sales de casa temprano.",
+      "wrong2": "No salir de casa temprano.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-017",
@@ -1215,15 +1215,15 @@
       "de": "Sei nicht ungeduldig.",
       "es": "No seas impaciente.",
       "opts": [
-        "No sé paciente.",
-        "No  seas impaciente.",
+        "No eres impaciente.",
+        "No ser impaciente.",
         "No seas impaciente."
       ],
       "answer": "C",
-      "wrong1": "No sé paciente.",
-      "wrong2": "No  seas impaciente.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No eres impaciente.",
+      "wrong2": "No ser impaciente.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-019",
@@ -1251,15 +1251,15 @@
       "de": "Hab keine Angst.",
       "es": "No tengas miedo.",
       "opts": [
-        "No ten paciencia.",
+        "No tienes miedo.",
         "No tengas miedo.",
-        "No tener tengas miedo."
+        "No tener miedo."
       ],
       "answer": "B",
-      "wrong1": "No ten paciencia.",
-      "wrong2": "No tener tengas miedo.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No tienes miedo.",
+      "wrong2": "No tener miedo.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-021",
@@ -1288,14 +1288,14 @@
       "es": "No vengáis a casa mañana.",
       "opts": [
         "No vengáis a casa mañana.",
-        "No venid a casa mañana.",
-        "No venir vengáis a casa mañana."
+        "No venís a casa mañana.",
+        "No venir a casa mañana."
       ],
       "answer": "A",
-      "wrong1": "No venid a casa mañana.",
-      "wrong2": "No venir vengáis a casa mañana.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No venís a casa mañana.",
+      "wrong2": "No venir a casa mañana.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-023",
@@ -1323,15 +1323,15 @@
       "de": "Denk nicht an deine Probleme.",
       "es": "No pienses en tus problemas.",
       "opts": [
-        "No piensa en tus amigos.",
-        "No pensar pienses en tus problemas.",
+        "No piensas en tus problemas.",
+        "No pensar en tus problemas.",
         "No pienses en tus problemas."
       ],
       "answer": "C",
-      "wrong1": "No piensa en tus amigos.",
-      "wrong2": "No pensar pienses en tus problemas.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No piensas en tus problemas.",
+      "wrong2": "No pensar en tus problemas.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-025",
@@ -1359,15 +1359,15 @@
       "de": "Erzähl die Geschichte nicht noch einmal.",
       "es": "No cuentes la historia otra vez.",
       "opts": [
-        "No cuenta la historia otra vez.",
+        "No cuentas la historia otra vez.",
         "No cuentes la historia otra vez.",
-        "No contar cuentes la historia otra vez."
+        "No contar la historia otra vez."
       ],
       "answer": "B",
-      "wrong1": "No cuenta la historia otra vez.",
-      "wrong2": "No contar cuentes la historia otra vez.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No cuentas la historia otra vez.",
+      "wrong2": "No contar la historia otra vez.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-027",
@@ -1396,14 +1396,14 @@
       "es": "No te laves las manos.",
       "opts": [
         "No te laves las manos.",
-        "No lávate las manos.",
-        "No lavarse laves las manos."
+        "No te lavas las manos.",
+        "No te lavar las manos."
       ],
       "answer": "A",
-      "wrong1": "No lávate las manos.",
-      "wrong2": "No lavarse laves las manos.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No te lavas las manos.",
+      "wrong2": "No te lavar las manos.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-029",
@@ -1431,15 +1431,15 @@
       "de": "Setzen Sie sich hier nicht hin.",
       "es": "No se siente aquí.",
       "opts": [
-        "No siéntese aquí.",
-        "No sentarse siente aquí.",
+        "No se sienta aquí.",
+        "No se sentar aquí.",
         "No se siente aquí."
       ],
       "answer": "C",
-      "wrong1": "No siéntese aquí.",
-      "wrong2": "No sentarse siente aquí.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No se sienta aquí.",
+      "wrong2": "No se sentar aquí.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-031",
@@ -1467,15 +1467,15 @@
       "de": "Geh noch nicht weg.",
       "es": "No te vayas todavía.",
       "opts": [
-        "No vete ahora.",
+        "No te vas todavía.",
         "No te vayas todavía.",
-        "No irse vayas todavía."
+        "No te ir todavía."
       ],
       "answer": "B",
-      "wrong1": "No vete ahora.",
-      "wrong2": "No irse vayas todavía.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No te vas todavía.",
+      "wrong2": "No te ir todavía.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-033",
@@ -1504,14 +1504,14 @@
       "es": "No charlen con su amiga.",
       "opts": [
         "No charlen con su amiga.",
-        "No Charlar con tu amiga.",
-        "No charlar charlen con su amiga."
+        "No charlan con su amiga.",
+        "No charlar con su amiga."
       ],
       "answer": "A",
-      "wrong1": "No Charlar con tu amiga.",
-      "wrong2": "No charlar charlen con su amiga.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No charlan con su amiga.",
+      "wrong2": "No charlar con su amiga.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-035",
@@ -1539,15 +1539,15 @@
       "de": "Hilf deinem Bruder nicht.",
       "es": "No ayudes a tu hermano.",
       "opts": [
-        "No ayuda a tu hermano.",
-        "No ayudar ayudes a tu hermano.",
+        "No ayudas a tu hermano.",
+        "No ayudar a tu hermano.",
         "No ayudes a tu hermano."
       ],
       "answer": "C",
-      "wrong1": "No ayuda a tu hermano.",
-      "wrong2": "No ayudar ayudes a tu hermano.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No ayudas a tu hermano.",
+      "wrong2": "No ayudar a tu hermano.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-037",
@@ -1575,15 +1575,15 @@
       "de": "Trinkt nicht mehr Wasser.",
       "es": "No bebáis más agua.",
       "opts": [
-        "No bebed más agua.",
+        "No bebéis más agua.",
         "No bebáis más agua.",
-        "No beber bebáis más agua."
+        "No beber más agua."
       ],
       "answer": "B",
-      "wrong1": "No bebed más agua.",
-      "wrong2": "No beber bebáis más agua.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No bebéis más agua.",
+      "wrong2": "No beber más agua.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-039",
@@ -1612,14 +1612,14 @@
       "es": "No abras el libro todavía.",
       "opts": [
         "No abras el libro todavía.",
-        "No abre el libro en la página diez.",
-        "No abrir abras el libro todavía."
+        "No abres el libro todavía.",
+        "No abrir el libro todavía."
       ],
       "answer": "A",
-      "wrong1": "No abre el libro en la página diez.",
-      "wrong2": "No abrir abras el libro todavía.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No abres el libro todavía.",
+      "wrong2": "No abrir el libro todavía.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-041",
@@ -1647,15 +1647,15 @@
       "de": "Sagen Sie mir Ihren Namen nicht.",
       "es": "No me diga su nombre.",
       "opts": [
-        "No dígame su nombre.",
-        "No decir me diga su nombre.",
+        "No me dice su nombre.",
+        "No me decir su nombre.",
         "No me diga su nombre."
       ],
       "answer": "C",
-      "wrong1": "No dígame su nombre.",
-      "wrong2": "No decir me diga su nombre.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No me dice su nombre.",
+      "wrong2": "No me decir su nombre.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-043",
@@ -1683,15 +1683,15 @@
       "de": "Mach jetzt nicht das Bett.",
       "es": "No hagas la cama ahora.",
       "opts": [
-        "No haz la cama antes de clase.",
+        "No haces la cama ahora.",
         "No hagas la cama ahora.",
-        "No hacer hagas la cama ahora."
+        "No hacer la cama ahora."
       ],
       "answer": "B",
-      "wrong1": "No haz la cama antes de clase.",
-      "wrong2": "No hacer hagas la cama ahora.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No haces la cama ahora.",
+      "wrong2": "No hacer la cama ahora.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-045",
@@ -1720,14 +1720,14 @@
       "es": "No pongan el vaso en la mesa.",
       "opts": [
         "No pongan el vaso en la mesa.",
-        "No Poner el vaso en la mesa.",
-        "No poner pongan el vaso en la mesa."
+        "No ponen el vaso en la mesa.",
+        "No poner el vaso en la mesa."
       ],
       "answer": "A",
-      "wrong1": "No Poner el vaso en la mesa.",
-      "wrong2": "No poner pongan el vaso en la mesa.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No ponen el vaso en la mesa.",
+      "wrong2": "No poner el vaso en la mesa.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-047",
@@ -1755,15 +1755,15 @@
       "de": "Komm nicht vor acht Uhr.",
       "es": "No vengas antes de las ocho.",
       "opts": [
-        "No ven antes de las ocho.",
-        "No venir vengas antes de las ocho.",
+        "No vienes antes de las ocho.",
+        "No venir antes de las ocho.",
         "No vengas antes de las ocho."
       ],
       "answer": "C",
-      "wrong1": "No ven antes de las ocho.",
-      "wrong2": "No venir vengas antes de las ocho.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No vienes antes de las ocho.",
+      "wrong2": "No venir antes de las ocho.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "IMP-049",
@@ -1791,15 +1791,15 @@
       "de": "Erzählt mir das Ende nicht.",
       "es": "No me contéis el final.",
       "opts": [
-        "No contadme el final.",
+        "No me contáis el final.",
         "No me contéis el final.",
-        "No contar me contéis el final."
+        "No me contar el final."
       ],
       "answer": "B",
-      "wrong1": "No contadme el final.",
-      "wrong2": "No contar me contéis el final.",
-      "reason1": "Der bejahte Imperativ wird nach no nicht verwendet.",
-      "reason2": "Der verneinte Imperativ ist falsch gebildet."
+      "wrong1": "No me contáis el final.",
+      "wrong2": "No me contar el final.",
+      "reason1": "Hier steht die Präsensform des Indicativo statt des verneinten Imperativs.",
+      "reason2": "Hier steht der Infinitiv statt der benötigten Subjuntivo-Form."
     },
     {
       "id": "FUT1-001",
@@ -6720,7 +6720,7 @@
       "topic": "Personal- und Objektpronomen",
       "lemma": "recomendar",
       "phen": "Indirektes Objektpronomen",
-      "de": "Ich empfehle meinen Freunden das Café.",
+      "de": "Ich empfehle meinen Freunden den Kaffee.",
       "es": "Les recomiendo el café a mis amigos.",
       "opts": [
         "Le recomiendo el café a mis amigos.",
