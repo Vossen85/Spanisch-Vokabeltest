@@ -1,1468 +1,1468 @@
 {
-  "version": 1,
-  "translation": "Lutherbibel 1912",
-  "license": "Public Domain",
-  "source": "midvash/bible-data (eBible / Lutherbibel 1912)",
+  "version": 2,
+  "translation": "Menge-Bibel 1939",
+  "license": "Gemeinfrei in Deutschland (Public Domain, CC0-Textquelle)",
+  "source": "Hermann Menge (1939), Texttranskription renehamburger/Menge-Bibel (CC0 1.0)",
   "verses": [
     {
-      "text": "Verlasset euch auf den HERRN ewiglich; denn Gott der HERR ist ein Fels ewiglich.",
-      "reference": "Jesaja 26,4"
+      "text": "Mit seinen Fittichen deckt er dich, und unter seinen Flügeln bist du geborgen, Schild und Panzer ist seine Treue.",
+      "reference": "Psalm 91,4"
     },
     {
-      "text": "Ich hatte viel Bekümmernisse in meinem Herzen; aber deine Tröstungen ergötzten meine Seele.",
-      "reference": "Psalm 94,19"
-    },
-    {
-      "text": "Und was ihr bitten werdet in meinem Namen, das will ich tun, auf daß der Vater geehrt werde in dem Sohne.",
-      "reference": "Johannes 14,13"
-    },
-    {
-      "text": "Ich aber will in dein Haus gehen auf deine große Güte und anbeten gegen deinen heiligen Tempel in deiner Furcht.",
-      "reference": "Psalm 5,7"
-    },
-    {
-      "text": "Der Segen des HERRN macht reich ohne Mühe.",
-      "reference": "Sprüche 10,22"
-    },
-    {
-      "text": "Mein Kind, fürchte den HERRN und den König und menge dich nicht unter die Aufrührer.",
-      "reference": "Sprüche 24,21"
-    },
-    {
-      "text": "Der HERR wird das Haus des Hoffärtigen zerbrechen und die Grenze der Witwe bestätigen.",
-      "reference": "Sprüche 15,25"
-    },
-    {
-      "text": "Nehmet auf euch mein Joch und lernet von mir; denn ich bin sanftmütig und von Herzen demütig; so werdet ihr Ruhe finden für eure Seelen.",
-      "reference": "Matthäus 11,29"
-    },
-    {
-      "text": "Wohl dem, der seine Hoffnung setzt auf den HERRN und sich nicht wendet zu den Hoffärtigen und zu denen, die mit Lügen umgehen!",
-      "reference": "Psalm 40,4"
-    },
-    {
-      "text": "Weißt du nicht? hast du nicht gehört? Der HERR, der ewige Gott, der die Enden der Erde geschaffen hat, wird nicht müde noch matt; sein Verstand ist unausforschlich.",
-      "reference": "Jesaja 40,28"
-    },
-    {
-      "text": "Ich, der HERR, behüte ihn und feuchte ihn bald, daß man seine Blätter nicht vermisse; ich will ihn Tag und Nacht behüten.",
-      "reference": "Jesaja 27,3"
-    },
-    {
-      "text": "Ich aber sprach, da mir's wohl ging: Ich werde nimmermehr darniederliegen.",
-      "reference": "Psalm 30,6"
-    },
-    {
-      "text": "Dein Wort ist meine Fußes Leuchte und ein Licht auf meinem Wege.",
-      "reference": "Psalm 119,105"
-    },
-    {
-      "text": "Die Freude der Pauken feiert, das Jauchzen der Fröhlichen ist aus, und die Freude der Harfe hat ein Ende.",
-      "reference": "Jesaja 24,8"
-    },
-    {
-      "text": "Kann auch ein Weib ihres Kindleins vergessen, daß sie sich nicht erbarme über den Sohn ihres Leibes? Und ob sie desselben vergäße, so will ich doch dein nicht vergessen.",
-      "reference": "Jesaja 49,15"
-    },
-    {
-      "text": "Der Spötter liebt den nicht, der ihn straft, und geht nicht zu den Weisen.",
-      "reference": "Sprüche 15,12"
-    },
-    {
-      "text": "Die Elenden sehen's und freuen sich; und die Gott suchen, denen wird das Herz leben.",
-      "reference": "Psalm 69,32"
-    },
-    {
-      "text": "HERR Zebaoth, wohl dem Menschen, der sich auf dich verläßt!",
-      "reference": "Psalm 84,12"
-    },
-    {
-      "text": "Wer der Gerechtigkeit und Güte nachjagt, der findet Leben, Gerechtigkeit und Ehre.",
-      "reference": "Sprüche 21,21"
-    },
-    {
-      "text": "Der HERR ist allen gütig und erbarmt sich aller seiner Werke.",
-      "reference": "Psalm 145,9"
-    },
-    {
-      "text": "Ein holdselig Weib erlangt Ehre; aber die Tyrannen erlangen Reichtum.",
-      "reference": "Sprüche 11,16"
-    },
-    {
-      "text": "Die Befehle des HERRN sind richtig und erfreuen das Herz; die Gebote des HERRN sind lauter und erleuchten die Augen.",
-      "reference": "Psalm 19,8"
-    },
-    {
-      "text": "Es wird aber ein Stuhl bereitet werden aus Gnaden, daß einer darauf sitze in der Wahrheit, in der Hütte Davids, und richte und trachte nach Recht und fördere Gerechtigkeit.",
-      "reference": "Jesaja 16,5"
-    },
-    {
-      "text": "Ein Weiser fürchtet sich und meidet das Arge; ein Narr aber fährt trotzig hindurch.",
-      "reference": "Sprüche 14,16"
-    },
-    {
-      "text": "Gnädig und barmherzig ist der HERR, geduldig und von großer Güte.",
-      "reference": "Psalm 145,8"
-    },
-    {
-      "text": "Ich will ihm ewiglich bewahren meine Gnade, und mein Bund soll ihm fest bleiben.",
-      "reference": "Psalm 89,28"
-    },
-    {
-      "text": "Danket dem HERRN; denn er ist freundlich, und sein Güte währet ewiglich.",
-      "reference": "Psalm 118,29"
-    },
-    {
-      "text": "Der HERR liebt die Tore Zions über alle Wohnungen Jakobs.",
-      "reference": "Psalm 87,2"
-    },
-    {
-      "text": "Da redete Jesus abermals zu ihnen und sprach: Ich bin das Licht der Welt; wer mir nachfolgt, der wird nicht wandeln in der Finsternis, sondern wir das Licht des Lebens haben.",
-      "reference": "Johannes 8,12"
-    },
-    {
-      "text": "Der HERR wird seinem Volk Kraft geben; der HERR wird sein Volk segnen mit Frieden.",
-      "reference": "Psalm 29,11"
-    },
-    {
-      "text": "Denn er ist mein Hort, meine Hilfe, meine Schutz, daß mich kein Fall stürzen wird, wie groß er ist.",
-      "reference": "Psalm 62,2"
-    },
-    {
-      "text": "Der HERR tut wohl an mir nach meiner Gerechtigkeit; er vergilt mir nach der Reinigkeit meiner Hände.",
-      "reference": "Psalm 18,20"
-    },
-    {
-      "text": "Seid getrost und unverzagt, alle, die ihr des HERRN harret!",
-      "reference": "Psalm 31,24"
-    },
-    {
-      "text": "Der HERR läßt sein Heil verkündigen; vor den Völkern läßt er seine Gerechtigkeit offenbaren.",
-      "reference": "Psalm 98,2"
-    },
-    {
-      "text": "Freuet euch in dem HERRN allewege! Und abermals sage ich: Freuet euch!",
-      "reference": "Philipper 4,4"
-    },
-    {
-      "text": "Die Anschläge des Argen sind dem HERRN ein Greuel; aber freundlich reden die Reinen.",
-      "reference": "Sprüche 15,26"
-    },
-    {
-      "text": "HERR, Gott Zebaoth, tröste uns, laß dein Antlitz leuchten; so genesen wir.",
-      "reference": "Psalm 80,19"
-    },
-    {
-      "text": "Die Himmel verkündigen seine Gerechtigkeit, und alle Völker sehen seine Ehre.",
-      "reference": "Psalm 97,6"
-    },
-    {
-      "text": "Gott ist Geist, und die ihn anbeten, die müssen ihn im Geist und in der Wahrheit anbeten.",
-      "reference": "Johannes 4,24"
-    },
-    {
-      "text": "Gutes und Barmherzigkeit werden mir folgen mein Leben lang, und ich werde bleiben im Hause des HERRN immerdar.",
-      "reference": "Psalm 23,6"
-    },
-    {
-      "text": "Er war nicht das Licht, sondern daß er zeugte von dem Licht.",
-      "reference": "Johannes 1,8"
-    },
-    {
-      "text": "Ich aber nehme nicht Zeugnis von Menschen; sondern solches sage ich, auf daß ihr selig werdet.",
-      "reference": "Johannes 5,34"
-    },
-    {
-      "text": "Ich danke dir dafür, daß ich wunderbar gemacht bin; wunderbar sind deine Werke, und das erkennt meine Seele wohl.",
-      "reference": "Psalm 139,14"
-    },
-    {
-      "text": "Mache dich auf, werde licht! denn dein Licht kommt, und die Herrlichkeit des HERRN geht auf über dir.",
-      "reference": "Jesaja 60,1"
-    },
-    {
-      "text": "Ein verkehrter Mensch richtet Hader an, und ein Verleumder macht Freunde uneins.",
-      "reference": "Sprüche 16,28"
-    },
-    {
-      "text": "Wenn eine Plage kommen will, so fürchtet er sich nicht; sein Herz hofft unverzagt auf den HERRN.",
-      "reference": "Psalm 112,7"
-    },
-    {
-      "text": "Glaubet an das Licht, dieweil ihr es habt, auf daß ihr des Lichtes Kinder seid.",
-      "reference": "Johannes 12,36"
-    },
-    {
-      "text": "Öffne mir die Augen, daß ich sehe die Wunder an deinem Gesetz.",
-      "reference": "Psalm 119,18"
-    },
-    {
-      "text": "Niemand hat größere Liebe denn die, daß er sein Leben läßt für seine Freunde.",
-      "reference": "Johannes 15,13"
-    },
-    {
-      "text": "Wer aber beharret bis ans Ende, der wird selig.",
-      "reference": "Matthäus 24,13"
-    },
-    {
-      "text": "Der HERR ist König; des freue sich das Erdreich und seien fröhlich die Inseln, soviel ihrer sind.",
-      "reference": "Psalm 97,1"
-    },
-    {
-      "text": "Weiter, liebe Brüder, was wahrhaftig ist, was ehrbar, was gerecht, was keusch, was lieblich, was wohllautet, ist etwa eine Tugend, ist etwa ein Lob, dem denket nach!",
-      "reference": "Philipper 4,8"
-    },
-    {
-      "text": "Barmherzig und gnädig ist der HERR, geduldig und von großer Güte.",
-      "reference": "Psalm 103,8"
-    },
-    {
-      "text": "Daselbst wollte ich dich gerne loben mein Leben lang und meine Hände in deinem Namen aufheben.",
-      "reference": "Psalm 63,4"
-    },
-    {
-      "text": "Siehe, in die Hände habe ich dich gezeichnet; deine Mauern sind immerdar vor mir.",
-      "reference": "Jesaja 49,16"
-    },
-    {
-      "text": "Ein Psalm Davids. Der HERR ist mein Hirte; mir wird nichts mangeln.",
-      "reference": "Psalm 23,1"
-    },
-    {
-      "text": "Der HERR ist Richter über die Völker. Richte mich, HERR, nach deiner Gerechtigkeit und Frömmigkeit!",
-      "reference": "Psalm 7,8"
-    },
-    {
-      "text": "Deine Güte, HERR, sei über uns, wie wir auf dich hoffen.",
-      "reference": "Psalm 33,22"
-    },
-    {
-      "text": "Ich habe den HERRN allezeit vor Augen; denn er ist mir zur Rechten, so werde ich fest bleiben.",
-      "reference": "Psalm 16,8"
-    },
-    {
-      "text": "Die Gerechten werden sich des HERRN freuen und auf ihn trauen, und alle frommen Herzen werden sich des rühmen.",
-      "reference": "Psalm 64,10"
-    },
-    {
-      "text": "Der Name des HERRN ist ein festes Schloß; der Gerechte läuft dahin und wird beschirmt.",
-      "reference": "Sprüche 18,10"
-    },
-    {
-      "text": "leite mich in deiner Wahrheit und lehre mich! Denn du bist der Gott, der mir hilft; täglich harre ich dein.",
-      "reference": "Psalm 25,5"
-    },
-    {
-      "text": "Der Spötter sucht Weisheit, und findet sie nicht; aber dem Verständigen ist die Erkenntnis leicht.",
-      "reference": "Sprüche 14,6"
-    },
-    {
-      "text": "Lehre mich tun nach deinem Wohlgefallen, denn du bist mein Gott; dein guter Geist führe mich auf ebener Bahn.",
-      "reference": "Psalm 143,10"
-    },
-    {
-      "text": "Der Mund des Gerechten bringt Weisheit; aber die Zunge der Verkehrten wird ausgerottet.",
-      "reference": "Sprüche 10,31"
-    },
-    {
-      "text": "Meine liebe Tenne, darauf gedroschen wird! was ich gehört habe vom HERRN Zebaoth, dem Gott Israels, das verkündige ich euch.",
-      "reference": "Jesaja 21,10"
-    },
-    {
-      "text": "Du bist der Schönste unter den Menschenkindern, holdselig sind deine Lippen; darum segnet dich Gott ewiglich.",
-      "reference": "Psalm 45,2"
-    },
-    {
-      "text": "Befiehl dem HERRN deine Werke, so werden deine Anschläge fortgehen.",
-      "reference": "Sprüche 16,3"
-    },
-    {
-      "text": "Als nun die Samariter zu ihm kamen, baten sie ihn, daß er bei ihnen bliebe; und er blieb zwei Tage da.",
-      "reference": "Johannes 4,40"
-    },
-    {
-      "text": "Die Worte in eines Mannes Munde sind wie tiefe Wasser, und die Quelle der Weisheit ist ein voller Strom.",
-      "reference": "Sprüche 18,4"
-    },
-    {
-      "text": "Du machst, daß meine Freunde und Nächsten und meine Verwandten sich ferne von mir halten um solches Elends willen.",
-      "reference": "Psalm 88,18"
-    },
-    {
-      "text": "Das ist das Tor des HERRN; die Gerechten werden dahin eingehen.",
-      "reference": "Psalm 118,20"
-    },
-    {
-      "text": "Die solche machen, sind gleich also, alle, die auf solche hoffen.",
-      "reference": "Psalm 135,18"
-    },
-    {
-      "text": "Ich habe meine Gerechtigkeit nahe gebracht; sie ist nicht ferne und mein Heil säumt nicht; denn ich will zu Zion das Heil geben und in Israel meine Herrlichkeit.",
-      "reference": "Jesaja 46,13"
-    },
-    {
-      "text": "Ich liebe, die mich lieben; und die mich frühe suchen, finden mich.",
-      "reference": "Sprüche 8,17"
-    },
-    {
-      "text": "Der Jünglinge Stärke ist ihr Preis; und graues Haar ist der Alten Schmuck.",
-      "reference": "Sprüche 20,29"
-    },
-    {
-      "text": "Wer an mich glaubt, wie die Schrift sagt, von des Leibe werden Ströme des lebendigen Wassers fließen.",
-      "reference": "Johannes 7,38"
-    },
-    {
-      "text": "Er ist mein Hort, meine Hilfe und mein Schutz, daß ich nicht fallen werde.",
-      "reference": "Psalm 62,6"
-    },
-    {
-      "text": "Deine Gerechtigkeit verberge ich nicht in meinem Herzen; von deiner Wahrheit und von deinem Heil rede ich; ich verhehle deine Güte und Treue nicht vor der großen Gemeinde.",
-      "reference": "Psalm 40,10"
-    },
-    {
-      "text": "HERR, behüte meinen Mund und bewahre meine Lippen.",
-      "reference": "Psalm 141,3"
-    },
-    {
-      "text": "Wohl dem, der barmherzig ist und gerne leidet und richtet seine Sachen aus, daß er niemand Unrecht tue!",
-      "reference": "Psalm 112,5"
-    },
-    {
-      "text": "Man wird klagen um die Äcker, ja um die lieblichen Äcker, um die fruchtbaren Weinstöcke.",
-      "reference": "Jesaja 32,12"
-    },
-    {
-      "text": "Behüte dein Herz mit allem Fleiß; denn daraus geht das Leben.",
-      "reference": "Sprüche 4,23"
-    },
-    {
-      "text": "Du wollest mich aus dem Netze ziehen, das sie mir gestellt haben; denn du bist meine Stärke.",
-      "reference": "Psalm 31,4"
-    },
-    {
-      "text": "Gott, wie dein Name, so ist auch dein Ruhm bis an der Welt Enden; deine Rechte ist voll Gerechtigkeit.",
-      "reference": "Psalm 48,10"
-    },
-    {
-      "text": "Sie tut ihren Mund auf mit Weisheit, und auf ihrer Zunge ist holdselige Lehre.",
-      "reference": "Sprüche 31,26"
-    },
-    {
-      "text": "Herr, davon lebt man, und das Leben meines Geistes steht ganz darin; denn du ließest mich wieder stark werden und machtest mich leben.",
-      "reference": "Jesaja 38,16"
-    },
-    {
-      "text": "Dem Gerechten muß das Licht immer wieder aufgehen und Freude den frommen Herzen.",
-      "reference": "Psalm 97,11"
-    },
-    {
-      "text": "Freundlicher Anblick erfreut das Herz; eine gute Botschaft labt das Gebein.",
-      "reference": "Sprüche 15,30"
-    },
-    {
-      "text": "und bin desselben in guter Zuversicht, daß, der in euch angefangen hat das gute Werk, der wird's auch vollführen bis an den Tag Jesu Christi.",
-      "reference": "Philipper 1,6"
-    },
-    {
-      "text": "Den Frommen geht das Licht auf in der Finsternis von dem Gnädigen, Barmherzigen und Gerechten.",
-      "reference": "Psalm 112,4"
-    },
-    {
-      "text": "Denn Gott ist's, der in euch wirkt beides, das Wollen und das Vollbringen, nach seinem Wohlgefallen.",
-      "reference": "Philipper 2,13"
-    },
-    {
-      "text": "Das Gras verdorrt, die Blume verwelkt; aber das Wort unsres Gottes bleibt ewiglich.",
-      "reference": "Jesaja 40,8"
-    },
-    {
-      "text": "Ich danke dem HERRN um seiner Gerechtigkeit willen und will loben den Namen des HERRN, des Allerhöchsten.",
-      "reference": "Psalm 7,17"
-    },
-    {
-      "text": "Die Hoffnung auf einen Treulosen zur Zeit der Not ist wie ein fauler Zahn und gleitender Fuß.",
-      "reference": "Sprüche 25,19"
-    },
-    {
-      "text": "Wohlan, ich will meinem Lieben singen, ein Lied meines Geliebten von seinem Weinberge: Mein Lieber hat einen Weinberg an einem fetten Ort.",
-      "reference": "Jesaja 5,1"
-    },
-    {
-      "text": "Meine Seele verlangt und sehnt sich nach den Vorhöfen des HERRN; mein Leib und Seele freuen sich in dem lebendigen Gott.",
-      "reference": "Psalm 84,2"
-    },
-    {
-      "text": "Angst und Not haben mich getroffen; ich habe aber Lust an deinen Geboten.",
-      "reference": "Psalm 119,143"
-    },
-    {
-      "text": "Ich gräme mich, daß mir das Herz verschmachtet; stärke mich nach deinem Wort.",
-      "reference": "Psalm 119,28"
-    },
-    {
-      "text": "Ein Dieb kommt nur, daß er stehle, würge und umbringe.",
-      "reference": "Johannes 10,10"
-    },
-    {
-      "text": "Wer seinen Feigenbaum bewahrt, der ißt Früchte davon; und wer seinen Herrn bewahrt, wird geehrt.",
-      "reference": "Sprüche 27,18"
-    },
-    {
-      "text": "Ich aber werde bleiben wie ein grüner Ölbaum im Hause Gottes, verlasse mich auf Gottes Güte immer und ewiglich.",
-      "reference": "Psalm 52,8"
-    },
-    {
-      "text": "Der HERR ist meine Stärke und mein Schild; auf ihn hofft mein Herz, und mir ist geholfen. Und mein Herz ist fröhlich, und ich will ihm danken mit meinem Lied.",
-      "reference": "Psalm 28,7"
-    },
-    {
-      "text": "HERR, ich habe lieb die Stätte deines Hauses und den Ort, da deine Ehre wohnt.",
-      "reference": "Psalm 26,8"
-    },
-    {
-      "text": "Und das Licht scheint in der Finsternis, und die Finsternis hat's nicht begriffen.",
-      "reference": "Johannes 1,5"
-    },
-    {
-      "text": "Fürchtet den HERRN, ihr seine Heiligen! denn die ihn fürchten, haben keinen Mangel.",
-      "reference": "Psalm 34,9"
-    },
-    {
-      "text": "Unsre Seele harrt auf den HERRN; er ist unsre Hilfe und Schild.",
-      "reference": "Psalm 33,20"
-    },
-    {
-      "text": "Der Gerechte wird grünen wie ein Palmbaum; er wird wachsen wie eine Zeder auf dem Libanon.",
-      "reference": "Psalm 92,12"
-    },
-    {
-      "text": "Mein Herz zittert, Grauen hat mich betäubt; ich habe in der lieben Nacht keine Ruhe davor.",
-      "reference": "Jesaja 21,4"
-    },
-    {
-      "text": "Zu der Zeit wird Israel selbdritt sein mit den Ägyptern und Assyrern, ein Segen mitten auf der Erden.",
-      "reference": "Jesaja 19,24"
-    },
-    {
-      "text": "Es sind viel Anschläge in eines Mannes Herzen; aber der Rat des HERRN besteht.",
-      "reference": "Sprüche 19,21"
-    },
-    {
-      "text": "Ein Messer wetzt das andere und ein Mann den andern.",
-      "reference": "Sprüche 27,17"
-    },
-    {
-      "text": "Ich will Frucht der Lippen schaffen, die da predigen: Friede, Friede, denen in der Ferne und denen in der Nähe, spricht der HERR, und ich will sie heilen.",
-      "reference": "Jesaja 57,19"
-    },
-    {
-      "text": "Die Geburt Christi war aber also getan. Als Maria, seine Mutter, dem Joseph vertraut war, fand sich's ehe er sie heimholte, daß sie schwanger war von dem heiligen Geist.",
-      "reference": "Matthäus 1,18"
-    },
-    {
-      "text": "Deine Sonne wird nicht mehr untergehen noch dein Mond den Schein verlieren; denn der HERR wird dein ewiges Licht sein, und die Tage deines Leides sollen ein Ende haben.",
-      "reference": "Jesaja 60,20"
-    },
-    {
-      "text": "Das Herz kennt sein eigen Leid, und in seine Freude kann sich kein Fremder mengen.",
-      "reference": "Sprüche 14,10"
-    },
-    {
-      "text": "Der HERR ist gerecht und hat Gerechtigkeit lieb; die Frommen werden schauen sein Angesicht.",
-      "reference": "Psalm 11,7"
-    },
-    {
-      "text": "Jesus aber sah sie an und sprach zu ihnen: Bei den Menschen ist es unmöglich; aber bei Gott sind alle Dinge möglich.",
-      "reference": "Matthäus 19,26"
-    },
-    {
-      "text": "Denn du bist meine Zuversicht, Herr HERR, meine Hoffnung von meiner Jugend an.",
-      "reference": "Psalm 71,5"
-    },
-    {
-      "text": "Die Seele, die da reichlich segnet, wird gelabt; wer reichlich tränkt, der wird auch getränkt werden.",
-      "reference": "Sprüche 11,25"
-    },
-    {
-      "text": "Wer einen Narren zeugt, der hat Grämen; und eines Narren Vater hat keine Freude.",
-      "reference": "Sprüche 17,21"
-    },
-    {
-      "text": "Du bist mein Schirm und Schild; ich hoffe auf dein Wort.",
-      "reference": "Psalm 119,114"
-    },
-    {
-      "text": "HERR, mein Gott, richte mich nach deiner Gerechtigkeit, daß sie sich über mich nicht freuen.",
-      "reference": "Psalm 35,24"
-    },
-    {
-      "text": "Gott wird hören und sie demütigen, der allewege bleibt. (Sela.) Denn sie werden nicht anders und fürchten Gott nicht.",
-      "reference": "Psalm 55,19"
-    },
-    {
-      "text": "Das Volk das im Finstern wandelt, sieht ein großes Licht; und über die da wohnen im finstern Lande, scheint es hell.",
-      "reference": "Jesaja 9,2"
-    },
-    {
-      "text": "Meine Seele soll sich rühmen des HERRN, daß es die Elenden hören und sich freuen.",
-      "reference": "Psalm 34,2"
-    },
-    {
-      "text": "Ich fürchte mich nicht vor viel Tausenden, die sich umher gegen mich legen.",
-      "reference": "Psalm 3,6"
-    },
-    {
-      "text": "Wer klug wird, liebt sein Leben; und der Verständige findet Gutes.",
-      "reference": "Sprüche 19,8"
-    },
-    {
-      "text": "Tut die Tore auf, daß hereingehe das gerechte Volk, das den Glauben bewahrt!",
-      "reference": "Jesaja 26,2"
-    },
-    {
-      "text": "Laßt fröhlich sein und miteinander rühmen das Wüste zu Jerusalem; denn der HERR hat sein Volk getröstet und Jerusalem gelöst.",
-      "reference": "Jesaja 52,9"
-    },
-    {
-      "text": "Breite deine Güte über die, die dich kennen, und deine Gerechtigkeit über die Frommen.",
-      "reference": "Psalm 36,10"
-    },
-    {
-      "text": "Mein Mund soll verkündigen deine Gerechtigkeit, täglich deine Wohltaten, die ich nicht alle zählen kann.",
-      "reference": "Psalm 71,15"
-    },
-    {
-      "text": "Ich aber bin elend, und mir ist wehe. Gott, deine Hilfe schütze mich!",
-      "reference": "Psalm 69,29"
-    },
-    {
-      "text": "fürchte dich nicht, ich bin mit dir; weiche nicht, denn ich bin dein Gott; ich stärke dich, ich helfe dir auch, ich erhalte dich durch die rechte Hand meiner Gerechtigkeit.",
-      "reference": "Jesaja 41,10"
-    },
-    {
-      "text": "Gott ist ja mein König von alters her, der alle Hilfe tut, die auf Erden geschieht.",
-      "reference": "Psalm 74,12"
-    },
-    {
-      "text": "HERR, wie sind deine Werke so groß und viel! Du hast sie alle weislich geordnet, und die Erde ist voll deiner Güter.",
-      "reference": "Psalm 104,24"
-    },
-    {
-      "text": "Ihr vom Hause Levi, lobet den HERRN! Die ihr den HERRN fürchtet, lobet den HERRN!",
-      "reference": "Psalm 135,20"
-    },
-    {
-      "text": "und ein jeglicher sehe nicht auf das Seine, sondern auch auf das, was des andern ist.",
-      "reference": "Philipper 2,4"
-    },
-    {
-      "text": "Der HERR hat Gefallen an denen, die ihn fürchten, die auf seine Güte hoffen.",
-      "reference": "Psalm 147,11"
-    },
-    {
-      "text": "Die Ungnade des Königs ist wie das Brüllen eines jungen Löwen; aber seine Gnade ist wie der Tau auf dem Grase.",
-      "reference": "Sprüche 19,12"
-    },
-    {
-      "text": "Du gibst mir den Schild deines Heils, und deine Rechte stärkt mich; und wenn du mich demütigst, machst du mich groß.",
-      "reference": "Psalm 18,35"
-    },
-    {
-      "text": "Und der König wird antworten und sagen zu ihnen: Wahrlich ich sage euch: Was ihr getan habt einem unter diesen meinen geringsten Brüdern, das habt ihr mir getan.",
-      "reference": "Matthäus 25,40"
-    },
-    {
-      "text": "Der Engel des HERRN lagert sich um die her, so ihn fürchten, und hilft ihnen aus.",
-      "reference": "Psalm 34,7"
-    },
-    {
-      "text": "Wer gern in Freuden lebt, dem wird's mangeln; und wer Wein und Öl liebt, wird nicht reich.",
-      "reference": "Sprüche 21,17"
-    },
-    {
-      "text": "Du tust mir kund den Weg zum Leben; vor dir ist Freude die Fülle und liebliches Wesen zu deiner Rechten ewiglich.",
-      "reference": "Psalm 16,11"
-    },
-    {
-      "text": "Ich bin geachtet gleich denen, die in die Grube fahren; ich bin ein Mann, der keine Hilfe hat.",
-      "reference": "Psalm 88,4"
-    },
-    {
-      "text": "Der HERR wollte ihnen wohl um seiner Gerechtigkeit willen, daß er das Gesetz herrlich und groß mache.",
-      "reference": "Jesaja 42,21"
-    },
-    {
-      "text": "Die Frucht des Gerechten ist ein Baum des Lebens, und ein Weiser gewinnt die Herzen.",
-      "reference": "Sprüche 11,30"
-    },
-    {
-      "text": "Darum ist das Recht fern von uns, und wir erlangen die Gerechtigkeit nicht. Wir harren aufs Licht, siehe, so wird's finster, auf den Schein, siehe, so wandeln wir im Dunkeln.",
-      "reference": "Jesaja 59,9"
-    },
-    {
-      "text": "HERR, hilf mir, so wollen wir meine Lieder singen, solange wir leben, im Hause des HERRN!",
-      "reference": "Jesaja 38,20"
-    },
-    {
-      "text": "Du erfreuest mein Herz, ob jene gleich viel Wein und Korn haben.",
-      "reference": "Psalm 4,7"
-    },
-    {
-      "text": "Predigt von den Gerechten, daß sie es gut haben; denn sie werden die Frucht ihrer Werke essen.",
-      "reference": "Jesaja 3,10"
-    },
-    {
-      "text": "Wer sich auf seinen Reichtum verläßt, der wird untergehen; aber die Gerechten werden grünen wie ein Blatt.",
-      "reference": "Sprüche 11,28"
-    },
-    {
-      "text": "Von allen Seiten umgibst du mich und hältst deine Hand über mir.",
-      "reference": "Psalm 139,5"
-    },
-    {
-      "text": "Ich aber will schauen dein Antlitz in Gerechtigkeit; ich will satt werden, wenn ich erwache, an deinem Bilde.",
-      "reference": "Psalm 17,15"
-    },
-    {
-      "text": "Dein Born sei gesegnet, und freue dich des Weibes deiner Jugend.",
-      "reference": "Sprüche 5,18"
-    },
-    {
-      "text": "Ein fröhlich Herz macht ein fröhlich Angesicht; aber wenn das Herz bekümmert ist, so fällt auch der Mut.",
-      "reference": "Sprüche 15,13"
-    },
-    {
-      "text": "Bleibet in mir und ich in euch. Gleichwie die Rebe kann keine Frucht bringen von ihr selber, sie bleibe denn am Weinstock, also auch ihr nicht, ihr bleibet denn in mir.",
-      "reference": "Johannes 15,4"
-    },
-    {
-      "text": "Die Hoffnung, die sich verzieht, ängstet das Herz; wenn's aber kommt, was man begehrt, das ist wie ein Baum des Lebens.",
-      "reference": "Sprüche 13,12"
-    },
-    {
-      "text": "Selig ist der Knecht, wenn sein Herr kommt und findet ihn also tun.",
-      "reference": "Matthäus 24,46"
-    },
-    {
-      "text": "Ein Wort geredet zu seiner Zeit, ist wie goldene Äpfel auf silbernen Schalen.",
-      "reference": "Sprüche 25,11"
-    },
-    {
-      "text": "Der Vater hat den Sohn lieb und hat ihm alles in seine Hand gegeben.",
-      "reference": "Johannes 3,35"
-    },
-    {
-      "text": "Die mit Tränen säen, werden mit Freuden ernten.",
-      "reference": "Psalm 126,5"
-    },
-    {
-      "text": "Ich bin gekommen, daß sie das Leben und volle Genüge haben sollen.",
-      "reference": "Johannes 10,11"
-    },
-    {
-      "text": "Ich hoffe aber darauf, daß du so gnädig bist; mein Herz freut sich, daß du so gerne hilfst.",
-      "reference": "Psalm 13,5"
-    },
-    {
-      "text": "Ich recke meine Hand aus den ganzen Tag zu einem ungehorsamen Volk, das seinen Gedanken nachwandelt auf einem Wege, der nicht gut ist.",
-      "reference": "Jesaja 65,2"
-    },
-    {
-      "text": "Harre des HERRN! Sei getrost und unverzagt und harre des HERRN!",
-      "reference": "Psalm 27,14"
-    },
-    {
-      "text": "Ich habe meine Geheiligten geboten und meine Starken gerufen zu meinem Zorn, die fröhlich sind in meiner Herrlichkeit.",
-      "reference": "Jesaja 13,3"
-    },
-    {
-      "text": "Wer seinen Mund bewahrt, der bewahrt sein Leben; wer aber mit seinem Maul herausfährt, der kommt in Schrecken.",
-      "reference": "Sprüche 13,3"
-    },
-    {
-      "text": "Die Übriggebliebenen werden sich bekehren, ja, die Übriggebliebenen in Jakob, zu Gott, dem Starken.",
-      "reference": "Jesaja 10,21"
-    },
-    {
-      "text": "Großen Frieden haben, die dein Gesetz lieben; sie werden nicht straucheln.",
-      "reference": "Psalm 119,165"
-    },
-    {
-      "text": "Der HERR ist meine Stärke; er ist die Stärke, die seinem Gesalbten hilft.",
-      "reference": "Psalm 28,8"
-    },
-    {
-      "text": "Aber das ist meine Freude, daß ich mich zu Gott halte und meine Zuversicht setzte auf den Herrn HERRN, daß ich verkündige all dein Tun.",
-      "reference": "Psalm 73,28"
-    },
-    {
-      "text": "Eine richtige Antwort ist wie ein lieblicher Kuß.",
-      "reference": "Sprüche 24,26"
-    },
-    {
-      "text": "Selig sind, die da Leid tragen; denn sie sollen getröstet werden.",
-      "reference": "Matthäus 5,4"
-    },
-    {
-      "text": "Wer eine Sache klüglich führt, der findet Glück; und wohl dem, der sich auf den HERRN verläßt!",
-      "reference": "Sprüche 16,20"
-    },
-    {
-      "text": "Der Vater eines Gerechten freut sich; und wer einen Weisen gezeugt hat, ist fröhlich darüber.",
-      "reference": "Sprüche 23,24"
-    },
-    {
-      "text": "Der Frommen Weg meidet das Arge; und wer seinen Weg bewahrt, der erhält sein Leben.",
-      "reference": "Sprüche 16,17"
-    },
-    {
-      "text": "Laß die Berge den Frieden bringen unter das Volk und die Hügel die Gerechtigkeit.",
-      "reference": "Psalm 72,3"
-    },
-    {
-      "text": "Die Gerechten erben das Land und bleiben ewiglich darin.",
-      "reference": "Psalm 37,29"
-    },
-    {
-      "text": "Das ist mir lieb, daß der HERR meine Stimme und mein Flehen hört.",
-      "reference": "Psalm 116,1"
-    },
-    {
-      "text": "Ich bin der Weinstock, ihr seid die Reben. Wer in mir bleibt und ich in ihm, der bringt viele Frucht, denn ohne mich könnt ihr nichts tun.",
-      "reference": "Johannes 15,5"
-    },
-    {
-      "text": "Die Wege des HERRN sind eitel Güte und Wahrheit denen, die seinen Bund und seine Zeugnisse halten.",
-      "reference": "Psalm 25,10"
-    },
-    {
-      "text": "Und soll geschehen, ehe sie rufen, will ich antworten; wenn sie noch reden, will ich hören.",
-      "reference": "Jesaja 65,24"
-    },
-    {
-      "text": "Des Menschen Herz erdenkt sich seinen Weg; aber der HERR allein gibt, daß er fortgehe.",
-      "reference": "Sprüche 16,9"
-    },
-    {
-      "text": "Denn es sollen wohl Berge weichen und Hügel hinfallen; aber meine Gnade soll nicht von dir weichen, und der Bund meines Friedens soll nicht hinfallen, spricht der HERR, dein Erbarmer.",
-      "reference": "Jesaja 54,10"
-    },
-    {
-      "text": "Ein Verständiger wird gerühmt für einen weisen Mann, und liebliche Reden lehren wohl.",
-      "reference": "Sprüche 16,21"
-    },
-    {
-      "text": "Wer Vater oder Mutter mehr liebt denn mich, der ist mein nicht wert; und wer Sohn oder Tochter mehr liebt denn mich, der ist mein nicht wert.",
-      "reference": "Matthäus 10,37"
-    },
-    {
-      "text": "Der Weisheit Anfang ist des HERRN Furcht, und den Heiligen erkennen ist Verstand.",
-      "reference": "Sprüche 9,10"
-    },
-    {
-      "text": "Vor Menschen sich scheuen bringt zu Fall; wer sich aber auf den HERRN verläßt, wird beschützt.",
-      "reference": "Sprüche 29,25"
-    },
-    {
-      "text": "Danket dem Gott aller Götter, denn seine Güte währet ewiglich.",
-      "reference": "Psalm 136,2"
-    },
-    {
-      "text": "Der Weisen Zunge macht die Lehre lieblich; der Narren Mund speit eitel Narrheit.",
-      "reference": "Sprüche 15,2"
-    },
-    {
-      "text": "Dies ist der Tag, den der HERR macht; lasset uns freuen und fröhlich darinnen sein.",
-      "reference": "Psalm 118,24"
-    },
-    {
-      "text": "Ich aber bete, HERR, zu dir zur angenehmen Zeit; Gott durch deine große Güte erhöre mich mit deiner treuen Hilfe.",
-      "reference": "Psalm 69,13"
-    },
-    {
-      "text": "Er gibt den Müden Kraft, und Stärke genug dem Unvermögenden.",
-      "reference": "Jesaja 40,29"
-    },
-    {
-      "text": "Wenn mir gleich Leib und Seele verschmachtet, so bist du doch, Gott, allezeit meines Herzens Trost und mein Teil.",
-      "reference": "Psalm 73,26"
-    },
-    {
-      "text": "Wer aber des Nachts wandelt, der stößt sich; denn es ist kein Licht in ihm.",
-      "reference": "Johannes 11,10"
-    },
-    {
-      "text": "Du aber, HERR, wollest deine Barmherzigkeit von mir nicht wenden; laß deine Güte und Treue allewege mich behüten.",
-      "reference": "Psalm 40,11"
-    },
-    {
-      "text": "In ihm war das Leben, und das Leben war das Licht der Menschen.",
-      "reference": "Johannes 1,4"
-    },
-    {
-      "text": "Er heilt, die zerbrochnes Herzens sind, und verbindet ihre Schmerzen.",
-      "reference": "Psalm 147,3"
-    },
-    {
-      "text": "Gleichwie mich mein Vater liebt, also liebe ich euch auch. Bleibet in meiner Liebe!",
-      "reference": "Johannes 15,9"
-    },
-    {
-      "text": "Laß die Inseln vor mir schweigen und die Völker sich stärken! Laß sie herzutreten und nun reden; laßt uns miteinander rechten!",
-      "reference": "Jesaja 41,1"
-    },
-    {
-      "text": "Wohl dem Menschen, der Weisheit findet, und dem Menschen, der Verstand bekommt!",
-      "reference": "Sprüche 3,13"
-    },
-    {
-      "text": "Weil du so wert bist vor meinen Augen geachtet, mußt du auch herrlich sein, und ich habe dich lieb; darum gebe ich Menschen an deine Statt und Völker für deine Seele.",
-      "reference": "Jesaja 43,4"
-    },
-    {
-      "text": "Der HERR ist mit mir, darum fürchte ich mich nicht; was können mir Menschen tun?",
-      "reference": "Psalm 118,6"
-    },
-    {
-      "text": "Jauchzet, ihr Himmel, freue dich, Erde, lobet, ihr Berge, mit Jauchzen; denn der HERR hat sein Volk getröstet und erbarmt sich seiner Elenden.",
-      "reference": "Jesaja 49,13"
-    },
-    {
-      "text": "Denn der HERR ist dein Trotz; der behütet deinen Fuß, daß er nicht gefangen werde.",
-      "reference": "Sprüche 3,26"
-    },
-    {
-      "text": "Ich vermag alles durch den, der mich mächtig macht, Christus.",
-      "reference": "Philipper 4,13"
-    },
-    {
-      "text": "Gott, tröste uns und laß leuchten dein Antlitz; so genesen wir.",
-      "reference": "Psalm 80,3"
-    },
-    {
-      "text": "Du erhältst stets Frieden nach gewisser Zusage; denn man verläßt sich auf dich.",
-      "reference": "Jesaja 26,3"
-    },
-    {
-      "text": "Dein Wesen ist an den glatten Bachsteinen, die sind dein Teil; ihnen schüttest du dein Trankopfer, da du Speisopfer opferst. Sollte ich mich darüber trösten?",
-      "reference": "Jesaja 57,6"
-    },
-    {
-      "text": "Mein Kind, bewahre die Gebote deines Vaters und laß nicht fahren das Gesetz deiner Mutter.",
-      "reference": "Sprüche 6,20"
-    },
-    {
-      "text": "Solches habe ich mit euch geredet, daß ihr in mir Frieden habet. In der Welt habt ihr Angst; aber seid getrost, ich habe die Welt überwunden.",
-      "reference": "Johannes 16,33"
-    },
-    {
-      "text": "Wer den HERRN fürchtet, der hat eine sichere Festung, und seine Kinder werden auch beschirmt.",
-      "reference": "Sprüche 14,26"
-    },
-    {
-      "text": "Ich bin verstummt und still und schweige der Freuden und muß mein Leid in mich fressen.",
-      "reference": "Psalm 39,2"
-    },
-    {
-      "text": "Der HERR hat des Tages verheißen seine Güte, und des Nachts singe ich ihm und bete zu dem Gott meines Lebens.",
-      "reference": "Psalm 42,8"
-    },
-    {
-      "text": "Siehe, Gott ist mein Heil, ich bin sicher und fürchte mich nicht; denn Gott der HERR ist meine Stärke und mein Psalm und ist mein Heil.",
-      "reference": "Jesaja 12,2"
-    },
-    {
-      "text": "Ein barmherziger Mann tut sich selber Gutes; aber ein unbarmherziger betrübt auch sein eigen Fleisch.",
-      "reference": "Sprüche 11,17"
-    },
-    {
-      "text": "Das Herz erfreut sich an Salbe und Räuchwerk; aber ein Freund ist lieblich um Rats willen der Seele.",
-      "reference": "Sprüche 27,9"
-    },
-    {
-      "text": "Ein neu Gebot gebe ich euch, daß ihr euch untereinander liebet, wie ich euch geliebt habe, auf daß auch ihr einander liebhabet.",
-      "reference": "Johannes 13,34"
-    },
-    {
-      "text": "Denn du, Herr, bist gut und gnädig, von großer Güte allen, die dich anrufen.",
-      "reference": "Psalm 86,5"
-    },
-    {
-      "text": "In meines Vaters Hause sind viele Wohnungen. Wenn es nicht so wäre, so wollte ich zu euch sagen: Ich gehe hin euch die Stätte zu bereiten.",
-      "reference": "Johannes 14,2"
-    },
-    {
-      "text": "Hoffe auf den HERRN und tue Gutes; bleibe im Lande und nähre dich redlich.",
-      "reference": "Psalm 37,3"
-    },
-    {
-      "text": "HERR, deine Güte reicht, soweit der Himmel ist, und deine Wahrheit, soweit die Wolken gehen.",
-      "reference": "Psalm 36,5"
-    },
-    {
-      "text": "Ein Freund liebt allezeit, und als ein Bruder wird er in Not erfunden.",
-      "reference": "Sprüche 17,17"
-    },
-    {
-      "text": "Danket dem HERRN; denn er ist freundlich, und seine Güte währet ewiglich.",
-      "reference": "Psalm 107,1"
-    },
-    {
-      "text": "Das Haus Aaron hoffe auf den HERRN! Der ist ihre Hilfe und Schild.",
-      "reference": "Psalm 115,10"
-    },
-    {
-      "text": "Und nun spricht der HERR, der dich geschaffen hat, Jakob, und dich gemacht hat, Israel: Fürchte dich nicht, denn ich habe dich erlöst; ich habe dich bei deinem Namen gerufen; du bist mein!",
-      "reference": "Jesaja 43,1"
-    },
-    {
-      "text": "Ich will predigen die Gerechtigkeit in der großen Gemeinde; siehe, ich will mir meinen Mund nicht stopfen lassen, HERR, das weißt du.",
-      "reference": "Psalm 40,9"
-    },
-    {
-      "text": "Siehe, ihre Helden schreien draußen, die Boten des Friedens weinen bitterlich.",
-      "reference": "Jesaja 33,7"
-    },
-    {
-      "text": "Gerechtigkeit wird der Gurt seiner Lenden sein und der Glaube der Gurt seiner Hüften.",
-      "reference": "Jesaja 11,5"
-    },
-    {
-      "text": "Habe Deine Lust am HERRN; der wird dir geben, was dein Herz wünschet.",
-      "reference": "Psalm 37,4"
-    },
-    {
-      "text": "HERR, erzeige uns deine Gnade und hilf uns!",
-      "reference": "Psalm 85,7"
-    },
-    {
-      "text": "sondern gedenke an ihn in allen deinen Wegen, so wird er dich recht führen.",
-      "reference": "Sprüche 3,6"
-    },
-    {
-      "text": "Gott Zebaoth, tröste uns, laß leuchten dein Antlitz; so genesen wir.",
-      "reference": "Psalm 80,7"
-    },
-    {
-      "text": "Mein Mund soll von Weisheit reden und mein Herz von Verstand sagen.",
-      "reference": "Psalm 49,3"
-    },
-    {
-      "text": "Das war das wahrhaftige Licht, welches alle Menschen erleuchtet, die in diese Welt kommen.",
-      "reference": "Johannes 1,9"
-    },
-    {
-      "text": "Der HERR ist gnädig und gerecht, und unser Gott ist barmherzig.",
-      "reference": "Psalm 116,5"
-    },
-    {
-      "text": "Laß sich freuen alle, die auf dich trauen; ewiglich laß sie rühmen, denn du beschirmst sie; fröhlich laß sein in dir, die deinen Namen lieben.",
-      "reference": "Psalm 5,11"
-    },
-    {
-      "text": "Du machst des Volkes viel; du machst groß seine Freude. Vor dir wird man sich freuen, wie man sich freut in der Ernte, wie man fröhlich ist, wenn man Beute austeilt.",
-      "reference": "Jesaja 9,3"
-    },
-    {
-      "text": "Laß sich deinen Vater und deine Mutter freuen, und fröhlich sein, die dich geboren hat.",
-      "reference": "Sprüche 23,25"
-    },
-    {
-      "text": "Jesus aber sprach zu ihnen: Ich bin das Brot des Lebens. Wer zu mir kommt, den wird nicht hungern; und wer an mich glaubt, den wird nimmermehr dürsten.",
+      "text": "Da sagte Jesus zu ihnen: »Ich bin das Brot des Lebens! Wer zu mir kommt, den wird nimmermehr hungern, und wer an mich glaubt, den wird niemals wieder dürsten.",
       "reference": "Johannes 6,35"
     },
     {
-      "text": "Es ist einem Manne eine Freude, wenn er richtig antwortet; und ein Wort zu seiner Zeit ist sehr lieblich.",
-      "reference": "Sprüche 15,23"
+      "text": "Abraham hat da, wo nichts zu hoffen war, doch hoffnungsvoll am Glauben festgehalten, damit er der Vater vieler Völker würde nach der Verheißung: »So (unzählbar) soll deine Nachkommenschaft sein«;",
+      "reference": "Römer 4,18"
     },
     {
-      "text": "und jage nach dem vorgesteckten Ziel, nach dem Kleinod, welches vorhält die himmlische Berufung Gottes in Christo Jesu.",
-      "reference": "Philipper 3,14"
+      "text": "Laß jubeln und deiner sich freuen alle, die dich suchen; laß alle, die nach deinem Heil verlangen, immerdar bekennen: »Groß ist der HERR.«",
+      "reference": "Psalm 40,17"
     },
     {
-      "text": "Gott, wir gedenken deiner Güte in deinem Tempel.",
-      "reference": "Psalm 48,9"
+      "text": "– denn wir wandeln (hier noch) in (der Welt des) Glaubens, nicht schon in (der Welt des) Schauens –,",
+      "reference": "2. Korinther 5,7"
     },
     {
-      "text": "Das ist des Klugen Weisheit, daß er auf seinen Weg merkt; aber der Narren Torheit ist eitel Trug.",
-      "reference": "Sprüche 14,8"
+      "text": "Ist’s möglich, soviel an euch liegt, so lebt mit allen Menschen in Frieden!",
+      "reference": "Römer 12,18"
     },
     {
-      "text": "Ich komme in der Frühe und schreie; auf dein Wort hoffe ich.",
-      "reference": "Psalm 119,147"
+      "text": "sagt in jeder Lage Dank, denn so will es Gott von euch in Christus Jesus.",
+      "reference": "1. Thessalonicher 5,18"
     },
     {
-      "text": "Selig sind, die da hungert und dürstet nach der Gerechtigkeit; denn sie sollen satt werden.",
-      "reference": "Matthäus 5,6"
+      "text": "Versage keinem Bedürftigen eine Wohltat, wenn es in deiner Macht steht, sie zu erweisen.",
+      "reference": "Sprüche 3,27"
     },
     {
-      "text": "Ich bin die Tür; so jemand durch mich eingeht, der wird selig werden und wird ein und aus gehen und Weide finden.",
-      "reference": "Johannes 10,9"
+      "text": "Daß deine Geliebten gerettet werden, hilf uns mit deiner Rechten, erhöre uns!",
+      "reference": "Psalm 60,7"
     },
     {
-      "text": "Ein gütiges Herz ist des Leibes Leben; aber Neid ist Eiter in den Gebeinen.",
-      "reference": "Sprüche 14,30"
+      "text": "So wirst du, HERR, mir dein Erbarmen nicht versagen; deine Gnade und Wahrheit werden stets mich behüten.",
+      "reference": "Psalm 40,12"
     },
     {
-      "text": "Das Gras verdorrt, die Blume verwelkt; denn des HERRN Geist bläst darein. Ja, das Volk ist das Gras.",
-      "reference": "Jesaja 40,7"
+      "text": "Die, bei denen der Same auf den felsigen Boden fiel, sind solche, die das Wort, wenn sie es gehört haben, mit Freuden annehmen; doch es kann nicht Wurzel bei ihnen schlagen: eine Zeitlang glauben sie wohl, aber zur Zeit der Versuchung fallen sie ab.",
+      "reference": "Lukas 8,13"
     },
     {
-      "text": "Das ward ihm gerechnet zur Gerechtigkeit für und für ewiglich.",
-      "reference": "Psalm 106,31"
+      "text": "Und laßt uns auch aufeinander achtgeben, um uns gegenseitig zur Liebe und zu guten Werken anzuregen,",
+      "reference": "Hebräer 10,24"
     },
     {
-      "text": "Man klagt um den Wein auf den Gassen, daß alle Freude weg ist, alle Wonne des Landes dahin ist.",
-      "reference": "Jesaja 24,11"
+      "text": "Prüfet alles, behaltet das Gute;",
+      "reference": "1. Thessalonicher 5,21"
     },
     {
-      "text": "Der Vater aber hat den Sohn lieb und zeigt ihm alles, was er tut, und wird ihm noch größere Werke zeigen, daß ihr euch verwundern werdet.",
-      "reference": "Johannes 5,20"
+      "text": "denn der HERR wird deine Zuversicht sein und deinen Fuß vor dem Fallstrick behüten.",
+      "reference": "Sprüche 3,26"
     },
     {
-      "text": "Verlaß sie nicht, so wird sie dich bewahren; liebe sie, so wird sie dich behüten.",
-      "reference": "Sprüche 4,6"
+      "text": "Freuet euch mit den Fröhlichen und weinet mit den Weinenden!",
+      "reference": "Römer 12,15"
     },
     {
-      "text": "Ein guter Ruf ist köstlicher denn großer Reichtum, und Gunst besser denn Silber und Gold.",
-      "reference": "Sprüche 22,1"
+      "text": "Wisset, meine geliebten Brüder: es sei [aber] jeder Mensch schnell (bereit) zum Hören, langsam zum Reden und langsam zum Zorn;",
+      "reference": "Jakobus 1,19"
     },
     {
-      "text": "Laß mich frühe hören deine Gnade; denn ich hoffe auf dich. Tue mir kund den Weg, darauf ich gehen soll; denn mich verlangt nach dir.",
-      "reference": "Psalm 143,8"
+      "text": "Deine Gerechtigkeit habe ich nicht verborgen in meinem Herzen, von deiner Treue und Hilfe laut geredet; ich habe deine Gnade und Wahrheit nicht verschwiegen, vor der großen Versammlung.",
+      "reference": "Psalm 40,11"
     },
     {
-      "text": "Ich liege und schlafe ganz mit Frieden; denn allein du, HERR, hilfst mir, daß ich sicher wohne.",
-      "reference": "Psalm 4,8"
+      "text": "Seid allezeit fröhlich,",
+      "reference": "1. Thessalonicher 5,16"
     },
     {
-      "text": "Der HERR hat Großes an uns getan; des sind wir fröhlich.",
-      "reference": "Psalm 126,3"
+      "text": "Es sollte eben der dem Abraham verheißene Segen den Heiden in Christus Jesus zuteil werden, damit wir das Verheißungsgut des Geistes durch den Glauben empfangen könnten.",
+      "reference": "Galater 3,14"
     },
     {
-      "text": "Ein jeglicher ist zuerst in seiner Sache gerecht; kommt aber sein Nächster hinzu, so findet sich's.",
-      "reference": "Sprüche 18,17"
+      "text": "Mache dich auf, werde licht! Denn dein Licht ist gekommen, und die Herrlichkeit des HERRN ist über dir erstrahlt.",
+      "reference": "Jesaja 60,1"
     },
     {
-      "text": "Geht zu seinen Toren ein mit Danken, zu seinen Vorhöfen mit Loben; danket ihm, lobet seinen Namen!",
-      "reference": "Psalm 100,4"
+      "text": "betet ohne Unterlaß,",
+      "reference": "1. Thessalonicher 5,17"
     },
     {
-      "text": "Sie ist lieblich wie die Hinde und holdselig wie ein Reh. Laß dich ihre Liebe allezeit sättigen und ergötze dich allewege in ihrer Liebe.",
-      "reference": "Sprüche 5,19"
+      "text": "Sodann ermahnen wir euch, liebe Brüder: Weiset die Unordentlichen zurecht, ermutigt die Verzagten, nehmt euch der Schwachen an, verfahrt mit Geduld gegen alle!",
+      "reference": "1. Thessalonicher 5,14"
     },
     {
-      "text": "Du machst mich sehr groß und tröstest mich wieder.",
-      "reference": "Psalm 71,21"
+      "text": "Doch nein, ich vertraue deiner Gnade: jauchzen soll mein Herz ob deiner Hilfe! Singen will ich dem HERRN, daß er Gutes an mir getan!",
+      "reference": "Psalm 13,6"
     },
     {
-      "text": "Wer den HERRN fürchtet, der wandelt auf rechter Bahn; wer ihn aber verachtet, der geht auf Abwegen.",
-      "reference": "Sprüche 14,2"
+      "text": "Du wirst des Jubels viel schaffen, wirst die Freude groß werden lassen; sie werden sich vor dir freuen, wie man sich in der Ernte freut, wie man jubelt beim Beuteverteilen.",
+      "reference": "Jesaja 9,2"
     },
     {
-      "text": "Der HERR ist meine Macht und mein Psalm und ist mein Heil.",
-      "reference": "Psalm 118,14"
+      "text": "Jesus aber antwortete: »Was bei Menschen unmöglich ist, das ist bei Gott möglich.«",
+      "reference": "Lukas 18,27"
     },
     {
-      "text": "Selig sind die Friedfertigen; denn sie werden Gottes Kinder heißen.",
-      "reference": "Matthäus 5,9"
+      "text": "lauter gute Gabe und lauter vollkommenes Geschenk kommt von oben herab, vom Vater der Himmelslichter, bei dem keine Veränderung und keine zeitweilige Verdunkelung stattfindet.",
+      "reference": "Jakobus 1,17"
     },
     {
-      "text": "Stärkt die müden Hände und erquickt die strauchelnden Kniee!",
-      "reference": "Jesaja 35,3"
+      "text": "Laßt uns am Bekenntnis der Hoffnung unerschütterlich festhalten; denn treu ist der, welcher die Verheißung gegeben hat.",
+      "reference": "Hebräer 10,23"
     },
     {
-      "text": "Kommt nun, ihr vom Hause Jakob, laßt uns wandeln im Lichte des HERRN!",
-      "reference": "Jesaja 2,5"
+      "text": "Ein fröhliches Herz macht das Angesicht heiter, aber bei Bekümmernis des Herzens ist der Mut gebrochen. –",
+      "reference": "Sprüche 15,13"
     },
     {
-      "text": "Der Mund des Gerechten redet die Weisheit, und seine Zunge lehrt das Recht.",
-      "reference": "Psalm 37,30"
+      "text": "Christus dagegen (ist treu) als »Sohn« über »sein eigenes Haus«, und sein Haus sind wir, vorausgesetzt, daß wir an der freudigen Zuversicht und an der Hoffnung, deren wir uns rühmen, bis ans Ende unerschütterlich festhalten.",
+      "reference": "Hebräer 3,6"
     },
     {
-      "text": "Ihr Gerechten freuet euch des HERRN und danket ihm und preiset seine Heiligkeit!",
-      "reference": "Psalm 97,12"
+      "text": "Seid fröhlich in der Hoffnung, geduldig im Leiden, beharrlich im Gebet!",
+      "reference": "Römer 12,12"
     },
     {
-      "text": "Deine Gerechtigkeit steht wie die Berge Gottes und dein Recht wie eine große Tiefe. HERR, du hilfst Menschen und Vieh.",
-      "reference": "Psalm 36,6"
+      "text": "Darum ermahnt euch gegenseitig und erbauet euch einer den andern, wie ihr das ja auch tut!",
+      "reference": "1. Thessalonicher 5,11"
     },
     {
-      "text": "Wer seinen Mund und seine Zunge bewahrt, der bewahrt seine Seele vor Angst.",
-      "reference": "Sprüche 21,23"
-    },
-    {
-      "text": "So höret nun ihr, die ihr ferne seid, was ich getan habe; und die ihr nahe seid, merket meine Stärke.",
-      "reference": "Jesaja 33,13"
-    },
-    {
-      "text": "Ich habe mein Angesicht im Augenblick des Zorns ein wenig vor dir verborgen, aber mit ewiger Gnade will ich mich dein erbarmen, spricht der HERR, dein Erlöser.",
-      "reference": "Jesaja 54,8"
-    },
-    {
-      "text": "Die Gerechten aber müssen sich freuen und fröhlich sein vor Gott und von Herzen sich freuen.",
-      "reference": "Psalm 68,3"
-    },
-    {
-      "text": "Ich gehe einher in der Kraft des Herrn HERRN; ich preise deine Gerechtigkeit allein.",
-      "reference": "Psalm 71,16"
-    },
-    {
-      "text": "Meine Seele hanget dir an; deine rechte Hand erhält mich.",
-      "reference": "Psalm 63,8"
-    },
-    {
-      "text": "Denn ich bin der HERR, dein Gott, der deine rechte Hand stärkt und zu dir spricht: Fürchte dich nicht, ich helfe dir!",
-      "reference": "Jesaja 41,13"
-    },
-    {
-      "text": "Das wäre meines Herzens Freude und Wonne, wenn ich dich mit fröhlichem Munde loben sollte.",
-      "reference": "Psalm 63,5"
-    },
-    {
-      "text": "Denn der HERR ist freundlich, und seine Gnade währet ewig und seine Wahrheit für und für.",
-      "reference": "Psalm 100,5"
-    },
-    {
-      "text": "Wer geduldig ist, der ist weise; wer aber ungeduldig ist, der offenbart seine Torheit.",
-      "reference": "Sprüche 14,29"
-    },
-    {
-      "text": "Trachtet am ersten nach dem Reich Gottes und nach seiner Gerechtigkeit, so wird euch solches alles zufallen.",
-      "reference": "Matthäus 6,33"
-    },
-    {
-      "text": "Sorge im Herzen kränkt, aber ein freundliches Wort erfreut.",
-      "reference": "Sprüche 12,25"
-    },
-    {
-      "text": "Die Gerechtigkeit der Frommen wird sie erretten; aber die Verächter werden gefangen in ihrer Bosheit.",
-      "reference": "Sprüche 11,6"
-    },
-    {
-      "text": "Die Furcht des HERRN ist rein und bleibt ewiglich; die Rechte des HERRN sind wahrhaftig, allesamt gerecht.",
-      "reference": "Psalm 19,9"
-    },
-    {
-      "text": "Sei nun wieder zufrieden, meine Seele; denn der HERR tut dir Gutes.",
-      "reference": "Psalm 116,7"
-    },
-    {
-      "text": "Meine Hilfe kommt von dem HERRN, der Himmel und Erde gemacht hat.",
-      "reference": "Psalm 121,2"
-    },
-    {
-      "text": "Wer von sich selbst redet, der sucht seine eigene Ehre; wer aber sucht die Ehre des, der ihn gesandt hat, der ist wahrhaftig, und ist keine Ungerechtigkeit an ihm.",
-      "reference": "Johannes 7,18"
-    },
-    {
-      "text": "Bittet, so wird euch gegeben; suchet, so werdet ihr finden; klopfet an, so wird euch aufgetan.",
-      "reference": "Matthäus 7,7"
-    },
-    {
-      "text": "Solches rede ich zu euch, auf daß meine Freude in euch bleibe und eure Freude vollkommen werde.",
-      "reference": "Johannes 15,11"
-    },
-    {
-      "text": "Der HERR behütet die Einfältigen; wenn ich unterliege, so hilft er mir.",
-      "reference": "Psalm 116,6"
-    },
-    {
-      "text": "Die Furcht des HERRN ist der Weisheit Anfang. Das ist eine feine Klugheit, wer darnach tut, des Lob bleibt ewiglich.",
-      "reference": "Psalm 111,10"
-    },
-    {
-      "text": "Selig sind die Barmherzigen; denn sie werden Barmherzigkeit erlangen.",
-      "reference": "Matthäus 5,7"
-    },
-    {
-      "text": "Bei Gott ist mein Heil, meine Ehre, der Fels meiner Stärke; meine Zuversicht ist auf Gott.",
-      "reference": "Psalm 62,7"
-    },
-    {
-      "text": "Die den HERRN fürchten, hoffen auf den HERRN! Der ist ihre Hilfe und Schild.",
-      "reference": "Psalm 115,11"
-    },
-    {
-      "text": "Wer aber die Wahrheit tut, der kommt an das Licht, daß seine Werke offenbar werden; denn sie sind in Gott getan.",
-      "reference": "Johannes 3,21"
-    },
-    {
-      "text": "Mein Gott, betrübt ist meine Seele in mir; darum gedenke ich an dich im Lande am Jordan und Hermonim, auf dem kleinen Berg.",
-      "reference": "Psalm 42,6"
-    },
-    {
-      "text": "Mein Kind, laß sie nicht von deinen Augen weichen, so wirst du glückselig und klug werden.",
-      "reference": "Sprüche 3,21"
-    },
-    {
-      "text": "Freuet euch des HERRN, ihr Gerechten; die Frommen sollen ihn preisen.",
-      "reference": "Psalm 33,1"
-    },
-    {
-      "text": "Das ist mein Trost in meinem Elend; denn dein Wort erquickt mich.",
-      "reference": "Psalm 119,50"
-    },
-    {
-      "text": "Jesus spricht zu ihm: Ich bin der Weg und die Wahrheit und das Leben; niemand kommt zum Vater denn durch mich.",
-      "reference": "Johannes 14,6"
-    },
-    {
-      "text": "Laß leuchten dein Antlitz über deinen Knecht; hilf mir durch deine Güte!",
-      "reference": "Psalm 31,16"
-    },
-    {
-      "text": "Und er sprach zu seinen Jüngern: Euer Herz erschrecke nicht! Glaubet an Gott und glaubet an mich!",
-      "reference": "Johannes 14,1"
-    },
-    {
-      "text": "Du aber, Herr, Gott, bist barmherzig und gnädig, geduldig und von großer Güte und Treue.",
-      "reference": "Psalm 86,15"
-    },
-    {
-      "text": "Das andere aber ist ihm gleich; Du sollst deinen Nächsten lieben wie dich selbst.",
-      "reference": "Matthäus 22,39"
-    },
-    {
-      "text": "und lehret sie halten alles, was ich euch befohlen habe. Und siehe, ich bin bei euch alle Tage bis an der Welt Ende.",
-      "reference": "Matthäus 28,20"
-    },
-    {
-      "text": "HERR, mein Fels, meine Burg, mein Erretter, mein Gott, mein Hort, auf den ich traue, mein Schild und Horn meines Heils und mein Schutz!",
-      "reference": "Psalm 18,2"
-    },
-    {
-      "text": "Er wird mich erhalten bei meiner Kraft und wird mir Frieden schaffen; Frieden wird er mir dennoch schaffen.",
-      "reference": "Jesaja 27,5"
-    },
-    {
-      "text": "Wenn ich dich anrufe, so erhörst du mich und gibst meiner Seele große Kraft.",
-      "reference": "Psalm 138,3"
-    },
-    {
-      "text": "Die Sonne soll nicht mehr des Tages dir scheinen, und der Glanz des Mondes soll dir nicht leuchten; sondern der HERR wird dein ewiges Licht und dein Gott wird dein Preis sein.",
-      "reference": "Jesaja 60,19"
-    },
-    {
-      "text": "Ich habe dich einen kleinen Augenblick verlassen; aber mit großer Barmherzigkeit will ich dich sammeln.",
-      "reference": "Jesaja 54,7"
-    },
-    {
-      "text": "also soll das Wort, so aus meinem Munde geht, auch sein. Es soll nicht wieder zu mir leer kommen, sondern tun, was mir gefällt, und soll ihm gelingen, dazu ich's sende.",
-      "reference": "Jesaja 55,11"
-    },
-    {
-      "text": "Eitel Wüstung ist in der Stadt geblieben, und die Tore stehen öde.",
-      "reference": "Jesaja 24,12"
-    },
-    {
-      "text": "Ich bin gekommen in die Welt ein Licht, auf daß, wer an mich glaubt, nicht in der Finsternis bleibe.",
-      "reference": "Johannes 12,46"
-    },
-    {
-      "text": "Der HERR ist nahe allen, die ihn anrufen, allen, die ihn mit Ernst anrufen.",
-      "reference": "Psalm 145,18"
-    },
-    {
-      "text": "Der HERR ist groß und von großer Kraft; und ist unbegreiflich, wie er regiert.",
-      "reference": "Psalm 147,5"
-    },
-    {
-      "text": "Mein Herz bebt, meine Kraft hat mich verlassen, und das Licht meiner Augen ist nicht bei mir.",
-      "reference": "Psalm 38,10"
-    },
-    {
-      "text": "Die solche machen, sind ihnen gleich, und alle, die auf sie hoffen.",
-      "reference": "Psalm 115,8"
-    },
-    {
-      "text": "Gottes Wege sind vollkommen; die Reden des HERRN sind durchläutert. Er ist ein Schild allen, die ihm vertrauen.",
-      "reference": "Psalm 18,30"
-    },
-    {
-      "text": "Heilige sie in deiner Wahrheit; dein Wort ist die Wahrheit.",
-      "reference": "Johannes 17,17"
-    },
-    {
-      "text": "Tröste mich wieder mit deiner Hilfe, und mit einem freudigen Geist rüste mich aus.",
-      "reference": "Psalm 51,12"
-    },
-    {
-      "text": "Ein Lied im höhern Chor. Ich hebe meine Augen auf zu den Bergen von welchen mir Hilfe kommt.",
-      "reference": "Psalm 121,1"
-    },
-    {
-      "text": "Denn wo euer Schatz ist, da ist auch euer Herz.",
-      "reference": "Matthäus 6,21"
-    },
-    {
-      "text": "Selig sind, die um Gerechtigkeit willen verfolgt werden; denn das Himmelreich ist ihr.",
-      "reference": "Matthäus 5,10"
-    },
-    {
-      "text": "Alles, was Odem hat, lobe den HERRN! Halleluja!",
-      "reference": "Psalm 150,6"
-    },
-    {
-      "text": "Ich danke dir ewiglich, denn du kannst's wohl machen; ich will harren auf deinen Namen, denn deine Heiligen haben Freude daran.",
-      "reference": "Psalm 52,9"
-    },
-    {
-      "text": "Ich bin jung gewesen und alt geworden und habe noch nie gesehen den Gerechten verlassen oder seinen Samen nach Brot gehen.",
-      "reference": "Psalm 37,25"
-    },
-    {
-      "text": "Wenn dein Wort offenbar wird, so erfreut es und macht klug die Einfältigen.",
-      "reference": "Psalm 119,130"
-    },
-    {
-      "text": "Ich will Gottes Namen rühmen; auf Gott will ich hoffen und mich nicht fürchten; was sollte mir Fleisch tun?",
-      "reference": "Psalm 56,4"
-    },
-    {
-      "text": "Ich will euch trösten, wie einen seine Mutter tröstet; ja, ihr sollt an Jerusalem ergötzt werden.",
-      "reference": "Jesaja 66,13"
-    },
-    {
-      "text": "Die Augen des HERRN behüten guten Rat; aber die Worte des Verächters verkehrt er.",
-      "reference": "Sprüche 22,12"
-    },
-    {
-      "text": "der spricht zu dem HERRN: Meine Zuversicht und meine Burg, mein Gott, auf den ich hoffe.",
-      "reference": "Psalm 91,2"
-    },
-    {
-      "text": "Denn wer da bittet, der empfängt; und wer da sucht, der findet; und wer da anklopft, dem wird aufgetan.",
-      "reference": "Matthäus 7,8"
-    },
-    {
-      "text": "Das Geheimnis des HERRN ist unter denen, die ihn fürchten; und seinen Bund läßt er sie wissen.",
-      "reference": "Psalm 25,14"
-    },
-    {
-      "text": "Lobet den HERRN, denn der HERR ist freundlich; lobsinget seinem Namen, denn er ist lieblich!",
-      "reference": "Psalm 135,3"
-    },
-    {
-      "text": "Denn ihr sollt in Freuden ausziehen und im Frieden geleitet werden. Berge und Hügel sollen vor euch her frohlocken mit Ruhm und alle Bäume auf dem Felde mit den Händen klatschen.",
-      "reference": "Jesaja 55,12"
-    },
-    {
-      "text": "Der HERR wird's für mich vollführen. HERR, deine Güte ist ewig. Das Werk deiner Hände wollest du nicht lassen.",
-      "reference": "Psalm 138,8"
-    },
-    {
-      "text": "Sorget nichts! sondern in allen Dingen lasset eure Bitten im Gebet und Flehen mit Danksagung vor Gott kund werden.",
-      "reference": "Philipper 4,6"
-    },
-    {
-      "text": "Ihr aber sollt Priester des HERRN heißen, und man wird euch Diener unsers Gottes nennen, und ihr werdet der Heiden Güter essen und in ihrer Herrlichkeit euch rühmen.",
-      "reference": "Jesaja 61,6"
-    },
-    {
-      "text": "Ich will euch nicht Waisen lassen; ich komme zu euch.",
-      "reference": "Johannes 14,18"
-    },
-    {
-      "text": "Ein treuer Freund liebt mehr uns steht fester bei denn ein Bruder.",
-      "reference": "Sprüche 18,24"
-    },
-    {
-      "text": "Ein Gerechter, der in seiner Frömmigkeit wandelt, des Kindern wird's wohl gehen nach ihm.",
-      "reference": "Sprüche 20,7"
-    },
-    {
-      "text": "Fülle uns früh mit deiner Gnade, so wollen wir rühmen und fröhlich sein unser Leben lang.",
-      "reference": "Psalm 90,14"
-    },
-    {
-      "text": "Kommet her zu mir alle, die ihr mühselig und beladen seid; ich will euch erquicken.",
-      "reference": "Matthäus 11,28"
-    },
-    {
-      "text": "Träufelt, ihr Himmel, von oben und die Wolken regnen Gerechtigkeit. Die Erde tue sich auf und bringe Heil, und Gerechtigkeit wachse mit zu. Ich, der HERR, schaffe es.",
-      "reference": "Jesaja 45,8"
-    },
-    {
-      "text": "Die Reden des Freundlichen sind Honigseim, trösten die Seele und erfrischen die Gebeine.",
-      "reference": "Sprüche 16,24"
-    },
-    {
-      "text": "Ein Psalm Davids. Der HERR ist mein Licht und mein Heil; vor wem sollte ich mich fürchten! Der HERR ist meines Lebens Kraft; vor wem sollte mir grauen!",
-      "reference": "Psalm 27,1"
-    },
-    {
-      "text": "Alles nun, was ihr wollt, daß euch die Leute tun sollen, das tut ihr ihnen auch. Das ist das Gesetz und die Propheten.",
-      "reference": "Matthäus 7,12"
-    },
-    {
-      "text": "Das ist mein Gebot, daß ihr euch untereinander liebet, gleichwie ich euch liebe.",
-      "reference": "Johannes 15,12"
-    },
-    {
-      "text": "Ich will aber deine Gerechtigkeit anzeigen und deine Werke, daß sie dir nichts nütze sein sollen.",
-      "reference": "Jesaja 57,12"
-    },
-    {
-      "text": "Und der Friede Gottes, welcher höher ist denn alle Vernunft, bewahre eure Herzen und Sinne in Christo Jesu!",
-      "reference": "Philipper 4,7"
-    },
-    {
-      "text": "der HERR behüte deinen Ausgang und Eingang von nun an bis in Ewigkeit.",
-      "reference": "Psalm 121,8"
-    },
-    {
-      "text": "Ein weiser Mann ist stark, und ein vernünftiger Mann ist mächtig von Kräften.",
-      "reference": "Sprüche 24,5"
-    },
-    {
-      "text": "Den Frieden lasse ich euch, meinen Frieden gebe ich euch. Nicht gebe ich euch, wie die Welt gibt. Euer Herz erschrecke nicht und fürchte sich nicht.",
-      "reference": "Johannes 14,27"
-    },
-    {
-      "text": "Die Weisen bewahren die Lehre; aber der Narren Mund ist nahe dem Schrecken.",
-      "reference": "Sprüche 10,14"
-    },
-    {
-      "text": "Zu der Zeit wird Ägypten sein wie Weiber und sich fürchten und erschrecken, wenn der HERR Zebaoth die Hand über sie schwingen wird.",
-      "reference": "Jesaja 19,16"
-    },
-    {
-      "text": "Ich harre des HERRN; meine Seele harret, und ich hoffe auf sein Wort.",
-      "reference": "Psalm 130,5"
-    },
-    {
-      "text": "Du kannst mich rüsten mit Stärke zum Streit; du kannst unter mich werfen, die sich wider mich setzen.",
-      "reference": "Psalm 18,39"
-    },
-    {
-      "text": "Freuet euch des HERRN und seid fröhlich, ihr Gerechten, und rühmet, alle ihr Frommen.",
-      "reference": "Psalm 32,11"
-    },
-    {
-      "text": "Das Los ist mir gefallen aufs Liebliche; mir ist ein schön Erbteil geworden.",
-      "reference": "Psalm 16,6"
-    },
-    {
-      "text": "Danket dem HERRN; denn er ist freundlich, denn seine Güte währet ewiglich.",
-      "reference": "Psalm 136,1"
-    },
-    {
-      "text": "Kraft und Schöne sind ihr Gewand, und sie lacht des kommenden Tages.",
-      "reference": "Sprüche 31,25"
-    },
-    {
-      "text": "Ein Lied Davids im höhern Chor. Siehe, wie fein und lieblich ist's, daß Brüder einträchtig beieinander wohnen!",
-      "reference": "Psalm 133,1"
-    },
-    {
-      "text": "Mein Gott aber fülle aus alle eure Notdurft nach seinem Reichtum in der Herrlichkeit in Christo Jesu.",
+      "text": "Mein Gott aber wird euch nach seinem Reichtum alles, was ihr bedürft, in Herrlichkeit zukommen lassen in Christus Jesus.",
       "reference": "Philipper 4,19"
     },
     {
-      "text": "Wer ein treues Herz und liebliche Rede hat, des Freund ist der König.",
-      "reference": "Sprüche 22,11"
+      "text": "durch den wir im Glauben auch den Zugang zu unserm jetzigen Gnadenstande erlangt haben, und wir rühmen uns auch der Hoffnung auf die Herrlichkeit Gottes.",
+      "reference": "Römer 5,2"
+    },
+    {
+      "text": "So seid auch ihr jetzt in Traurigkeit; aber ich werde euch wiedersehen: dann wird euer Herz sich freuen, und niemand wird euch eure Freude rauben.",
+      "reference": "Johannes 16,22"
+    },
+    {
+      "text": "Selig ist der Mann, der die Versuchung standhaft erträgt! Denn nachdem er sich bewährt hat, wird er das Leben als Siegeskranz empfangen, den er denen verheißen hat, die ihn lieben.",
+      "reference": "Jakobus 1,12"
+    },
+    {
+      "text": "Du aber hast dir zur Richtschnur genommen meine Lehre und Lebensführung, mein Streben, meinen Glauben, meine Langmut, Liebe und Geduld,",
+      "reference": "2. Timotheus 3,10"
+    },
+    {
+      "text": "Das ist denn auch der Grund, weshalb ich auf die Kunde von eurem Glauben an den Herrn Jesus und von eurer Liebe zu allen Heiligen",
+      "reference": "Epheser 1,15"
+    },
+    {
+      "text": "Laß jubeln und deiner sich freuen alle, die dich suchen! Laß alle, die nach deinem Heil verlangen, immerdar bekennen: »Groß ist Gott!«",
+      "reference": "Psalm 70,5"
+    },
+    {
+      "text": "Bevor aber der Glaube kam, wurden wir unter dem Gesetz in Verwahrung gehalten und waren unter Verschluß gelegt für den Glauben, der erst später geoffenbart werden sollte.",
+      "reference": "Galater 3,23"
+    },
+    {
+      "text": "Jesus aber blickte sie an und sagte zu ihnen: »Bei den Menschen ist dies unmöglich, aber bei Gott ist alles möglich.«",
+      "reference": "Matthäus 19,26"
+    },
+    {
+      "text": "die Hoffnung aber führt nicht zur Enttäuschung, weil die Liebe Gottes in unsere Herzen ausgegossen ist durch den heiligen Geist, der uns verliehen worden ist.",
+      "reference": "Römer 5,5"
+    },
+    {
+      "text": "Tritt du nun, mein (Glaubens-) Kind, durch die Gnade, die in Christus Jesus (dargeboten) ist, kraftvoll auf",
+      "reference": "2. Timotheus 2,1"
+    },
+    {
+      "text": "Was folgt nun hieraus? Wenn Gott für uns ist, wer kann dann gegen uns sein?",
+      "reference": "Römer 8,31"
+    },
+    {
+      "text": "Wenn wir dagegen auf das hoffen, was wir noch nicht (verwirklicht) sehen, so warten wir darauf in Geduld.",
+      "reference": "Römer 8,25"
+    },
+    {
+      "text": "Von David. Der HERR ist mein Licht und mein Heil: vor wem sollt’ ich mich fürchten? Der HERR ist meines Lebens Schutzwehr: vor wem sollte mir bangen?",
+      "reference": "Psalm 27,1"
+    },
+    {
+      "text": "Dann will ich mit Freuden dir Opfer bringen, will preisen deinen Namen, o HERR, daß er gütig ist;",
+      "reference": "Psalm 54,8"
+    },
+    {
+      "text": "Er hat ein Gedächtnis seiner Wundertaten gestiftet; gnädig und barmherzig ist der HERR.",
+      "reference": "Psalm 111,4"
+    },
+    {
+      "text": "Denn wir sind zwar gerettet worden, aber doch (bisher) nur auf Hoffnung hin. Eine Hoffnung aber, die man schon (verwirklicht) sieht, ist keine (rechte) Hoffnung mehr; denn wozu braucht man noch auf etwas zu hoffen, das man schon (verwirklicht) sieht?",
+      "reference": "Römer 8,24"
+    },
+    {
+      "text": "Nein, in dem allem siegen wir weitaus durch den, der uns geliebt hat.",
+      "reference": "Römer 8,37"
+    },
+    {
+      "text": "alles vermag ich in ihm, der mich stark macht.",
+      "reference": "Philipper 4,13"
+    },
+    {
+      "text": "Jede von Gottes Geist eingegebene Schrift ist auch förderlich zur Belehrung und zur Überführung, zur Besserung und zur Erziehung in der Gerechtigkeit,",
+      "reference": "2. Timotheus 3,16"
+    },
+    {
+      "text": "Ein zweites aber steht ihm gleich: ›Du sollst deinen Nächsten lieben wie dich selbst!‹",
+      "reference": "Matthäus 22,39"
+    },
+    {
+      "text": "senden unsern Gruß den in Kolossä lebenden heiligen und gläubigen Brüdern in Christus Jesus: Gnade sei mit euch und Friede von Gott, unserm Vater!",
+      "reference": "Kolosser 1,2"
+    },
+    {
+      "text": "Wer auf das Wort (Gottes) achtet, wird Segen davon haben, und wer auf den HERRN vertraut: wohl ihm! –",
+      "reference": "Sprüche 16,20"
+    },
+    {
+      "text": "Seid barmherzig, wie euer Vater barmherzig ist!«",
+      "reference": "Lukas 6,36"
+    },
+    {
+      "text": "Sehet, welch große Liebe uns der Vater dadurch erwiesen hat, daß wir Kinder Gottes heißen sollen, und wir sind es auch. Deshalb erkennt die Welt uns nicht, weil sie ihn nicht erkannt hat.",
+      "reference": "1. Johannes 3,1"
+    },
+    {
+      "text": "Nicht daß wir als die Herren über euren Glauben zu bestimmen hätten, nein, wir sind Mitarbeiter an eurer Freude; denn im Glauben steht ihr fest.",
+      "reference": "2. Korinther 1,24"
+    },
+    {
+      "text": "und habe deine Lust am HERRN: so wird er dir geben, was dein Herz begehrt.",
+      "reference": "Psalm 37,4"
+    },
+    {
+      "text": "Befiehl dem HERRN deine Wege und vertraue auf ihn: er wird’s wohl machen",
+      "reference": "Psalm 37,5"
+    },
+    {
+      "text": "Den Ruhm deiner reichen Güte wird man verkünden und jubelnd preisen deine Gerechtigkeit.",
+      "reference": "Psalm 145,7"
+    },
+    {
+      "text": "Nun sind aber (bei euch) sogar die Haare auf eurem Haupt alle gezählt. Fürchtet euch nicht: ihr seid mehr wert als viele Sperlinge!",
+      "reference": "Lukas 12,7"
+    },
+    {
+      "text": "Und wie ihr von den Leuten behandelt werden wollt, ebenso behandelt auch ihr sie!",
+      "reference": "Lukas 6,31"
+    },
+    {
+      "text": "Denn durch die Gnade seid ihr gerettet worden auf Grund des Glaubens, und zwar nicht aus euch – nein, Gottes Geschenk ist es –,",
+      "reference": "Epheser 2,8"
+    },
+    {
+      "text": "Denn wer da bittet, empfängt, und wer da sucht, findet, und wer anklopft, dem wird man auftun.",
+      "reference": "Lukas 11,10"
+    },
+    {
+      "text": "Wir wissen aber, daß denen, die Gott lieben, alle Dinge zum Guten mitwirken, nämlich denen, welche nach seinem Vorsatz berufen sind.",
+      "reference": "Römer 8,28"
+    },
+    {
+      "text": "Gnädig und barmherzig ist der HERR, langmütig und reich an Güte.",
+      "reference": "Psalm 145,8"
+    },
+    {
+      "text": "um in den kommenden Weltzeiten den überschwenglichen Reichtum seiner Gnade durch die Gütigkeit gegen uns in Christus Jesus zu erweisen.",
+      "reference": "Epheser 2,7"
+    },
+    {
+      "text": "Der HERR ist gütig gegen alle, und sein Erbarmen umfaßt alle seine Werke.",
+      "reference": "Psalm 145,9"
+    },
+    {
+      "text": "Ein ränkesüchtiger Mensch richtet Unfrieden an, und ein Ohrenbläser entzweit vertraute Freunde. –",
+      "reference": "Sprüche 16,28"
+    },
+    {
+      "text": "Der Eisenschmied arbeitet mit seinem Werkzeug bei Kohlenglut; mit Hammerschlägen gestaltet er ein Bild und formt es mit seinem kräftigen Arm; wird er auch hungrig dabei, so geht ihm die Kraft aus; und trinkt er kein Wasser, so wird er matt.",
+      "reference": "Jesaja 44,12"
+    },
+    {
+      "text": "Gott aber, der an Barmherzigkeit reich ist, hat uns um seiner großen Liebe willen, die er zu uns hegte,",
+      "reference": "Epheser 2,4"
+    },
+    {
+      "text": "Denn so sehr hat Gott die Welt geliebt, daß er seinen eingeborenen Sohn hingegeben hat, damit alle, die an ihn glauben, nicht verloren gehen, sondern ewiges Leben haben.",
+      "reference": "Johannes 3,16"
+    },
+    {
+      "text": "Nicht ihr habt mich erwählt, sondern ich habe euch erwählt und euch dazu bestellt, daß ihr hingehen und Frucht bringen sollt und eure Frucht eine bleibende sei, auf daß der Vater euch alles gebe, um was ihr ihn in meinem Namen bittet.",
+      "reference": "Johannes 15,16"
+    },
+    {
+      "text": "Meine Hilfe kommt vom HERRN, der Himmel und Erde geschaffen.",
+      "reference": "Psalm 121,2"
+    },
+    {
+      "text": "Steh auf, komm uns zu Hilfe und erlöse uns um deiner Gnade willen!",
+      "reference": "Psalm 44,27"
+    },
+    {
+      "text": "Andrerseits ist es auch ein neues Gebot, das ich euch schreibe, wie dies sich in ihm und in euch als wahr erweist; denn die Finsternis ist im Verschwinden, und das wahre Licht leuchtet bereits.",
+      "reference": "1. Johannes 2,8"
+    },
+    {
+      "text": "Das ist mein Gebot, daß ihr einander liebt, wie ich euch geliebt habe.",
+      "reference": "Johannes 15,12"
+    },
+    {
+      "text": "Denn wie der Jüngling sich mit der Jungfrau vermählt, so werden deine Söhne sich mit dir vermählen, und wie der Bräutigam seine Freude an der Braut hat, so wird dein Gott Freude über dich empfinden.",
+      "reference": "Jesaja 62,5"
+    },
+    {
+      "text": "Größere Liebe kann niemand haben als die, daß er sein Leben für seine Freunde hingibt.",
+      "reference": "Johannes 15,13"
+    },
+    {
+      "text": "Lobe den HERRN, meine Seele, und vergiß nicht, was er dir Gutes getan!",
+      "reference": "Psalm 103,2"
+    },
+    {
+      "text": "Schmecket und sehet, wie freundlich der HERR ist: wohl dem Manne, der auf ihn vertraut!",
+      "reference": "Psalm 34,9"
+    },
+    {
+      "text": "Wenn ihr meine Gebote haltet, werdet ihr in meiner Liebe bleiben, gleichwie ich die Gebote meines Vaters gehalten habe und damit in seiner Liebe bleibe.",
+      "reference": "Johannes 15,10"
+    },
+    {
+      "text": "Der HERR behütet dich vor allem Übel, er behütet deine Seele;",
+      "reference": "Psalm 121,7"
+    },
+    {
+      "text": "Wenn aber schon ihre Verfehlung ein reicher Segen für die Menschheit und ihr Zurückbleiben ein reicher Segen für die Heiden geworden ist, um wieviel segensreicher wird (dann erst) ihre Vollzahl sein!",
+      "reference": "Römer 11,12"
+    },
+    {
+      "text": "Nehmt mein Joch auf euch und lernt von mir; denn ich bin sanftmütig und von Herzen demütig: so werdet ihr Ruhe finden für eure Seelen;",
+      "reference": "Matthäus 11,29"
+    },
+    {
+      "text": "Mehr als alles, was man zu bewachen hat, behüte dein Herz; denn von ihm hängt das Leben ab.",
+      "reference": "Sprüche 4,23"
+    },
+    {
+      "text": "Dies habe ich zu euch geredet, damit die Freude, wie ich sie habe, auch in euch (vorhanden) sei und eure Freude vollkommen werde. –",
+      "reference": "Johannes 15,11"
+    },
+    {
+      "text": "»Kommt her zu mir alle, die ihr niedergedrückt und belastet seid: ich will euch Ruhe schaffen!",
+      "reference": "Matthäus 11,28"
+    },
+    {
+      "text": "Ich schaute mich um, doch niemand war da, um zu helfen; ich blickte erstaunt umher, doch niemand war da, der mir beistand; da hat mein Arm mir geholfen, und mein Grimm, der hat mir Beistand geleistet.",
+      "reference": "Jesaja 63,5"
+    },
+    {
+      "text": "Du wirst Freude und Jubel darüber empfinden, und viele werden sich über seine Geburt freuen,",
+      "reference": "Lukas 1,14"
+    },
+    {
+      "text": "Sooft den HERRN ich suchte, hat er mich erhört und aus allen meinen Ängsten mich befreit.",
+      "reference": "Psalm 34,5"
+    },
+    {
+      "text": "Während er noch redete, überschattete sie plötzlich eine lichte Wolke, und eine Stimme erscholl aus der Wolke, die sprach: »Dies ist mein geliebter Sohn, an dem ich Wohlgefallen gefunden habe: höret auf ihn!«",
+      "reference": "Matthäus 17,5"
+    },
+    {
+      "text": "So werden denn die vom HERRN Erlösten heimkehren und mit Jubel nach Zion gelangen, und ewige Freude wird ihr Haupt umschweben: Frohlocken und Freude werden ihnen zuteil werden, Kummer und Seufzen entflohen sein.",
+      "reference": "Jesaja 51,11"
+    },
+    {
+      "text": "Liebe Brüder, ich denke von mir noch nicht, daß ich’s ergriffen habe; eins aber (tue ich): ich vergesse, was hinter mir liegt, und strecke mich nach dem aus, was vor mir liegt,",
+      "reference": "Philipper 3,13"
+    },
+    {
+      "text": "Barmherzig und gnädig ist der HERR, voller Langmut und reich an Güte;",
+      "reference": "Psalm 103,8"
+    },
+    {
+      "text": "Wenn dann dort ein Sohn des Friedens wohnt, wird der Friede, den ihr ihm gewünscht habt, auf ihm ruhen; andernfalls wird euer Friedensgruß zu euch zurückkehren.",
+      "reference": "Lukas 10,6"
+    },
+    {
+      "text": "Ich spreche mich mit voller Offenheit euch gegenüber aus, ich bin voll Rühmens über euch, habe Trost in Fülle und bin überreich an Freude bei aller meiner Trübsal.",
+      "reference": "2. Korinther 7,4"
+    },
+    {
+      "text": "Ihr Männer, liebet eure Frauen, wie auch Christus die Gemeinde geliebt und sich für sie dahingegeben hat,",
+      "reference": "Epheser 5,25"
+    },
+    {
+      "text": "Denn du bist meine Hoffnung, HERR, mein Gott, du meine Zuversicht von Jugend an.",
+      "reference": "Psalm 71,5"
+    },
+    {
+      "text": "Singt jubelnd dem Gott, der unsre Stärke ist, jauchzet dem Gott Jakobs!",
+      "reference": "Psalm 81,2"
+    },
+    {
+      "text": "Laß deine Gnadenerweise mir widerfahren, o HERR, deine Hilfe nach deinem Wort,",
+      "reference": "Psalm 119,41"
+    },
+    {
+      "text": "denn der HERR steht ihnen bei und rettet sie; er rettet sie von den Frevlern und bringt ihnen Hilfe, weil auf ihn sie ihr Vertrauen setzen.",
+      "reference": "Psalm 37,40"
+    },
+    {
+      "text": "sende meinen Gruß dem Timotheus, meinem geliebten (Glaubens-)Kinde: Gnade, Barmherzigkeit und Friede (sei mit dir) von Gott dem Vater und unserm Herrn Christus Jesus!",
+      "reference": "2. Timotheus 1,2"
+    },
+    {
+      "text": "Ein fester Turm ist der Name des HERRN; in diesen flüchtet sich der Gerechte und ist in Sicherheit. –",
+      "reference": "Sprüche 18,10"
+    },
+    {
+      "text": "Sei mir ein schützender Fels, zu dem ich allzeit fliehen kann; du hast ja geboten, mich zu retten, denn mein Fels und meine Burg bist du.",
+      "reference": "Psalm 71,3"
+    },
+    {
+      "text": "denn bei dir ist der Brunnquell des Lebens, und in deinem Lichte schauen wir Licht.",
+      "reference": "Psalm 36,10"
+    },
+    {
+      "text": "Dann wird mein Herz frohlocken über den HERRN und sich freuen ob seiner Hilfe;",
+      "reference": "Psalm 35,9"
+    },
+    {
+      "text": "denn Gott hat uns nicht einen Geist der Verzagtheit gegeben, sondern der Kraft und der Liebe und der Selbstzucht.",
+      "reference": "2. Timotheus 1,7"
+    },
+    {
+      "text": "Denn der König vertraut auf den HERRN und wird durch des Höchsten Gnade nicht wanken.",
+      "reference": "Psalm 21,8"
+    },
+    {
+      "text": "Euch aber lasse der Herr in der Liebe zueinander und zu allen Menschen wachsen und reich werden, wie auch wir euch gegenüber (von Liebe durchdrungen sind)!",
+      "reference": "1. Thessalonicher 3,12"
+    },
+    {
+      "text": "Beim HERRN steht die Hilfe: über deinem Volke walte dein Segen! SELA.",
+      "reference": "Psalm 3,9"
+    },
+    {
+      "text": "Wir freuen uns ja, wenn wir schwach sind, ihr aber stark seid; und dahin geht auch unser Gebet, nämlich daß ihr euch völlig zurechtbringen laßt.",
+      "reference": "2. Korinther 13,9"
+    },
+    {
+      "text": "Die Weisheit dagegen, die von oben kommt, ist fürs erste lauter, sodann friedfertig, freundlich, nachgiebig, reich an Erbarmen und guten Früchten, frei von Zweifel und ohne Heuchelei.",
+      "reference": "Jakobus 3,17"
+    },
+    {
+      "text": "Mit Gottes Hilfe werde sein Wort ich rühmen. Auf Gott vertrau’ ich, fürchte mich nicht; was können Menschen mir antun?",
+      "reference": "Psalm 56,5"
+    },
+    {
+      "text": "So harret denn standhaft aus, liebe Brüder, bis zur Ankunft des Herrn! Bedenket: Der Landmann wartet auf die köstliche Frucht der Erde und geduldet sich ihretwegen, bis sie den Früh- und Spätregen empfängt.",
+      "reference": "Jakobus 5,7"
+    },
+    {
+      "text": "In Zeiten, da mir angst ist, vertrau ich auf dich!",
+      "reference": "Psalm 56,4"
+    },
+    {
+      "text": "ich in ihnen und du in mir, auf daß sie zu vollkommener Einheit gelangen, damit die Welt erkenne, daß du mich gesandt und sie geliebt hast, wie du mich geliebt hast.",
+      "reference": "Johannes 17,23"
+    },
+    {
+      "text": "Der Knabe aber wuchs heran und wurde kräftig und mit Weisheit erfüllt, und die Gnade Gottes war über ihm.",
+      "reference": "Lukas 2,40"
+    },
+    {
+      "text": "O HERR, ob deiner Kraft freut sich der König, und ob deiner Hilfe – wie jauchzt er so laut!",
+      "reference": "Psalm 21,2"
+    },
+    {
+      "text": "jeder habe nicht (nur) seinen eigenen Vorteil im Auge, sondern jeder auch den des andern.",
+      "reference": "Philipper 2,4"
+    },
+    {
+      "text": "(Der Same) aber, (der) die Frucht der Gerechtigkeit (hervorbringt), wird in Frieden für die gesät, die Frieden stiften.",
+      "reference": "Jakobus 3,18"
+    },
+    {
+      "text": "Der Engel aber sagte zu ihnen: »Fürchtet euch nicht! Denn wisset wohl: ich verkündige euch große Freude, die dem ganzen Volke widerfahren wird;",
+      "reference": "Lukas 2,10"
+    },
+    {
+      "text": "»Bittet, so wird euch gegeben werden; suchet, so werdet ihr finden; klopfet an, so wird euch aufgetan werden!",
+      "reference": "Matthäus 7,7"
+    },
+    {
+      "text": "so macht meine Freude dadurch vollkommen, daß ihr eines Sinnes seid, indem ihr die gleiche Liebe hegt und einmütig dem gleichen Ziel zustrebt",
+      "reference": "Philipper 2,2"
+    },
+    {
+      "text": "Zu diesem unserm Trost kam aber noch ein außerordentlicher Zuwachs an Freude hinzu im Hinblick auf die Freude des Titus, weil ihm eine geistige Erquickung von euch allen zuteil geworden ist.",
+      "reference": "2. Korinther 7,13"
+    },
+    {
+      "text": "und nichts aus Rechthaberei oder eitlem Ehrgeiz tut, sondern in Demut einer den andern höher als sich selbst erachtet;",
+      "reference": "Philipper 2,3"
+    },
+    {
+      "text": "Kindlein, laßt uns nicht mit Worten und nicht mit der Zunge lieben, sondern mit der Tat und in Wahrheit!",
+      "reference": "1. Johannes 3,18"
+    },
+    {
+      "text": "Wir können euch nun auch, liebe Brüder, Mitteilung von der Gnade Gottes machen, die (den Brüdern) in den mazedonischen Gemeinden verliehen worden ist,",
+      "reference": "2. Korinther 8,1"
+    },
+    {
+      "text": "Und ich habe ihnen deinen Namen kundgetan und werde ihn (auch weiterhin) kundtun, damit die Liebe, mit der du mich geliebt hast, in ihnen sei und ich in ihnen.«",
+      "reference": "Johannes 17,26"
+    },
+    {
+      "text": "und lehrt sie alles halten, was ich euch geboten habe. Und wisset wohl: Ich bin bei euch alle Tage bis ans Ende der Weltzeit!«",
+      "reference": "Matthäus 28,20"
+    },
+    {
+      "text": "Darum wollen wir so, wie wir Gelegenheit haben, allen Menschen Gutes erweisen, besonders aber den Glaubensgenossen!",
+      "reference": "Galater 6,10"
+    },
+    {
+      "text": "Denn mögen auch die Berge weichen und die Hügel wanken, so soll doch meine Gnade nicht von dir weichen und mein Friedensbund nicht wanken«, spricht der HERR, dein Erbarmer.",
+      "reference": "Jesaja 54,10"
+    },
+    {
+      "text": "Laß schon früh am Morgen mich deine Gnade erfahren, denn auf dich vertraue ich! Tu mir kund den Weg, den ich gehn soll, denn zu dir erhebe ich meine Seele!",
+      "reference": "Psalm 143,8"
+    },
+    {
+      "text": "weil sie an Gott nicht glaubten und auf seine Hilfe nicht vertrauten.",
+      "reference": "Psalm 78,22"
+    },
+    {
+      "text": "Denn wer da bittet, der empfängt, und wer da sucht, der findet, und wer anklopft, dem wird aufgetan werden.",
+      "reference": "Matthäus 7,8"
+    },
+    {
+      "text": "Ihm aber, der nach der Kraft, die in uns wirksam ist, unendlich mehr zu tun vermag über alles hinaus, was wir erbitten und erdenken (können):",
+      "reference": "Epheser 3,20"
+    },
+    {
+      "text": "denn unsere Verkündigung der Heilsbotschaft ist bei euch nicht allein im Wort erfolgt, sondern auch in Kraft und im heiligen Geist und in großer Zuversichtlichkeit; ihr wißt ja doch (noch gut), wie wir uns unter euch um euretwillen verhalten haben.",
+      "reference": "1. Thessalonicher 1,5"
+    },
+    {
+      "text": "und der HERR wird dich allezeit geleiten und deine Seele auch in dürren Gegenden sich sättigen lassen und deine Glieder kräftig machen, so daß du einem wohlbewässerten Garten gleichst und einem Wasserquell, dessen Fluten nicht trügen.",
+      "reference": "Jesaja 58,11"
+    },
+    {
+      "text": "Denn mit Freuden sollt ihr ausziehen und in Frieden geleitet werden; die Berge und Hügel werden vor euch her in Jubel ausbrechen und alle Bäume des Gefildes in die Hände klatschen;",
+      "reference": "Jesaja 55,12"
+    },
+    {
+      "text": "die auf den HERRN harren, gewinnen neue Kraft, daß ihnen neue Schwingen wachsen wie den Adlern, daß sie laufen und nicht müde werden, daß sie wandern und nicht ermatten.",
+      "reference": "Jesaja 40,31"
+    },
+    {
+      "text": "Mein Herz pocht stürmisch, meine Kraft hat mich verlassen, und das Licht meiner Augen, auch das ist dahin!",
+      "reference": "Psalm 38,11"
+    },
+    {
+      "text": "denn unablässig halten wir vor dem Angesicht unsers Gottes und Vaters die Erinnerung an euer tatkräftiges Glaubensleben fest sowie an eure eifrige Arbeit in der Liebe und an eure Standhaftigkeit in der Hoffnung auf unsern Herrn Jesus Christus.",
+      "reference": "1. Thessalonicher 1,3"
+    },
+    {
+      "text": "ich hege eben deshalb auch die feste Zuversicht, daß der, welcher ein gutes Werk in euch angefangen hat, es auch bis zum Tage Jesu Christi vollenden wird.",
+      "reference": "Philipper 1,6"
+    },
+    {
+      "text": "Die Gnade unsers Herrn Jesus Christus sei mit eurem Geiste, liebe Brüder! Amen.",
+      "reference": "Galater 6,18"
+    },
+    {
+      "text": "Wir, Paulus, Silvanus und Timotheus, senden unsern Gruß der Gemeinde der Thessaloniker, (die) in (Gemeinschaft mit) Gott dem Vater und dem Herrn Jesus Christus (steht): Gnade sei (mit) euch und Friede!",
+      "reference": "1. Thessalonicher 1,1"
+    },
+    {
+      "text": "Hebt eure Augen zum Himmel empor und schauet: Wer hat diese da geschaffen? Er ist es, der ihr Heer nach der Zahl herausführt, der sie alle mit Namen ruft, vor dem wegen der Größe seiner Macht und der Stärke seiner Kraft kein einziges (Gestirn) ausbleibt.",
+      "reference": "Jesaja 40,26"
+    },
+    {
+      "text": "Ja, sie haben es beschlossen und sind es ihnen ja auch schuldig; denn wenn die Heiden(christen) Anteil an den geistlichen Gütern jener erhalten haben, so sind sie dafür auch verpflichtet, ihnen mit ihren irdischen Gütern auszuhelfen.",
+      "reference": "Römer 15,27"
+    },
+    {
+      "text": "Gnade sei (mit) euch und Friede von Gott unserm Vater und vom Herrn Jesus Christus!",
+      "reference": "Philipper 1,2"
+    },
+    {
+      "text": "Alles, was ihr zu tun habt, das leistet mit willigem Herzen, als gälte es dem Herrn und nicht den Menschen;",
+      "reference": "Kolosser 3,23"
+    },
+    {
+      "text": "Sieh her, ich liebe deine Befehle: HERR, schenke mir neues Leben nach deiner Gnade!",
+      "reference": "Psalm 119,159"
+    },
+    {
+      "text": "Ich bin der Weinstock, ihr seid die Reben: wer in mir bleibt und in wem ich bleibe, der bringt reichlich Frucht; dagegen ohne mich könnt ihr nichts vollbringen.",
+      "reference": "Johannes 15,5"
+    },
+    {
+      "text": "Er verleiht dem Ermatteten Kraft und gewährt dem Ohnmächtigen Stärke in Fülle.",
+      "reference": "Jesaja 40,29"
+    },
+    {
+      "text": "Sind wir aber mit Christus gestorben, so glauben wir zuversichtlich, daß wir auch mit ihm leben werden,",
+      "reference": "Römer 6,8"
+    },
+    {
+      "text": "Wende dich zu mir und sei mir gnädig, wie es recht ist bei denen, die deinen Namen lieben!",
+      "reference": "Psalm 119,132"
+    },
+    {
+      "text": "»Wie mich der Vater geliebt hat, so habe auch ich euch geliebt: bleibet in meiner Liebe!",
+      "reference": "Johannes 15,9"
+    },
+    {
+      "text": "Ich harre des HERRN, meine Seele harrt, und ich warte auf sein Wort;",
+      "reference": "Psalm 130,5"
+    },
+    {
+      "text": "Auf dich haben unsre Väter vertraut, sie haben vertraut, und du hast ihnen ausgeholfen;",
+      "reference": "Psalm 22,5"
+    },
+    {
+      "text": "Dein Wort ist meines Fußes Leuchte und ein Licht auf meinem Wege.",
+      "reference": "Psalm 119,105"
+    },
+    {
+      "text": "Ich liebe dich, HERR, meine Stärke!",
+      "reference": "Psalm 18,2"
+    },
+    {
+      "text": "Denn ich, der HERR, dein Gott, werde deine Rechte stark machen, ich, der ich dir zurufe: ›Fürchte dich nicht: ich helfe dir!‹«",
+      "reference": "Jesaja 41,13"
+    },
+    {
+      "text": "Ein Psalm von David. Der HERR ist mein Hirt: mir mangelt nichts.",
+      "reference": "Psalm 23,1"
+    },
+    {
+      "text": "Er erquickt meine Seele; er leitet mich auf rechten Pfaden um seines Namens willen.",
+      "reference": "Psalm 23,3"
+    },
+    {
+      "text": "Fürchte dich nicht, denn ich bin mit dir! Blicke nicht ängstlich umher, denn ich bin dein Gott! Ich stärke dich und helfe dir auch und halte dich aufrecht mit meiner heilverleihenden Rechten.",
+      "reference": "Jesaja 41,10"
+    },
+    {
+      "text": "Da antwortete er dem Vater: ›Du weißt: schon so viele Jahre diene ich dir und habe noch nie ein Gebot von dir übertreten; doch mir hast du noch nie auch nur ein Böcklein gegeben, daß ich mit meinen Freunden ein fröhliches Mahl hätte halten können.",
+      "reference": "Lukas 15,29"
+    },
+    {
+      "text": "Doch nein, ich bleibe stets mit dir verbunden, du hältst mich fest bei meiner rechten Hand;",
+      "reference": "Psalm 73,23"
+    },
+    {
+      "text": "Wir mußten doch fröhlich sein und uns freuen! Denn dieser dein Bruder war tot und ist wieder lebendig geworden, er war verloren gegangen und ist wiedergefunden worden.‹«",
+      "reference": "Lukas 15,32"
+    },
+    {
+      "text": "Denn Gott, der da geboten hat: »Aus der Finsternis strahle das Licht hervor!«, der ist es auch, der das Licht in unsern Herzen hat aufstrahlen lassen, um (uns) die Erkenntnis der Herrlichkeit Gottes im Angesicht Christi erglänzen zu lassen.",
+      "reference": "2. Korinther 4,6"
+    },
+    {
+      "text": "Und das Licht leuchtet in der Finsternis, doch die Finsternis hat es nicht ergriffen.",
+      "reference": "Johannes 1,5"
+    },
+    {
+      "text": "indem ich als die Frucht der Lippen Frieden schaffe, nämlich Frieden den Fernen und den Nahen!« spricht der HERR, »und ich will es heilen!« –",
+      "reference": "Jesaja 57,19"
+    },
+    {
+      "text": "Selig sind, die reinen Herzens sind, denn sie werden Gott schauen!",
+      "reference": "Matthäus 5,8"
+    },
+    {
+      "text": "Selig sind die Friedfertigen, denn sie werden Söhne Gottes heißen! –",
+      "reference": "Matthäus 5,9"
+    },
+    {
+      "text": "Wohl dem, dessen Hilfe der Gott Jakobs ist, dessen Hoffnung ruht auf dem HERRN, seinem Gott,",
+      "reference": "Psalm 146,5"
+    },
+    {
+      "text": "und wandelt in der Liebe, wie auch Christus euch geliebt und sich selbst für uns als Weihegabe und Opfer dargebracht hat, Gott zu einem lieblichen Wohlgeruch.",
+      "reference": "Epheser 5,2"
+    },
+    {
+      "text": "Dies habe ich zu euch geredet, damit ihr in mir Frieden habet. In der Welt habt ihr Bedrängnis; doch seid getrost: ich habe die Welt überwunden!«",
+      "reference": "Johannes 16,33"
+    },
+    {
+      "text": "Trotzdem ließ er sich im Hinblick auf die Verheißung Gottes nicht durch Unglauben irre machen, sondern vielmehr wurde er im Glauben immer stärker, indem er Gott die Ehre gab",
+      "reference": "Römer 4,20"
+    },
+    {
+      "text": "Hört (mich an), meine geliebten Brüder! Hat Gott nicht gerade die, welche für die Welt arm sind, dazu erwählt, reich im Glauben und Erben des Reiches zu sein, das er denen verheißen hat, die ihn lieben?",
+      "reference": "Jakobus 2,5"
+    },
+    {
+      "text": "Selig sind die Barmherzigen, denn sie werden Barmherzigkeit erlangen!",
+      "reference": "Matthäus 5,7"
+    },
+    {
+      "text": "Licht erstrahlt dem Gerechten und Freude den redlich Gesinnten.",
+      "reference": "Psalm 97,11"
+    },
+    {
+      "text": "wir aber, die wir dem Tage angehören, wollen nüchtern bleiben, angetan mit dem Panzer des Glaubens und der Liebe und mit dem Helm der Hoffnung auf Rettung;",
+      "reference": "1. Thessalonicher 5,8"
+    },
+    {
+      "text": "Denn Trost hat der HERR für Zion, Trost für alle seine Trümmerstätten und wird seine Wüstenei zu einem Paradies machen und seine Steppe zu einem Gottesgarten: Jubel und Freude wird sich in ihm einfinden, Danklied und Saitenspiel.",
+      "reference": "Jesaja 51,3"
+    },
+    {
+      "text": "denn früher seid ihr zwar Finsternis gewesen, jetzt aber seid ihr Licht im Herrn: führt euren Wandel als Kinder des Lichts –",
+      "reference": "Epheser 5,8"
+    },
+    {
+      "text": "»Danket dem HERRN, denn er ist freundlich, ja, ewiglich währt seine Gnade«:",
+      "reference": "Psalm 107,1"
+    },
+    {
+      "text": "Du reichtest mir deinen schützenden Schild, deine Rechte stützte mich, und deine Gnade machte mich groß.",
+      "reference": "Psalm 18,36"
+    },
+    {
+      "text": "Sei mir gnädig, o Gott, nach deiner Güte! Nach deinem großen Erbarmen tilge meine Vergehen!",
+      "reference": "Psalm 51,3"
+    },
+    {
+      "text": "Er wird meine Seele erlösen zum Frieden, so daß sie nicht an mich können; denn ihrer sind viele gegen mich.",
+      "reference": "Psalm 55,19"
+    },
+    {
+      "text": "HERR, erbarme dich unser; auf dich hoffen wir: sei unser Arm an jedem Morgen und unsere Hilfe in der Stunde der Not!",
+      "reference": "Jesaja 33,2"
+    },
+    {
+      "text": "und nach der Vorersehung Gottes des Vaters dazu auserwählt sind, in der Heiligung des Geistes zum Gehorsam und zur Besprengung mit dem Blute Jesu Christi (zu gelangen): Gnade und Friede möge euch immer reichlicher zuteil werden!",
+      "reference": "1. Petrus 1,2"
+    },
+    {
+      "text": "Liebet den HERRN, ihr seine Frommen alle! Die Treuen behütet der HERR, vergilt aber reichlich dem, der Hochmut übt.",
+      "reference": "Psalm 31,24"
+    },
+    {
+      "text": "er heilt, die zerbrochnen Herzens sind, und verbindet ihre Wunden;",
+      "reference": "Psalm 147,3"
+    },
+    {
+      "text": "Doch du, HERR, bleibe nicht fern von mir, du, meine Stärke, eile mir zu Hilfe!",
+      "reference": "Psalm 22,20"
+    },
+    {
+      "text": "Die mit Tränen säen, werden mit Jubel ernten.",
+      "reference": "Psalm 126,5"
+    },
+    {
+      "text": "Der HERR verleihe Kraft seinem Volk, der HERR wolle segnen sein Volk mit Frieden!",
+      "reference": "Psalm 29,11"
+    },
+    {
+      "text": "»Weil er fest an mir hängt, so will ich ihn retten, will ihn schützen, denn er kennt meinen Namen.",
+      "reference": "Psalm 91,14"
+    },
+    {
+      "text": "Da sagte er zu ihr: »Meine Tochter, dein Glaube hat dir Heilung verschafft: gehe in Frieden!«",
+      "reference": "Lukas 8,48"
+    },
+    {
+      "text": "Ihn habt ihr lieb, obgleich ihr ihn nicht gesehen habt; an ihn glaubt ihr, obgleich ihr ihn jetzt nicht seht, und ihm jubelt ihr mit unaussprechlicher und verklärter Freude entgegen,",
+      "reference": "1. Petrus 1,8"
+    },
+    {
+      "text": "Euer Sinn sei frei von Geldgier; begnügt euch mit dem, was euch gerade zu Gebote steht, denn er selbst hat gesagt: »Ich will dir nimmermehr meine Hilfe versagen und dich nicht verlassen«;",
+      "reference": "Hebräer 13,5"
+    },
+    {
+      "text": "Was nützt es, meine Brüder, wenn jemand behauptet, Glauben zu besitzen, dabei aber keine Werke (aufzuweisen) hat? Vermag etwa der Glaube ihn zu retten?",
+      "reference": "Jakobus 2,14"
+    },
+    {
+      "text": "Sollte aber jemand von euch Mangel an Weisheit haben, so erbitte er sie sich von Gott, der allen ohne weiteres und ohne laute Vorwürfe gibt: dann wird sie ihm zuteil werden.",
+      "reference": "Jakobus 1,5"
+    },
+    {
+      "text": "daher dürfen wir auch zuversichtlich sagen: »Der Herr ist meine Hilfe, ich will mich nicht fürchten: was können Menschen mir antun?«",
+      "reference": "Hebräer 13,6"
+    },
+    {
+      "text": "denn du bist mir ein Helfer gewesen, und im Schatten deiner Flügel darf ich jubeln.",
+      "reference": "Psalm 63,8"
+    },
+    {
+      "text": "Liebe und Treue beschirmen den König, und durch Liebe stützt er seinen Thron. –",
+      "reference": "Sprüche 20,28"
+    },
+    {
+      "text": "Freunde und Gefährten hast du mir entfremdet: nur die Finsternis ist mir vertraut (geblieben).",
+      "reference": "Psalm 88,19"
+    },
+    {
+      "text": "Sooft du durchs Wasser gehst: ich bin bei dir, und durch Ströme: sie sollen dich nicht überfluten! Sooft du durchs Feuer gehst: du sollst nicht versengt werden, und die Flamme soll dir nichts antun!",
+      "reference": "Jesaja 43,2"
+    },
+    {
+      "text": "So wollen denn auch wir, da wir uns von einer solchen Wolke von Zeugen umgeben sehen, alles, was uns beschwert, und (besonders) die uns so leicht umstrickende Sünde ablegen und mit standhafter Ausdauer in dem uns obliegenden Wettkampfe laufen,",
+      "reference": "Hebräer 12,1"
+    },
+    {
+      "text": "Denn Sonne und Schild ist Gott der HERR; Gnade und Ehre verleiht der HERR, nichts Gutes versagt er denen, die unsträflich wandeln.",
+      "reference": "Psalm 84,12"
+    },
+    {
+      "text": "bei der Menge meiner Sorgen in meiner Brust haben deine Tröstungen mir das Herz erquickt.",
+      "reference": "Psalm 94,19"
+    },
+    {
+      "text": "Da wir also, liebe Brüder, die freudige Zuversicht haben, durch das Blut Jesu in das (himmlische) Heiligtum einzugehen –",
+      "reference": "Hebräer 10,19"
+    },
+    {
+      "text": "Jetzt aber, so spricht der HERR, der dich geschaffen hat, Jakob, und der dich gebildet hat, Israel: »Fürchte dich nicht, denn ich habe dich erlöst; ich habe dich bei deinem Namen gerufen: du bist mein!",
+      "reference": "Jesaja 43,1"
+    },
+    {
+      "text": "Doch es wird jemand einwenden: »Du hast Glauben, und ich habe Werke; weise mir deinen Glauben nach, der ohne Werke ist, und ich will dir aus meinen Werken den Glauben nachweisen!«",
+      "reference": "Jakobus 2,18"
+    },
+    {
+      "text": "Zu Mose sagt er ja: »Ich werde Gnade erweisen, wem ich gnädig bin, und werde Barmherzigkeit dem erzeigen, dessen ich mich erbarme.«",
+      "reference": "Römer 9,15"
+    },
+    {
+      "text": "Er gab zur Antwort: »Du sollst den Herrn, deinen Gott, lieben von ganzem Herzen, mit deiner ganzen Seele, mit aller deiner Kraft und mit deinem ganzen Denken« und »deinen Nächsten wie dich selbst«.",
+      "reference": "Lukas 10,27"
+    },
+    {
+      "text": "Gepriesen sei Gott, der mein Flehen nicht verworfen und seine Gnade mir nicht versagt hat!",
+      "reference": "Psalm 66,20"
+    },
+    {
+      "text": "Nur (im Aufblick) zu Gott ist meine Seele still: von ihm kommt meine Hilfe;",
+      "reference": "Psalm 62,2"
+    },
+    {
+      "text": "denn bei Gott ist kein Ding unmöglich.«",
+      "reference": "Lukas 1,37"
+    },
+    {
+      "text": "Nur (im Aufblick) zu Gott sei still, meine Seele! Denn von ihm kommt meine Hoffnung;",
+      "reference": "Psalm 62,6"
+    },
+    {
+      "text": "Vielerlei Pläne sind im Herzen eines Menschen, aber der Ratschluß des HERRN, der wird zustande kommen. –",
+      "reference": "Sprüche 19,21"
+    },
+    {
+      "text": "Wie einen seine Mutter tröstet, so will ich euch trösten; und zwar in Jerusalem sollt ihr Trost empfangen.",
+      "reference": "Jesaja 66,13"
+    },
+    {
+      "text": "Endlich, liebe Brüder: alles, was wahr ist, was ehrbar, was gerecht, was rein, was liebenswert, was unanstößig ist, sei es irgendeine Tugend oder etwas Lobenswertes, darauf seid bedacht!",
+      "reference": "Philipper 4,8"
+    },
+    {
+      "text": "Wer die Braut hat, ist der Bräutigam; der Freund des Bräutigams aber, der dabeisteht und ihm zuhört, freut sich von Herzen über den Jubelruf des Bräutigams. Diese meine Freude ist nun vollkommen geworden.",
+      "reference": "Johannes 3,29"
+    },
+    {
+      "text": "Dies ist der Tag, den der HERR gemacht hat: laßt uns jubeln und fröhlich an ihm sein! –",
+      "reference": "Psalm 118,24"
+    },
+    {
+      "text": "Geliebte, wenn Gott uns so sehr geliebt hat, so sind auch wir verpflichtet, einander zu lieben.",
+      "reference": "1. Johannes 4,11"
+    },
+    {
+      "text": "Wir wollen euch aber, liebe Brüder, über die Entschlafenen nicht im unklaren lassen, damit ihr nicht betrübt zu sein braucht wie die anderen, die keine Hoffnung haben.",
+      "reference": "1. Thessalonicher 4,13"
+    },
+    {
+      "text": "So sage denn auch ich euch: Bittet, so wird euch gegeben werden; suchet, so werdet ihr finden; klopft an, so wird man euch auftun!",
+      "reference": "Lukas 11,9"
+    },
+    {
+      "text": "»Tröstet, tröstet mein Volk!« spricht euer Gott;",
+      "reference": "Jesaja 40,1"
+    },
+    {
+      "text": "Durch Glauben empfing ebenso auch Sara die Kraft, trotz ihres hohen Alters Mutter zu werden, weil sie den für zuverlässig ansah, der ihr die Verheißung gegeben hatte.",
+      "reference": "Hebräer 11,11"
+    },
+    {
+      "text": "Die Frucht des Geistes dagegen besteht in Liebe, Freude, Friede, Geduld, Freundlichkeit, Gütigkeit, Treue,",
+      "reference": "Galater 5,22"
+    },
+    {
+      "text": "Ich aber bin wie ein grünender Ölbaum im Hause Gottes, ich vertraue auf Gottes Gnade immer und ewig.",
+      "reference": "Psalm 52,10"
+    },
+    {
+      "text": "Danket dem HERRN, denn er ist freundlich, ja, ewiglich währt seine Gnade!",
+      "reference": "Psalm 136,1"
+    },
+    {
+      "text": "Daran erkennen wir, daß wir die Kinder Gottes lieben, wenn wir Gott lieben und seine Gebote erfüllen.",
+      "reference": "1. Johannes 5,2"
+    },
+    {
+      "text": "Niemand hat Gott jemals (mit Augen) gesehen; doch wenn wir einander lieben, so bleibt Gott dauernd in uns, und seine Liebe ist in uns zur Vollendung gekommen.",
+      "reference": "1. Johannes 4,12"
+    },
+    {
+      "text": "Der HERR behütet alle, die ihn lieben, doch alle Frevler rottet er aus.",
+      "reference": "Psalm 145,20"
+    },
+    {
+      "text": "Daher, meine geliebten Brüder, nach denen ich mich sehne, ihr meine Freude und meine Krone: stehet in dieser Weise fest im Herrn, Geliebte!",
+      "reference": "Philipper 4,1"
+    },
+    {
+      "text": "Sättige früh uns am Morgen mit deiner Gnade, daß wir jubeln und uns freun unser Leben lang!",
+      "reference": "Psalm 90,14"
+    },
+    {
+      "text": "Der HERR ist nahe allen, die ihn anrufen, allen, die ihn in Treue anrufen;",
+      "reference": "Psalm 145,18"
+    },
+    {
+      "text": "Und wir haben die Liebe, die Gott zu uns hat, erkannt und geglaubt: Gott ist Liebe, und wer in der Liebe bleibt, der bleibt in Gott, und Gott bleibt in ihm.",
+      "reference": "1. Johannes 4,16"
+    },
+    {
+      "text": "Der HERR ist meine Stärke und mein Schild; auf ihn hat mein Herz vertraut, da ist mir Hilfe geworden. So frohlockt denn mein Herz, und mit meinem Liede will ich ihm danken.",
+      "reference": "Psalm 28,7"
+    },
+    {
+      "text": "Freuet euch im Herrn allezeit! Noch einmal wiederhole ich’s: »Freuet euch!«",
+      "reference": "Philipper 4,4"
+    },
+    {
+      "text": "Wir dagegen lieben, weil er uns zuerst geliebt hat.",
+      "reference": "1. Johannes 4,19"
+    },
+    {
+      "text": "denn alles, was aus Gott erzeugt ist, überwindet die Welt; und dies ist die Siegesmacht, welche die Welt überwunden hat: unser Glaube.",
+      "reference": "1. Johannes 5,4"
+    },
+    {
+      "text": "Furcht ist nicht in der Liebe, sondern die vollkommene Liebe treibt die Furcht aus, weil die Furcht es mit Strafe zu tun hat; wer also Furcht empfindet, der ist in der Liebe noch nicht zur Vollendung gelangt.",
+      "reference": "1. Johannes 4,18"
+    },
+    {
+      "text": "Horch! Deine Wächter lassen schon ihren Ruf erschallen und jubeln allesamt; denn Auge in Auge sehen sie voll Freude, wie der HERR nach Zion zurückkehrt.",
+      "reference": "Jesaja 52,8"
+    },
+    {
+      "text": "Sorgt euch um nichts, sondern laßt in jeder Lage eure Anliegen durch Gebet und Flehen verbunden mit Danksagung vor Gott kund werden!",
+      "reference": "Philipper 4,6"
+    },
+    {
+      "text": "Dann wird der Friede Gottes, der höher ist als aller Verstand, eure Herzen und euer ganzes Denken in Christus Jesus bewahren.",
+      "reference": "Philipper 4,7"
+    },
+    {
+      "text": "doch so, daß wir Gnadengaben besitzen, die nach der uns verliehenen Gnade verschieden sind. Wer also die Gabe prophetischer Rede besitzt, bleibe in Übereinstimmung mit dem Maß des Glaubens;",
+      "reference": "Römer 12,6"
+    },
+    {
+      "text": "Als Vorbild gesunder Lehren halte die fest, welche du von mir gehört hast, im Glauben und in der Liebe, die in Christus Jesus wurzeln.",
+      "reference": "2. Timotheus 1,13"
+    },
+    {
+      "text": "Das alles wird aber, wenn es aufgedeckt wird, vom Licht getroffen und offenbar gemacht; denn alles, was offenbar gemacht wird, ist Licht.",
+      "reference": "Epheser 5,13"
+    },
+    {
+      "text": "Wer nicht liebt, hat Gott nicht erkannt; denn Gott ist Liebe.",
+      "reference": "1. Johannes 4,8"
+    },
+    {
+      "text": "Das ist auch die Ursache meiner jetzigen Leiden, deren ich mich aber nicht schäme; denn ich weiß, wer es ist, auf den ich mein Vertrauen gesetzt habe, und bin dessen gewiß, daß er stark genug ist, mein mir anvertrautes Gut bis auf jenen Tag zu bewahren.",
+      "reference": "2. Timotheus 1,12"
+    },
+    {
+      "text": "Gnade sei mit euch und Friede von Gott unserm Vater und dem Herrn Jesus Christus!",
+      "reference": "2. Korinther 1,2"
+    },
+    {
+      "text": "Eine wohltätige Seele wird reichlich gesättigt, und wer anderen zu trinken gibt, wird selbst getränkt. –",
+      "reference": "Sprüche 11,25"
+    },
+    {
+      "text": "Gepriesen sei der Gott und Vater unsers Herrn Jesus Christus, der Vater der Barmherzigkeit und der Gott alles Trostes,",
+      "reference": "2. Korinther 1,3"
+    },
+    {
+      "text": "Darum macht euch geistlich fertig zum rüstigen Vorwärtsschreiten, seid nüchtern und setzt eure Hoffnung ausschließlich auf die Gnade, die euch in der Offenbarung Jesu Christi dargeboten wird.",
+      "reference": "1. Petrus 1,13"
+    },
+    {
+      "text": "So ermahne ich euch nun, liebe Brüder, durch (den Hinweis auf) die Barmherzigkeit Gottes: Bringt eure Leiber als ein lebendiges, heiliges und Gott wohlgefälliges Opfer dar: (das sei) euer vernünftiger Gottesdienst!",
+      "reference": "Römer 12,1"
+    },
+    {
+      "text": "Des Menschen Herz erdenkt sich seinen Weg, der HERR aber lenkt seine Schritte. –",
+      "reference": "Sprüche 16,9"
+    },
+    {
+      "text": "der uns in aller unserer Trübsal tröstet, damit wir dann (unserseits) alle, die sich in irgendeiner Trübsal befinden, mit dem Trost zu erquicken vermögen, mit dem wir selbst von Gott getröstet werden.",
+      "reference": "2. Korinther 1,4"
+    },
+    {
+      "text": "Gnade sei mit euch und Friede von Gott, unserm Vater, und dem Herrn Jesus Christus,",
+      "reference": "Galater 1,3"
+    },
+    {
+      "text": "Geliebte, schenkt nicht jedem Geiste Glauben, sondern prüfet die Geister, ob sie aus Gott sind; denn viele falsche Propheten sind in die Welt ausgezogen.",
+      "reference": "1. Johannes 4,1"
+    },
+    {
+      "text": "Geliebte, laßt uns einander lieben! Denn die Liebe stammt aus Gott, und jeder, der liebt, ist aus Gott erzeugt und erkennt Gott.",
+      "reference": "1. Johannes 4,7"
+    },
+    {
+      "text": "Nun redete Jesus aufs neue zu ihnen und sagte: »Ich bin das Licht der Welt: wer mir nachfolgt, wird nicht in der Finsternis wandeln, sondern das Licht des Lebens haben.«",
+      "reference": "Johannes 8,12"
+    },
+    {
+      "text": "Friede (werde) den Brüdern (zuteil) und Liebe im Verein mit Glauben von Gott dem Vater und dem Herrn Jesus Christus!",
+      "reference": "Epheser 6,23"
+    },
+    {
+      "text": "Befiehl dem HERRN deine Werke, dann werden deine Pläne gelingen. –",
+      "reference": "Sprüche 16,3"
+    },
+    {
+      "text": "Fliehe die Begierden der Jugend, jage vielmehr der Gerechtigkeit und dem Glauben, der Liebe und dem Frieden nach im Verein mit denen, die den Herrn aus reinem Herzen anrufen!",
+      "reference": "2. Timotheus 2,22"
+    },
+    {
+      "text": "Ebenso soll auch euer Licht vor den Menschen leuchten, damit sie eure guten Werke sehen und euren Vater, der im Himmel ist, preisen.«",
+      "reference": "Matthäus 5,16"
+    },
+    {
+      "text": "Kummer im Herzen drückt einen Menschen nieder, aber ein freundliches Wort heitert ihn auf. –",
+      "reference": "Sprüche 12,25"
+    },
+    {
+      "text": "»Ich bin der gute Hirt! Der gute Hirt gibt sein Leben für die Schafe hin.",
+      "reference": "Johannes 10,11"
+    },
+    {
+      "text": "Meine Stärke, dir will ich lobsingen! Denn Gott ist meine feste Burg, der Gott, der mir Gnade erweist.",
+      "reference": "Psalm 59,18"
+    },
+    {
+      "text": "Der Dieb kommt nur, um zu stehlen und zu schlachten und Unheil anzurichten; ich aber bin gekommen, damit die Schafe Leben haben und Überfluß haben.«",
+      "reference": "Johannes 10,10"
+    },
+    {
+      "text": "Ihr seid das Licht der Welt! Eine Stadt, die oben auf einem Berge liegt, kann nicht verborgen bleiben.",
+      "reference": "Matthäus 5,14"
+    },
+    {
+      "text": "Denn freundlich ist der HERR, seine Gnade währt ewig und seine Treue von Geschlecht zu Geschlecht.",
+      "reference": "Psalm 100,5"
+    },
+    {
+      "text": "Ich danke dir, daß ich so überaus wunderbar bereitet bin: wunderbar sind deine Werke, und meine Seele erkennt das wohl.",
+      "reference": "Psalm 139,14"
+    },
+    {
+      "text": "Darum werden wir auch nicht verzagt; nein, wenn auch unser äußerer Mensch aufgerieben wird, so empfängt doch unser innerer Mensch Tag für Tag neue Kraft.",
+      "reference": "2. Korinther 4,16"
+    },
+    {
+      "text": "Denn das alles geschieht um euretwillen, damit die Gnade, gemehrt durch immer weiteren Zuwachs (der Begnadeten), die Danksagung in immer stärkerem Strom sich ergießen lasse zur Ehre Gottes.",
+      "reference": "2. Korinther 4,15"
+    },
+    {
+      "text": "Ist er aber durch Gnade (ausgesondert), so ist er es nicht mehr aufgrund von Werken; sonst würde ja die Gnade keine Gnade mehr sein.",
+      "reference": "Römer 11,6"
+    },
+    {
+      "text": "Die Gnade sei mit allen, die unsern Herrn Jesus Christus lieben mit unverbrüchlicher Treue.",
+      "reference": "Epheser 6,24"
+    },
+    {
+      "text": "Im übrigen, liebe Brüder, freuet euch! Laßt euch zurechtbringen, nehmt Ermahnungen an, seid eines Sinnes und haltet Frieden; dann wird der Gott der Liebe und des Friedens mit euch sein.",
+      "reference": "2. Korinther 13,11"
+    },
+    {
+      "text": "Ich liebe, die mich lieben, und wer mich eifrig sucht, der findet mich.",
+      "reference": "Sprüche 8,17"
+    },
+    {
+      "text": "Die Gnade des Herrn Jesus Christus und die Liebe Gottes und die Gemeinschaft des heiligen Geistes sei mit euch allen!",
+      "reference": "2. Korinther 13,13"
+    },
+    {
+      "text": "Dann werden alle sich freun, die auf dich vertrauen: allzeit werden sie jubeln, daß du sie beschirmst; und frohlocken werden alle über dich, die deinen Namen lieben.",
+      "reference": "Psalm 5,12"
+    },
+    {
+      "text": "Zeigt euch vielmehr gütig und herzlich gegeneinander, und vergebt einer dem andern, wie auch Gott euch in Christus vergeben hat!",
+      "reference": "Epheser 4,32"
+    },
+    {
+      "text": "Denn du, HERR, segnest den Gerechten, schirmst ihn mit (deiner) Gnade wie mit einem Schilde.",
+      "reference": "Psalm 5,13"
+    },
+    {
+      "text": "So wollen wir denn mit freudiger Zuversicht zum Thron der Gnade hinzutreten, um Barmherzigkeit zu empfangen und Gnade zu finden zu rechtzeitiger Hilfe.",
+      "reference": "Hebräer 4,16"
+    },
+    {
+      "text": "Und dabei rühmen wir uns nicht maßlos aufgrund fremder Arbeitsleistungen, hegen aber die Hoffnung, beim Wachstum eures Glaubens dem uns zugewiesenen Wirkungsgebiet entsprechend bei euch noch ungleich größer dazustehen,",
+      "reference": "2. Korinther 10,15"
+    },
+    {
+      "text": "Sogar seinem Freunde ist der Arme widerwärtig; aber derer, die den Reichen lieben, sind viele. –",
+      "reference": "Sprüche 14,20"
+    },
+    {
+      "text": "zum Lobpreis der Herrlichkeit seiner Gnade, die er uns in dem Geliebten erwiesen hat.",
+      "reference": "Epheser 1,6"
+    },
+    {
+      "text": "Wer Liebe sucht, deckt Verfehlungen zu; wer aber eine Sache immer wieder aufrührt, entzweit vertraute Freunde. –",
+      "reference": "Sprüche 17,9"
+    },
+    {
+      "text": "Da wird man denn an jenem Tage sagen: »Seht, da ist unser Gott, auf den wir geharrt haben, daß er uns errette; da ist der HERR, auf den wir geharrt haben: laßt uns jubeln und uns freuen über seine Hilfe!«",
+      "reference": "Jesaja 25,9"
+    },
+    {
+      "text": "In Frieden will ich beides, mich niederlegen und schlafen; denn du allein, HERR, läßt mich in Sicherheit wohnen.",
+      "reference": "Psalm 4,9"
+    },
+    {
+      "text": "Sehet die Vögel des Himmels an: sie säen nicht und ernten nicht und sammeln nichts in Scheuern, und euer himmlischer Vater ernährt sie doch. Seid ihr denn nicht viel mehr wert als sie?",
+      "reference": "Matthäus 6,26"
+    },
+    {
+      "text": "»Wer meine Gebote hat und sie hält, der ist es, der mich liebt; wer aber mich liebt, wird von meinem Vater geliebt werden, und auch ich werde ihn lieben und mich ihm offenbaren.«",
+      "reference": "Johannes 14,21"
+    },
+    {
+      "text": "Tod und Leben stehen in der Gewalt der Zunge, und wer sie viel gebraucht, wird das, was sie anrichtet, zu schmecken bekommen. –",
+      "reference": "Sprüche 18,21"
+    },
+    {
+      "text": "Ist der HERR für mich, so fürchte ich nichts: was können Menschen mir tun?",
+      "reference": "Psalm 118,6"
+    },
+    {
+      "text": "Nein, trachtet zuerst nach dem Reiche Gottes und nach seiner Gerechtigkeit, dann wird euch all das andere obendrein gegeben werden.",
+      "reference": "Matthäus 6,33"
+    },
+    {
+      "text": "Gnade sei mit euch und Friede von Gott unserm Vater und dem Herrn Jesus Christus!",
+      "reference": "Epheser 1,2"
+    },
+    {
+      "text": "Fürchte dich nicht, du kleine Herde! Denn eurem Vater hat es gefallen, euch das Reich (Gottes) zu geben.",
+      "reference": "Lukas 12,32"
+    },
+    {
+      "text": "So ziehet nun als von Gott Auserwählte, als Heilige und Geliebte, herzliches Erbarmen, Gütigkeit, Demut, Sanftmut und Geduld an;",
+      "reference": "Kolosser 3,12"
+    },
+    {
+      "text": "Gepriesen sei der Gott und Vater unsers Herrn Jesus Christus, der uns mit jedem Segen geistlicher Art, (der) in der Himmelswelt (vorhanden ist), in Christus gesegnet hat!",
+      "reference": "Epheser 1,3"
+    },
+    {
+      "text": "Ihr vom Hause Aarons, vertraut auf den HERRN! – Ihre Hilfe und ihr Schild ist er.",
+      "reference": "Psalm 115,10"
+    },
+    {
+      "text": "Und wer seine Gebote hält, der bleibt in der Gemeinschaft mit ihm und er mit ihm; und daran erkennen wir, daß er in der Gemeinschaft mit uns bleibt: an dem Geist, den er uns gegeben hat.",
+      "reference": "1. Johannes 3,24"
+    },
+    {
+      "text": "Und der Friede Christi regiere in euren Herzen – zu diesem seid ihr ja auch berufen worden als ein Leib –, und erweiset euch dankbar (dafür)!",
+      "reference": "Kolosser 3,15"
+    },
+    {
+      "text": "Ihr, die ihr fürchtet den HERRN, vertraut auf den HERRN! – Ihre Hilfe und ihr Schild ist er.",
+      "reference": "Psalm 115,11"
+    },
+    {
+      "text": "Diese sind stark durch Wagen und jene durch Rosse, doch wir sind stark durch den Namen des HERRN, unsers Gottes.A",
+      "reference": "Psalm 20,8"
+    },
+    {
+      "text": "Zu dem allem aber (ziehet) die Liebe (an), die das Band der Vollkommenheit ist.",
+      "reference": "Kolosser 3,14"
+    },
+    {
+      "text": "Und alles, was ihr mit Worten oder Werken tun mögt, das tut alles im Namen des Herrn Jesus, indem ihr eure Dankgebete durch seine Vermittlung vor Gott den Vater bringt.",
+      "reference": "Kolosser 3,17"
+    },
+    {
+      "text": "Frieden hinterlasse ich euch, meinen Frieden gebe ich euch; nicht so, wie die Welt gibt, gebe ich euch. Euer Herz erschrecke nicht und verzage nicht!",
+      "reference": "Johannes 14,27"
+    },
+    {
+      "text": "Zu jeder Zeit beweist der (wahre) Freund Liebe und wird als Bruder für die Zeit der Not geboren. –",
+      "reference": "Sprüche 17,17"
+    },
+    {
+      "text": "Denn wie ich Wasser ausgieße auf das dürstende Land und Rieselfluten auf dürres Erdreich, so will ich meinen Geist auf deinen Samen ausgießen und meinen Segen auf deine Sprößlinge,",
+      "reference": "Jesaja 44,3"
+    },
+    {
+      "text": "Laßt das Wort Christi reichlich unter euch wohnen; belehrt und ermahnt einander in aller Weisheit, und singet Gott mit Psalmen, Lobgesängen und geistlichen Liedern, voller Dankbarkeit in euren Herzen.",
+      "reference": "Kolosser 3,16"
+    },
+    {
+      "text": "Doch du, o Allherr, bist ein Gott voll Erbarmen und Gnade, langmütig und reich an Gnade und Treue.",
+      "reference": "Psalm 86,15"
+    },
+    {
+      "text": "Vertraue auf den HERRN mit ganzem Herzen und verlaß dich nicht auf eigene Klugheit;",
+      "reference": "Sprüche 3,5"
+    },
+    {
+      "text": "doch er hat zu mir gesagt: »Meine Gnade ist für dich genügend, denn meine Kraft gelangt in der Schwachheit zur Vollendung.« Daher will ich mich am liebsten um so mehr meiner Schwachheiten rühmen, damit die Kraft Christi Wohnung bei mir nimmt.",
+      "reference": "2. Korinther 12,9"
+    },
+    {
+      "text": "Gott hat aber die Macht, euch mit jeglicher Gnadengabe reichlich zu segnen, auf daß ihr allezeit in jeder Hinsicht vollauf genug habt und (außerdem noch) reiche Mittel besitzt zu guten Werken jeder Art,",
+      "reference": "2. Korinther 9,8"
+    },
+    {
+      "text": "Dies ist aber sein Gebot, daß wir an den Namen seines Sohnes Jesus Christus glauben und einander lieben dem Gebot entsprechend, das er uns gegeben hat.",
+      "reference": "1. Johannes 3,23"
+    },
+    {
+      "text": "Frieden in Fülle erlangen die Freunde deines Gesetzes, denn es gibt für sie kein Straucheln.",
+      "reference": "Psalm 119,165"
+    },
+    {
+      "text": "Oder wie könnte jemand in das Haus des Starken eindringen und ihm sein Rüstzeug rauben, ohne zunächst den Starken gefesselt zu haben? Erst dann kann er ihm das Haus ausplündern. –",
+      "reference": "Matthäus 12,29"
+    },
+    {
+      "text": "denke an ihn auf allen deinen Wegen, so wird er dir die Pfade ebnen. –",
+      "reference": "Sprüche 3,6"
+    },
+    {
+      "text": "Gott ist uns Zuflucht und Stärke, als Hilfe in Nöten wohlbewährt befunden.",
+      "reference": "Psalm 46,2"
+    },
+    {
+      "text": "So ließ er sein Volk in Freuden ausziehn, unter Jubel seine Erwählten;",
+      "reference": "Psalm 105,43"
+    },
+    {
+      "text": "Er sende dir Hilfe vom Heiligtum her und leiste dir Beistand von Zion aus!",
+      "reference": "Psalm 20,3"
+    },
+    {
+      "text": "Den Frommen geht er auf wie ein Licht in der Finsternis, als gnädig, barmherzig und gerecht.",
+      "reference": "Psalm 112,4"
+    },
+    {
+      "text": "Denn wer ist unsere Hoffnung, unsere Freude und unser Ruhmeskranz, wenn nicht auch ihr es seid, vor dem Angesicht unsers Herrn Jesus bei seiner Ankunft?",
+      "reference": "1. Thessalonicher 2,19"
+    },
+    {
+      "text": "Ich sehne mich nach deiner Hilfe, o HERR, und dein Gesetz ist meine Freude.",
+      "reference": "Psalm 119,174"
+    },
+    {
+      "text": "Das Reich Gottes besteht ja nicht in Essen und Trinken, sondern in Gerechtigkeit und Frieden und Freude im heiligen Geist;",
+      "reference": "Römer 14,17"
+    },
+    {
+      "text": "Den Weg des Friedens kennen sie nicht, und kein Recht gibt es in ihren Geleisen; sie schlagen krumme Pfade ein: wer immer sie betritt, lernt den Frieden nicht kennen.",
+      "reference": "Jesaja 59,8"
+    },
+    {
+      "text": "Mit Gottes Hilfe werde sein Wort ich rühmen, mit Hilfe des HERRN werde sein Wort ich rühmen.",
+      "reference": "Psalm 56,11"
+    },
+    {
+      "text": "Euch allen, die ihr als Geliebte Gottes, als berufene Heilige in Rom wohnt, sende ich meinen Gruß: Gnade werde euch zuteil und Friede von Gott unserm Vater und dem Herrn Jesus Christus!",
+      "reference": "Römer 1,7"
+    },
+    {
+      "text": "Er aber sagte zu der Frau: »Dein Glaube hat dich gerettet: gehe hin in Frieden!«",
+      "reference": "Lukas 7,50"
+    },
+    {
+      "text": "Um so reicher ist aber die Gnade, die er zuteilt. Darum heißt es: »Gott widersteht den Hoffärtigen, den Demütigen aber gibt er Gnade.«",
+      "reference": "Jakobus 4,6"
+    },
+    {
+      "text": "Neige dein Ohr mir zu, eile zu meiner Rettung herbei, sei mir ein schützender Fels, eine feste Burg, mir zu helfen!",
+      "reference": "Psalm 31,3"
+    },
+    {
+      "text": "In dieser besitzen wir ja gleichsam einen festen und zuverlässigen Anker für unsere Seele, der bis hinter den Vorhang (in das himmlische Heiligtum) hineinreicht,",
+      "reference": "Hebräer 6,19"
+    },
+    {
+      "text": "damit Christus durch den Glauben Wohnung in euren Herzen nehme und ihr in der Liebe tiefgewurzelt und festgegründet dastehet,",
+      "reference": "Epheser 3,17"
+    },
+    {
+      "text": "Weil aber die Schrift voraussah, daß Gott die Völker um des Glaubens willen rechtfertigt, hat sie dem Abraham die Heilsverheißung im voraus verkündigtGen 12,318,18\">: »In dir sollen alle Völker gesegnet werden.«",
+      "reference": "Galater 3,8"
+    },
+    {
+      "text": "Der Gott aber, der unsere Hoffnung ist, erfülle euch mit aller Freude und mit Frieden auf dem Grunde des Glaubens, damit ihr immer reicher an Hoffnung werdet durch die Kraft des heiligen Geistes!",
+      "reference": "Römer 15,13"
+    },
+    {
+      "text": "Somit empfangen die, welche aus dem Glauben sind den Segen zugleich mit dem gläubigen Abraham.",
+      "reference": "Galater 3,9"
+    },
+    {
+      "text": "Denn in Christus Jesus hat weder die Beschneidung noch das Unbeschnittensein irgendwelche Bedeutung, sondern nur der Glaube, der sich durch Liebe betätigt.",
+      "reference": "Galater 5,6"
+    },
+    {
+      "text": "Ohne Glauben aber kann man (Gott) unmöglich wohlgefallen; denn wer sich Gott nahen will, muß glauben, daß es einen Gott gibt und daß er denen, die ihn suchen, ihren Lohn zukommen läßt. –",
+      "reference": "Hebräer 11,6"
+    },
+    {
+      "text": "in welchem wir die freudige Zuversicht und den freien Zutritt (zu Gott) in freudigem Vertrauen durch den Glauben an ihn haben.",
+      "reference": "Epheser 3,12"
+    },
+    {
+      "text": "»Ein neues Gebot gebe ich euch, daß ihr einander lieben sollt; wie ich euch geliebt habe, so sollt auch ihr einander lieben.",
+      "reference": "Johannes 13,34"
+    },
+    {
+      "text": "Daß deine Geliebten gerettet werden, hilf uns mit deiner Rechten, erhör’ uns!",
+      "reference": "Psalm 108,7"
+    },
+    {
+      "text": "denn wir erwarten durch den Geist das Hoffnungsgut der Gerechtigkeit aufgrund des Glaubens.",
+      "reference": "Galater 5,5"
+    },
+    {
+      "text": "Aus seiner Fülle haben wir ja alle empfangen, und zwar Gnade über Gnade.",
+      "reference": "Johannes 1,16"
+    },
+    {
+      "text": "Ewig möge er thronen vor Gottes Angesicht! Entbiete Gnade und Treue, daß sie ihn behüten!",
+      "reference": "Psalm 61,8"
+    },
+    {
+      "text": "Gedenke meiner, o HERR, mit der Liebe zu deinem Volk, nimm dich meiner an mit deiner Hilfe,",
+      "reference": "Psalm 106,4"
+    },
+    {
+      "text": "und wenn das Haus es verdient, soll der Friede, den ihr ihm gewünscht habt, ihm auch zuteil werden; ist es dessen aber nicht würdig, so soll euer ihm gewünschter Friede zu euch zurückkehren.",
+      "reference": "Matthäus 10,13"
+    },
+    {
+      "text": "Es ist aber der Glaube ein zuversichtliches Vertrauen auf das, was man hofft, ein festes Überzeugtsein von Dingen, die man (mit Augen) nicht sieht.",
+      "reference": "Hebräer 11,1"
+    },
+    {
+      "text": "Der Gott des Friedens aber sei mit euch allen! Amen.",
+      "reference": "Römer 15,33"
+    },
+    {
+      "text": "Ich bitte euch aber dringend, liebe Brüder, bei unserm Herrn Jesus Christus und bei der Liebe, die der (heilige) Geist wirkt: steht mir mit den Gebeten, die ihr für mich an Gott richtet, im Kampfe kräftig bei,",
+      "reference": "Römer 15,30"
+    },
+    {
+      "text": "»Euer Herz erschrecke nicht! Vertrauet auf Gott und vertrauet auf mich!",
+      "reference": "Johannes 14,1"
+    },
+    {
+      "text": "Du hast Gerechtigkeit geliebt und Gesetzwidrigkeit gehaßt; darum hat dich, o Gott, dein Gott mit Freudenöl gesalbt vor deinen Genossen.«",
+      "reference": "Hebräer 1,9"
+    },
+    {
+      "text": "So ist er denn gekommen und hat Frieden euch, den Fernstehenden, und ebenso Frieden den Nahestehenden als frohe Botschaft verkündigt;",
+      "reference": "Epheser 2,17"
+    },
+    {
+      "text": "Es müßte sonst sein, daß man Schutz bei mir suchte und Frieden mit mir machte, ja Frieden machte mit mir!«",
+      "reference": "Jesaja 27,5"
+    },
+    {
+      "text": "Jesus antwortete ihm: »Ich bin der Weg und die Wahrheit und das Leben; niemand kommt zum Vater außer durch mich.",
+      "reference": "Johannes 14,6"
+    },
+    {
+      "text": "daß Gnade und Treue einander begegnen, Gerechtigkeit und Friede sich küssen.",
+      "reference": "Psalm 85,11"
+    },
+    {
+      "text": "Wird wohl ein Weib ihres Kindleins vergessen, so daß sie sich nicht erbarmt über das Kind ihres Mutterleibes? Und sollten selbst Mütter seiner vergessen, so will ich doch deiner nicht vergessen;",
+      "reference": "Jesaja 49,15"
+    },
+    {
+      "text": "So ist ja alles, was vor Zeiten geschrieben worden ist, für uns zur Belehrung geschrieben, damit wir durch standhaftes Ausharren und durch den Trost, den die (heiligen) Schriften gewähren, an der Hoffnung festhalten.",
+      "reference": "Römer 15,4"
+    },
+    {
+      "text": "Darum nehmet euch gegenseitig (in Liebe) an, wie auch Christus euch zu Gottes Verherrlichung (in Liebe) angenommen hat!",
+      "reference": "Römer 15,7"
+    },
+    {
+      "text": "Denn du, o Allherr, bist gütig und bereit zum Verzeihen, bist reich an Gnade für alle, die dich anrufen.",
+      "reference": "Psalm 86,5"
+    },
+    {
+      "text": "Jubelt, ihr Himmel, und jauchze, du Erde, und ihr Berge, brecht in Jubel aus! Denn der HERR hat sein Volk getröstet und seiner Gebeugten sich erbarmt.",
+      "reference": "Jesaja 49,13"
+    },
+    {
+      "text": "mit aller Demut und Sanftmut, mit Geduld als solche, die einander in Liebe ertragen,",
+      "reference": "Epheser 4,2"
+    },
+    {
+      "text": "Denn wenn ich auch leiblich abwesend bin, so bin ich doch dem Geist nach bei euch gegenwärtig und sehe mit Freuden eure festgeschlossene Kampfstellung und das gesicherte Bollwerk eures Glaubens an Christus.",
+      "reference": "Kolosser 2,5"
+    },
+    {
+      "text": "der spricht zum HERRN: »Meine Zuflucht und meine Burg, mein Gott, auf den ich vertraue!«",
+      "reference": "Psalm 91,2"
+    },
+    {
+      "text": "Traget einer des andern Lasten, so werdet ihr dadurch das Gesetz Christi erfüllen.",
+      "reference": "Galater 6,2"
+    },
+    {
+      "text": "Dienet einander, ein jeder mit der Gnadengabe, die er empfangen hat, als gute Verwalter der mannigfachen Gnadengaben Gottes!",
+      "reference": "1. Petrus 4,10"
+    },
+    {
+      "text": "Fürwahr, Gott ist mein Heil: ich bin voller Zuversicht und fürchte mich nicht! Denn Gott, der HERR, ist meine Stärke und mein Lobgesang, und er ist mir ein Retter geworden!«",
+      "reference": "Jesaja 12,2"
+    },
+    {
+      "text": "»Ich, der HERR, habe dich berufen in Gerechtigkeit und dich bei der Hand gefaßt und habe dich behütet und dich zum Volksbund gemacht, zum Licht für die Völker,",
+      "reference": "Jesaja 42,6"
+    },
+    {
+      "text": "Laßt uns aber nicht müde werden, das Rechte zu tun; denn zu seiner Zeit werden wir ernten, wenn wir nicht ermatten.",
+      "reference": "Galater 6,9"
     }
   ]
 }
