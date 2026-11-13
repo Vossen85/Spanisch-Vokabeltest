@@ -361,6 +361,9 @@
     /* Motivation des Tages: ausschließlich im geschützten Lehrerbereich. */
     .teacher-motivation{margin:15px 0 20px}
     #motivationToggleBtn{display:block;width:100%;min-height:70px;padding:15px 20px;border:2px solid #f5b62f;border-radius:17px;background:linear-gradient(135deg,#ffed78,#ffca3a);color:#493005;font-size:1.2rem;font-weight:850;text-align:center;box-shadow:0 7px 19px rgba(172,115,8,.16);cursor:pointer;color-scheme:only light;position:relative;overflow:hidden;isolation:isolate}
+    /* Samsung Internet/PWA erzwungener Dunkelmodus: Beschriftung bleibt dunkel und lesbar. */
+    #motivationToggleBtn{color:#302300!important;-webkit-text-fill-color:#302300!important}
+    #motivationToggleBtn .rainbow-button-label{color:#302300!important;-webkit-text-fill-color:#302300!important;text-shadow:0 1px 0 rgba(255,255,255,.35);font-weight:900}
     #motivationToggleBtn:hover{filter:brightness(1.04)}
     #motivationToggleBtn:focus-visible{outline:3px solid #ad6e00;outline-offset:3px}
     .motivation-daily{margin:0 0 13px;padding:18px 17px;border:1px solid #f4d77b;border-radius:17px;background:#fffdf3;text-align:center;box-shadow:0 5px 18px rgba(90,65,9,.07)}
@@ -950,7 +953,7 @@
       "activity":["#9082ff","#6657ee"],
       "reports":["#ca79ff","#a04cea"],
       "admin":["#ff79c7","#e84aa0"],
-      "motivation":["#fff078","#ffc928"],
+      "motivation":["#f4d04e","#ebb127"],
       "logout":["#fb8990","#e35476"]
     };
     const buttons=[...document.querySelectorAll(".nav .navBtn"),...document.querySelectorAll(".test-sub-btn"),$("motivationToggleBtn"),$("logoutBtn"),$("logoutPendingBtn")].filter(Boolean);
