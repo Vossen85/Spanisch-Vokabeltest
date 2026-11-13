@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#15b9aa">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Wörterbuch – ¡Avanza!</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#182436;background:#f5f8fa;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;padding:16px 16px 60px}
+main{max-width:850px;margin:0 auto}
+a{color:#096b79}
+.back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:750;margin:0 0 18px;padding:9px 11px;border-radius:10px;background:#e5f5f4;color:#08716e}
+.back:hover{background:#c8ebe9}
+.hero{background:#fff;border:1px solid #d6e6eb;border-radius:21px;padding:clamp(18px,4vw,29px);box-shadow:0 10px 26px #1830480d}
+h1{margin:0 0 5px;font-size:clamp(1.8rem,5vw,2.55rem);line-height:1.18;font-weight:900}
+.intro{color:#607389;margin:8px 0 18px;line-height:1.5}
+.search-row{display:flex;align-items:center;gap:10px;border:2px solid #0ea89d;border-radius:14px;background:#fff;padding:7px 9px}
+.search-row:focus-within{box-shadow:0 0 0 4px #25d2b626}
+.search-symbol{font-size:1.25rem;margin-left:4px}
+#wordSearch{min-width:0;flex:1;border:0;outline:0;background:transparent;color:inherit;padding:8px 3px;font:inherit;font-size:1.15rem}
+#clearSearch{border:0;background:#e2e8f0;color:#344054;border-radius:8px;cursor:pointer;padding:7px 10px;font-size:1rem}
+#clearSearch[hidden]{display:none}
+.under{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 10px;color:#64748b;font-size:.83rem;margin:10px 2px 0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0 14px}
+.filter{border:1px solid #cedde5;padding:8px 14px;border-radius:999px;background:#fff;color:#506276;font-weight:750;cursor:pointer;font:inherit}
+.filter[aria-pressed=true]{background:#087b79;color:white;border-color:#087b79;font-weight:800}
+.filter:focus-visible,.sample:focus-visible,.more:focus-visible,.back:focus-visible{outline:3px solid #f72585;outline-offset:3px}
+.status{color:#506276;font-weight:600;margin:15px 2px}
+.samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sample{border:1px solid #bde5e4;background:#f0fffc;color:#08716e;border-radius:999px;padding:7px 10px;font:inherit;cursor:pointer;font-size:.85rem}
+.results{display:grid;gap:11px}
+.entry{background:#fff;border:1px solid #dce5eb;border-left:5px solid #15b9aa;border-radius:15px;padding:15px;box-shadow:0 5px 16px #15223809}
+.entry.grammatik{border-left-color:#8053d7}
+.pair{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 12px}
+.spanish{font-size:1.21rem;font-weight:900;color:#0e8178;overflow-wrap:anywhere}
+.entry.grammatik .spanish{color:#7851c7}
+.german{font-size:1.01rem;font-weight:650;overflow-wrap:anywhere}
+.meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.tag{border-radius:999px;padding:4px 8px;background:#d8f4ef;color:#09685f;font-size:.75rem;font-weight:750}
+.entry.grammatik .tag{background:#eee4fc;color:#6e42b0}
+.reason{font-size:.81rem;color:#6e5ba0}
+.found{display:grid;gap:5px;margin-top:11px;padding-top:9px;border-top:1px solid #edf1f4}
+.found-title{font-weight:800;color:#526476;font-size:.8rem;margin-bottom:2px}
+.loc{display:flex;gap:6px;align-items:flex-start;font-size:.84rem;line-height:1.35;overflow-wrap:anywhere}
+.loc .mark{flex:none;opacity:.55}
+.loc a{text-underline-offset:2px}
+.more{justify-self:start;padding:5px 9px;border:0;border-radius:8px;background:#f0f4f9;color:#39536d;font-weight:750;cursor:pointer}
+.empty{background:#fff;border:1px dashed #bdcbd9;border-radius:14px;padding:26px 18px;text-align:center;line-height:1.5;color:#6a7988}
+.note{line-height:1.5;color:#64748b;font-size:.82rem;padding:12px 4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+[hidden]{display:none!important}
+@media(prefers-color-scheme:dark){
+ :root{color:#eef2ff;background:#10151e;color-scheme:dark}
+ .hero,.entry,.empty{background:#1c2029;border-color:#46515d}
+ .intro,.under,.status,.found-title,.note{color:#b2c0d8}
+ .search-row{background:#22252e}
+ #clearSearch{background:#434957;color:#eef2ff}
+ .back,.sample{background:#163c3d;color:#7be0d4;border-color:#315e5a}
+ .filter{background:#303540;color:#e0e7f3;border-color:#505767}
+ .filter[aria-pressed=true]{background:#087b79;color:#fff}
+ .spanish{color:#53dacc}.entry.grammatik .spanish{color:#b7a0ff}
+ .tag{background:#15443f;color:#80e0d2}
+ .entry.grammatik .tag{background:#382b58;color:#c5b1ff}
+ .reason{color:#c1b0f1}
+ .found{border-color:#404653}
+ .more{background:#303743;color:#dde5f5}
+ .german{color:#e4eafa}
+ .loc a{color:#74d7dc}
+}
+@media(max-width:600px){body{padding:12px 11px 40px}.hero{padding:15px}.entry{padding:12px}.pair{display:block}.german{display:block;margin-top:4px}.filter{padding:8px 10px}}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="./uebung.html">← Zurück zu ¡Avanza!</a>
+<section class="hero" aria-labelledby="dictTitle">
+<h1 id="dictTitle">📖 Wörterbuch</h1>
+<p class="intro">Suche auf Deutsch oder Spanisch. Auch konjugierte Verben und Pluralformen können zu ihrem gespeicherten Eintrag führen.</p>
+<label class="sr-only" for="wordSearch">Deutsch oder Spanisch suchen</label>
+<div class="search-row">
+<span class="search-symbol" aria-hidden="true">⌕</span>
+<input id="wordSearch" type="search" placeholder="z. B. escrib, escribió, suchen …" spellcheck="false" autocomplete="off" maxlength="100" autofocus>
+<button id="clearSearch" title="Suche leeren" aria-label="Suche leeren" type="button" hidden>✕</button>
+</div>
+<div class="under"><span id="loadedCount">Wörter werden geladen …</span><span>Deutsch ↔ Español</span></div>
+</section>
+<nav class="filters" aria-label="Suchergebnisse filtern">
+<button class="filter" type="button" data-type="Alle" aria-pressed="true">Alle</button>
+<button class="filter" type="button" data-type="Vokabeln" aria-pressed="false">Vokabeln</button>
+<button class="filter" type="button" data-type="Grammatik" aria-pressed="false">Grammatik</button>
+</nav>
+<div id="status" class="status" role="status" aria-live="polite">Wörterbuch wird geladen …</div>
+<section id="results" class="results" aria-label="Wörterbuchtreffer"></section>
+<div id="samples" class="samples" hidden>
+<button class="sample" data-search="escribió" type="button">escribió</button>
+<button class="sample" data-search="tuvo" type="button">tuvo</button>
+<button class="sample" data-search="lápices" type="button">lápices</button>
+<button class="sample" data-search="suchen" type="button">suchen</button>
+<button class="sample" data-search="fui" type="button">fui</button>
+</div>
+<p class="note">Das Wörterbuch durchsucht nur hinterlegte Vokabeln und die Verben aus dem Grammatikbereich. Wörter aus „Grammatik in Sätzen üben“ werden nicht aufgenommen. Bei mehrdeutigen Wortformen werden mögliche Grundformen angezeigt.</p>
+</main>
+<script src="./woerterbuch-suche.js?v=20261113a"></script>
+<script>
+(function(){
+"use strict";
+const API_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co/functions/v1/practice-test";
+const API_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+const $=id=>document.getElementById(id);
+let index=null,selectedType="Alle";
+const collator=new Intl.Collator("de",{sensitivity:"base",numeric:true});
+function elt(tag,cls,value){
+ const node=document.createElement(tag);
+ if(cls)node.className=cls;
+ if(value!==undefined)node.textContent=String(value);
+ return node;
+}
+function api(body){
+ return fetch(API_URL,{
+  method:"POST",headers:{"Content-Type":"application/json","apikey":API_KEY,"Authorization":"Bearer "+API_KEY},
+  body:JSON.stringify(body)
+ }).then(async response=>{
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||data.error)throw new Error(data.error||"Die Vokabeln konnten nicht geladen werden.");
+  return data;
+ });
+}
+function folderMaps(units){
+ const folderById=new Map();
+ for(const unit of units){
+  const groups=new Map();
+  for(const folder of unit.folders||[]){
+   const key=folder.quarterOrder||0;
+   if(!groups.has(key))groups.set(key,[]);
+   groups.get(key).push(folder);
+  }
+  for(const group of groups.values()){
+   group.sort((a,b)=>(a.sortOrder||0)-(b.sortOrder||0)||collator.compare(a.title,b.title));
+   group.forEach((f,i)=>folderById.set(Number(f.id),{...f,order:i+1,unit}));
+  }
+ }
+ return folderById;
+}
+function vocabLocations(row,folders){
+ const result=[],seen=new Set();
+ for(const id of row.folderIds||[]){
+  const f=folders.get(Number(id));
+  if(!f)continue;
+  const code=f.unit.courseKey||"EF";
+  const location=code==="EF"
+   ?["EF",f.unit.title,(f.order||"")+"."+" Lernordner: "+f.title]
+   :[code+(f.quarterOrder?"."+f.quarterOrder:""),f.quarterTitle,(f.order||"")+"."+" Lernordner: "+f.title];
+  const label=location.filter(Boolean).join(" · ");
+  if(!seen.has(label)){seen.add(label);result.push({label,href:"uebung.html?woerterbuchOrdner="+encodeURIComponent(id)})}
+ }
+ if(!result.length){
+  result.push({label:[row.courseKey,row.unitTitle].filter(Boolean).join(" · ")||"Vokabelbereich",href:"uebung.html#vokabeln"});
+ }
+ return result;
+}
+function buildEntries(vocab,catalog,grammar){
+ const folders=folderMaps(catalog);
+ const entries=[],merge=new Map();
+ const add=(spanish,german,type,locations)=>{
+  const es=Array.isArray(spanish)?spanish:[spanish];
+  if(!es.some(x=>String(x||"").trim())||!String(german||"").trim())return;
+  const key=type+"|"+es.join("¦")+"|"+german;
+  let entry=merge.get(key);
+  if(!entry){entry={spanish:es,german,type,locations:[]};merge.set(key,entry);entries.push(entry)}
+  const seen=new Set(entry.locations.map(x=>x.label));
+  for(const loc of locations)if(loc.label&&!seen.has(loc.label)){entry.locations.push(loc);seen.add(loc.label)}
+ };
+ for(const row of vocab){
+  add(row.acceptedAnswers||[],row.sourceText,"Vokabeln",vocabLocations(row,folders));
+ }
+ for(const topic of grammar){
+  if(!Array.isArray(topic.verbs))continue;
+  for(const verb of topic.verbs){
+   if(!verb||!verb.verb||!verb.de)continue;
+   add([verb.verb],verb.de,"Grammatik",[{label:[topic.group,topic.title].filter(Boolean).join(" · "),href:"grammatik-karten.html"}]);
+  }
+ }
+ return entries;
+}
+function addLocations(card,locations){
+ const list=elt("div","found");
+ list.appendChild(elt("div","found-title",locations.length===1?"Fundstelle":"Fundstellen ("+locations.length+")"));
+ const first=3;
+ locations.forEach((location,i)=>{
+  const line=elt("div","loc");
+  if(i>=first)line.hidden=true;
+  line.appendChild(elt("span","mark","⌖"));
+  const a=elt("a","",location.label);
+  a.href=location.href||"uebung.html";
+  line.appendChild(a);
+  list.appendChild(line);
+ });
+ if(locations.length>first){
+  const more=elt("button","more","+"+(locations.length-first)+" weitere Fundstellen");
+  more.type="button";
+  more.addEventListener("click",()=>{
+   const opening=more.textContent.startsWith("+");
+   [...list.querySelectorAll(".loc")].slice(first).forEach(line=>line.hidden=!opening);
+   more.textContent=opening?"Weniger anzeigen":"+"+(locations.length-first)+" weitere Fundstellen";
+  });
+  list.appendChild(more);
+ }
+ card.appendChild(list);
+}
+function render(){
+ const q=$("wordSearch").value.trim(),root=$("results");
+ $("clearSearch").hidden=!q;
+ root.replaceChildren();
+ if(!index){
+  $("status").textContent="Wörterbuch wird geladen …";
+  return;
+ }
+ if(q.length<2){
+  $("samples").hidden=false;
+  $("status").textContent="Gib mindestens zwei Buchstaben ein. Die Treffer erscheinen sofort beim Tippen.";
+  return;
+ }
+ $("samples").hidden=true;
+ const found=index.lookup(q,10000);
+ const filtered=found.results.filter(e=>selectedType==="Alle"||e.type===selectedType);
+ const visible=filtered.slice(0,45);
+ $("status").textContent=filtered.length
+  ?filtered.length+" Treffer für „"+q+"“"+(filtered.length>visible.length?" · Erste "+visible.length+" angezeigt":"")
+  :"Nicht im Wörterbuch vorhanden: „"+q+"“";
+ if(!filtered.length){
+  root.appendChild(elt("div","empty","Kein passender Eintrag gefunden. Probiere eine Grundform oder einen anderen Suchbegriff."));
+  return;
+ }
+ const frag=document.createDocumentFragment();
+ for(const row of visible){
+  const card=elt("article","entry "+(row.type==="Grammatik"?"grammatik":""));
+  const pair=elt("div","pair");
+  pair.appendChild(elt("div","spanish",row.spanish.join(" / ")));
+  pair.appendChild(elt("div","german",row.german));
+  card.appendChild(pair);
+  const meta=elt("div","meta");
+  meta.appendChild(elt("span","tag",row.type));
+  if(row.reason)meta.appendChild(elt("span","reason",row.reason));
+  card.appendChild(meta);
+  addLocations(card,row.locations);
+  frag.appendChild(card);
+ }
+ root.appendChild(frag);
+}
+async function init(){
+ try{
+  const [catalog,grammarResponse]=await Promise.all([
+   api({action:"catalog"}),
+   fetch("./grammatik-themen.json",{cache:"no-store"})
+  ]);
+  if(!grammarResponse.ok)throw new Error("Grammatikdaten nicht erreichbar.");
+  const grammar=await grammarResponse.json();
+  const units=Array.isArray(catalog.units)?catalog.units:[];
+  if(!units.length)throw new Error("Keine Vokabelbereiche verfügbar.");
+  const list=await api({action:"vocab_list",unitKeys:units.map(u=>u.unitKey),folderIds:[]});
+  const entries=buildEntries(list.vocabulary||[],units,grammar.topics||[]);
+  index=window.AvanzaWoerterbuchSuche.build(entries);
+  const vocabularyCount=entries.filter(e=>e.type==="Vokabeln").length;
+  const grammarCount=entries.length-vocabularyCount;
+  $("loadedCount").textContent=vocabularyCount+" Vokabeleinträge · "+grammarCount+" Grammatikverben";
+  render();
+ }catch(error){
+  $("loadedCount").textContent="Laden nicht möglich";
+  $("status").textContent="Das Wörterbuch konnte nicht geladen werden.";
+  $("results").replaceChildren(elt("div","empty","Fehler: "+(error?.message||"Bitte die Seite neu laden.")));
+ }
+}
+$("wordSearch").addEventListener("input",render);
+$("clearSearch").addEventListener("click",()=>{$("wordSearch").value="";render();$("wordSearch").focus()});
+document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
+ selectedType=btn.dataset.type;
+ document.querySelectorAll(".filter").forEach(b=>b.setAttribute("aria-pressed",String(b===btn)));
+ render();
+}));
+document.querySelectorAll(".sample").forEach(btn=>btn.addEventListener("click",()=>{
+ $("wordSearch").value=btn.dataset.search;render();$("wordSearch").focus();
+}));
+const initial=new URLSearchParams(location.search).get("q");
+if(initial)$("wordSearch").value=initial.slice(0,100);
+void init();
+})();
+</script>
+</body>
+</html>
