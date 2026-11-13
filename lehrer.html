@@ -360,7 +360,7 @@
 
     /* Motivation des Tages: ausschließlich im geschützten Lehrerbereich. */
     .teacher-motivation{margin:15px 0 20px}
-    #motivationToggleBtn{display:block;width:100%;min-height:70px;padding:15px 20px;border:2px solid #f5b62f;border-radius:17px;background:linear-gradient(135deg,#ffed78,#ffca3a);color:#493005;font-size:1.2rem;font-weight:850;text-align:center;box-shadow:0 7px 19px rgba(172,115,8,.16);cursor:pointer;color-scheme:light}
+    #motivationToggleBtn{display:block;width:100%;min-height:70px;padding:15px 20px;border:2px solid #f5b62f;border-radius:17px;background:linear-gradient(135deg,#ffed78,#ffca3a);color:#493005;font-size:1.2rem;font-weight:850;text-align:center;box-shadow:0 7px 19px rgba(172,115,8,.16);cursor:pointer;color-scheme:only light;position:relative;overflow:hidden;isolation:isolate}
     #motivationToggleBtn:hover{filter:brightness(1.04)}
     #motivationToggleBtn:focus-visible{outline:3px solid #ad6e00;outline-offset:3px}
     .motivation-daily{margin:0 0 13px;padding:18px 17px;border:1px solid #f4d77b;border-radius:17px;background:#fffdf3;text-align:center;box-shadow:0 5px 18px rgba(90,65,9,.07)}
@@ -450,7 +450,7 @@
         <div id="motivationRainbowText" class="motivation-daily-text"></div>
         <div id="motivationDailyReference" class="motivation-daily-reference"></div>
       </div>
-      <button id="motivationToggleBtn" type="button" aria-controls="motivationSettings" aria-expanded="false">🌞 Motivation des Tages</button>
+      <button id="motivationToggleBtn" data-view="motivation" type="button" aria-controls="motivationSettings" aria-expanded="false" title="Motivationsart auswählen oder Einstellungen schließen">🌞 Motivation des Tages</button>
       <div id="motivationSettings" class="motivation-controls hidden">
         <fieldset>
           <legend>Welche Motivation möchtest du sehen?</legend>
@@ -461,6 +461,7 @@
             <label><input type="radio" name="teacherMotivationMode" value="mixed">Gemischt</label>
           </div>
         </fieldset>
+        <p class="tiny" style="margin:13px 0 0">Tippe erneut auf den gelben Button, um die Einstellungen zu schließen. Dein Tagesvers bleibt darüber sichtbar.</p>
         <p id="motivationSettingsStatus" role="status">Die Einstellung gilt nur für dein Lehrerkonto, nicht für Schülerinnen und Schüler.</p>
       </div>
     </section>
@@ -889,7 +890,8 @@
       return;
     }
     setTeacherMotivationMode(data?.mode||"off");
-    // Nach dem Login sichtbar, auch solange die Einstellungen geschlossen sind.
+    // Das Einstellungsmenü bleibt zu; nur der farbige Tagesvers wird angezeigt.
+    // Er bleibt auch beim Zuklappen und beim Wechsel in andere Lehrerbereiche sichtbar.
     await renderTeacherMotivation();
   }
   $("motivationToggleBtn").addEventListener("click",()=>{
@@ -901,6 +903,10 @@
       $("motivationSettingsStatus").textContent=teacherMotivationMode==="off"?"Aktuell ausgeschaltet. Wähle eine Motivation.":"Diese Auswahl wird nur für dein Lehrerkonto gespeichert.";
     }
     // Der gelbe Button steuert nur das Einstellungsmenü, nicht den Tagesvers.
+    // Bei vorübergehendem Ladefehler den Tagesvers erneut versuchen.
+    if(teacherMotivationMode!=="off" && $("motivationDailyDisplay").classList.contains("hidden")){
+      void renderTeacherMotivation();
+    }
   });
   document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.addEventListener("change",async()=>{
     if(!input.checked||!teacherMotivationUserId)return;
@@ -944,9 +950,10 @@
       "activity":["#9082ff","#6657ee"],
       "reports":["#ca79ff","#a04cea"],
       "admin":["#ff79c7","#e84aa0"],
+      "motivation":["#fff078","#ffc928"],
       "logout":["#fb8990","#e35476"]
     };
-    const buttons=[...document.querySelectorAll(".nav .navBtn"),...document.querySelectorAll(".test-sub-btn"),$("logoutBtn"),$("logoutPendingBtn")].filter(Boolean);
+    const buttons=[...document.querySelectorAll(".nav .navBtn"),...document.querySelectorAll(".test-sub-btn"),$("motivationToggleBtn"),$("logoutBtn"),$("logoutPendingBtn")].filter(Boolean);
     const renderers=[];
     for(const button of buttons){
       const colors=palette[button.dataset.view||"logout"];
