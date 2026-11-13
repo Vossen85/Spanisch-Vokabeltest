@@ -1,0 +1,3605 @@
+{
+  "version": 1,
+  "sentences": [
+    {
+      "id": "SUBP-001",
+      "topic": "Presente de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Regelmäßig",
+      "de": "Ich möchte, dass du mir bei den Hausaufgaben hilfst.",
+      "es": "Quiero que me ayudes con los deberes.",
+      "opts": [
+        "Quiero que me ayudes con los deberes.",
+        "Quiero que me ayudas con los deberes.",
+        "Quiero que me ayudar con los deberes."
+      ],
+      "answer": "A",
+      "wrong1": "Quiero que me ayudas con los deberes.",
+      "wrong2": "Quiero que me ayudar con los deberes.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-002",
+      "topic": "Presente de subjuntivo",
+      "lemma": "beber",
+      "phen": "Regelmäßig",
+      "de": "Ich hoffe, dass du genug Wasser trinkst.",
+      "es": "Espero que bebas suficiente agua.",
+      "opts": [
+        "Espero que beber suficiente agua.",
+        "Espero que bebas suficiente agua.",
+        "Espero que bebes suficiente agua."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que bebes suficiente agua.",
+      "wrong2": "Espero que beber suficiente agua.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-003",
+      "topic": "Presente de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Regelmäßig",
+      "de": "Ich möchte, dass meine Schwester das Fenster öffnet.",
+      "es": "Quiero que mi hermana abra la ventana.",
+      "opts": [
+        "Quiero que mi hermana abre la ventana.",
+        "Quiero que mi hermana abrir la ventana.",
+        "Quiero que mi hermana abra la ventana."
+      ],
+      "answer": "C",
+      "wrong1": "Quiero que mi hermana abre la ventana.",
+      "wrong2": "Quiero que mi hermana abrir la ventana.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-004",
+      "topic": "Presente de subjuntivo",
+      "lemma": "aprender",
+      "phen": "Regelmäßig",
+      "de": "Es ist wichtig, dass wir die neuen Wörter lernen.",
+      "es": "Es importante que aprendamos las palabras nuevas.",
+      "opts": [
+        "Es importante que aprendamos las palabras nuevas.",
+        "Es importante que aprendemos las palabras nuevas.",
+        "Es importante que aprender las palabras nuevas."
+      ],
+      "answer": "A",
+      "wrong1": "Es importante que aprendemos las palabras nuevas.",
+      "wrong2": "Es importante que aprender las palabras nuevas.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-005",
+      "topic": "Presente de subjuntivo",
+      "lemma": "pensar",
+      "phen": "Stammwechsel e → ie",
+      "de": "Ich möchte, dass du an die Lösung denkst.",
+      "es": "Quiero que pienses en la solución.",
+      "opts": [
+        "Quiero que pensar en la solución.",
+        "Quiero que pienses en la solución.",
+        "Quiero que piensas en la solución."
+      ],
+      "answer": "B",
+      "wrong1": "Quiero que piensas en la solución.",
+      "wrong2": "Quiero que pensar en la solución.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-006",
+      "topic": "Presente de subjuntivo",
+      "lemma": "entender",
+      "phen": "Stammwechsel e → ie",
+      "de": "Ich bezweifle, dass ihr die Frage versteht.",
+      "es": "Dudo que entendáis la pregunta.",
+      "opts": [
+        "Dudo que entendéis la pregunta.",
+        "Dudo que entender la pregunta.",
+        "Dudo que entendáis la pregunta."
+      ],
+      "answer": "C",
+      "wrong1": "Dudo que entendéis la pregunta.",
+      "wrong2": "Dudo que entender la pregunta.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-007",
+      "topic": "Presente de subjuntivo",
+      "lemma": "probar",
+      "phen": "Stammwechsel o → ue",
+      "de": "Ich möchte, dass meine Freunde die Suppe probieren.",
+      "es": "Quiero que mis amigos prueben la sopa.",
+      "opts": [
+        "Quiero que mis amigos prueben la sopa.",
+        "Quiero que mis amigos prueban la sopa.",
+        "Quiero que mis amigos probar la sopa."
+      ],
+      "answer": "A",
+      "wrong1": "Quiero que mis amigos prueban la sopa.",
+      "wrong2": "Quiero que mis amigos probar la sopa.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-008",
+      "topic": "Presente de subjuntivo",
+      "lemma": "poder",
+      "phen": "Stammwechsel o → ue",
+      "de": "Meine Mutter möchte, dass ich mit euch gehen kann.",
+      "es": "Mi madre quiere que yo pueda ir con vosotros.",
+      "opts": [
+        "Mi madre quiere que yo poder ir con vosotros.",
+        "Mi madre quiere que yo pueda ir con vosotros.",
+        "Mi madre quiere que yo puedo ir con vosotros."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre quiere que yo puedo ir con vosotros.",
+      "wrong2": "Mi madre quiere que yo poder ir con vosotros.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-009",
+      "topic": "Presente de subjuntivo",
+      "lemma": "jugar",
+      "phen": "Stammwechsel u → ue",
+      "de": "Hoffentlich spielen wir morgen im Park.",
+      "es": "Ojalá juguemos mañana en el parque.",
+      "opts": [
+        "Ojalá jugamos mañana en el parque.",
+        "Ojalá jugar mañana en el parque.",
+        "Ojalá juguemos mañana en el parque."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá jugamos mañana en el parque.",
+      "wrong2": "Ojalá jugar mañana en el parque.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-010",
+      "topic": "Presente de subjuntivo",
+      "lemma": "sentir",
+      "phen": "Stammwechsel e → ie",
+      "de": "Ich freue mich, dass meine Freundin sich besser fühlt.",
+      "es": "Me alegro de que mi amiga se sienta mejor.",
+      "opts": [
+        "Me alegro de que mi amiga se sienta mejor.",
+        "Me alegro de que mi amiga se siente mejor.",
+        "Me alegro de que mi amiga se sentir mejor."
+      ],
+      "answer": "A",
+      "wrong1": "Me alegro de que mi amiga se siente mejor.",
+      "wrong2": "Me alegro de que mi amiga se sentir mejor.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-011",
+      "topic": "Presente de subjuntivo",
+      "lemma": "dormir",
+      "phen": "Stammwechsel o → ue",
+      "de": "Ich hoffe, dass die Kinder heute Nacht gut schlafen.",
+      "es": "Espero que los niños duerman bien esta noche.",
+      "opts": [
+        "Espero que los niños dormir bien esta noche.",
+        "Espero que los niños duerman bien esta noche.",
+        "Espero que los niños duermen bien esta noche."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que los niños duermen bien esta noche.",
+      "wrong2": "Espero que los niños dormir bien esta noche.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-012",
+      "topic": "Presente de subjuntivo",
+      "lemma": "pedir",
+      "phen": "Stammwechsel e → i",
+      "de": "Mein Vater möchte, dass wir um Hilfe bitten.",
+      "es": "Mi padre quiere que pidamos ayuda.",
+      "opts": [
+        "Mi padre quiere que pedimos ayuda.",
+        "Mi padre quiere que pedir ayuda.",
+        "Mi padre quiere que pidamos ayuda."
+      ],
+      "answer": "C",
+      "wrong1": "Mi padre quiere que pedimos ayuda.",
+      "wrong2": "Mi padre quiere que pedir ayuda.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-013",
+      "topic": "Presente de subjuntivo",
+      "lemma": "buscar",
+      "phen": "Orthografische Veränderungen",
+      "de": "Ich möchte, dass du die Schlüssel suchst.",
+      "es": "Quiero que busques las llaves.",
+      "opts": [
+        "Quiero que busques las llaves.",
+        "Quiero que buscas las llaves.",
+        "Quiero que buscar las llaves."
+      ],
+      "answer": "A",
+      "wrong1": "Quiero que buscas las llaves.",
+      "wrong2": "Quiero que buscar las llaves.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-014",
+      "topic": "Presente de subjuntivo",
+      "lemma": "llegar",
+      "phen": "Orthografische Veränderungen",
+      "de": "Ich hoffe, dass Laura pünktlich ankommt.",
+      "es": "Espero que Laura llegue a tiempo.",
+      "opts": [
+        "Espero que Laura llegar a tiempo.",
+        "Espero que Laura llegue a tiempo.",
+        "Espero que Laura llega a tiempo."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que Laura llega a tiempo.",
+      "wrong2": "Espero que Laura llegar a tiempo.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-015",
+      "topic": "Presente de subjuntivo",
+      "lemma": "averiguar",
+      "phen": "Orthografische Veränderungen",
+      "de": "Es ist wichtig, dass sie die Wahrheit herausfinden.",
+      "es": "Es importante que averigüen la verdad.",
+      "opts": [
+        "Es importante que averiguan la verdad.",
+        "Es importante que averiguar la verdad.",
+        "Es importante que averigüen la verdad."
+      ],
+      "answer": "C",
+      "wrong1": "Es importante que averiguan la verdad.",
+      "wrong2": "Es importante que averiguar la verdad.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-016",
+      "topic": "Presente de subjuntivo",
+      "lemma": "coger",
+      "phen": "Orthografische Veränderungen",
+      "de": "Mein Vater möchte, dass ich den Bus nehme.",
+      "es": "Mi padre quiere que yo coja el autobús.",
+      "opts": [
+        "Mi padre quiere que yo coja el autobús.",
+        "Mi padre quiere que yo cojo el autobús.",
+        "Mi padre quiere que yo coger el autobús."
+      ],
+      "answer": "A",
+      "wrong1": "Mi padre quiere que yo cojo el autobús.",
+      "wrong2": "Mi padre quiere que yo coger el autobús.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-017",
+      "topic": "Presente de subjuntivo",
+      "lemma": "dirigir",
+      "phen": "Orthografische Veränderungen",
+      "de": "Hoffentlich leitest du dieses Jahr die Gruppe.",
+      "es": "Ojalá dirijas el grupo este año.",
+      "opts": [
+        "Ojalá dirigir el grupo este año.",
+        "Ojalá dirijas el grupo este año.",
+        "Ojalá diriges el grupo este año."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá diriges el grupo este año.",
+      "wrong2": "Ojalá dirigir el grupo este año.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-018",
+      "topic": "Presente de subjuntivo",
+      "lemma": "distinguir",
+      "phen": "Orthografische Veränderungen",
+      "de": "Ich freue mich, dass wir die beiden Farben unterscheiden.",
+      "es": "Me alegro de que distingamos los dos colores.",
+      "opts": [
+        "Me alegro de que distinguimos los dos colores.",
+        "Me alegro de que distinguir los dos colores.",
+        "Me alegro de que distingamos los dos colores."
+      ],
+      "answer": "C",
+      "wrong1": "Me alegro de que distinguimos los dos colores.",
+      "wrong2": "Me alegro de que distinguir los dos colores.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-019",
+      "topic": "Presente de subjuntivo",
+      "lemma": "vencer",
+      "phen": "Orthografische Veränderungen",
+      "de": "Ich bezweifle, dass unsere Freunde das andere Team besiegen.",
+      "es": "Dudo que nuestros amigos venzan al otro equipo.",
+      "opts": [
+        "Dudo que nuestros amigos venzan al otro equipo.",
+        "Dudo que nuestros amigos vencen al otro equipo.",
+        "Dudo que nuestros amigos vencer al otro equipo."
+      ],
+      "answer": "A",
+      "wrong1": "Dudo que nuestros amigos vencen al otro equipo.",
+      "wrong2": "Dudo que nuestros amigos vencer al otro equipo.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-020",
+      "topic": "Presente de subjuntivo",
+      "lemma": "conocer",
+      "phen": "Orthografische Veränderungen",
+      "de": "Ich hoffe, dass du meine Eltern bald kennenlernst.",
+      "es": "Espero que conozcas pronto a mis padres.",
+      "opts": [
+        "Espero que conocer pronto a mis padres.",
+        "Espero que conozcas pronto a mis padres.",
+        "Espero que conoces pronto a mis padres."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que conoces pronto a mis padres.",
+      "wrong2": "Espero que conocer pronto a mis padres.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-021",
+      "topic": "Presente de subjuntivo",
+      "lemma": "traducir",
+      "phen": "Orthografische Veränderungen",
+      "de": "Ich möchte, dass ihr diesen Text übersetzt.",
+      "es": "Quiero que traduzcáis este texto.",
+      "opts": [
+        "Quiero que traducís este texto.",
+        "Quiero que traducir este texto.",
+        "Quiero que traduzcáis este texto."
+      ],
+      "answer": "C",
+      "wrong1": "Quiero que traducís este texto.",
+      "wrong2": "Quiero que traducir este texto.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-022",
+      "topic": "Presente de subjuntivo",
+      "lemma": "almorzar",
+      "phen": "Orthografische Veränderungen",
+      "de": "Ich hoffe, dass wir morgen zusammen zu Mittag essen.",
+      "es": "Espero que almorcemos juntos mañana.",
+      "opts": [
+        "Espero que almorcemos juntos mañana.",
+        "Espero que almorzamos juntos mañana.",
+        "Espero que almorzar juntos mañana."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que almorzamos juntos mañana.",
+      "wrong2": "Espero que almorzar juntos mañana.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-023",
+      "topic": "Presente de subjuntivo",
+      "lemma": "hacer",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Meine Lehrerin möchte, dass Marcos die Aufgabe allein macht.",
+      "es": "Mi profesora quiere que Marcos haga el ejercicio solo.",
+      "opts": [
+        "Mi profesora quiere que Marcos hacer el ejercicio solo.",
+        "Mi profesora quiere que Marcos haga el ejercicio solo.",
+        "Mi profesora quiere que Marcos hace el ejercicio solo."
+      ],
+      "answer": "B",
+      "wrong1": "Mi profesora quiere que Marcos hace el ejercicio solo.",
+      "wrong2": "Mi profesora quiere que Marcos hacer el ejercicio solo.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-024",
+      "topic": "Presente de subjuntivo",
+      "lemma": "tener",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Hoffentlich hast du mehr Freizeit.",
+      "es": "Ojalá tengas más tiempo libre.",
+      "opts": [
+        "Ojalá tienes más tiempo libre.",
+        "Ojalá tener más tiempo libre.",
+        "Ojalá tengas más tiempo libre."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá tienes más tiempo libre.",
+      "wrong2": "Ojalá tener más tiempo libre.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-025",
+      "topic": "Presente de subjuntivo",
+      "lemma": "salir",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Es ist möglich, dass wir früh ausgehen.",
+      "es": "Es posible que salgamos temprano.",
+      "opts": [
+        "Es posible que salgamos temprano.",
+        "Es posible que salimos temprano.",
+        "Es posible que salir temprano."
+      ],
+      "answer": "A",
+      "wrong1": "Es posible que salimos temprano.",
+      "wrong2": "Es posible que salir temprano.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-026",
+      "topic": "Presente de subjuntivo",
+      "lemma": "caer",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich befürchte, dass heute Nacht Schnee fällt.",
+      "es": "Temo que la nieve caiga esta noche.",
+      "opts": [
+        "Temo que la nieve caer esta noche.",
+        "Temo que la nieve caiga esta noche.",
+        "Temo que la nieve cae esta noche."
+      ],
+      "answer": "B",
+      "wrong1": "Temo que la nieve cae esta noche.",
+      "wrong2": "Temo que la nieve caer esta noche.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-027",
+      "topic": "Presente de subjuntivo",
+      "lemma": "decir",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich möchte, dass du die Wahrheit sagst.",
+      "es": "Quiero que digas la verdad.",
+      "opts": [
+        "Quiero que dices la verdad.",
+        "Quiero que decir la verdad.",
+        "Quiero que digas la verdad."
+      ],
+      "answer": "C",
+      "wrong1": "Quiero que dices la verdad.",
+      "wrong2": "Quiero que decir la verdad.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-028",
+      "topic": "Presente de subjuntivo",
+      "lemma": "oír",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich bezweifle, dass meine Großeltern das Telefon hören.",
+      "es": "Dudo que mis abuelos oigan el teléfono.",
+      "opts": [
+        "Dudo que mis abuelos oigan el teléfono.",
+        "Dudo que mis abuelos oyen el teléfono.",
+        "Dudo que mis abuelos oír el teléfono."
+      ],
+      "answer": "A",
+      "wrong1": "Dudo que mis abuelos oyen el teléfono.",
+      "wrong2": "Dudo que mis abuelos oír el teléfono.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-029",
+      "topic": "Presente de subjuntivo",
+      "lemma": "poner",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Mein Bruder möchte, dass ich den Tisch decke.",
+      "es": "Mi hermano quiere que yo ponga la mesa.",
+      "opts": [
+        "Mi hermano quiere que yo poner la mesa.",
+        "Mi hermano quiere que yo ponga la mesa.",
+        "Mi hermano quiere que yo pongo la mesa."
+      ],
+      "answer": "B",
+      "wrong1": "Mi hermano quiere que yo pongo la mesa.",
+      "wrong2": "Mi hermano quiere que yo poner la mesa.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-030",
+      "topic": "Presente de subjuntivo",
+      "lemma": "traer",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich hoffe, dass ihr morgen die Bücher mitbringt.",
+      "es": "Espero que traigáis los libros mañana.",
+      "opts": [
+        "Espero que traéis los libros mañana.",
+        "Espero que traer los libros mañana.",
+        "Espero que traigáis los libros mañana."
+      ],
+      "answer": "C",
+      "wrong1": "Espero que traéis los libros mañana.",
+      "wrong2": "Espero que traer los libros mañana.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-031",
+      "topic": "Presente de subjuntivo",
+      "lemma": "venir",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Hoffentlich kommt mein Cousin zur Feier.",
+      "es": "Ojalá venga mi primo a la fiesta.",
+      "opts": [
+        "Ojalá venga mi primo a la fiesta.",
+        "Ojalá viene mi primo a la fiesta.",
+        "Ojalá venir mi primo a la fiesta."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá viene mi primo a la fiesta.",
+      "wrong2": "Ojalá venir mi primo a la fiesta.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-032",
+      "topic": "Presente de subjuntivo",
+      "lemma": "valer",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich bezweifle, dass dieses Ticket so viel Geld wert ist.",
+      "es": "Dudo que este billete valga tanto dinero.",
+      "opts": [
+        "Dudo que este billete valer tanto dinero.",
+        "Dudo que este billete valga tanto dinero.",
+        "Dudo que este billete vale tanto dinero."
+      ],
+      "answer": "B",
+      "wrong1": "Dudo que este billete vale tanto dinero.",
+      "wrong2": "Dudo que este billete valer tanto dinero.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-033",
+      "topic": "Presente de subjuntivo",
+      "lemma": "conducir",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich möchte, dass ihr langsam fahrt.",
+      "es": "Quiero que conduzcáis despacio.",
+      "opts": [
+        "Quiero que conducís despacio.",
+        "Quiero que conducir despacio.",
+        "Quiero que conduzcáis despacio."
+      ],
+      "answer": "C",
+      "wrong1": "Quiero que conducís despacio.",
+      "wrong2": "Quiero que conducir despacio.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-034",
+      "topic": "Presente de subjuntivo",
+      "lemma": "ofrecer",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich hoffe, dass Daniel seine Hilfe anbietet.",
+      "es": "Espero que Daniel ofrezca su ayuda.",
+      "opts": [
+        "Espero que Daniel ofrezca su ayuda.",
+        "Espero que Daniel ofrece su ayuda.",
+        "Espero que Daniel ofrecer su ayuda."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que Daniel ofrece su ayuda.",
+      "wrong2": "Espero que Daniel ofrecer su ayuda.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-035",
+      "topic": "Presente de subjuntivo",
+      "lemma": "construir",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Hoffentlich bauen sie einen neuen Park im Viertel.",
+      "es": "Ojalá construyan un parque nuevo en el barrio.",
+      "opts": [
+        "Ojalá construir un parque nuevo en el barrio.",
+        "Ojalá construyan un parque nuevo en el barrio.",
+        "Ojalá construyen un parque nuevo en el barrio."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá construyen un parque nuevo en el barrio.",
+      "wrong2": "Ojalá construir un parque nuevo en el barrio.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-036",
+      "topic": "Presente de subjuntivo",
+      "lemma": "ver",
+      "phen": "Unregelmäßige yo-Form",
+      "de": "Ich hoffe, dass wir diesen Sommer das Meer sehen.",
+      "es": "Espero que veamos el mar este verano.",
+      "opts": [
+        "Espero que vemos el mar este verano.",
+        "Espero que ver el mar este verano.",
+        "Espero que veamos el mar este verano."
+      ],
+      "answer": "C",
+      "wrong1": "Espero que vemos el mar este verano.",
+      "wrong2": "Espero que ver el mar este verano.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-037",
+      "topic": "Presente de subjuntivo",
+      "lemma": "dar",
+      "phen": "Stark unregelmäßig",
+      "de": "Ich möchte, dass du mir eine klare Antwort gibst.",
+      "es": "Quiero que me des una respuesta clara.",
+      "opts": [
+        "Quiero que me des una respuesta clara.",
+        "Quiero que me das una respuesta clara.",
+        "Quiero que me dar una respuesta clara."
+      ],
+      "answer": "A",
+      "wrong1": "Quiero que me das una respuesta clara.",
+      "wrong2": "Quiero que me dar una respuesta clara.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-038",
+      "topic": "Presente de subjuntivo",
+      "lemma": "estar",
+      "phen": "Stark unregelmäßig",
+      "de": "Ich freue mich, dass ihr hier seid.",
+      "es": "Me alegro de que estéis aquí.",
+      "opts": [
+        "Me alegro de que estar aquí.",
+        "Me alegro de que estéis aquí.",
+        "Me alegro de que estáis aquí."
+      ],
+      "answer": "B",
+      "wrong1": "Me alegro de que estáis aquí.",
+      "wrong2": "Me alegro de que estar aquí.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-039",
+      "topic": "Presente de subjuntivo",
+      "lemma": "haber",
+      "phen": "Stark unregelmäßig",
+      "de": "Hoffentlich gibt es genügend Stühle.",
+      "es": "Ojalá haya suficientes sillas.",
+      "opts": [
+        "Ojalá hay suficientes sillas.",
+        "Ojalá haber suficientes sillas.",
+        "Ojalá haya suficientes sillas."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá hay suficientes sillas.",
+      "wrong2": "Ojalá haber suficientes sillas.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-040",
+      "topic": "Presente de subjuntivo",
+      "lemma": "ir",
+      "phen": "Stark unregelmäßig",
+      "de": "Ich hoffe, dass wir am Samstag ins Museum gehen.",
+      "es": "Espero que vayamos al museo el sábado.",
+      "opts": [
+        "Espero que vayamos al museo el sábado.",
+        "Espero que vamos al museo el sábado.",
+        "Espero que ir al museo el sábado."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que vamos al museo el sábado.",
+      "wrong2": "Espero que ir al museo el sábado.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-041",
+      "topic": "Presente de subjuntivo",
+      "lemma": "saber",
+      "phen": "Stark unregelmäßig",
+      "de": "Ich möchte, dass du die Wahrheit weißt.",
+      "es": "Quiero que sepas la verdad.",
+      "opts": [
+        "Quiero que saber la verdad.",
+        "Quiero que sepas la verdad.",
+        "Quiero que sabes la verdad."
+      ],
+      "answer": "B",
+      "wrong1": "Quiero que sabes la verdad.",
+      "wrong2": "Quiero que saber la verdad.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-042",
+      "topic": "Presente de subjuntivo",
+      "lemma": "ser",
+      "phen": "Stark unregelmäßig",
+      "de": "Es ist möglich, dass sie gute Freunde sind.",
+      "es": "Es posible que sean buenos amigos.",
+      "opts": [
+        "Es posible que son buenos amigos.",
+        "Es posible que ser buenos amigos.",
+        "Es posible que sean buenos amigos."
+      ],
+      "answer": "C",
+      "wrong1": "Es posible que son buenos amigos.",
+      "wrong2": "Es posible que ser buenos amigos.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-043",
+      "topic": "Presente de subjuntivo",
+      "lemma": "caber",
+      "phen": "Stark unregelmäßig",
+      "de": "Ich bezweifle, dass wir alle ins Auto passen.",
+      "es": "Dudo que quepamos todos en el coche.",
+      "opts": [
+        "Dudo que quepamos todos en el coche.",
+        "Dudo que cabemos todos en el coche.",
+        "Dudo que caber todos en el coche."
+      ],
+      "answer": "A",
+      "wrong1": "Dudo que cabemos todos en el coche.",
+      "wrong2": "Dudo que caber todos en el coche.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-044",
+      "topic": "Presente de subjuntivo",
+      "lemma": "recomendar",
+      "phen": "Verwendung: Wunsch",
+      "de": "Meine Mutter möchte, dass ich ihr ein Buch empfehle.",
+      "es": "Mi madre quiere que le recomiende un libro.",
+      "opts": [
+        "Mi madre quiere que le recomendar un libro.",
+        "Mi madre quiere que le recomiende un libro.",
+        "Mi madre quiere que le recomiendo un libro."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre quiere que le recomiendo un libro.",
+      "wrong2": "Mi madre quiere que le recomendar un libro.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-045",
+      "topic": "Presente de subjuntivo",
+      "lemma": "prohibir",
+      "phen": "Verwendung: Wunsch",
+      "de": "Ich möchte nicht, dass du Musik im Unterricht verbietest.",
+      "es": "No quiero que prohíbas la música en clase.",
+      "opts": [
+        "No quiero que prohíbes la música en clase.",
+        "No quiero que prohibir la música en clase.",
+        "No quiero que prohíbas la música en clase."
+      ],
+      "answer": "C",
+      "wrong1": "No quiero que prohíbes la música en clase.",
+      "wrong2": "No quiero que prohibir la música en clase.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-046",
+      "topic": "Presente de subjuntivo",
+      "lemma": "encantar",
+      "phen": "Verwendung: Wunsch",
+      "de": "Hoffentlich gefällt dir das Geschenk sehr gut.",
+      "es": "Ojalá te encante el regalo.",
+      "opts": [
+        "Ojalá te encante el regalo.",
+        "Ojalá te encanta el regalo.",
+        "Ojalá te encantar el regalo."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá te encanta el regalo.",
+      "wrong2": "Ojalá te encantar el regalo.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-047",
+      "topic": "Presente de subjuntivo",
+      "lemma": "preferir",
+      "phen": "Verwendung: Wunsch",
+      "de": "Ich hoffe, dass du den Zug vorziehst.",
+      "es": "Espero que prefieras el tren.",
+      "opts": [
+        "Espero que preferir el tren.",
+        "Espero que prefieras el tren.",
+        "Espero que prefieres el tren."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que prefieres el tren.",
+      "wrong2": "Espero que preferir el tren.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-048",
+      "topic": "Presente de subjuntivo",
+      "lemma": "permitir",
+      "phen": "Verwendung: Wunsch",
+      "de": "Hoffentlich erlauben sie mehr Zeit für die Prüfung.",
+      "es": "Ojalá permitan más tiempo para el examen.",
+      "opts": [
+        "Ojalá permiten más tiempo para el examen.",
+        "Ojalá permitir más tiempo para el examen.",
+        "Ojalá permitan más tiempo para el examen."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá permiten más tiempo para el examen.",
+      "wrong2": "Ojalá permitir más tiempo para el examen.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-049",
+      "topic": "Presente de subjuntivo",
+      "lemma": "dudar",
+      "phen": "Verwendung: Zweifel",
+      "de": "Ich möchte nicht, dass du an mir zweifelst.",
+      "es": "No quiero que dudes de mí.",
+      "opts": [
+        "No quiero que dudes de mí.",
+        "No quiero que dudas de mí.",
+        "No quiero que dudar de mí."
+      ],
+      "answer": "A",
+      "wrong1": "No quiero que dudas de mí.",
+      "wrong2": "No quiero que dudar de mí.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBP-050",
+      "topic": "Presente de subjuntivo",
+      "lemma": "creer",
+      "phen": "Verwendung: Hoffnung",
+      "de": "Ich hoffe, dass du an mich glaubst.",
+      "es": "Espero que creas en mí.",
+      "opts": [
+        "Espero que creer en mí.",
+        "Espero que creas en mí.",
+        "Espero que crees en mí."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que crees en mí.",
+      "wrong2": "Espero que creer en mí.",
+      "reason1": "Indicativo statt Subjuntivo: Der einleitende Ausdruck verlangt hier den Subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-001",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Regelmäßig – -ra",
+      "de": "Ich wollte, dass du mir beim Projekt hilfst.",
+      "es": "Quería que me ayudaras con el proyecto.",
+      "opts": [
+        "Quería que me ayudaras con el proyecto.",
+        "Quería que me ayudabas con el proyecto.",
+        "Quería que me ayudar con el proyecto."
+      ],
+      "answer": "A",
+      "wrong1": "Quería que me ayudabas con el proyecto.",
+      "wrong2": "Quería que me ayudar con el proyecto.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-002",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Regelmäßig – -ra",
+      "de": "Meine Mutter hoffte, dass meine Schwester mehr Wasser trinken würde.",
+      "es": "Mi madre esperaba que mi hermana bebiera más agua.",
+      "opts": [
+        "Mi madre esperaba que mi hermana beber más agua.",
+        "Mi madre esperaba que mi hermana bebiera más agua.",
+        "Mi madre esperaba que mi hermana bebía más agua."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre esperaba que mi hermana bebía más agua.",
+      "wrong2": "Mi madre esperaba que mi hermana beber más agua.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-003",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Regelmäßig – -ra",
+      "de": "Der Lehrer bat uns, das Buch zu öffnen.",
+      "es": "El profesor nos pidió que abriéramos el libro.",
+      "opts": [
+        "El profesor nos pidió que abríamos el libro.",
+        "El profesor nos pidió que abrir el libro.",
+        "El profesor nos pidió que abriéramos el libro."
+      ],
+      "answer": "C",
+      "wrong1": "El profesor nos pidió que abríamos el libro.",
+      "wrong2": "El profesor nos pidió que abrir el libro.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-004",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "andar",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich hoffte, dass du etwas langsamer gehst.",
+      "es": "Esperaba que anduvieras un poco más despacio.",
+      "opts": [
+        "Esperaba que anduvieras un poco más despacio.",
+        "Esperaba que andabas un poco más despacio.",
+        "Esperaba que andar un poco más despacio."
+      ],
+      "answer": "A",
+      "wrong1": "Esperaba que andabas un poco más despacio.",
+      "wrong2": "Esperaba que andar un poco más despacio.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-005",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "caer",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich hatte Angst, dass das Glas zu Boden fallen würde.",
+      "es": "Tenía miedo de que el vaso cayera al suelo.",
+      "opts": [
+        "Tenía miedo de que el vaso caer al suelo.",
+        "Tenía miedo de que el vaso cayera al suelo.",
+        "Tenía miedo de que el vaso caía al suelo."
+      ],
+      "answer": "B",
+      "wrong1": "Tenía miedo de que el vaso caía al suelo.",
+      "wrong2": "Tenía miedo de que el vaso caer al suelo.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-006",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "conducir",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Mein Vater wollte, dass ich vorsichtig fahre.",
+      "es": "Mi padre quería que yo condujera con cuidado.",
+      "opts": [
+        "Mi padre quería que yo conducía con cuidado.",
+        "Mi padre quería que yo conducir con cuidado.",
+        "Mi padre quería que yo condujera con cuidado."
+      ],
+      "answer": "C",
+      "wrong1": "Mi padre quería que yo conducía con cuidado.",
+      "wrong2": "Mi padre quería que yo conducir con cuidado.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-007",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "dar",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Sie hofften, dass wir ihnen eine Antwort geben.",
+      "es": "Esperaban que les diéramos una respuesta.",
+      "opts": [
+        "Esperaban que les diéramos una respuesta.",
+        "Esperaban que les dábamos una respuesta.",
+        "Esperaban que les dar una respuesta."
+      ],
+      "answer": "A",
+      "wrong1": "Esperaban que les dábamos una respuesta.",
+      "wrong2": "Esperaban que les dar una respuesta.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-008",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "decir",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich wollte, dass du mir die Wahrheit sagst.",
+      "es": "Quería que me dijeras la verdad.",
+      "opts": [
+        "Quería que me decir la verdad.",
+        "Quería que me dijeras la verdad.",
+        "Quería que me decías la verdad."
+      ],
+      "answer": "B",
+      "wrong1": "Quería que me decías la verdad.",
+      "wrong2": "Quería que me decir la verdad.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-009",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "estar",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich freute mich darüber, dass es dir gut ging.",
+      "es": "Me alegraba de que estuvieras bien.",
+      "opts": [
+        "Me alegraba de que estabas bien.",
+        "Me alegraba de que estar bien.",
+        "Me alegraba de que estuvieras bien."
+      ],
+      "answer": "C",
+      "wrong1": "Me alegraba de que estabas bien.",
+      "wrong2": "Me alegraba de que estar bien.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-010",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "haber",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich hatte Angst, dass es zu viele Menschen gibt.",
+      "es": "Temía que hubiera demasiada gente.",
+      "opts": [
+        "Temía que hubiera demasiada gente.",
+        "Temía que había demasiada gente.",
+        "Temía que haber demasiada gente."
+      ],
+      "answer": "A",
+      "wrong1": "Temía que había demasiada gente.",
+      "wrong2": "Temía que haber demasiada gente.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-011",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "hacer",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Meine Mutter wollte, dass du das Bett machst.",
+      "es": "Mi madre quería que hicieras la cama.",
+      "opts": [
+        "Mi madre quería que hacer la cama.",
+        "Mi madre quería que hicieras la cama.",
+        "Mi madre quería que hacías la cama."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre quería que hacías la cama.",
+      "wrong2": "Mi madre quería que hacer la cama.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-012",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "querer",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich hoffte, dass du mit mir kommen möchtest.",
+      "es": "Esperaba que quisieras venir conmigo.",
+      "opts": [
+        "Esperaba que querías venir conmigo.",
+        "Esperaba que querer venir conmigo.",
+        "Esperaba que quisieras venir conmigo."
+      ],
+      "answer": "C",
+      "wrong1": "Esperaba que querías venir conmigo.",
+      "wrong2": "Esperaba que querer venir conmigo.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-013",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "poder",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Unsere Freunde wollten, dass wir zusammen ins Theater gehen können.",
+      "es": "Nuestros amigos querían que pudiéramos ir juntos al teatro.",
+      "opts": [
+        "Nuestros amigos querían que pudiéramos ir juntos al teatro.",
+        "Nuestros amigos querían que podíamos ir juntos al teatro.",
+        "Nuestros amigos querían que poder ir juntos al teatro."
+      ],
+      "answer": "A",
+      "wrong1": "Nuestros amigos querían que podíamos ir juntos al teatro.",
+      "wrong2": "Nuestros amigos querían que poder ir juntos al teatro.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-014",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "poner",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich bat ihn, den Tisch zu decken.",
+      "es": "Le pedí que pusiera la mesa.",
+      "opts": [
+        "Le pedí que poner la mesa.",
+        "Le pedí que pusiera la mesa.",
+        "Le pedí que ponía la mesa."
+      ],
+      "answer": "B",
+      "wrong1": "Le pedí que ponía la mesa.",
+      "wrong2": "Le pedí que poner la mesa.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-015",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "saber",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Sie glaubten nicht, dass du die Antwort kennst.",
+      "es": "No creían que supieras la respuesta.",
+      "opts": [
+        "No creían que sabías la respuesta.",
+        "No creían que saber la respuesta.",
+        "No creían que supieras la respuesta."
+      ],
+      "answer": "C",
+      "wrong1": "No creían que sabías la respuesta.",
+      "wrong2": "No creían que saber la respuesta.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-016",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ser",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich wollte, dass du geduldiger bist.",
+      "es": "Quería que fueras más paciente.",
+      "opts": [
+        "Quería que fueras más paciente.",
+        "Quería que eras más paciente.",
+        "Quería que ser más paciente."
+      ],
+      "answer": "A",
+      "wrong1": "Quería que eras más paciente.",
+      "wrong2": "Quería que ser más paciente.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-017",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "tener",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich hoffte, dass du einen schönen Tag hast.",
+      "es": "Esperaba que tuvieras un buen día.",
+      "opts": [
+        "Esperaba que tener un buen día.",
+        "Esperaba que tuvieras un buen día.",
+        "Esperaba que tenías un buen día."
+      ],
+      "answer": "B",
+      "wrong1": "Esperaba que tenías un buen día.",
+      "wrong2": "Esperaba que tener un buen día.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-018",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "traer",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Wir hofften, dass ihr die Bücher mitbringt.",
+      "es": "Esperábamos que trajerais los libros.",
+      "opts": [
+        "Esperábamos que traíais los libros.",
+        "Esperábamos que traer los libros.",
+        "Esperábamos que trajerais los libros."
+      ],
+      "answer": "C",
+      "wrong1": "Esperábamos que traíais los libros.",
+      "wrong2": "Esperábamos que traer los libros.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-019",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Wenn sie doch vor dem Winter kämen!",
+      "es": "Ojalá vinieran antes del invierno.",
+      "opts": [
+        "Ojalá vinieran antes del invierno.",
+        "Ojalá venían antes del invierno.",
+        "Ojalá venir antes del invierno."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá venían antes del invierno.",
+      "wrong2": "Ojalá venir antes del invierno.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-020",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ir",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich wollte, dass ihr zusammen zur Schule geht.",
+      "es": "Quería que fuerais juntos al colegio.",
+      "opts": [
+        "Quería que ir juntos al colegio.",
+        "Quería que fuerais juntos al colegio.",
+        "Quería que ibais juntos al colegio."
+      ],
+      "answer": "B",
+      "wrong1": "Quería que ibais juntos al colegio.",
+      "wrong2": "Quería que ir juntos al colegio.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-021",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "valer",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich bezweifelte, dass das Fahrrad so viel Geld wert war.",
+      "es": "Dudaba que la bicicleta valiera tanto dinero.",
+      "opts": [
+        "Dudaba que la bicicleta valía tanto dinero.",
+        "Dudaba que la bicicleta valer tanto dinero.",
+        "Dudaba que la bicicleta valiera tanto dinero."
+      ],
+      "answer": "C",
+      "wrong1": "Dudaba que la bicicleta valía tanto dinero.",
+      "wrong2": "Dudaba que la bicicleta valer tanto dinero.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-022",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "pedir",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich wollte, dass du mich um Hilfe bittest.",
+      "es": "Quería que me pidieras ayuda.",
+      "opts": [
+        "Quería que me pidieras ayuda.",
+        "Quería que me pedías ayuda.",
+        "Quería que me pedir ayuda."
+      ],
+      "answer": "A",
+      "wrong1": "Quería que me pedías ayuda.",
+      "wrong2": "Quería que me pedir ayuda.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-023",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "caber",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich glaubte nicht, dass wir alle in das Zimmer passen.",
+      "es": "No creía que cupiéramos todos en la habitación.",
+      "opts": [
+        "No creía que caber todos en la habitación.",
+        "No creía que cupiéramos todos en la habitación.",
+        "No creía que cabíamos todos en la habitación."
+      ],
+      "answer": "B",
+      "wrong1": "No creía que cabíamos todos en la habitación.",
+      "wrong2": "No creía que caber todos en la habitación.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-024",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Regelmäßig – -se",
+      "de": "Meine Mutter wollte, dass sie bei den Einkäufen hilft.",
+      "es": "Mi madre quería que ella ayudase con las compras.",
+      "opts": [
+        "Mi madre quería que ella ayudaba con las compras.",
+        "Mi madre quería que ella ayudar con las compras.",
+        "Mi madre quería que ella ayudase con las compras."
+      ],
+      "answer": "C",
+      "wrong1": "Mi madre quería que ella ayudaba con las compras.",
+      "wrong2": "Mi madre quería que ella ayudar con las compras.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-025",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Regelmäßig – -se",
+      "de": "Ich hoffte, dass du etwas Wasser trinkst.",
+      "es": "Esperaba que bebieses un poco de agua.",
+      "opts": [
+        "Esperaba que bebieses un poco de agua.",
+        "Esperaba que bebías un poco de agua.",
+        "Esperaba que beber un poco de agua."
+      ],
+      "answer": "A",
+      "wrong1": "Esperaba que bebías un poco de agua.",
+      "wrong2": "Esperaba que beber un poco de agua.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-026",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Regelmäßig – -se",
+      "de": "Der Lehrer wollte, dass sie die Fenster öffnen.",
+      "es": "El profesor quería que abriesen las ventanas.",
+      "opts": [
+        "El profesor quería que abrir las ventanas.",
+        "El profesor quería que abriesen las ventanas.",
+        "El profesor quería que abrían las ventanas."
+      ],
+      "answer": "B",
+      "wrong1": "El profesor quería que abrían las ventanas.",
+      "wrong2": "El profesor quería que abrir las ventanas.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-027",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "andar",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Wir hatten Angst, dass er nachts allein geht.",
+      "es": "Temíamos que anduviese solo por la noche.",
+      "opts": [
+        "Temíamos que andaba solo por la noche.",
+        "Temíamos que andar solo por la noche.",
+        "Temíamos que anduviese solo por la noche."
+      ],
+      "answer": "C",
+      "wrong1": "Temíamos que andaba solo por la noche.",
+      "wrong2": "Temíamos que andar solo por la noche.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-028",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "caer",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Ich war überrascht, dass so viele Blätter fielen.",
+      "es": "Me sorprendió que cayesen tantas hojas.",
+      "opts": [
+        "Me sorprendió que cayesen tantas hojas.",
+        "Me sorprendió que caían tantas hojas.",
+        "Me sorprendió que caer tantas hojas."
+      ],
+      "answer": "A",
+      "wrong1": "Me sorprendió que caían tantas hojas.",
+      "wrong2": "Me sorprendió que caer tantas hojas.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-029",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "conducir",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Mein Bruder wollte lieber, dass du fährst.",
+      "es": "Mi hermano prefería que condujeses tú.",
+      "opts": [
+        "Mi hermano prefería que conducir tú.",
+        "Mi hermano prefería que condujeses tú.",
+        "Mi hermano prefería que conducías tú."
+      ],
+      "answer": "B",
+      "wrong1": "Mi hermano prefería que conducías tú.",
+      "wrong2": "Mi hermano prefería que conducir tú.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-030",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "dar",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Meine Lehrerin bat mich, meine Meinung zu sagen.",
+      "es": "Mi profesora me pidió que diese mi opinión.",
+      "opts": [
+        "Mi profesora me pidió que daba mi opinión.",
+        "Mi profesora me pidió que dar mi opinión.",
+        "Mi profesora me pidió que diese mi opinión."
+      ],
+      "answer": "C",
+      "wrong1": "Mi profesora me pidió que daba mi opinión.",
+      "wrong2": "Mi profesora me pidió que dar mi opinión.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-031",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "decir",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Ich wollte, dass sie etwas über den Film sagen.",
+      "es": "Quería que dijesen algo sobre la película.",
+      "opts": [
+        "Quería que dijesen algo sobre la película.",
+        "Quería que decían algo sobre la película.",
+        "Quería que decir algo sobre la película."
+      ],
+      "answer": "A",
+      "wrong1": "Quería que decían algo sobre la película.",
+      "wrong2": "Quería que decir algo sobre la película.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-032",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "estar",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Wir bezweifelten, dass sie zu Hause waren.",
+      "es": "Dudábamos que estuviesen en casa.",
+      "opts": [
+        "Dudábamos que estar en casa.",
+        "Dudábamos que estuviesen en casa.",
+        "Dudábamos que estaban en casa."
+      ],
+      "answer": "B",
+      "wrong1": "Dudábamos que estaban en casa.",
+      "wrong2": "Dudábamos que estar en casa.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-033",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "haber",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Wir hofften, dass es mehr Zeit gibt.",
+      "es": "Esperábamos que hubiese más tiempo.",
+      "opts": [
+        "Esperábamos que había más tiempo.",
+        "Esperábamos que haber más tiempo.",
+        "Esperábamos que hubiese más tiempo."
+      ],
+      "answer": "C",
+      "wrong1": "Esperábamos que había más tiempo.",
+      "wrong2": "Esperábamos que haber más tiempo.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-034",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "hacer",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Es war nötig, dass sie mehr Platz schaffen.",
+      "es": "Hacía falta que hiciesen más espacio.",
+      "opts": [
+        "Hacía falta que hiciesen más espacio.",
+        "Hacía falta que hacían más espacio.",
+        "Hacía falta que hacer más espacio."
+      ],
+      "answer": "A",
+      "wrong1": "Hacía falta que hacían más espacio.",
+      "wrong2": "Hacía falta que hacer más espacio.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-035",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "querer",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Sie glaubten nicht, dass wir noch eine Chance wollten.",
+      "es": "No creían que quisiésemos otra oportunidad.",
+      "opts": [
+        "No creían que querer otra oportunidad.",
+        "No creían que quisiésemos otra oportunidad.",
+        "No creían que queríamos otra oportunidad."
+      ],
+      "answer": "B",
+      "wrong1": "No creían que queríamos otra oportunidad.",
+      "wrong2": "No creían que querer otra oportunidad.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-036",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "poder",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Wenn du doch morgen kommen könntest!",
+      "es": "Ojalá pudieses venir mañana.",
+      "opts": [
+        "Ojalá podías venir mañana.",
+        "Ojalá poder venir mañana.",
+        "Ojalá pudieses venir mañana."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá podías venir mañana.",
+      "wrong2": "Ojalá poder venir mañana.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-037",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "poner",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Mein Bruder wollte, dass du den Rucksack hierhin stellst.",
+      "es": "Mi hermano quería que pusieses la mochila aquí.",
+      "opts": [
+        "Mi hermano quería que pusieses la mochila aquí.",
+        "Mi hermano quería que ponías la mochila aquí.",
+        "Mi hermano quería que poner la mochila aquí."
+      ],
+      "answer": "A",
+      "wrong1": "Mi hermano quería que ponías la mochila aquí.",
+      "wrong2": "Mi hermano quería que poner la mochila aquí.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-038",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "saber",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Ich bezweifelte, dass wir die Adresse kannten.",
+      "es": "Dudaba que supiésemos la dirección.",
+      "opts": [
+        "Dudaba que saber la dirección.",
+        "Dudaba que supiésemos la dirección.",
+        "Dudaba que sabíamos la dirección."
+      ],
+      "answer": "B",
+      "wrong1": "Dudaba que sabíamos la dirección.",
+      "wrong2": "Dudaba que saber la dirección.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-039",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ser",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Ich glaubte nicht, dass sie so freundlich waren.",
+      "es": "No creía que fuesen tan amables.",
+      "opts": [
+        "No creía que eran tan amables.",
+        "No creía que ser tan amables.",
+        "No creía que fuesen tan amables."
+      ],
+      "answer": "C",
+      "wrong1": "No creía que eran tan amables.",
+      "wrong2": "No creía que ser tan amables.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-040",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "tener",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Unsere Eltern wollten, dass wir mehr Freunde haben.",
+      "es": "Nuestros padres querían que tuviésemos más amigos.",
+      "opts": [
+        "Nuestros padres querían que tuviésemos más amigos.",
+        "Nuestros padres querían que teníamos más amigos.",
+        "Nuestros padres querían que tener más amigos."
+      ],
+      "answer": "A",
+      "wrong1": "Nuestros padres querían que teníamos más amigos.",
+      "wrong2": "Nuestros padres querían que tener más amigos.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-041",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "traer",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Wir hofften, dass sie das Frühstück mitbringen.",
+      "es": "Esperábamos que trajesen el desayuno.",
+      "opts": [
+        "Esperábamos que traer el desayuno.",
+        "Esperábamos que trajesen el desayuno.",
+        "Esperábamos que traían el desayuno."
+      ],
+      "answer": "B",
+      "wrong1": "Esperábamos que traían el desayuno.",
+      "wrong2": "Esperábamos que traer el desayuno.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-042",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Meine Lehrerin wollte, dass du am Montag kommst.",
+      "es": "Mi profesora quería que vinieses el lunes.",
+      "opts": [
+        "Mi profesora quería que venías el lunes.",
+        "Mi profesora quería que venir el lunes.",
+        "Mi profesora quería que vinieses el lunes."
+      ],
+      "answer": "C",
+      "wrong1": "Mi profesora quería que venías el lunes.",
+      "wrong2": "Mi profesora quería que venir el lunes.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-043",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ir",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Meine Großmutter wollte, dass wir mit ihr gehen.",
+      "es": "Mi abuela quería que fuésemos con ella.",
+      "opts": [
+        "Mi abuela quería que fuésemos con ella.",
+        "Mi abuela quería que íbamos con ella.",
+        "Mi abuela quería que ir con ella."
+      ],
+      "answer": "A",
+      "wrong1": "Mi abuela quería que íbamos con ella.",
+      "wrong2": "Mi abuela quería que ir con ella.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-044",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "valer",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Ich hoffte, dass die Eintrittskarten weniger kosten.",
+      "es": "Esperaba que las entradas valiesen menos.",
+      "opts": [
+        "Esperaba que las entradas valer menos.",
+        "Esperaba que las entradas valiesen menos.",
+        "Esperaba que las entradas valían menos."
+      ],
+      "answer": "B",
+      "wrong1": "Esperaba que las entradas valían menos.",
+      "wrong2": "Esperaba que las entradas valer menos.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-045",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "pedir",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Meine Schwester wollte, dass ich mich entschuldige.",
+      "es": "Mi hermana quería que yo pidiese perdón.",
+      "opts": [
+        "Mi hermana quería que yo pedía perdón.",
+        "Mi hermana quería que yo pedir perdón.",
+        "Mi hermana quería que yo pidiese perdón."
+      ],
+      "answer": "C",
+      "wrong1": "Mi hermana quería que yo pedía perdón.",
+      "wrong2": "Mi hermana quería que yo pedir perdón.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-046",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "caber",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Wir glaubten nicht, dass alles in die Kiste passt.",
+      "es": "No creíamos que cupiese todo en la caja.",
+      "opts": [
+        "No creíamos que cupiese todo en la caja.",
+        "No creíamos que cabía todo en la caja.",
+        "No creíamos que caber todo en la caja."
+      ],
+      "answer": "A",
+      "wrong1": "No creíamos que cabía todo en la caja.",
+      "wrong2": "No creíamos que caber todo en la caja.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-047",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Regelmäßig – -ra",
+      "de": "Sie hofften, dass wir der neuen Nachbarin helfen.",
+      "es": "Esperaban que ayudáramos a la vecina nueva.",
+      "opts": [
+        "Esperaban que ayudar a la vecina nueva.",
+        "Esperaban que ayudáramos a la vecina nueva.",
+        "Esperaban que ayudábamos a la vecina nueva."
+      ],
+      "answer": "B",
+      "wrong1": "Esperaban que ayudábamos a la vecina nueva.",
+      "wrong2": "Esperaban que ayudar a la vecina nueva.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-048",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "tener",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Ich wollte, dass sie mehr Geduld haben.",
+      "es": "Quería que tuvieran más paciencia.",
+      "opts": [
+        "Quería que tenían más paciencia.",
+        "Quería que tener más paciencia.",
+        "Quería que tuvieran más paciencia."
+      ],
+      "answer": "C",
+      "wrong1": "Quería que tenían más paciencia.",
+      "wrong2": "Quería que tener más paciencia.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-049",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Unregelmäßiger Stamm – -se",
+      "de": "Wenn ihr doch früher kämt!",
+      "es": "Ojalá vinieseis antes.",
+      "opts": [
+        "Ojalá vinieseis antes.",
+        "Ojalá veníais antes.",
+        "Ojalá venir antes."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá veníais antes.",
+      "wrong2": "Ojalá venir antes.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBI-050",
+      "topic": "Imperfecto de subjuntivo",
+      "lemma": "ir",
+      "phen": "Unregelmäßiger Stamm – -ra",
+      "de": "Meine Eltern wollten, dass ich zum Arzt gehe.",
+      "es": "Mis padres querían que yo fuera al médico.",
+      "opts": [
+        "Mis padres querían que yo ir al médico.",
+        "Mis padres querían que yo fuera al médico.",
+        "Mis padres querían que yo iba al médico."
+      ],
+      "answer": "B",
+      "wrong1": "Mis padres querían que yo iba al médico.",
+      "wrong2": "Mis padres querían que yo ir al médico.",
+      "reason1": "Indicativo imperfecto statt Imperfecto de subjuntivo.",
+      "reason2": "Infinitiv statt der erforderlichen konjugierten Subjuntivo-Form."
+    },
+    {
+      "id": "SUBPERF-001",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Ich hoffe, dass du mir bei den Hausaufgaben geholfen hast.",
+      "es": "Espero que me hayas ayudado con los deberes.",
+      "opts": [
+        "Espero que me hayas ayudado con los deberes.",
+        "Espero que me has ayudado con los deberes.",
+        "Espero que me hayas ayudar con los deberes."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que me has ayudado con los deberes.",
+      "wrong2": "Espero que me hayas ayudar con los deberes.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-002",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Ich freue mich, dass Ana ihrem Bruder geholfen hat.",
+      "es": "Me alegro de que Ana haya ayudado a su hermano.",
+      "opts": [
+        "Me alegro de que Ana haya ayudar a su hermano.",
+        "Me alegro de que Ana haya ayudado a su hermano.",
+        "Me alegro de que Ana ha ayudado a su hermano."
+      ],
+      "answer": "B",
+      "wrong1": "Me alegro de que Ana ha ayudado a su hermano.",
+      "wrong2": "Me alegro de que Ana haya ayudar a su hermano.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-003",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Hoffentlich haben wir den neuen Schülern geholfen.",
+      "es": "Ojalá hayamos ayudado a los alumnos nuevos.",
+      "opts": [
+        "Ojalá hemos ayudado a los alumnos nuevos.",
+        "Ojalá hayamos ayudar a los alumnos nuevos.",
+        "Ojalá hayamos ayudado a los alumnos nuevos."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá hemos ayudado a los alumnos nuevos.",
+      "wrong2": "Ojalá hayamos ayudar a los alumnos nuevos.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-004",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Ich bezweifle, dass sie diese Woche zu Hause geholfen haben.",
+      "es": "Dudo que ellos hayan ayudado en casa esta semana.",
+      "opts": [
+        "Dudo que ellos hayan ayudado en casa esta semana.",
+        "Dudo que ellos han ayudado en casa esta semana.",
+        "Dudo que ellos hayan ayudar en casa esta semana."
+      ],
+      "answer": "A",
+      "wrong1": "Dudo que ellos han ayudado en casa esta semana.",
+      "wrong2": "Dudo que ellos hayan ayudar en casa esta semana.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-005",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Ich freue mich, dass ihr eurer Großmutter geholfen habt.",
+      "es": "Me alegro de que hayáis ayudado a vuestra abuela.",
+      "opts": [
+        "Me alegro de que hayáis ayudar a vuestra abuela.",
+        "Me alegro de que hayáis ayudado a vuestra abuela.",
+        "Me alegro de que habéis ayudado a vuestra abuela."
+      ],
+      "answer": "B",
+      "wrong1": "Me alegro de que habéis ayudado a vuestra abuela.",
+      "wrong2": "Me alegro de que hayáis ayudar a vuestra abuela.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-006",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Es ist möglich, dass ich gestern zu wenig geholfen habe.",
+      "es": "Es posible que yo haya ayudado poco ayer.",
+      "opts": [
+        "Es posible que yo he ayudado poco ayer.",
+        "Es posible que yo haya ayudar poco ayer.",
+        "Es posible que yo haya ayudado poco ayer."
+      ],
+      "answer": "C",
+      "wrong1": "Es posible que yo he ayudado poco ayer.",
+      "wrong2": "Es posible que yo haya ayudar poco ayer.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-007",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Ich hoffe, dass dein Vater mit den Taschen geholfen hat.",
+      "es": "Espero que tu padre haya ayudado con las bolsas.",
+      "opts": [
+        "Espero que tu padre haya ayudado con las bolsas.",
+        "Espero que tu padre ha ayudado con las bolsas.",
+        "Espero que tu padre haya ayudar con las bolsas."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que tu padre ha ayudado con las bolsas.",
+      "wrong2": "Espero que tu padre haya ayudar con las bolsas.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-008",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Ich glaube nicht, dass du mir genug geholfen hast.",
+      "es": "No creo que me hayas ayudado lo suficiente.",
+      "opts": [
+        "No creo que me hayas ayudar lo suficiente.",
+        "No creo que me hayas ayudado lo suficiente.",
+        "No creo que me has ayudado lo suficiente."
+      ],
+      "answer": "B",
+      "wrong1": "No creo que me has ayudado lo suficiente.",
+      "wrong2": "No creo que me hayas ayudar lo suficiente.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-009",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Hoffentlich haben wir unseren Nachbarn geholfen.",
+      "es": "Ojalá hayamos ayudado a nuestros vecinos.",
+      "opts": [
+        "Ojalá hemos ayudado a nuestros vecinos.",
+        "Ojalá hayamos ayudar a nuestros vecinos.",
+        "Ojalá hayamos ayudado a nuestros vecinos."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá hemos ayudado a nuestros vecinos.",
+      "wrong2": "Ojalá hayamos ayudar a nuestros vecinos.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-010",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Partizip: ayudado",
+      "de": "Ich hoffe, dass alle in der Schule geholfen haben.",
+      "es": "Espero que todos hayan ayudado en el colegio.",
+      "opts": [
+        "Espero que todos hayan ayudado en el colegio.",
+        "Espero que todos han ayudado en el colegio.",
+        "Espero que todos hayan ayudar en el colegio."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que todos han ayudado en el colegio.",
+      "wrong2": "Espero que todos hayan ayudar en el colegio.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-011",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Ich hoffe, dass du heute genug Wasser getrunken hast.",
+      "es": "Espero que hayas bebido suficiente agua hoy.",
+      "opts": [
+        "Espero que hayas beber suficiente agua hoy.",
+        "Espero que hayas bebido suficiente agua hoy.",
+        "Espero que has bebido suficiente agua hoy."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que has bebido suficiente agua hoy.",
+      "wrong2": "Espero que hayas beber suficiente agua hoy.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-012",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Ich freue mich, dass ihr während der Reise Wasser getrunken habt.",
+      "es": "Me alegro de que hayáis bebido agua durante el viaje.",
+      "opts": [
+        "Me alegro de que habéis bebido agua durante el viaje.",
+        "Me alegro de que hayáis beber agua durante el viaje.",
+        "Me alegro de que hayáis bebido agua durante el viaje."
+      ],
+      "answer": "C",
+      "wrong1": "Me alegro de que habéis bebido agua durante el viaje.",
+      "wrong2": "Me alegro de que hayáis beber agua durante el viaje.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-013",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Es ist möglich, dass Ana wenig Kaffee getrunken hat.",
+      "es": "Es posible que Ana haya bebido poco café.",
+      "opts": [
+        "Es posible que Ana haya bebido poco café.",
+        "Es posible que Ana ha bebido poco café.",
+        "Es posible que Ana haya beber poco café."
+      ],
+      "answer": "A",
+      "wrong1": "Es posible que Ana ha bebido poco café.",
+      "wrong2": "Es posible que Ana haya beber poco café.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-014",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Hoffentlich haben wir vor dem Spiel genug Wasser getrunken.",
+      "es": "Ojalá hayamos bebido suficiente agua antes del partido.",
+      "opts": [
+        "Ojalá hayamos beber suficiente agua antes del partido.",
+        "Ojalá hayamos bebido suficiente agua antes del partido.",
+        "Ojalá hemos bebido suficiente agua antes del partido."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá hemos bebido suficiente agua antes del partido.",
+      "wrong2": "Ojalá hayamos beber suficiente agua antes del partido.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-015",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Ich bezweifle, dass er so viel Tee getrunken hat.",
+      "es": "Dudo que él haya bebido tanto té.",
+      "opts": [
+        "Dudo que él ha bebido tanto té.",
+        "Dudo que él haya beber tanto té.",
+        "Dudo que él haya bebido tanto té."
+      ],
+      "answer": "C",
+      "wrong1": "Dudo que él ha bebido tanto té.",
+      "wrong2": "Dudo que él haya beber tanto té.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-016",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Ich freue mich, dass die Kinder Milch getrunken haben.",
+      "es": "Me alegro de que los niños hayan bebido leche.",
+      "opts": [
+        "Me alegro de que los niños hayan bebido leche.",
+        "Me alegro de que los niños han bebido leche.",
+        "Me alegro de que los niños hayan beber leche."
+      ],
+      "answer": "A",
+      "wrong1": "Me alegro de que los niños han bebido leche.",
+      "wrong2": "Me alegro de que los niños hayan beber leche.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-017",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Ich glaube nicht, dass ich zu viel getrunken habe.",
+      "es": "No creo que yo haya bebido demasiado.",
+      "opts": [
+        "No creo que yo haya beber demasiado.",
+        "No creo que yo haya bebido demasiado.",
+        "No creo que yo he bebido demasiado."
+      ],
+      "answer": "B",
+      "wrong1": "No creo que yo he bebido demasiado.",
+      "wrong2": "No creo que yo haya beber demasiado.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-018",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Ich hoffe, dass deine Schwester etwas Wasser getrunken hat.",
+      "es": "Espero que tu hermana haya bebido un poco de agua.",
+      "opts": [
+        "Espero que tu hermana ha bebido un poco de agua.",
+        "Espero que tu hermana haya beber un poco de agua.",
+        "Espero que tu hermana haya bebido un poco de agua."
+      ],
+      "answer": "C",
+      "wrong1": "Espero que tu hermana ha bebido un poco de agua.",
+      "wrong2": "Espero que tu hermana haya beber un poco de agua.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-019",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Es ist möglich, dass du aus meiner Flasche getrunken hast.",
+      "es": "Es posible que hayas bebido de mi botella.",
+      "opts": [
+        "Es posible que hayas bebido de mi botella.",
+        "Es posible que has bebido de mi botella.",
+        "Es posible que hayas beber de mi botella."
+      ],
+      "answer": "A",
+      "wrong1": "Es posible que has bebido de mi botella.",
+      "wrong2": "Es posible que hayas beber de mi botella.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-020",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Partizip: bebido",
+      "de": "Ich bezweifle, dass ihr so viel Saft getrunken habt.",
+      "es": "Dudo que vosotros hayáis bebido tanto zumo.",
+      "opts": [
+        "Dudo que vosotros hayáis beber tanto zumo.",
+        "Dudo que vosotros hayáis bebido tanto zumo.",
+        "Dudo que vosotros habéis bebido tanto zumo."
+      ],
+      "answer": "B",
+      "wrong1": "Dudo que vosotros habéis bebido tanto zumo.",
+      "wrong2": "Dudo que vosotros hayáis beber tanto zumo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-021",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich hoffe, dass du die Haustür geöffnet hast.",
+      "es": "Espero que hayas abierto la puerta de casa.",
+      "opts": [
+        "Espero que has abierto la puerta de casa.",
+        "Espero que hayas abrir la puerta de casa.",
+        "Espero que hayas abierto la puerta de casa."
+      ],
+      "answer": "C",
+      "wrong1": "Espero que has abierto la puerta de casa.",
+      "wrong2": "Espero que hayas abrir la puerta de casa.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-022",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich freue mich, dass die Lehrerin die Bibliothek geöffnet hat.",
+      "es": "Me alegro de que la profesora haya abierto la biblioteca.",
+      "opts": [
+        "Me alegro de que la profesora haya abierto la biblioteca.",
+        "Me alegro de que la profesora ha abierto la biblioteca.",
+        "Me alegro de que la profesora haya abrir la biblioteca."
+      ],
+      "answer": "A",
+      "wrong1": "Me alegro de que la profesora ha abierto la biblioteca.",
+      "wrong2": "Me alegro de que la profesora haya abrir la biblioteca.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-023",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Hoffentlich haben wir alle Fenster geöffnet.",
+      "es": "Ojalá hayamos abierto todas las ventanas.",
+      "opts": [
+        "Ojalá hayamos abrir todas las ventanas.",
+        "Ojalá hayamos abierto todas las ventanas.",
+        "Ojalá hemos abierto todas las ventanas."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá hemos abierto todas las ventanas.",
+      "wrong2": "Ojalá hayamos abrir todas las ventanas.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-024",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich glaube nicht, dass sie den Laden schon geöffnet haben.",
+      "es": "No creo que hayan abierto ya la tienda.",
+      "opts": [
+        "No creo que han abierto ya la tienda.",
+        "No creo que hayan abrir ya la tienda.",
+        "No creo que hayan abierto ya la tienda."
+      ],
+      "answer": "C",
+      "wrong1": "No creo que han abierto ya la tienda.",
+      "wrong2": "No creo que hayan abrir ya la tienda.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-025",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Es ist möglich, dass ich die falsche Kiste geöffnet habe.",
+      "es": "Es posible que yo haya abierto la caja equivocada.",
+      "opts": [
+        "Es posible que yo haya abierto la caja equivocada.",
+        "Es posible que yo he abierto la caja equivocada.",
+        "Es posible que yo haya abrir la caja equivocada."
+      ],
+      "answer": "A",
+      "wrong1": "Es posible que yo he abierto la caja equivocada.",
+      "wrong2": "Es posible que yo haya abrir la caja equivocada.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-026",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich freue mich, dass ihr die Briefe geöffnet habt.",
+      "es": "Me alegro de que hayáis abierto las cartas.",
+      "opts": [
+        "Me alegro de que hayáis abrir las cartas.",
+        "Me alegro de que hayáis abierto las cartas.",
+        "Me alegro de que habéis abierto las cartas."
+      ],
+      "answer": "B",
+      "wrong1": "Me alegro de que habéis abierto las cartas.",
+      "wrong2": "Me alegro de que hayáis abrir las cartas.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-027",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich hoffe, dass Marcos das Geschenk geöffnet hat.",
+      "es": "Espero que Marcos haya abierto el regalo.",
+      "opts": [
+        "Espero que Marcos ha abierto el regalo.",
+        "Espero que Marcos haya abrir el regalo.",
+        "Espero que Marcos haya abierto el regalo."
+      ],
+      "answer": "C",
+      "wrong1": "Espero que Marcos ha abierto el regalo.",
+      "wrong2": "Espero que Marcos haya abrir el regalo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-028",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich bezweifle, dass mein Bruder seine Post geöffnet hat.",
+      "es": "Dudo que mi hermano haya abierto su correo.",
+      "opts": [
+        "Dudo que mi hermano haya abierto su correo.",
+        "Dudo que mi hermano ha abierto su correo.",
+        "Dudo que mi hermano haya abrir su correo."
+      ],
+      "answer": "A",
+      "wrong1": "Dudo que mi hermano ha abierto su correo.",
+      "wrong2": "Dudo que mi hermano haya abrir su correo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-029",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich hoffe, dass du das Buch auf der richtigen Seite geöffnet hast.",
+      "es": "Espero que hayas abierto el libro en la página correcta.",
+      "opts": [
+        "Espero que hayas abrir el libro en la página correcta.",
+        "Espero que hayas abierto el libro en la página correcta.",
+        "Espero que has abierto el libro en la página correcta."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que has abierto el libro en la página correcta.",
+      "wrong2": "Espero que hayas abrir el libro en la página correcta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-030",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Partizip: abierto",
+      "de": "Ich freue mich, dass die Nachbarn die Tür geöffnet haben.",
+      "es": "Me alegro de que los vecinos hayan abierto la puerta.",
+      "opts": [
+        "Me alegro de que los vecinos han abierto la puerta.",
+        "Me alegro de que los vecinos hayan abrir la puerta.",
+        "Me alegro de que los vecinos hayan abierto la puerta."
+      ],
+      "answer": "C",
+      "wrong1": "Me alegro de que los vecinos han abierto la puerta.",
+      "wrong2": "Me alegro de que los vecinos hayan abrir la puerta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-031",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Ich hoffe, dass du die Spanischprüfung bestanden hast.",
+      "es": "Espero que hayas aprobado el examen de español.",
+      "opts": [
+        "Espero que hayas aprobado el examen de español.",
+        "Espero que has aprobado el examen de español.",
+        "Espero que hayas aprobar el examen de español."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que has aprobado el examen de español.",
+      "wrong2": "Espero que hayas aprobar el examen de español.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-032",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Ich freue mich, dass Marta die Matheprüfung bestanden hat.",
+      "es": "Me alegro de que Marta haya aprobado el examen de matemáticas.",
+      "opts": [
+        "Me alegro de que Marta haya aprobar el examen de matemáticas.",
+        "Me alegro de que Marta haya aprobado el examen de matemáticas.",
+        "Me alegro de que Marta ha aprobado el examen de matemáticas."
+      ],
+      "answer": "B",
+      "wrong1": "Me alegro de que Marta ha aprobado el examen de matemáticas.",
+      "wrong2": "Me alegro de que Marta haya aprobar el examen de matemáticas.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-033",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Hoffentlich haben wir die heutige Prüfung bestanden.",
+      "es": "Ojalá hayamos aprobado la prueba de hoy.",
+      "opts": [
+        "Ojalá hemos aprobado la prueba de hoy.",
+        "Ojalá hayamos aprobar la prueba de hoy.",
+        "Ojalá hayamos aprobado la prueba de hoy."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá hemos aprobado la prueba de hoy.",
+      "wrong2": "Ojalá hayamos aprobar la prueba de hoy.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-034",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Es ist möglich, dass ihr das Schuljahr bestanden habt.",
+      "es": "Es posible que vosotros hayáis aprobado el curso.",
+      "opts": [
+        "Es posible que vosotros hayáis aprobado el curso.",
+        "Es posible que vosotros habéis aprobado el curso.",
+        "Es posible que vosotros hayáis aprobar el curso."
+      ],
+      "answer": "A",
+      "wrong1": "Es posible que vosotros habéis aprobado el curso.",
+      "wrong2": "Es posible que vosotros hayáis aprobar el curso.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-035",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Ich glaube nicht, dass meine Freunde die Prüfung mit so wenig Vorbereitung bestanden haben.",
+      "es": "No creo que mis amigos hayan aprobado el examen con tan poca preparación.",
+      "opts": [
+        "No creo que mis amigos hayan aprobar el examen con tan poca preparación.",
+        "No creo que mis amigos hayan aprobado el examen con tan poca preparación.",
+        "No creo que mis amigos han aprobado el examen con tan poca preparación."
+      ],
+      "answer": "B",
+      "wrong1": "No creo que mis amigos han aprobado el examen con tan poca preparación.",
+      "wrong2": "No creo que mis amigos hayan aprobar el examen con tan poca preparación.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-036",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Hoffentlich habe ich diese Prüfung bestanden.",
+      "es": "Ojalá yo haya aprobado este examen.",
+      "opts": [
+        "Ojalá yo he aprobado este examen.",
+        "Ojalá yo haya aprobar este examen.",
+        "Ojalá yo haya aprobado este examen."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá yo he aprobado este examen.",
+      "wrong2": "Ojalá yo haya aprobar este examen.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-037",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Ich hoffe, dass mein Bruder die Fahrprüfung bestanden hat.",
+      "es": "Espero que mi hermano haya aprobado el examen de conducir.",
+      "opts": [
+        "Espero que mi hermano haya aprobado el examen de conducir.",
+        "Espero que mi hermano ha aprobado el examen de conducir.",
+        "Espero que mi hermano haya aprobar el examen de conducir."
+      ],
+      "answer": "A",
+      "wrong1": "Espero que mi hermano ha aprobado el examen de conducir.",
+      "wrong2": "Espero que mi hermano haya aprobar el examen de conducir.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-038",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Ich bezweifle, dass du mit dieser Note bestanden hast.",
+      "es": "Dudo que hayas aprobado con esa nota.",
+      "opts": [
+        "Dudo que hayas aprobar con esa nota.",
+        "Dudo que hayas aprobado con esa nota.",
+        "Dudo que has aprobado con esa nota."
+      ],
+      "answer": "B",
+      "wrong1": "Dudo que has aprobado con esa nota.",
+      "wrong2": "Dudo que hayas aprobar con esa nota.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-039",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Ich freue mich, dass ihr die Abschlussprüfung bestanden habt.",
+      "es": "Me alegro de que hayáis aprobado el examen final.",
+      "opts": [
+        "Me alegro de que habéis aprobado el examen final.",
+        "Me alegro de que hayáis aprobar el examen final.",
+        "Me alegro de que hayáis aprobado el examen final."
+      ],
+      "answer": "C",
+      "wrong1": "Me alegro de que habéis aprobado el examen final.",
+      "wrong2": "Me alegro de que hayáis aprobar el examen final.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-040",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Partizip: aprobado",
+      "de": "Es ist möglich, dass alle das Schuljahr bestanden haben.",
+      "es": "Es posible que todos hayan aprobado el curso.",
+      "opts": [
+        "Es posible que todos hayan aprobado el curso.",
+        "Es posible que todos han aprobado el curso.",
+        "Es posible que todos hayan aprobar el curso."
+      ],
+      "answer": "A",
+      "wrong1": "Es posible que todos han aprobado el curso.",
+      "wrong2": "Es posible que todos hayan aprobar el curso.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-041",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Ich hoffe, dass du mit dem Zug gekommen bist.",
+      "es": "Espero que hayas venido en tren.",
+      "opts": [
+        "Espero que hayas venir en tren.",
+        "Espero que hayas venido en tren.",
+        "Espero que has venido en tren."
+      ],
+      "answer": "B",
+      "wrong1": "Espero que has venido en tren.",
+      "wrong2": "Espero que hayas venir en tren.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-042",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Ich freue mich, dass deine Eltern zu uns gekommen sind.",
+      "es": "Me alegro de que tus padres hayan venido a nuestra casa.",
+      "opts": [
+        "Me alegro de que tus padres han venido a nuestra casa.",
+        "Me alegro de que tus padres hayan venir a nuestra casa.",
+        "Me alegro de que tus padres hayan venido a nuestra casa."
+      ],
+      "answer": "C",
+      "wrong1": "Me alegro de que tus padres han venido a nuestra casa.",
+      "wrong2": "Me alegro de que tus padres hayan venir a nuestra casa.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-043",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Hoffentlich sind wir rechtzeitig gekommen.",
+      "es": "Ojalá hayamos venido a tiempo.",
+      "opts": [
+        "Ojalá hayamos venido a tiempo.",
+        "Ojalá hemos venido a tiempo.",
+        "Ojalá hayamos venir a tiempo."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá hemos venido a tiempo.",
+      "wrong2": "Ojalá hayamos venir a tiempo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-044",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Es ist möglich, dass sie mit ihrem Bruder gekommen ist.",
+      "es": "Es posible que ella haya venido con su hermano.",
+      "opts": [
+        "Es posible que ella haya venir con su hermano.",
+        "Es posible que ella haya venido con su hermano.",
+        "Es posible que ella ha venido con su hermano."
+      ],
+      "answer": "B",
+      "wrong1": "Es posible que ella ha venido con su hermano.",
+      "wrong2": "Es posible que ella haya venir con su hermano.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-045",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Ich bezweifle, dass du ohne Begleitung gekommen bist.",
+      "es": "Dudo que tú hayas venido sin compañía.",
+      "opts": [
+        "Dudo que tú has venido sin compañía.",
+        "Dudo que tú hayas venir sin compañía.",
+        "Dudo que tú hayas venido sin compañía."
+      ],
+      "answer": "C",
+      "wrong1": "Dudo que tú has venido sin compañía.",
+      "wrong2": "Dudo que tú hayas venir sin compañía.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-046",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Ich freue mich, dass ihr heute gekommen seid.",
+      "es": "Me alegro de que hayáis venido hoy.",
+      "opts": [
+        "Me alegro de que hayáis venido hoy.",
+        "Me alegro de que habéis venido hoy.",
+        "Me alegro de que hayáis venir hoy."
+      ],
+      "answer": "A",
+      "wrong1": "Me alegro de que habéis venido hoy.",
+      "wrong2": "Me alegro de que hayáis venir hoy.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-047",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Ich glaube nicht, dass Marcos heute Morgen gekommen ist.",
+      "es": "No creo que Marcos haya venido esta mañana.",
+      "opts": [
+        "No creo que Marcos haya venir esta mañana.",
+        "No creo que Marcos haya venido esta mañana.",
+        "No creo que Marcos ha venido esta mañana."
+      ],
+      "answer": "B",
+      "wrong1": "No creo que Marcos ha venido esta mañana.",
+      "wrong2": "No creo que Marcos haya venir esta mañana.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-048",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Ich hoffe, dass meine Freunde zur Feier gekommen sind.",
+      "es": "Espero que mis amigos hayan venido a la fiesta.",
+      "opts": [
+        "Espero que mis amigos han venido a la fiesta.",
+        "Espero que mis amigos hayan venir a la fiesta.",
+        "Espero que mis amigos hayan venido a la fiesta."
+      ],
+      "answer": "C",
+      "wrong1": "Espero que mis amigos han venido a la fiesta.",
+      "wrong2": "Espero que mis amigos hayan venir a la fiesta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-049",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Hoffentlich ist meine Tante schon gekommen.",
+      "es": "Ojalá haya venido ya mi tía.",
+      "opts": [
+        "Ojalá haya venido ya mi tía.",
+        "Ojalá ha venido ya mi tía.",
+        "Ojalá haya venir ya mi tía."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá ha venido ya mi tía.",
+      "wrong2": "Ojalá haya venir ya mi tía.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPERF-050",
+      "topic": "Perfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Partizip: venido",
+      "de": "Ich freue mich, dass alle zur Feier gekommen sind.",
+      "es": "Me alegro de que todos hayan venido a la fiesta.",
+      "opts": [
+        "Me alegro de que todos hayan venir a la fiesta.",
+        "Me alegro de que todos hayan venido a la fiesta.",
+        "Me alegro de que todos han venido a la fiesta."
+      ],
+      "answer": "B",
+      "wrong1": "Me alegro de que todos han venido a la fiesta.",
+      "wrong2": "Me alegro de que todos hayan venir a la fiesta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-001",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hatte gehofft, dass du mir vor der Prüfung geholfen hättest.",
+      "es": "Esperaba que me hubieras ayudado antes del examen.",
+      "opts": [
+        "Esperaba que me hubieras ayudado antes del examen.",
+        "Esperaba que me habías ayudado antes del examen.",
+        "Esperaba que me hubieras ayudar antes del examen."
+      ],
+      "answer": "A",
+      "wrong1": "Esperaba que me habías ayudado antes del examen.",
+      "wrong2": "Esperaba que me hubieras ayudar antes del examen.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-002",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hätte mir gewünscht, dass Ana ihrer Schwester geholfen hätte.",
+      "es": "Me habría gustado que Ana hubiera ayudado a su hermana.",
+      "opts": [
+        "Me habría gustado que Ana hubiera ayudar a su hermana.",
+        "Me habría gustado que Ana hubiera ayudado a su hermana.",
+        "Me habría gustado que Ana había ayudado a su hermana."
+      ],
+      "answer": "B",
+      "wrong1": "Me habría gustado que Ana había ayudado a su hermana.",
+      "wrong2": "Me habría gustado que Ana hubiera ayudar a su hermana.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-003",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Wir bezweifelten, dass sie zu Hause geholfen hatten.",
+      "es": "Dudábamos que ellos hubieran ayudado en casa.",
+      "opts": [
+        "Dudábamos que ellos habían ayudado en casa.",
+        "Dudábamos que ellos hubieran ayudar en casa.",
+        "Dudábamos que ellos hubieran ayudado en casa."
+      ],
+      "answer": "C",
+      "wrong1": "Dudábamos que ellos habían ayudado en casa.",
+      "wrong2": "Dudábamos que ellos hubieran ayudar en casa.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-004",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Hätten wir unseren Freunden doch geholfen!",
+      "es": "Ojalá hubiésemos ayudado a nuestros amigos.",
+      "opts": [
+        "Ojalá hubiésemos ayudado a nuestros amigos.",
+        "Ojalá habíamos ayudado a nuestros amigos.",
+        "Ojalá hubiésemos ayudar a nuestros amigos."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá habíamos ayudado a nuestros amigos.",
+      "wrong2": "Ojalá hubiésemos ayudar a nuestros amigos.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-005",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hatte gehofft, dass ihr der Lehrerin geholfen hättet.",
+      "es": "Esperaba que hubierais ayudado a la profesora.",
+      "opts": [
+        "Esperaba que hubierais ayudar a la profesora.",
+        "Esperaba que hubierais ayudado a la profesora.",
+        "Esperaba que habíais ayudado a la profesora."
+      ],
+      "answer": "B",
+      "wrong1": "Esperaba que habíais ayudado a la profesora.",
+      "wrong2": "Esperaba que hubierais ayudar a la profesora.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-006",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich glaubte nicht, dass ich zu viel geholfen hatte.",
+      "es": "No creía que yo hubiera ayudado demasiado.",
+      "opts": [
+        "No creía que yo había ayudado demasiado.",
+        "No creía que yo hubiera ayudar demasiado.",
+        "No creía que yo hubiera ayudado demasiado."
+      ],
+      "answer": "C",
+      "wrong1": "No creía que yo había ayudado demasiado.",
+      "wrong2": "No creía que yo hubiera ayudar demasiado.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-007",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich war überrascht, dass mein Vater beim Umzug geholfen hatte.",
+      "es": "Me sorprendió que mi padre hubiese ayudado con la mudanza.",
+      "opts": [
+        "Me sorprendió que mi padre hubiese ayudado con la mudanza.",
+        "Me sorprendió que mi padre había ayudado con la mudanza.",
+        "Me sorprendió que mi padre hubiese ayudar con la mudanza."
+      ],
+      "answer": "A",
+      "wrong1": "Me sorprendió que mi padre había ayudado con la mudanza.",
+      "wrong2": "Me sorprendió que mi padre hubiese ayudar con la mudanza.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-008",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Meine Mutter hatte gehofft, dass du deiner Großmutter geholfen hättest.",
+      "es": "Mi madre esperaba que hubieses ayudado a tu abuela.",
+      "opts": [
+        "Mi madre esperaba que hubieses ayudar a tu abuela.",
+        "Mi madre esperaba que hubieses ayudado a tu abuela.",
+        "Mi madre esperaba que habías ayudado a tu abuela."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre esperaba que habías ayudado a tu abuela.",
+      "wrong2": "Mi madre esperaba que hubieses ayudar a tu abuela.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-009",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Hätten an diesem Tag doch alle geholfen!",
+      "es": "Ojalá todos hubiesen ayudado aquel día.",
+      "opts": [
+        "Ojalá todos habían ayudado aquel día.",
+        "Ojalá todos hubiesen ayudar aquel día.",
+        "Ojalá todos hubiesen ayudado aquel día."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá todos habían ayudado aquel día.",
+      "wrong2": "Ojalá todos hubiesen ayudar aquel día.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-010",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "ayudar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Sie bezweifelten, dass wir rechtzeitig geholfen hatten.",
+      "es": "Dudaban que hubiéramos ayudado a tiempo.",
+      "opts": [
+        "Dudaban que hubiéramos ayudado a tiempo.",
+        "Dudaban que habíamos ayudado a tiempo.",
+        "Dudaban que hubiéramos ayudar a tiempo."
+      ],
+      "answer": "A",
+      "wrong1": "Dudaban que habíamos ayudado a tiempo.",
+      "wrong2": "Dudaban que hubiéramos ayudar a tiempo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-011",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Hättest du auf der Reise doch mehr Wasser getrunken!",
+      "es": "Ojalá hubieras bebido más agua durante el viaje.",
+      "opts": [
+        "Ojalá hubieras beber más agua durante el viaje.",
+        "Ojalá hubieras bebido más agua durante el viaje.",
+        "Ojalá habías bebido más agua durante el viaje."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá habías bebido más agua durante el viaje.",
+      "wrong2": "Ojalá hubieras beber más agua durante el viaje.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-012",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich hatte gehofft, dass du den Tee schon getrunken hättest.",
+      "es": "Esperaba que ya hubieses bebido el té.",
+      "opts": [
+        "Esperaba que ya habías bebido el té.",
+        "Esperaba que ya hubieses beber el té.",
+        "Esperaba que ya hubieses bebido el té."
+      ],
+      "answer": "C",
+      "wrong1": "Esperaba que ya habías bebido el té.",
+      "wrong2": "Esperaba que ya hubieses beber el té.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-013",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Mein Vater glaubte nicht, dass wir so viel Limonade getrunken hatten.",
+      "es": "Mi padre no creía que hubiéramos bebido tanta limonada.",
+      "opts": [
+        "Mi padre no creía que hubiéramos bebido tanta limonada.",
+        "Mi padre no creía que habíamos bebido tanta limonada.",
+        "Mi padre no creía que hubiéramos beber tanta limonada."
+      ],
+      "answer": "A",
+      "wrong1": "Mi padre no creía que habíamos bebido tanta limonada.",
+      "wrong2": "Mi padre no creía que hubiéramos beber tanta limonada.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-014",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich war überrascht, dass sie so spät noch Kaffee getrunken hatten.",
+      "es": "Me sorprendió que hubieran bebido café tan tarde.",
+      "opts": [
+        "Me sorprendió que hubieran beber café tan tarde.",
+        "Me sorprendió que hubieran bebido café tan tarde.",
+        "Me sorprendió que habían bebido café tan tarde."
+      ],
+      "answer": "B",
+      "wrong1": "Me sorprendió que habían bebido café tan tarde.",
+      "wrong2": "Me sorprendió que hubieran beber café tan tarde.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-015",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hätte mir gewünscht, dass du weniger Softdrinks getrunken hättest.",
+      "es": "Me habría gustado que hubieras bebido menos refrescos.",
+      "opts": [
+        "Me habría gustado que habías bebido menos refrescos.",
+        "Me habría gustado que hubieras beber menos refrescos.",
+        "Me habría gustado que hubieras bebido menos refrescos."
+      ],
+      "answer": "C",
+      "wrong1": "Me habría gustado que habías bebido menos refrescos.",
+      "wrong2": "Me habría gustado que hubieras beber menos refrescos.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-016",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hatte gehofft, dass Ana vor dem Spiel genug getrunken hätte.",
+      "es": "Esperaba que Ana hubiera bebido suficiente antes del partido.",
+      "opts": [
+        "Esperaba que Ana hubiera bebido suficiente antes del partido.",
+        "Esperaba que Ana había bebido suficiente antes del partido.",
+        "Esperaba que Ana hubiera beber suficiente antes del partido."
+      ],
+      "answer": "A",
+      "wrong1": "Esperaba que Ana había bebido suficiente antes del partido.",
+      "wrong2": "Esperaba que Ana hubiera beber suficiente antes del partido.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-017",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich glaubte nicht, dass ihr den ganzen Saft getrunken hattet.",
+      "es": "No creía que hubieseis bebido todo el zumo.",
+      "opts": [
+        "No creía que hubieseis beber todo el zumo.",
+        "No creía que hubieseis bebido todo el zumo.",
+        "No creía que habíais bebido todo el zumo."
+      ],
+      "answer": "B",
+      "wrong1": "No creía que habíais bebido todo el zumo.",
+      "wrong2": "No creía que hubieseis beber todo el zumo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-018",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Hätten sie vor der Reise doch etwas getrunken!",
+      "es": "Ojalá hubiesen bebido algo antes del viaje.",
+      "opts": [
+        "Ojalá habían bebido algo antes del viaje.",
+        "Ojalá hubiesen beber algo antes del viaje.",
+        "Ojalá hubiesen bebido algo antes del viaje."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá habían bebido algo antes del viaje.",
+      "wrong2": "Ojalá hubiesen beber algo antes del viaje.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-019",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich war überrascht, dass ich so wenig Wasser getrunken hatte.",
+      "es": "Me sorprendió que yo hubiera bebido tan poca agua.",
+      "opts": [
+        "Me sorprendió que yo hubiera bebido tan poca agua.",
+        "Me sorprendió que yo había bebido tan poca agua.",
+        "Me sorprendió que yo hubiera beber tan poca agua."
+      ],
+      "answer": "A",
+      "wrong1": "Me sorprendió que yo había bebido tan poca agua.",
+      "wrong2": "Me sorprendió que yo hubiera beber tan poca agua.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-020",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "beber",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Wir hofften, dass wir vor dem Unterricht genug getrunken hatten.",
+      "es": "Esperábamos que hubiésemos bebido suficiente antes de clase.",
+      "opts": [
+        "Esperábamos que hubiésemos beber suficiente antes de clase.",
+        "Esperábamos que hubiésemos bebido suficiente antes de clase.",
+        "Esperábamos que habíamos bebido suficiente antes de clase."
+      ],
+      "answer": "B",
+      "wrong1": "Esperábamos que habíamos bebido suficiente antes de clase.",
+      "wrong2": "Esperábamos que hubiésemos beber suficiente antes de clase.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-021",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hatte gehofft, dass du die Tür schon geöffnet hättest.",
+      "es": "Esperaba que ya hubieras abierto la puerta.",
+      "opts": [
+        "Esperaba que ya habías abierto la puerta.",
+        "Esperaba que ya hubieras abrir la puerta.",
+        "Esperaba que ya hubieras abierto la puerta."
+      ],
+      "answer": "C",
+      "wrong1": "Esperaba que ya habías abierto la puerta.",
+      "wrong2": "Esperaba que ya hubieras abrir la puerta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-022",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich war überrascht, dass die Lehrerin den Raum geöffnet hatte.",
+      "es": "Me sorprendió que la profesora hubiese abierto el aula.",
+      "opts": [
+        "Me sorprendió que la profesora hubiese abierto el aula.",
+        "Me sorprendió que la profesora había abierto el aula.",
+        "Me sorprendió que la profesora hubiese abrir el aula."
+      ],
+      "answer": "A",
+      "wrong1": "Me sorprendió que la profesora había abierto el aula.",
+      "wrong2": "Me sorprendió que la profesora hubiese abrir el aula.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-023",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Hätten wir die Fenster doch früher geöffnet!",
+      "es": "Ojalá hubiéramos abierto las ventanas antes.",
+      "opts": [
+        "Ojalá hubiéramos abrir las ventanas antes.",
+        "Ojalá hubiéramos abierto las ventanas antes.",
+        "Ojalá habíamos abierto las ventanas antes."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá habíamos abierto las ventanas antes.",
+      "wrong2": "Ojalá hubiéramos abrir las ventanas antes.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-024",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich glaubte nicht, dass sie den Laden so früh geöffnet hatten.",
+      "es": "No creía que hubieran abierto la tienda tan temprano.",
+      "opts": [
+        "No creía que habían abierto la tienda tan temprano.",
+        "No creía que hubieran abrir la tienda tan temprano.",
+        "No creía que hubieran abierto la tienda tan temprano."
+      ],
+      "answer": "C",
+      "wrong1": "No creía que habían abierto la tienda tan temprano.",
+      "wrong2": "No creía que hubieran abrir la tienda tan temprano.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-025",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hatte gehofft, dass ich die richtige Kiste geöffnet hätte.",
+      "es": "Esperaba que yo hubiera abierto la caja correcta.",
+      "opts": [
+        "Esperaba que yo hubiera abierto la caja correcta.",
+        "Esperaba que yo había abierto la caja correcta.",
+        "Esperaba que yo hubiera abrir la caja correcta."
+      ],
+      "answer": "A",
+      "wrong1": "Esperaba que yo había abierto la caja correcta.",
+      "wrong2": "Esperaba que yo hubiera abrir la caja correcta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-026",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich hätte mir gewünscht, dass ihr den Brief geöffnet hättet.",
+      "es": "Me habría gustado que hubieseis abierto la carta.",
+      "opts": [
+        "Me habría gustado que hubieseis abrir la carta.",
+        "Me habría gustado que hubieseis abierto la carta.",
+        "Me habría gustado que habíais abierto la carta."
+      ],
+      "answer": "B",
+      "wrong1": "Me habría gustado que habíais abierto la carta.",
+      "wrong2": "Me habría gustado que hubieseis abrir la carta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-027",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Wir bezweifelten, dass mein Bruder seine Post geöffnet hatte.",
+      "es": "Dudábamos que mi hermano hubiera abierto su correo.",
+      "opts": [
+        "Dudábamos que mi hermano había abierto su correo.",
+        "Dudábamos que mi hermano hubiera abrir su correo.",
+        "Dudábamos que mi hermano hubiera abierto su correo."
+      ],
+      "answer": "C",
+      "wrong1": "Dudábamos que mi hermano había abierto su correo.",
+      "wrong2": "Dudábamos que mi hermano hubiera abrir su correo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-028",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich hätte mir gewünscht, dass du das Geschenk geöffnet hättest.",
+      "es": "Me habría gustado que hubieses abierto el regalo.",
+      "opts": [
+        "Me habría gustado que hubieses abierto el regalo.",
+        "Me habría gustado que habías abierto el regalo.",
+        "Me habría gustado que hubieses abrir el regalo."
+      ],
+      "answer": "A",
+      "wrong1": "Me habría gustado que habías abierto el regalo.",
+      "wrong2": "Me habría gustado que hubieses abrir el regalo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-029",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Wir glaubten nicht, dass die Nachbarn das Fenster geöffnet hatten.",
+      "es": "No creíamos que los vecinos hubiesen abierto la ventana.",
+      "opts": [
+        "No creíamos que los vecinos hubiesen abrir la ventana.",
+        "No creíamos que los vecinos hubiesen abierto la ventana.",
+        "No creíamos que los vecinos habían abierto la ventana."
+      ],
+      "answer": "B",
+      "wrong1": "No creíamos que los vecinos habían abierto la ventana.",
+      "wrong2": "No creíamos que los vecinos hubiesen abrir la ventana.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-030",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "abrir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Hätte sie das Buch doch vor der Prüfung geöffnet!",
+      "es": "Ojalá ella hubiera abierto el libro antes del examen.",
+      "opts": [
+        "Ojalá ella había abierto el libro antes del examen.",
+        "Ojalá ella hubiera abrir el libro antes del examen.",
+        "Ojalá ella hubiera abierto el libro antes del examen."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá ella había abierto el libro antes del examen.",
+      "wrong2": "Ojalá ella hubiera abrir el libro antes del examen.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-031",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hatte gehofft, dass du die Spanischprüfung bestanden hättest.",
+      "es": "Esperaba que hubieras aprobado el examen de español.",
+      "opts": [
+        "Esperaba que hubieras aprobado el examen de español.",
+        "Esperaba que habías aprobado el examen de español.",
+        "Esperaba que hubieras aprobar el examen de español."
+      ],
+      "answer": "A",
+      "wrong1": "Esperaba que habías aprobado el examen de español.",
+      "wrong2": "Esperaba que hubieras aprobar el examen de español.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-032",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich war überrascht, dass Marta die Prüfung bestanden hatte.",
+      "es": "Me sorprendió que Marta hubiese aprobado el examen.",
+      "opts": [
+        "Me sorprendió que Marta hubiese aprobar el examen.",
+        "Me sorprendió que Marta hubiese aprobado el examen.",
+        "Me sorprendió que Marta había aprobado el examen."
+      ],
+      "answer": "B",
+      "wrong1": "Me sorprendió que Marta había aprobado el examen.",
+      "wrong2": "Me sorprendió que Marta hubiese aprobar el examen.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-033",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Hätten wir die Prüfung doch bestanden!",
+      "es": "Ojalá hubiéramos aprobado la prueba.",
+      "opts": [
+        "Ojalá habíamos aprobado la prueba.",
+        "Ojalá hubiéramos aprobar la prueba.",
+        "Ojalá hubiéramos aprobado la prueba."
+      ],
+      "answer": "C",
+      "wrong1": "Ojalá habíamos aprobado la prueba.",
+      "wrong2": "Ojalá hubiéramos aprobar la prueba.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-034",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich glaubte nicht, dass ihr das Schuljahr bestanden hattet.",
+      "es": "No creía que hubieseis aprobado el curso.",
+      "opts": [
+        "No creía que hubieseis aprobado el curso.",
+        "No creía que habíais aprobado el curso.",
+        "No creía que hubieseis aprobar el curso."
+      ],
+      "answer": "A",
+      "wrong1": "No creía que habíais aprobado el curso.",
+      "wrong2": "No creía que hubieseis aprobar el curso.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-035",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Wir bezweifelten, dass unsere Freunde die Prüfung bestanden hatten.",
+      "es": "Dudábamos que nuestros amigos hubieran aprobado el examen.",
+      "opts": [
+        "Dudábamos que nuestros amigos hubieran aprobar el examen.",
+        "Dudábamos que nuestros amigos hubieran aprobado el examen.",
+        "Dudábamos que nuestros amigos habían aprobado el examen."
+      ],
+      "answer": "B",
+      "wrong1": "Dudábamos que nuestros amigos habían aprobado el examen.",
+      "wrong2": "Dudábamos que nuestros amigos hubieran aprobar el examen.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-036",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich hatte gehofft, dass ich die Abschlussprüfung bestanden hätte.",
+      "es": "Esperaba que yo hubiera aprobado el examen final.",
+      "opts": [
+        "Esperaba que yo había aprobado el examen final.",
+        "Esperaba que yo hubiera aprobar el examen final.",
+        "Esperaba que yo hubiera aprobado el examen final."
+      ],
+      "answer": "C",
+      "wrong1": "Esperaba que yo había aprobado el examen final.",
+      "wrong2": "Esperaba que yo hubiera aprobar el examen final.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-037",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich hätte mir gewünscht, dass mein Bruder die Fahrprüfung bestanden hätte.",
+      "es": "Me habría gustado que mi hermano hubiese aprobado el examen de conducir.",
+      "opts": [
+        "Me habría gustado que mi hermano hubiese aprobado el examen de conducir.",
+        "Me habría gustado que mi hermano había aprobado el examen de conducir.",
+        "Me habría gustado que mi hermano hubiese aprobar el examen de conducir."
+      ],
+      "answer": "A",
+      "wrong1": "Me habría gustado que mi hermano había aprobado el examen de conducir.",
+      "wrong2": "Me habría gustado que mi hermano hubiese aprobar el examen de conducir.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-038",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Hättest du doch schon im Juni bestanden!",
+      "es": "Ojalá hubieses aprobado ya en junio.",
+      "opts": [
+        "Ojalá hubieses aprobar ya en junio.",
+        "Ojalá hubieses aprobado ya en junio.",
+        "Ojalá habías aprobado ya en junio."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá habías aprobado ya en junio.",
+      "wrong2": "Ojalá hubieses aprobar ya en junio.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-039",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Wir hatten gehofft, dass ihr die Prüfung bestanden hättet.",
+      "es": "Esperábamos que hubierais aprobado el examen.",
+      "opts": [
+        "Esperábamos que habíais aprobado el examen.",
+        "Esperábamos que hubierais aprobar el examen.",
+        "Esperábamos que hubierais aprobado el examen."
+      ],
+      "answer": "C",
+      "wrong1": "Esperábamos que habíais aprobado el examen.",
+      "wrong2": "Esperábamos que hubierais aprobar el examen.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-040",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "aprobar",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Es war überraschend, dass alle bestanden hatten.",
+      "es": "Fue sorprendente que todos hubiesen aprobado.",
+      "opts": [
+        "Fue sorprendente que todos hubiesen aprobado.",
+        "Fue sorprendente que todos habían aprobado.",
+        "Fue sorprendente que todos hubiesen aprobar."
+      ],
+      "answer": "A",
+      "wrong1": "Fue sorprendente que todos habían aprobado.",
+      "wrong2": "Fue sorprendente que todos hubiesen aprobar.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-041",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Wenn du doch zu meinem Geburtstag gekommen wärst!",
+      "es": "Ojalá hubieras venido a mi cumpleaños.",
+      "opts": [
+        "Ojalá hubieras venir a mi cumpleaños.",
+        "Ojalá hubieras venido a mi cumpleaños.",
+        "Ojalá habías venido a mi cumpleaños."
+      ],
+      "answer": "B",
+      "wrong1": "Ojalá habías venido a mi cumpleaños.",
+      "wrong2": "Ojalá hubieras venir a mi cumpleaños.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-042",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich war überrascht, dass deine Eltern gestern gekommen waren.",
+      "es": "Me sorprendió que tus padres hubiesen venido ayer.",
+      "opts": [
+        "Me sorprendió que tus padres habían venido ayer.",
+        "Me sorprendió que tus padres hubiesen venir ayer.",
+        "Me sorprendió que tus padres hubiesen venido ayer."
+      ],
+      "answer": "C",
+      "wrong1": "Me sorprendió que tus padres habían venido ayer.",
+      "wrong2": "Me sorprendió que tus padres hubiesen venir ayer.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-043",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Wir hätten uns gewünscht, dass wir früher gekommen wären.",
+      "es": "Nos habría gustado que hubiéramos venido antes.",
+      "opts": [
+        "Nos habría gustado que hubiéramos venido antes.",
+        "Nos habría gustado que habíamos venido antes.",
+        "Nos habría gustado que hubiéramos venir antes."
+      ],
+      "answer": "A",
+      "wrong1": "Nos habría gustado que habíamos venido antes.",
+      "wrong2": "Nos habría gustado que hubiéramos venir antes.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-044",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich hatte gehofft, dass sie mit ihrem Bruder gekommen wäre.",
+      "es": "Esperaba que ella hubiese venido con su hermano.",
+      "opts": [
+        "Esperaba que ella hubiese venir con su hermano.",
+        "Esperaba que ella hubiese venido con su hermano.",
+        "Esperaba que ella había venido con su hermano."
+      ],
+      "answer": "B",
+      "wrong1": "Esperaba que ella había venido con su hermano.",
+      "wrong2": "Esperaba que ella hubiese venir con su hermano.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-045",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich bezweifelte, dass du ohne Begleitung gekommen warst.",
+      "es": "Dudaba que hubieras venido sin compañía.",
+      "opts": [
+        "Dudaba que habías venido sin compañía.",
+        "Dudaba que hubieras venir sin compañía.",
+        "Dudaba que hubieras venido sin compañía."
+      ],
+      "answer": "C",
+      "wrong1": "Dudaba que habías venido sin compañía.",
+      "wrong2": "Dudaba que hubieras venir sin compañía.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-046",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Wenn ihr doch früher zu uns gekommen wärt!",
+      "es": "Ojalá hubieseis venido antes a nuestra casa.",
+      "opts": [
+        "Ojalá hubieseis venido antes a nuestra casa.",
+        "Ojalá habíais venido antes a nuestra casa.",
+        "Ojalá hubieseis venir antes a nuestra casa."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá habíais venido antes a nuestra casa.",
+      "wrong2": "Ojalá hubieseis venir antes a nuestra casa.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-047",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Ich glaubte nicht, dass Marcos am Morgen gekommen war.",
+      "es": "No creía que Marcos hubiera venido por la mañana.",
+      "opts": [
+        "No creía que Marcos hubiera venir por la mañana.",
+        "No creía que Marcos hubiera venido por la mañana.",
+        "No creía que Marcos había venido por la mañana."
+      ],
+      "answer": "B",
+      "wrong1": "No creía que Marcos había venido por la mañana.",
+      "wrong2": "No creía que Marcos hubiera venir por la mañana.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-048",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich hatte gehofft, dass meine Freunde zur Feier gekommen wären.",
+      "es": "Esperaba que mis amigos hubiesen venido a la fiesta.",
+      "opts": [
+        "Esperaba que mis amigos habían venido a la fiesta.",
+        "Esperaba que mis amigos hubiesen venir a la fiesta.",
+        "Esperaba que mis amigos hubiesen venido a la fiesta."
+      ],
+      "answer": "C",
+      "wrong1": "Esperaba que mis amigos habían venido a la fiesta.",
+      "wrong2": "Esperaba que mis amigos hubiesen venir a la fiesta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-049",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -ra",
+      "de": "Wenn meine Tante doch rechtzeitig gekommen wäre!",
+      "es": "Ojalá mi tía hubiera venido a tiempo.",
+      "opts": [
+        "Ojalá mi tía hubiera venido a tiempo.",
+        "Ojalá mi tía había venido a tiempo.",
+        "Ojalá mi tía hubiera venir a tiempo."
+      ],
+      "answer": "A",
+      "wrong1": "Ojalá mi tía había venido a tiempo.",
+      "wrong2": "Ojalá mi tía hubiera venir a tiempo.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    },
+    {
+      "id": "SUBPLUS-050",
+      "topic": "Pluscuamperfecto de subjuntivo",
+      "lemma": "venir",
+      "phen": "Plusquamperfekt – -se",
+      "de": "Ich war überrascht, dass alle zur Feier gekommen waren.",
+      "es": "Me sorprendió que todos hubiesen venido a la fiesta.",
+      "opts": [
+        "Me sorprendió que todos hubiesen venir a la fiesta.",
+        "Me sorprendió que todos hubiesen venido a la fiesta.",
+        "Me sorprendió que todos habían venido a la fiesta."
+      ],
+      "answer": "B",
+      "wrong1": "Me sorprendió que todos habían venido a la fiesta.",
+      "wrong2": "Me sorprendió que todos hubiesen venir a la fiesta.",
+      "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
+      "reason2": "Infinitiv statt Partizip nach haber."
+    }
+  ]
+}
