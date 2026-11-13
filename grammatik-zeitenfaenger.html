@@ -355,6 +355,10 @@ function formsFor(v,mode){
 function cleanForm(value){return String(value||"").split(" / ")[0].replace(/[¡!¿?]/g,"").trim()}
 function keyForm(value){return cleanForm(value).toLocaleLowerCase("es")}
 function listForms(topic,verb){return formsFor(verb,topic.mode).map(function(row){return cleanForm(row[1])}).filter(Boolean)}
+function gameLabel(group){
+ const shortNames={"Pretérito indefinido":"Indefinido","Pretérito imperfecto":"Imperfecto","Pretérito perfecto":"Perfecto"};
+ return shortNames[group]||group;
+}
 function selectedInputs(){return Array.from(document.querySelectorAll(".tense-check:checked")).map(function(el){return el.value})}
 function updateSelection(){
  selected=selectedInputs();
@@ -443,10 +447,10 @@ function startGame(){
  if(!prepareCandidates()){ $("setupMsg").textContent="Für diese Kombination gibt es keine ausreichend eindeutigen Verbformen. Bitte wähle andere Zeitformen.";return}
  correct=0;wrong=0;total=0;active=true;answerLocked=false;
  $("correctCount").textContent="0";$("wrongCount").textContent="0";$("feedback").textContent="";
- $("activeHeading").textContent=selected.join(" · ");
+ $("activeHeading").textContent=selected.map(gameLabel).join(" · ");
  $("answerButtons").replaceChildren();
  selected.forEach(function(group){
-  const button=document.createElement("button");button.type="button";button.className="answer-btn";button.textContent=group;
+  const button=document.createElement("button");button.type="button";button.className="answer-btn";button.textContent=gameLabel(group);
   button.addEventListener("click",function(){answer(group)});$("answerButtons").append(button);
  });
  $("setupCard").classList.add("hidden");$("resultCard").classList.add("hidden");$("gameCard").classList.remove("hidden");
