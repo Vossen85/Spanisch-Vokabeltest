@@ -49,7 +49,7 @@ function render(){
  $('checkBtn').hidden=false;$('resetBtn').hidden=false;
  $('nextBtn').hidden=true;$('nextBtn').textContent=position===round.length-1?'Ergebnisse ansehen':'Weiter';
  $('chars').querySelectorAll('button').forEach(b=>b.disabled=false);
- updateButtons();$('topicHeading').focus({preventScroll:true});
+ updateButtons();$('prompt').focus({preventScroll:true});
 }
 function submit(){
  if(!running||locked||!$('correctionInput').value.trim())return;
