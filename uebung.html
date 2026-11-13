@@ -65,7 +65,14 @@
     .answer-line{margin-top:7px}.solution{color:#166534;font-weight:700}.own{color:#991b1b}.half{color:#9a3412}
     .note{background:#f8fafc;border-radius:12px;padding:12px 14px;margin-top:14px;font-size:.92rem}
     a.btn{display:inline-block;text-decoration:none;border-radius:10px;padding:12px 16px;font-weight:750}
-    .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+    .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:17px}
+    .dictionary-entry{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px;border:1px solid #64cfca;border-radius:14px;background:linear-gradient(110deg,#d6faf4,#edf7ff);color:#116765;text-decoration:none;margin-top:18px;box-shadow:0 5px 14px rgba(15,118,110,.08)}
+    .dictionary-entry:hover{border-color:#0d9488;background:#ccfbf1}
+    .dictionary-entry:focus-visible{outline:3px solid #0d9488;outline-offset:3px}
+    .dictionary-entry-title{font-weight:900;font-size:1.05rem}
+    .dictionary-entry-note{flex:1;min-width:190px;font-size:.85rem;color:#365c64}
+    .dictionary-entry-arrow{font-size:1.2rem;font-weight:900}
+    @media(max-width:600px){.dictionary-entry{gap:5px 10px;padding:11px 12px}.dictionary-entry-note{flex-basis:100%;order:2}.dictionary-entry-arrow{margin-left:auto}}
     .choice-btn{min-height:150px;border-radius:18px;padding:24px;text-align:left;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;font-size:1.25rem;box-shadow:0 8px 22px rgba(15,23,42,.08)}
     .choice-btn span{font-size:.92rem;font-weight:550;line-height:1.4;opacity:.9}
     .mode-btn[aria-pressed="true"]{outline:3px solid #0f766e;outline-offset:3px}
@@ -280,6 +287,11 @@
       <div id="plannerSaveStatus" class="weekly-planner-save-status" role="status" aria-live="polite"></div>
     </section>
 
+    <a class="dictionary-entry" href="./woerterbuch.html" aria-label="Wörterbuch öffnen: Deutsch oder Spanisch suchen">
+      <span class="dictionary-entry-title">📖 Wörterbuch</span>
+      <span class="dictionary-entry-note">Spanisch und Deutsch suchen · mit Grundformen und Fundstellen</span>
+      <span class="dictionary-entry-arrow" aria-hidden="true">→</span>
+    </a>
     <div class="choice-grid">
       <button id="openVocabBtn" class="choice-btn choice-vocab" type="button">
         📚 Vokabeln
@@ -2706,6 +2718,33 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
     try{
       const data=await api({action:"catalog"});
       renderCatalog(data.units||[]);
+      const searchFolder=new URLSearchParams(location.search).get("woerterbuchOrdner");
+      if(searchFolder&&/^\d+$/.test(searchFolder)){
+        const target=$("unitsBox").querySelector('.folder-check[value="'+searchFolder+'"]');
+        if(target){
+          $("openVocabBtn").click();
+          // Den genauen Lernordner aus dem Wörterbuch anzeigen.
+          let current=target.parentElement;
+          while(current&&current!==$("unitsBox")){
+            current.classList?.remove("hidden");
+            current=current.parentElement;
+          }
+          const phase=target.closest(".phase-course");
+          const unit=target.closest(".unit-group:not(.phase-course)");
+          const quarter=target.closest(".quarter-block");
+          const phaseToggle=phase?.querySelector(":scope > .unit-head > .course-toggle");
+          if(phaseToggle){phaseToggle.textContent="Unidades ausblenden ▴";phaseToggle.setAttribute("aria-expanded","true");}
+          const phaseQuarterToggle=phase?.querySelector(":scope > .unit-head > .toggle");
+          if(phaseQuarterToggle)phaseQuarterToggle.textContent="Quartale ausblenden ▴";
+          const unitToggle=unit?.querySelector(":scope > .unit-head > .toggle");
+          if(unitToggle)unitToggle.textContent="Unterordner ausblenden ▴";
+          const quarterToggle=quarter?.querySelector(".quarter-toggle");
+          if(quarterToggle)quarterToggle.textContent="Lernordner ausblenden ▴";
+          target.checked=true;
+          target.dispatchEvent(new Event("change",{bubbles:true}));
+          window.setTimeout(()=>target.closest(".folder-row")?.scrollIntoView({behavior:"smooth",block:"center"}),150);
+        }
+      }
       const token=sessionStorage.getItem("spanischPracticeToken");
       if(token)await resume(token);
     }catch(e){
