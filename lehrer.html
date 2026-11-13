@@ -66,7 +66,7 @@
       box-shadow:0 4px 10px rgba(15,23,42,.18);
       transition:transform .15s ease,filter .15s ease,box-shadow .15s ease;
     }
-    .nav .navBtn[data-view="tests"]{--rainbow-from:#ef4662;--rainbow-to:#c62a52}
+    .nav .navBtn[data-view="test-hub"]{--rainbow-from:#ef4662;--rainbow-to:#c62a52}
     .nav .navBtn[data-view="analog-import"]{--rainbow-from:#f58a26;--rainbow-to:#d15a12}
     .nav .navBtn[data-view="students"]{--rainbow-from:#ffdd54;--rainbow-to:#edb82b;--rainbow-text:#382700}
     .nav .navBtn[data-view="create"]{--rainbow-from:#37ba69;--rainbow-to:#16834d}
@@ -386,6 +386,25 @@
     .motivation-modes label{margin:0;display:flex;align-items:center;gap:9px;padding:12px 11px;border:1px solid #e2cc87;border-radius:10px;background:#fff;color:#493005;font-weight:700;cursor:pointer}
     .motivation-modes input{accent-color:#bc8000;width:19px;height:19px;flex:0 0 auto}
     #motivationSettingsStatus{margin:12px 0 0;font-size:.87rem;color:#7b5b13}
+
+    /* Echte Unteransichten: Auf der Startseite wird kein Arbeitsinhalt aufgeklappt. */
+    #teacherHome,#teacherWorkspace{width:100%}
+    .teacher-workspace-head{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin:19px 0 20px}
+    .teacher-workspace-back{background:#e8edf5;color:#263a56;border:1px solid #cbd5e1;padding:9px 15px;border-radius:12px;font-size:.95rem}
+    .teacher-workspace-back:hover{background:#dbe6f4}
+    .teacher-workspace-back:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+    .teacher-workspace-title{margin:0;width:100%;padding:19px 21px;background:linear-gradient(135deg,#5185da,#3154b5);color:#fff;border-radius:16px;box-shadow:0 5px 15px rgba(15,23,42,.13);font-size:clamp(1.24rem,4vw,1.65rem);font-weight:850}
+    #teacherWorkspace[data-section="tests"] .teacher-workspace-title{background:linear-gradient(135deg,#ff526d,#e52f61)}
+    #teacherWorkspace[data-section="courses"] .teacher-workspace-title{background:linear-gradient(135deg,#5caaff,#3875ee)}
+    #teacherWorkspace[data-section="practice"] .teacher-workspace-title{background:linear-gradient(135deg,#28d1c6,#008f9c)}
+    #teacherWorkspace[data-section="activity"] .teacher-workspace-title{background:linear-gradient(135deg,#9082ff,#6657ee)}
+    #teacherWorkspace[data-section="reports"] .teacher-workspace-title{background:linear-gradient(135deg,#ca79ff,#a04cea)}
+    #teacherWorkspace[data-section="admin"] .teacher-workspace-title{background:linear-gradient(135deg,#ff79c7,#e84aa0)}
+    #teacherWorkspace[data-section="motivation"] .teacher-workspace-title{background:linear-gradient(135deg,#ffe678,#f4c63c);color:#493005}
+    #teacherWorkspace .view>.card>h2,
+    #teacherWorkspace .view>.card>.topline>div>h2{display:none}
+    #teacherWorkspace .test-subnav{margin:0 0 20px}
+    #teacherWorkspace .motivation-controls{margin-top:0}
     .teacher-logout-bottom{display:flex;justify-content:center;margin:30px 0 15px}
     .teacher-logout-bottom #logoutBtn{min-width:170px}
     @media(max-width:390px){.motivation-modes{grid-template-columns:1fr}}
@@ -395,8 +414,10 @@
 <body>
 <div class="wrap">
   <header class="avanza-home-header"><a class="avanza-home-link" href="lehrer.html" data-home-target="lehrer.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-lehrer-180.png" alt="¡Avanza! Startseite"></a></header>
-  <h1>Spanisch-Tests</h1>
-  <div class="sub">Lehrerbereich</div>
+  <div id="appIntro">
+    <h1>Spanisch-Tests</h1>
+    <div class="sub">Lehrerbereich</div>
+  </div>
 
   <section id="authCard" class="card">
     <div id="authChoice">
@@ -457,26 +478,13 @@
   </section>
 
   <section id="teacherArea" class="hidden">
-
+    <div id="teacherHome">
     <section id="teacherMotivation" class="teacher-motivation" aria-label="Motivation des Tages">
       <div id="motivationDailyDisplay" class="motivation-daily hidden" aria-live="polite">
         <div id="motivationRainbowText" class="motivation-daily-text"></div>
         <div id="motivationDailyReference" class="motivation-daily-reference"></div>
       </div>
-      <button id="motivationToggleBtn" data-view="motivation" type="button" aria-controls="motivationSettings" aria-expanded="false" title="Motivationsart auswählen oder Einstellungen schließen">🌞 Motivation des Tages</button>
-      <div id="motivationSettings" class="motivation-controls hidden">
-        <fieldset>
-          <legend>Welche Motivation möchtest du sehen?</legend>
-          <div class="motivation-modes">
-            <label><input type="radio" name="teacherMotivationMode" value="off" checked>Aus</label>
-            <label><input type="radio" name="teacherMotivationMode" value="neutral">Neutrale Sprüche</label>
-            <label><input type="radio" name="teacherMotivationMode" value="bible">Bibelverse</label>
-            <label><input type="radio" name="teacherMotivationMode" value="mixed">Gemischt</label>
-          </div>
-        </fieldset>
-        <p class="tiny" style="margin:13px 0 0">Tippe erneut auf den gelben Button, um die Einstellungen zu schließen. Dein Tagesvers bleibt darüber sichtbar.</p>
-        <p id="motivationSettingsStatus" role="status">Die Einstellung gilt nur für dein Lehrerkonto, nicht für Schülerinnen und Schüler.</p>
-      </div>
+      <button id="motivationToggleBtn" data-view="motivation" type="button" aria-controls="view-motivation" title="Motivation des Tages öffnen">🌞 Motivation des Tages</button>
     </section>
     <div class="topline">
       <div>
@@ -486,13 +494,36 @@
     </div>
 
     <nav class="nav" aria-label="Lehrer-Hauptmenü">
-      <button id="testsHubBtn" class="navBtn secondary" type="button" data-view="tests" aria-controls="testSubnav" aria-expanded="false">Tests</button>
+      <button id="testsHubBtn" class="navBtn secondary" type="button" data-view="test-hub" aria-controls="testSubnav" aria-expanded="false">Tests</button>
       <button class="navBtn secondary" type="button" data-view="courses">Kurse verwalten</button>
       <button class="navBtn secondary" type="button" data-view="practice">Schülerbereich teilen</button>
       <button class="navBtn secondary" type="button" data-view="activity">Wochenaufgabe</button>
       <button class="navBtn secondary" type="button" data-view="reports">Lernberichte</button>
       <button id="adminNavBtn" class="navBtn secondary hidden" type="button" data-view="admin">Kollegen verwalten</button>
     </nav>
+    <div class="teacher-logout-bottom"><button id="logoutBtn" class="secondary" type="button">Abmelden</button></div>
+    </div><!-- teacherHome -->
+
+    <div id="teacherWorkspace" class="hidden">
+      <div class="teacher-workspace-head" id="workspaceHead">
+        <button id="workspaceBackBtn" class="teacher-workspace-back" type="button">← Zur Startseite</button>
+        <h2 id="workspaceTitle" class="teacher-workspace-title"></h2>
+      </div>
+      <section id="view-motivation" class="view hidden" aria-label="Motivation des Tages">
+      <div id="motivationSettings" class="motivation-controls">
+        <fieldset>
+          <legend>Welche Motivation möchtest du sehen?</legend>
+          <div class="motivation-modes">
+            <label><input type="radio" name="teacherMotivationMode" value="off" checked>Aus</label>
+            <label><input type="radio" name="teacherMotivationMode" value="neutral">Neutrale Sprüche</label>
+            <label><input type="radio" name="teacherMotivationMode" value="bible">Bibelverse</label>
+            <label><input type="radio" name="teacherMotivationMode" value="mixed">Gemischt</label>
+          </div>
+        </fieldset>
+        <p class="tiny" style="margin:13px 0 0">Wähle hier deine bevorzugte Motivation. Auf der Startseite erscheint der Tagesvers weiterhin in bunten Buchstaben über dem gelben Button.</p>
+        <p id="motivationSettingsStatus" role="status">Die Einstellung gilt nur für dein Lehrerkonto, nicht für Schülerinnen und Schüler.</p>
+      </div>
+      </section>
     <div id="testSubnav" class="test-subnav hidden" role="group" aria-label="Testverwaltung">
       <button class="test-sub-btn" type="button" data-view="tests" aria-pressed="false">Meine Tests</button>
       <button class="test-sub-btn" type="button" data-view="create" aria-pressed="false">Test erstellen</button>
@@ -800,7 +831,7 @@
         <div id="teachersList"></div>
       </div>
     </section>
-    <div class="teacher-logout-bottom"><button id="logoutBtn" class="secondary" type="button">Abmelden</button></div>
+    </div><!-- teacherWorkspace -->
   </section>
 </div>
 
@@ -891,9 +922,7 @@
     if(teacherMotivationUserId===userId)return;
     teacherMotivationUserId=userId;
     setTeacherMotivationMode("off");
-    $("motivationSettings").classList.add("hidden");
     $("motivationDailyDisplay").classList.add("hidden");
-    $("motivationToggleBtn").setAttribute("aria-expanded","false");
     ++motivationRequestId;
     const {data,error}=await supabase.from("teacher_motivation_preferences")
       .select("mode").eq("user_id",userId).maybeSingle();
@@ -903,24 +932,10 @@
       return;
     }
     setTeacherMotivationMode(data?.mode||"off");
-    // Das Einstellungsmenü bleibt zu; nur der farbige Tagesvers wird angezeigt.
-    // Er bleibt auch beim Zuklappen und beim Wechsel in andere Lehrerbereiche sichtbar.
+    // Der Tagesvers wird auf der Startseite angezeigt; die Einstellungen liegen in einer eigenen Ansicht.
     await renderTeacherMotivation();
   }
-  $("motivationToggleBtn").addEventListener("click",()=>{
-    const panel=$("motivationSettings");
-    const opens=panel.classList.contains("hidden");
-    panel.classList.toggle("hidden",!opens);
-    $("motivationToggleBtn").setAttribute("aria-expanded",String(opens));
-    if(opens){
-      $("motivationSettingsStatus").textContent=teacherMotivationMode==="off"?"Aktuell ausgeschaltet. Wähle eine Motivation.":"Diese Auswahl wird nur für dein Lehrerkonto gespeichert.";
-    }
-    // Der gelbe Button steuert nur das Einstellungsmenü, nicht den Tagesvers.
-    // Bei vorübergehendem Ladefehler den Tagesvers erneut versuchen.
-    if(teacherMotivationMode!=="off" && $("motivationDailyDisplay").classList.contains("hidden")){
-      void renderTeacherMotivation();
-    }
-  });
+  $("motivationToggleBtn").addEventListener("click",()=>navigateTeacherView("motivation"));
   document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.addEventListener("change",async()=>{
     if(!input.checked||!teacherMotivationUserId)return;
     const requested=input.value;
@@ -954,6 +969,7 @@
   // Ein Canvas-Farbgrund erhält die ursprünglichen Regenbogenfarben auf betroffenen Geräten besser.
   function installRainbowButtonBackgrounds(){
     const palette={
+      "test-hub":["#ff526d","#e52f61"],
       "tests":["#ff526d","#e52f61"],
       "analog-import":["#ff9a32","#f36c18"],
       "students":["#ffe65a","#f8c62b"],
@@ -1242,15 +1258,58 @@
   $("reportFromWeek").addEventListener("change",()=>{reportRangeManuallyChanged=true;if(!$("learningReports").classList.contains("hidden"))loadReportRange()});
   $("reportToWeek").addEventListener("change",()=>{reportRangeManuallyChanged=true;if(!$("learningReports").classList.contains("hidden"))loadReportRange()});
 
+  const teacherViewTitles={
+    "test-hub":"Tests",
+    "tests":"Meine Tests",
+    "create":"Test erstellen",
+    "students":"Nach Schülern",
+    "analog-import":"Analoge Tests importieren",
+    "courses":"Kurse verwalten",
+    "practice":"Schülerbereich teilen",
+    "activity":"Wochenaufgabe",
+    "reports":"Lernberichte",
+    "admin":"Kollegen verwalten",
+    "motivation":"Motivation des Tages"
+  };
+  const teacherTestChildViews=["tests","create","students","analog-import"];
+  function readTeacherView(){
+    const prefix="#lehrer/";
+    if(!window.location.hash.startsWith(prefix))return null;
+    const view=window.location.hash.slice(prefix.length);
+    return Object.prototype.hasOwnProperty.call(teacherViewTitles,view)?view:null;
+  }
+  function navigateTeacherView(name){
+    const target=name&&Object.prototype.hasOwnProperty.call(teacherViewTitles,name)?name:null;
+    if(target==="admin"&&currentUserRole!=="admin")return;
+    const url=window.location.pathname+window.location.search+(target?"#lehrer/"+target:"");
+    if(window.location.pathname+window.location.search+window.location.hash!==url){
+      window.history.pushState({teacherView:target},"",url);
+    }
+    setView(target);
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("popstate",()=>{
+    if(!$("teacherArea").classList.contains("hidden"))setView(readTeacherView());
+  });
   function setView(name){
-    currentView=name||null;
-    const testViews=["tests","create","students","analog-import"];
-    const inTestSection=testViews.includes(name);
+    if(!Object.prototype.hasOwnProperty.call(teacherViewTitles,name||""))name=null;
+    if(name==="admin"&&currentUserRole!=="admin")name=null;
+    currentView=name;
+    const testArea=name==="test-hub"||teacherTestChildViews.includes(name);
+    const home=!name;
+    $("appIntro").classList.toggle("hidden",!home);
+    $("teacherHome").classList.toggle("hidden",!home);
+    $("teacherWorkspace").classList.toggle("hidden",home);
+    $("testSubnav").classList.toggle("hidden",name!=="test-hub");
+    $("testsHubBtn").setAttribute("aria-expanded",String(testArea));
+    $("teacherWorkspace").dataset.section=testArea?"tests":(name||"");
+    $("workspaceTitle").textContent=teacherViewTitles[name]||"";
+    const backTarget=teacherTestChildViews.includes(name)?"test-hub":"";
+    $("workspaceBackBtn").dataset.target=backTarget;
+    $("workspaceBackBtn").textContent=backTarget?"← Tests":"← Zur Startseite";
     document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));
-    $("testSubnav").classList.toggle("hidden",!inTestSection);
-    $("testsHubBtn").setAttribute("aria-expanded",String(inTestSection));
     document.querySelectorAll(".navBtn").forEach(b=>{
-      const active=!!name&&(b.id==="testsHubBtn"?inTestSection:b.dataset.view===name);
+      const active=!!name&&(b.id==="testsHubBtn"?testArea:b.dataset.view===name);
       b.classList.toggle("active",active);
       b.setAttribute("aria-pressed",String(active));
     });
@@ -1259,17 +1318,20 @@
       b.classList.toggle("active",active);
       b.setAttribute("aria-pressed",String(active));
     });
+    if(name&&name!=="test-hub"){
+      const target=$("view-"+name);
+      if(target)target.classList.remove("hidden");
+    }
     refreshRainbowButtons();
-    if(!name)return;
-    $("view-"+name).classList.remove("hidden");
-    if(name==="tests") loadDashboard();
-    if(name==="analog-import") loadAnalogImportOptions();
-    if(name==="students") loadDashboard();
-    if(name==="practice") renderPracticeShare();
-    if(name==="courses") loadCourses();
-    if(name==="activity") loadLearningActivity();
-    if(name==="reports") loadLearningReports();
-    if(name==="admin" && currentUserRole==="admin") loadTeachers();
+    if(!name||name==="test-hub")return;
+    if(name==="tests")loadDashboard();
+    if(name==="analog-import")loadAnalogImportOptions();
+    if(name==="students")loadDashboard();
+    if(name==="practice")renderPracticeShare();
+    if(name==="courses")loadCourses();
+    if(name==="activity")loadLearningActivity();
+    if(name==="reports")loadLearningReports();
+    if(name==="admin"&&currentUserRole==="admin")loadTeachers();
   }
 
   let courseCodesClipboard = "";
@@ -1645,10 +1707,10 @@
     const {data:{session}}=await supabase.auth.getSession();
     if(!session){
       currentView=null;
+      $("appIntro").classList.remove("hidden");
       teacherMotivationUserId=null;
       setTeacherMotivationMode("off");
-      $("motivationSettings").classList.add("hidden");
-      $("motivationDailyDisplay").classList.add("hidden");
+        $("motivationDailyDisplay").classList.add("hidden");
       ++motivationRequestId;
       $("authCard").classList.remove("hidden");
       $("pendingCard").classList.add("hidden");
@@ -1659,6 +1721,7 @@
     const {data:profile,error}=await supabase.from("teacher_profiles")
       .select("display_name,approved,role").eq("user_id",session.user.id).maybeSingle();
     if(error){
+      $("appIntro").classList.remove("hidden");
       $("authCard").classList.remove("hidden");
       $("teacherArea").classList.add("hidden");
       showAuthMode("login");
@@ -1667,6 +1730,7 @@
     }
     $("authCard").classList.add("hidden");
     if(!profile?.approved){
+      $("appIntro").classList.remove("hidden");
       $("pendingCard").classList.remove("hidden");
       $("teacherArea").classList.add("hidden");
       return;
@@ -1684,7 +1748,7 @@
     await loadUnits();
     await loadGrammarCatalog();
     await loadTestCourseOptions();
-    setView(currentView);
+    setView(readTeacherView());
     refreshRainbowButtons();
   }
 
@@ -3050,7 +3114,8 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
   $("logoutBtn").addEventListener("click",logout);
   $("logoutPendingBtn").addEventListener("click",logout);
 
-  document.querySelectorAll(".navBtn,.test-sub-btn").forEach(btn=>btn.addEventListener("click",()=>setView(btn.dataset.view)));
+  document.querySelectorAll(".navBtn,.test-sub-btn").forEach(btn=>btn.addEventListener("click",()=>navigateTeacherView(btn.dataset.view)));
+  $("workspaceBackBtn").addEventListener("click",()=>navigateTeacherView($("workspaceBackBtn").dataset.target||null));
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
   $("analogTestSelect").addEventListener("change",()=>{
     const selected=testsCache.find(t=>String(t.id)===$("analogTestSelect").value);
