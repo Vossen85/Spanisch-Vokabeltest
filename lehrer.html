@@ -804,10 +804,23 @@
       });
       for(const item of renderers)observer.observe(item.button);
     }
-    window.addEventListener("resize",()=>renderers.forEach(item=>item.paint()),{passive:true});
-    requestAnimationFrame(()=>renderers.forEach(item=>item.paint()));
+    const repaint=()=>renderers.forEach(item=>item.paint());
+    const repaintAfterLayout=()=>{
+      requestAnimationFrame(()=>{
+        repaint();
+        requestAnimationFrame(repaint);
+      });
+    };
+    window.addEventListener("resize",repaintAfterLayout,{passive:true});
+    window.addEventListener("pageshow",repaintAfterLayout);
+    window.addEventListener("focus",repaintAfterLayout);
+    document.addEventListener("visibilitychange",()=>{
+      if(!document.hidden)repaintAfterLayout();
+    });
+    repaintAfterLayout();
+    return repaintAfterLayout;
   }
-  installRainbowButtonBackgrounds();
+  const refreshRainbowButtons=installRainbowButtonBackgrounds();
   let currentOpenTest = null;
   let currentOpenSubmission = null;
   let currentUserRole = "teacher";
@@ -1446,6 +1459,9 @@
     }
     $("pendingCard").classList.add("hidden");
     $("teacherArea").classList.remove("hidden");
+    // Die Navigationsknöpfe haben erst jetzt eine sichtbare Größe.
+    // Farben bewusst nach der Freischaltung erneut zeichnen (Samsung Internet/PWA).
+    refreshRainbowButtons();
     currentUserRole=profile.role||"teacher";
     $("adminNavBtn").classList.toggle("hidden",currentUserRole!=="admin");
     if(currentView==="admin" && currentUserRole!=="admin") currentView=null;
@@ -1454,6 +1470,7 @@
     await loadGrammarCatalog();
     await loadTestCourseOptions();
     setView(currentView);
+    refreshRainbowButtons();
   }
 
   function updateUnitSelectionState(group){
