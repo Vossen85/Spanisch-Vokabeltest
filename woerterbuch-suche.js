@@ -92,7 +92,9 @@ function conjugations(lemma){
  return result;
 }
 function singular(q){
- const c=new Set();if(q.includes(" "))return c;
+ const c=new Set(),parts=tokens(q);
+ if(parts.length===2&&["los","las","unos","unas"].includes(parts[0]))q=parts[1];
+ else if(parts.length!==1)return c;
  if(q.endsWith("ces")&&q.length>4)c.add(q.slice(0,-3)+"z");
  if(q.endsWith("es")&&q.length>4)c.add(q.slice(0,-2));
  if(q.endsWith("s")&&q.length>3)c.add(q.slice(0,-1));
