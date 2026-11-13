@@ -83,6 +83,10 @@
     .nav .navBtn:focus-visible,#logoutBtn:focus-visible,#logoutPendingBtn:focus-visible{outline:3px solid #152d48;outline-offset:4px}
     #logoutBtn,#logoutPendingBtn{background:linear-gradient(135deg,#f2717c,#cd3d5b);color:#fff;border:2px solid rgba(255,255,255,.3);font-weight:850;border-radius:12px;box-shadow:0 4px 11px rgba(127,29,29,.16)}
     #logoutBtn:hover,#logoutPendingBtn:hover{filter:brightness(1.07)}
+    /* Canvas-Farbflächen bleiben in Samsung Internet deutlich leuchtender als erzwungen abgedunkelte CSS-Verläufe. */
+    .nav .navBtn,#logoutBtn,#logoutPendingBtn{position:relative;overflow:hidden;color-scheme:only light;isolation:isolate}
+    .rainbow-button-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none;border-radius:inherit;z-index:0}
+    .rainbow-button-label{position:relative;z-index:1;pointer-events:none}
     @media(prefers-reduced-motion:reduce){.nav .navBtn{transition:none}.nav .navBtn:hover{transform:none}}
     .goodbtn{background:#dcfce7;color:#166534}
     .badbtn{background:#fee2e2;color:#991b1b}
@@ -746,7 +750,64 @@
   let testCourseNameCache = new Map();
   let submissionsCache = [];
   let testUnitsCache = [];
-  let currentView = "tests";
+  let currentView = null;
+
+  // Samsung Internet kann CSS-Verläufe durch seinen erzwungenen Dunkelmodus stark abdunkeln.
+  // Ein Canvas-Farbgrund erhält die ursprünglichen Regenbogenfarben auf betroffenen Geräten besser.
+  function installRainbowButtonBackgrounds(){
+    const palette={
+      "tests":["#ff526d","#e52f61"],
+      "analog-import":["#ff9a32","#f36c18"],
+      "students":["#ffe65a","#f8c62b"],
+      "create":["#48d47c","#1aa866"],
+      "practice":["#28d1c6","#00a5b4"],
+      "courses":["#5caaff","#3875ee"],
+      "activity":["#9082ff","#6657ee"],
+      "reports":["#ca79ff","#a04cea"],
+      "admin":["#ff79c7","#e84aa0"],
+      "logout":["#fb8990","#e35476"]
+    };
+    const buttons=[...document.querySelectorAll(".nav .navBtn"),$("logoutBtn"),$("logoutPendingBtn")].filter(Boolean);
+    const renderers=[];
+    for(const button of buttons){
+      const colors=palette[button.dataset.view||"logout"];
+      if(!colors)continue;
+      const canvas=document.createElement("canvas");
+      canvas.className="rainbow-button-canvas";
+      canvas.setAttribute("aria-hidden","true");
+      const label=document.createElement("span");
+      label.className="rainbow-button-label";
+      label.textContent=button.textContent;
+      button.replaceChildren(canvas,label);
+      const paint=()=>{
+        const {width,height}=button.getBoundingClientRect();
+        if(width<1||height<1)return;
+        const dpr=Math.min(window.devicePixelRatio||1,2);
+        const w=Math.max(1,Math.round(width*dpr)),h=Math.max(1,Math.round(height*dpr));
+        if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+        const ctx=canvas.getContext("2d");
+        if(!ctx)return;
+        const gradient=ctx.createLinearGradient(0,0,w,h);
+        gradient.addColorStop(0,colors[0]);
+        gradient.addColorStop(1,colors[1]);
+        ctx.fillStyle=gradient;
+        ctx.fillRect(0,0,w,h);
+      };
+      renderers.push({button,paint});
+    }
+    if(typeof ResizeObserver==="function"){
+      const observer=new ResizeObserver(entries=>{
+        for(const entry of entries){
+          const item=renderers.find(x=>x.button===entry.target);
+          if(item)item.paint();
+        }
+      });
+      for(const item of renderers)observer.observe(item.button);
+    }
+    window.addEventListener("resize",()=>renderers.forEach(item=>item.paint()),{passive:true});
+    requestAnimationFrame(()=>renderers.forEach(item=>item.paint()));
+  }
+  installRainbowButtonBackgrounds();
   let currentOpenTest = null;
   let currentOpenSubmission = null;
   let currentUserRole = "teacher";
@@ -970,10 +1031,15 @@
   $("reportToWeek").addEventListener("change",()=>{reportRangeManuallyChanged=true;if(!$("learningReports").classList.contains("hidden"))loadReportRange()});
 
   function setView(name){
-    currentView=name;
+    currentView=name||null;
     document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));
+    document.querySelectorAll(".navBtn").forEach(b=>{
+      const active=!!name&&b.dataset.view===name;
+      b.classList.toggle("active",active);
+      b.setAttribute("aria-pressed",String(active));
+    });
+    if(!name)return;
     $("view-"+name).classList.remove("hidden");
-    document.querySelectorAll(".navBtn").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
     if(name==="tests") loadDashboard();
     if(name==="analog-import") loadAnalogImportOptions();
     if(name==="students") loadDashboard();
@@ -1356,6 +1422,7 @@
   async function refreshUI(){
     const {data:{session}}=await supabase.auth.getSession();
     if(!session){
+      currentView=null;
       $("authCard").classList.remove("hidden");
       $("pendingCard").classList.add("hidden");
       $("teacherArea").classList.add("hidden");
@@ -1381,7 +1448,7 @@
     $("teacherArea").classList.remove("hidden");
     currentUserRole=profile.role||"teacher";
     $("adminNavBtn").classList.toggle("hidden",currentUserRole!=="admin");
-    if(currentView==="admin" && currentUserRole!=="admin") currentView="tests";
+    if(currentView==="admin" && currentUserRole!=="admin") currentView=null;
     $("welcome").textContent="Angemeldet als "+(profile.display_name||session.user.email);
     await loadUnits();
     await loadGrammarCatalog();
