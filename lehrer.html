@@ -874,10 +874,10 @@
       const list=type==="bible"?data.verses:data.sayings;
       if(!Array.isArray(list)||!list.length)throw new Error("Für diese Auswahl sind noch keine Texte verfügbar.");
       const item=list[day%list.length];
-      const message=type==="bible"?item?.text:item;
+      const message=typeof item==="string"?item:item?.text;
       if(typeof message!=="string"||!message.trim())throw new Error("Der Tagestext ist unvollständig.");
       rainbowMotivationText(message);
-      reference.textContent=type==="bible"?(item.reference+" · "+(data.translation||"Menge-Bibel 1939")):"Motivation des Tages";
+      reference.textContent=type==="bible"?(item.reference+" · "+(data.translation||"Menge-Bibel 1939")):(item?.author?(item.author+(item.work?" · "+item.work:"")):"Ein Gedanke für heute");
       card.classList.remove("hidden");
       motivationDisplayedDay=day;
       $("motivationSettingsStatus").textContent="Gespeichert: "+({neutral:"Neutrale Sprüche",bible:"Bibelverse (Menge 1939)",mixed:"Gemischt"}[teacherMotivationMode])+". Nur im Lehrerbereich.";
