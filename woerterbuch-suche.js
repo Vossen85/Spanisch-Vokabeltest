@@ -1,7 +1,7 @@
 /* ¡Avanza! Wörterbuch-Suchindex. Ausschließlich übergebene Vokabel- und Grammatikdaten. */
 (function(global){
 "use strict";
-const fold=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("de").replace(/[¿¡]/g,"").trim().replace(/\s+/g," ");
+const fold=s=>String(s??"").replace(/[ñÑ]/g,"\uE000").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("de").replace(/\uE000/g,"ñ").replace(/[¿¡]/g,"").trim().replace(/\s+/g," ");
 const tokens=s=>fold(s).match(/[a-zäöüßñ]+/g)||[];
 const unique=a=>[...new Set(a.filter(Boolean))];
 const pretStems={tener:"tuv",estar:"estuv",andar:"anduv",poder:"pud",poner:"pus",saber:"sup",caber:"cup",haber:"hub",hacer:"hic",querer:"quis",venir:"vin",decir:"dij",traer:"traj",conducir:"conduj",traducir:"traduj",producir:"produj",introducir:"introduj",mantener:"mantuv",obtener:"obtuv"};
@@ -52,9 +52,9 @@ function conjugations(lemma){
  const e=l.slice(-2),stem=l.slice(0,-2),ar=e==="ar",er=e==="er";
  const batch=(root,endings,kind)=>endings.forEach(s=>add(root+s,kind));
  const prs=ar?["o","as","a","amos","ais","an"]:er?["o","es","e","emos","eis","en"]:["o","es","e","imos","is","en"];
- batch(stem,prs,"Presente");
- batch(stem,ar?["e","aste","o","amos","asteis","aron"]:["i","iste","io","imos","isteis","ieron"],"Pretérito indefinido");
- batch(stem,ar?["aba","abas","aba","abamos","abais","aban"]:["ia","ias","ia","iamos","iais","ian"],"Pretérito imperfecto");
+ if(!presIrreg[l])batch(stem,prs,"Presente");
+ if(!pretIrreg[l]&&!pretStems[l])batch(stem,ar?["e","aste","o","amos","asteis","aron"]:["i","iste","io","imos","isteis","ieron"],"Pretérito indefinido");
+ if(!impIrreg[l])batch(stem,ar?["aba","abas","aba","abamos","abais","aban"]:["ia","ias","ia","iamos","iais","ian"],"Pretérito imperfecto");
  batch(stem,ar?["e","es","e","emos","eis","en"]:["a","as","a","amos","ais","an"],"Subjuntivo presente");
  batch(stem,ar?["ara","aras","ara","aramos","arais","aran"]:["iera","ieras","iera","ieramos","ierais","ieran"],"Subjuntivo imperfecto");
  batch(l,["e","as","a","emos","eis","an"],"Futuro simple");
@@ -67,7 +67,7 @@ function conjugations(lemma){
  }
  if(pretStems[l]){
   const p=pretStems[l];
-  batch(p,["e","iste","o","imos","isteis",p.endsWith("j")?"eron":"ieron"],"unregelmäßiges Pretérito indefinido");
+  batch(p,l==="hacer"?["e","iste","imos","isteis","ieron"]:["e","iste","o","imos","isteis",p.endsWith("j")?"eron":"ieron"],"unregelmäßiges Pretérito indefinido");
   if(l==="hacer")add("hizo","Pretérito indefinido");
  }
  if(futStems[l]){
