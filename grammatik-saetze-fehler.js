@@ -30,7 +30,7 @@ function selection(){const topics=selectedTopics();if(!topics.length){$('loadSta
 function remember(row){try{let items=JSON.parse(localStorage.getItem(seenKey)||'[]');if(!Array.isArray(items))items=[];const set=new Set(items);const topicRows=bank.filter(x=>x.topic===row.topic);if(topicRows.every(x=>set.has(x.id)))for(const x of topicRows)set.delete(x.id);set.add(row.id);localStorage.setItem(seenKey,JSON.stringify([...set]))}catch{}}
 function begin(rows){if(!rows?.length)return;round=rows;position=0;history=[];running=true;locked=false;$('saveStatus').textContent='';note();show('exercise');void startTracking();render()}
 function updateButtons(){$('checkBtn').disabled=locked||chosenIndex===null||!$('correctionInput').value.trim();$('resetBtn').disabled=locked||(chosenIndex===null&&!$('correctionInput').value.trim())}
-function chooseWord(i){if(locked)return;chosenIndex=i;$('correctionInput').disabled=false;$('correctionInput').placeholder='Richtige Verbform eingeben';paintSentence();updateButtons();$('correctionInput').focus({preventScroll:true})}
+function chooseWord(i){if(locked)return;if(chosenIndex!==i)$('correctionInput').value='';chosenIndex=i;$('correctionInput').disabled=false;$('correctionInput').placeholder='Richtige Verbform eingeben';paintSentence();updateButtons();$('correctionInput').focus({preventScroll:true})}
 function paintSentence(){const area=$('spanishSentence'),row=round[position],sentence=row.error.wrong;area.replaceChildren();const pattern=/[\p{L}\p{M}\p{N}]+/gu;let last=0,i=0;
 for(const match of sentence.matchAll(pattern)){
  if(match.index>last)area.append(document.createTextNode(sentence.slice(last,match.index)));
