@@ -2,7 +2,21 @@
   "version": 1,
   "translation": "Max Henning (1901), Originalfassung",
   "license": "Originalübersetzung gemeinfrei in Deutschland; spätere Bearbeitungen nicht automatisch eingeschlossen",
-  "selectionStatus": "awaiting_explicit_user_selected_references",
+  "selectionStatus": "partial_selection_from_two_user_screenshots_not_complete",
   "description": "Es werden bis zur Übertragung der tatsächlich markierten Stellen keine unbestätigten Koranverse angezeigt.",
-  "verses": []
+  "verses": [],
+  "explicitlyExcluded": [
+    "93:3",
+    "93:5",
+    "18:10"
+  ],
+  "confirmedSelectedVisible": [
+    "94:5–6",
+    "39:53",
+    "2:286",
+    "20:46",
+    "21:83",
+    "10:62"
+  ],
+  "selectionNote": "Die Nutzerin hat 47 von 59 als ausgewählt gemeldet, aber die vollständige Auswahl wurde nicht übertragen. Die obigen 3 ausgeschlossenen und 6 sichtbaren gewählten Stellen sind durch zwei Screenshots bestätigt. Keine verbleibenden Häkchen erraten; vor der Veröffentlichung die vollständige Liste einholen und Originalwortlaut von Max Henning (1901) überprüfen."
 }
