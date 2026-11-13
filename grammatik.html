@@ -163,7 +163,7 @@ const TOPICS=[
 {id:"subji-reg",group:"Subjuntivo imperfecto",title:"Regelmäßige Verben",mode:"subjImperfect",verbs:["ayudar","beber","abrir"]},
 {id:"subji-irreg",group:"Subjuntivo imperfecto",title:"Unregelmäßige Stämme aus dem Indefinido",mode:"subjImperfect",verbs:["andar","caber","conducir","dar","decir","estar","haber","hacer","ir","ser","poder","poner","querer","saber","tener","traer","venir"]},
 {id:"subj-perf",group:"Subjuntivo perfecto",title:"Subjuntivo von haber + Partizip",mode:"subjPerfect",verbs:["ayudar","beber","abrir"]},
-{id:"subj-plusc",group:"Subjuntivo pluscuamperfecto",title:"hubiera / hubiese + Partizip",mode:"subjPluperfect",verbs:["ayudar","beber","abrir"]},
+{id:"subj-plusc",group:"Subjuntivo pluscuamperfecto",title:"hubiera + Partizip",mode:"subjPluperfect",verbs:["ayudar","beber","abrir"]},
 
 {id:"imp-tu-reg",group:"Imperativo",title:"Bejahter Imperativ – tú – regelmäßig",mode:"impTu",verbs:["ayudar","beber","abrir"]},
 {id:"imp-tu-irreg",group:"Imperativo",title:"Bejahter Imperativ – tú – unregelmäßig",mode:"impTu",verbs:["decir","hacer","ir","poner","salir","ser","tener","venir"]},
@@ -367,13 +367,8 @@ function subjPresent(v){
 
 function subjImperfect(v){
   let [base,ref]=splitReflexive(v);
-  const ellos=indef(base)[5];
-  const stem=ellos.slice(0,-3);
-  const sAcc=accentLastVowel(stem);
-  const ra=[stem+"ra",stem+"ras",stem+"ra",sAcc+"ramos",stem+"rais",stem+"ran"];
-  const se=[stem+"se",stem+"ses",stem+"se",sAcc+"semos",stem+"seis",stem+"sen"];
-  const combined=ra.map((x,i)=>x+" / "+se[i]);
-  return addReflex(combined,ref);
+  const ellos=indef(base)[5],stem=ellos.slice(0,-3),sAcc=accentLastVowel(stem);
+  return addReflex([stem+"ra",stem+"ras",stem+"ra",sAcc+"ramos",stem+"rais",stem+"ran"],ref);
 }
 
 const HABER={
@@ -388,9 +383,8 @@ function compound(v,aux){
   return HABER[aux].map((h,i)=>(ref?REFL[i]+" ":"")+h+" "+part);
 }
 function subjPluperfect(v){
-  let [base,ref]=splitReflexive(v),part=participle(base);
-  const haber=subjImperfect("haber");
-  return haber.map((h,i)=>(ref?REFL[i]+" ":"")+h.split(" / ")[0]+" "+part+" / "+h.split(" / ")[1]+" "+part);
+  let [base,ref]=splitReflexive(v),part=participle(base),haber=subjImperfect("haber");
+  return haber.map((h,i)=>(ref?REFL[i]+" ":"")+h+" "+part);
 }
 
 const FUT_ROOT={haber:"habr",caber:"cabr",poder:"podr",querer:"querr",saber:"sabr",poner:"pondr",tener:"tendr",valer:"valdr",venir:"vendr",salir:"saldr",decir:"dir",hacer:"har"};
