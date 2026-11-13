@@ -810,6 +810,7 @@
   let teacherMotivationMode="off";
   let teacherMotivationUserId=null;
   let motivationRequestId=0;
+  let motivationDisplayedDay=null;
   const motivationDocuments={};
   const motivationPalette=["#ea4b65","#008a88","#3367d6","#a343bd","#cc6f08","#178748","#d63388","#675bd1"];
   function setTeacherMotivationMode(mode){
@@ -847,7 +848,8 @@
   async function renderTeacherMotivation(){
     const seq=++motivationRequestId;
     const card=$("motivationDailyDisplay"),reference=$("motivationDailyReference");
-    if(teacherMotivationMode==="off"||$("motivationSettings").classList.contains("hidden")){
+    if(teacherMotivationMode==="off"){
+      motivationDisplayedDay=null;
       card.classList.add("hidden");return;
     }
     const day=teacherMotivationDayIndex();
@@ -863,6 +865,7 @@
       rainbowMotivationText(message);
       reference.textContent=type==="bible"?(item.reference+" · "+(data.translation||"Menge-Bibel 1939")):"Motivation des Tages";
       card.classList.remove("hidden");
+      motivationDisplayedDay=day;
       $("motivationSettingsStatus").textContent="Gespeichert: "+({neutral:"Neutrale Sprüche",bible:"Bibelverse (Menge 1939)",mixed:"Gemischt"}[teacherMotivationMode])+". Nur im Lehrerbereich.";
     }catch(error){
       if(seq!==motivationRequestId)return;
@@ -886,6 +889,8 @@
       return;
     }
     setTeacherMotivationMode(data?.mode||"off");
+    // Nach dem Login sichtbar, auch solange die Einstellungen geschlossen sind.
+    await renderTeacherMotivation();
   }
   $("motivationToggleBtn").addEventListener("click",()=>{
     const panel=$("motivationSettings");
@@ -895,7 +900,7 @@
     if(opens){
       $("motivationSettingsStatus").textContent=teacherMotivationMode==="off"?"Aktuell ausgeschaltet. Wähle eine Motivation.":"Diese Auswahl wird nur für dein Lehrerkonto gespeichert.";
     }
-    void renderTeacherMotivation();
+    // Der gelbe Button steuert nur das Einstellungsmenü, nicht den Tagesvers.
   });
   document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.addEventListener("change",async()=>{
     if(!input.checked||!teacherMotivationUserId)return;
@@ -912,6 +917,19 @@
     }
   }));
 
+  // Bleibt die Lehrerseite über Mitternacht geöffnet, wechselt der Vers am neuen Tag.
+  function updateMotivationAtDayChange(){
+    if(teacherMotivationUserId && teacherMotivationMode!=="off" &&
+       !$("teacherArea").classList.contains("hidden") &&
+       motivationDisplayedDay!==teacherMotivationDayIndex()){
+      void renderTeacherMotivation();
+    }
+  }
+  window.setInterval(updateMotivationAtDayChange,60000);
+  document.addEventListener("visibilitychange",()=>{
+    if(!document.hidden)updateMotivationAtDayChange();
+  });
+  window.addEventListener("focus",updateMotivationAtDayChange);
 
   // Samsung Internet kann CSS-Verläufe durch seinen erzwungenen Dunkelmodus stark abdunkeln.
   // Ein Canvas-Farbgrund erhält die ursprünglichen Regenbogenfarben auf betroffenen Geräten besser.
