@@ -1,22 +1,268 @@
 {
-  "version": 1,
-  "translation": "Max Henning (1901), Originalfassung",
-  "license": "Originalübersetzung gemeinfrei in Deutschland; spätere Bearbeitungen nicht automatisch eingeschlossen",
-  "selectionStatus": "partial_selection_from_two_user_screenshots_not_complete",
-  "description": "Es werden bis zur Übertragung der tatsächlich markierten Stellen keine unbestätigten Koranverse angezeigt.",
-  "verses": [],
+  "version": 2,
+  "type": "quran",
+  "translation": "Sinngemäße Wiedergabe (keine wörtliche Henning-Übersetzung)",
+  "sourceTranslation": "Max Henning, Der Koran (1901), gemeinfreie Übersetzung als Orientierung für die spätere Wortlautprüfung",
+  "sourceUrl": "https://projekt-gutenberg.org/authors/max-henning/books/der-koran/",
+  "selection": "Die ursprünglichen 50 Vorschläge aus der Unterhaltung abzüglich Sure 93:3, Sure 93:5 und Sure 18:10. 47 ausdrücklich freigegebene Stellen.",
+  "selectionStatus": "published_user_approved_selection_in_editorial_paraphrase",
+  "exactWordingStatus": "Die angezeigten Texte sind die von der Nutzerin ausgewählten, eigens formulierten Sinnzusammenfassungen. Sie sind keine wörtlichen Koranübersetzungen. Exakte Transkription und Abgleich mit dem Originaldruck 1901 folgen getrennt.",
   "explicitlyExcluded": [
     "93:3",
     "93:5",
     "18:10"
   ],
-  "confirmedSelectedVisible": [
-    "94:5–6",
-    "39:53",
-    "2:286",
-    "20:46",
-    "21:83",
-    "10:62"
-  ],
-  "selectionNote": "Die Nutzerin hat 47 von 59 als ausgewählt gemeldet, aber die vollständige Auswahl wurde nicht übertragen. Die obigen 3 ausgeschlossenen und 6 sichtbaren gewählten Stellen sind durch zwei Screenshots bestätigt. Keine verbleibenden Häkchen erraten; vor der Veröffentlichung die vollständige Liste einholen und Originalwortlaut von Max Henning (1901) überprüfen."
+  "verses": [
+    {
+      "text": "Mit schweren Zeiten ist auch Erleichterung verbunden.",
+      "reference": "Sure 94:5–6",
+      "context": "Doppelte Trostzusage, ursprünglich an Mohammed",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Wer Fehler begangen hat, soll nicht an Gottes Barmherzigkeit verzweifeln.",
+      "reference": "Sure 39:53",
+      "context": "Im Zusammenhang mit Umkehr und Vergebung",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gott verlangt von keinem Menschen mehr, als er zu tragen vermag.",
+      "reference": "Sure 2:286",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Die Erinnerung an Gott kann dem Herzen Frieden und Ruhe schenken.",
+      "reference": "Sure 13:28",
+      "context": "Im Vers ausdrücklich auf die Glaubenden bezogen",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gott ermutigt Mose und Aaron: Sie sollen sich nicht fürchten, weil er bei ihnen ist.",
+      "reference": "Sure 20:46",
+      "context": "Zusage in der Mose-Erzählung",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Hiob wendet sich in seiner Not an Gott und vertraut auf dessen Barmherzigkeit.",
+      "reference": "Sure 21:83",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Für diejenigen, die Gott nahestehen, werden Furcht und Traurigkeit überwunden.",
+      "reference": "Sure 10:62",
+      "context": "Bezieht sich auf Gottes Freunde",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gott hat sich selbst Barmherzigkeit zugeschrieben.",
+      "reference": "Sure 6:54",
+      "context": "Mit der Zusage der Vergebung bei Reue",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gottes Barmherzigkeit umfasst alles.",
+      "reference": "Sure 7:156",
+      "context": "Im weiteren Vers wird die Verheißung näher eingeschränkt",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Barmherzigkeit zeigt sich in Sanftmut statt Härte.",
+      "reference": "Sure 3:159",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Menschen sollen einander verzeihen und Nachsicht üben.",
+      "reference": "Sure 24:22",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Begegne einer schlechten Handlung auf eine bessere Weise; sogar Feindschaft kann sich verwandeln.",
+      "reference": "Sure 41:34",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Vergebung und Versöhnung werden besonders gewürdigt.",
+      "reference": "Sure 42:40",
+      "context": "Im Zusammenhang mit dem Recht auf angemessene Gegenwehr",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Geduld und Vergebung werden als besonders wertvolle Haltung beschrieben.",
+      "reference": "Sure 42:43",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Josef verzichtet darauf, seinen Brüdern ihre früheren Verfehlungen vorzuhalten.",
+      "reference": "Sure 12:92",
+      "context": "Teil der Josef-Erzählung",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Ein freundliches Wort und Nachsicht sind besser als eine verletzende Wohltat.",
+      "reference": "Sure 2:263",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Menschen sollen einander zu Geduld und Barmherzigkeit ermutigen.",
+      "reference": "Sure 90:17",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Prüfe wichtige Nachrichten sorgfältig, bevor du anderen dadurch schadest.",
+      "reference": "Sure 49:6",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Verspotte andere nicht und gib ihnen keine verletzenden Spitznamen.",
+      "reference": "Sure 49:11",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Hüte dich vor unbegründeten Verdächtigungen, Ausspionieren und übler Nachrede.",
+      "reference": "Sure 49:12",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Die Verschiedenheit der Völker und Gemeinschaften soll gegenseitiges Kennenlernen ermöglichen.",
+      "reference": "Sure 49:13",
+      "context": "Vor Gott wird dabei Frömmigkeit als Maßstab genannt",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gott gebietet Gerechtigkeit, gute Taten und Fürsorge für Angehörige.",
+      "reference": "Sure 16:90",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Erwidere eine freundliche Begrüßung mindestens ebenso freundlich.",
+      "reference": "Sure 4:86",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Behandle Eltern, Bedürftige, Nachbarn und Reisende mit Güte.",
+      "reference": "Sure 4:36",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Ermutige Menschen dazu, miteinander auf die bestmögliche Weise zu sprechen.",
+      "reference": "Sure 17:53",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Die Diener des Barmherzigen begegnen anderen bescheiden und antworten auf Provokationen friedlich.",
+      "reference": "Sure 25:63",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Begegne Menschen ohne Hochmut oder Überheblichkeit.",
+      "reference": "Sure 31:18",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gib in guten wie in schwierigen Zeiten und bemühe dich, deinen Zorn zu beherrschen.",
+      "reference": "Sure 3:134",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Sprich freundlich zu Menschen und kümmere dich um Hilfsbedürftige.",
+      "reference": "Sure 2:83",
+      "context": "Teil eines Bundes mit den Kindern Israels",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Wahre Rechtschaffenheit zeigt sich auch in Großzügigkeit, Treue und Ausdauer.",
+      "reference": "Sure 2:177",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Großzügigkeit wird mit einem Samenkorn verglichen, aus dem viele neue Körner wachsen.",
+      "reference": "Sure 2:261",
+      "context": "Bild für Spenden auf Gottes Weg",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Wer glaubt und Gutes tut, dem wird ein gutes Leben verheißen.",
+      "reference": "Sure 16:97",
+      "context": "Die Zusage ist ausdrücklich an Glauben gebunden",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gib Angehörigen, Armen und Reisenden, was ihnen zusteht.",
+      "reference": "Sure 17:26",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Sei beim Geben weder verschwenderisch noch geizig, sondern halte ein gutes Maß.",
+      "reference": "Sure 25:67",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Tu anderen Gutes, so wie Gott dir Gutes erwiesen hat.",
+      "reference": "Sure 28:77",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Teile deine Nahrung mit Bedürftigen, Waisen und Gefangenen.",
+      "reference": "Sure 76:8",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Ein schwerer, aber guter Weg besteht darin, Menschen zu befreien und Hungernden zu helfen.",
+      "reference": "Sure 90:13–16",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gott verbindet Dankbarkeit mit der Vermehrung seiner Gaben.",
+      "reference": "Sure 14:7",
+      "context": "Der ganze Vers enthält auch eine Warnung vor Undankbarkeit",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Die Gaben Gottes sind so zahlreich, dass Menschen sie nicht vollständig aufzählen können.",
+      "reference": "Sure 16:18",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gehör, Augen und Herz werden als Gaben beschrieben, für die Menschen dankbar sein können.",
+      "reference": "Sure 16:78",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Das Gebet um wachsende Erkenntnis: Gott möge das Wissen vermehren.",
+      "reference": "Sure 20:114",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Weisheit wird als ein besonders großes Gut dargestellt.",
+      "reference": "Sure 2:269",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Höre aufmerksam zu und folge dem Besten, was gesagt wird.",
+      "reference": "Sure 39:18",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Die Vielfalt menschlicher Sprachen und Hautfarben gehört zu den Zeichen Gottes.",
+      "reference": "Sure 30:22",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Die wiedererwachende Natur macht Gottes Barmherzigkeit sichtbar.",
+      "reference": "Sure 30:50",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Gehe maßvoll durchs Leben und achte auf einen angemessenen Tonfall.",
+      "reference": "Sure 31:19",
+      "context": "Der zweite Teil verwendet einen drastischen Vergleich",
+      "rendering": "paraphrase"
+    },
+    {
+      "text": "Das Bemühen eines Menschen zählt, und seine Anstrengung wird gesehen.",
+      "reference": "Sure 53:39–40",
+      "context": "Steht im Zusammenhang mit Verantwortung und jenseitiger Vergeltung",
+      "rendering": "paraphrase"
+    }
+  ]
 }
