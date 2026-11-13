@@ -1319,13 +1319,13 @@
       "id": "SUBI-024",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "ayudar",
-      "phen": "Regelmäßig – -se",
+      "phen": "Regelmäßig – -ra",
       "de": "Meine Mutter wollte, dass sie bei den Einkäufen hilft.",
-      "es": "Mi madre quería que ella ayudase con las compras.",
+      "es": "Mi madre quería que ella ayudara con las compras.",
       "opts": [
         "Mi madre quería que ella ayudaba con las compras.",
         "Mi madre quería que ella ayudar con las compras.",
-        "Mi madre quería que ella ayudase con las compras."
+        "Mi madre quería que ella ayudara con las compras."
       ],
       "answer": "C",
       "wrong1": "Mi madre quería que ella ayudaba con las compras.",
@@ -1337,11 +1337,11 @@
       "id": "SUBI-025",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "beber",
-      "phen": "Regelmäßig – -se",
+      "phen": "Regelmäßig – -ra",
       "de": "Ich hoffte, dass du etwas Wasser trinkst.",
-      "es": "Esperaba que bebieses un poco de agua.",
+      "es": "Esperaba que bebieras un poco de agua.",
       "opts": [
-        "Esperaba que bebieses un poco de agua.",
+        "Esperaba que bebieras un poco de agua.",
         "Esperaba que bebías un poco de agua.",
         "Esperaba que beber un poco de agua."
       ],
@@ -1355,12 +1355,12 @@
       "id": "SUBI-026",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "abrir",
-      "phen": "Regelmäßig – -se",
+      "phen": "Regelmäßig – -ra",
       "de": "Der Lehrer wollte, dass sie die Fenster öffnen.",
-      "es": "El profesor quería que abriesen las ventanas.",
+      "es": "El profesor quería que abrieran las ventanas.",
       "opts": [
         "El profesor quería que abrir las ventanas.",
-        "El profesor quería que abriesen las ventanas.",
+        "El profesor quería que abrieran las ventanas.",
         "El profesor quería que abrían las ventanas."
       ],
       "answer": "B",
@@ -1373,13 +1373,13 @@
       "id": "SUBI-027",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "andar",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Wir hatten Angst, dass er nachts allein geht.",
-      "es": "Temíamos que anduviese solo por la noche.",
+      "es": "Temíamos que anduviera solo por la noche.",
       "opts": [
         "Temíamos que andaba solo por la noche.",
         "Temíamos que andar solo por la noche.",
-        "Temíamos que anduviese solo por la noche."
+        "Temíamos que anduviera solo por la noche."
       ],
       "answer": "C",
       "wrong1": "Temíamos que andaba solo por la noche.",
@@ -1391,11 +1391,11 @@
       "id": "SUBI-028",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "caer",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Ich war überrascht, dass so viele Blätter fielen.",
-      "es": "Me sorprendió que cayesen tantas hojas.",
+      "es": "Me sorprendió que cayeran tantas hojas.",
       "opts": [
-        "Me sorprendió que cayesen tantas hojas.",
+        "Me sorprendió que cayeran tantas hojas.",
         "Me sorprendió que caían tantas hojas.",
         "Me sorprendió que caer tantas hojas."
       ],
@@ -1409,12 +1409,12 @@
       "id": "SUBI-029",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "conducir",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Mein Bruder wollte lieber, dass du fährst.",
-      "es": "Mi hermano prefería que condujeses tú.",
+      "es": "Mi hermano prefería que condujeras tú.",
       "opts": [
         "Mi hermano prefería que conducir tú.",
-        "Mi hermano prefería que condujeses tú.",
+        "Mi hermano prefería que condujeras tú.",
         "Mi hermano prefería que conducías tú."
       ],
       "answer": "B",
@@ -1427,13 +1427,13 @@
       "id": "SUBI-030",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "dar",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Meine Lehrerin bat mich, meine Meinung zu sagen.",
-      "es": "Mi profesora me pidió que diese mi opinión.",
+      "es": "Mi profesora me pidió que diera mi opinión.",
       "opts": [
         "Mi profesora me pidió que daba mi opinión.",
         "Mi profesora me pidió que dar mi opinión.",
-        "Mi profesora me pidió que diese mi opinión."
+        "Mi profesora me pidió que diera mi opinión."
       ],
       "answer": "C",
       "wrong1": "Mi profesora me pidió que daba mi opinión.",
@@ -1445,11 +1445,11 @@
       "id": "SUBI-031",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "decir",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Ich wollte, dass sie etwas über den Film sagen.",
-      "es": "Quería que dijesen algo sobre la película.",
+      "es": "Quería que dijeran algo sobre la película.",
       "opts": [
-        "Quería que dijesen algo sobre la película.",
+        "Quería que dijeran algo sobre la película.",
         "Quería que decían algo sobre la película.",
         "Quería que decir algo sobre la película."
       ],
@@ -1463,12 +1463,12 @@
       "id": "SUBI-032",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "estar",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Wir bezweifelten, dass sie zu Hause waren.",
-      "es": "Dudábamos que estuviesen en casa.",
+      "es": "Dudábamos que estuvieran en casa.",
       "opts": [
         "Dudábamos que estar en casa.",
-        "Dudábamos que estuviesen en casa.",
+        "Dudábamos que estuvieran en casa.",
         "Dudábamos que estaban en casa."
       ],
       "answer": "B",
@@ -1481,13 +1481,13 @@
       "id": "SUBI-033",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "haber",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Wir hofften, dass es mehr Zeit gibt.",
-      "es": "Esperábamos que hubiese más tiempo.",
+      "es": "Esperábamos que hubiera más tiempo.",
       "opts": [
         "Esperábamos que había más tiempo.",
         "Esperábamos que haber más tiempo.",
-        "Esperábamos que hubiese más tiempo."
+        "Esperábamos que hubiera más tiempo."
       ],
       "answer": "C",
       "wrong1": "Esperábamos que había más tiempo.",
@@ -1499,11 +1499,11 @@
       "id": "SUBI-034",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "hacer",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Es war nötig, dass sie mehr Platz schaffen.",
-      "es": "Hacía falta que hiciesen más espacio.",
+      "es": "Hacía falta que hicieran más espacio.",
       "opts": [
-        "Hacía falta que hiciesen más espacio.",
+        "Hacía falta que hicieran más espacio.",
         "Hacía falta que hacían más espacio.",
         "Hacía falta que hacer más espacio."
       ],
@@ -1517,12 +1517,12 @@
       "id": "SUBI-035",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "querer",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Sie glaubten nicht, dass wir noch eine Chance wollten.",
-      "es": "No creían que quisiésemos otra oportunidad.",
+      "es": "No creían que quisiéramos otra oportunidad.",
       "opts": [
         "No creían que querer otra oportunidad.",
-        "No creían que quisiésemos otra oportunidad.",
+        "No creían que quisiéramos otra oportunidad.",
         "No creían que queríamos otra oportunidad."
       ],
       "answer": "B",
@@ -1535,13 +1535,13 @@
       "id": "SUBI-036",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "poder",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Wenn du doch morgen kommen könntest!",
-      "es": "Ojalá pudieses venir mañana.",
+      "es": "Ojalá pudieras venir mañana.",
       "opts": [
         "Ojalá podías venir mañana.",
         "Ojalá poder venir mañana.",
-        "Ojalá pudieses venir mañana."
+        "Ojalá pudieras venir mañana."
       ],
       "answer": "C",
       "wrong1": "Ojalá podías venir mañana.",
@@ -1553,11 +1553,11 @@
       "id": "SUBI-037",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "poner",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Mein Bruder wollte, dass du den Rucksack hierhin stellst.",
-      "es": "Mi hermano quería que pusieses la mochila aquí.",
+      "es": "Mi hermano quería que pusieras la mochila aquí.",
       "opts": [
-        "Mi hermano quería que pusieses la mochila aquí.",
+        "Mi hermano quería que pusieras la mochila aquí.",
         "Mi hermano quería que ponías la mochila aquí.",
         "Mi hermano quería que poner la mochila aquí."
       ],
@@ -1571,12 +1571,12 @@
       "id": "SUBI-038",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "saber",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Ich bezweifelte, dass wir die Adresse kannten.",
-      "es": "Dudaba que supiésemos la dirección.",
+      "es": "Dudaba que supiéramos la dirección.",
       "opts": [
         "Dudaba que saber la dirección.",
-        "Dudaba que supiésemos la dirección.",
+        "Dudaba que supiéramos la dirección.",
         "Dudaba que sabíamos la dirección."
       ],
       "answer": "B",
@@ -1589,13 +1589,13 @@
       "id": "SUBI-039",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "ser",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Ich glaubte nicht, dass sie so freundlich waren.",
-      "es": "No creía que fuesen tan amables.",
+      "es": "No creía que fueran tan amables.",
       "opts": [
         "No creía que eran tan amables.",
         "No creía que ser tan amables.",
-        "No creía que fuesen tan amables."
+        "No creía que fueran tan amables."
       ],
       "answer": "C",
       "wrong1": "No creía que eran tan amables.",
@@ -1607,11 +1607,11 @@
       "id": "SUBI-040",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "tener",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Unsere Eltern wollten, dass wir mehr Freunde haben.",
-      "es": "Nuestros padres querían que tuviésemos más amigos.",
+      "es": "Nuestros padres querían que tuviéramos más amigos.",
       "opts": [
-        "Nuestros padres querían que tuviésemos más amigos.",
+        "Nuestros padres querían que tuviéramos más amigos.",
         "Nuestros padres querían que teníamos más amigos.",
         "Nuestros padres querían que tener más amigos."
       ],
@@ -1625,12 +1625,12 @@
       "id": "SUBI-041",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "traer",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Wir hofften, dass sie das Frühstück mitbringen.",
-      "es": "Esperábamos que trajesen el desayuno.",
+      "es": "Esperábamos que trajeran el desayuno.",
       "opts": [
         "Esperábamos que traer el desayuno.",
-        "Esperábamos que trajesen el desayuno.",
+        "Esperábamos que trajeran el desayuno.",
         "Esperábamos que traían el desayuno."
       ],
       "answer": "B",
@@ -1643,13 +1643,13 @@
       "id": "SUBI-042",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "venir",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Meine Lehrerin wollte, dass du am Montag kommst.",
-      "es": "Mi profesora quería que vinieses el lunes.",
+      "es": "Mi profesora quería que vinieras el lunes.",
       "opts": [
         "Mi profesora quería que venías el lunes.",
         "Mi profesora quería que venir el lunes.",
-        "Mi profesora quería que vinieses el lunes."
+        "Mi profesora quería que vinieras el lunes."
       ],
       "answer": "C",
       "wrong1": "Mi profesora quería que venías el lunes.",
@@ -1661,11 +1661,11 @@
       "id": "SUBI-043",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "ir",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Meine Großmutter wollte, dass wir mit ihr gehen.",
-      "es": "Mi abuela quería que fuésemos con ella.",
+      "es": "Mi abuela quería que fuéramos con ella.",
       "opts": [
-        "Mi abuela quería que fuésemos con ella.",
+        "Mi abuela quería que fuéramos con ella.",
         "Mi abuela quería que íbamos con ella.",
         "Mi abuela quería que ir con ella."
       ],
@@ -1679,12 +1679,12 @@
       "id": "SUBI-044",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "valer",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Ich hoffte, dass die Eintrittskarten weniger kosten.",
-      "es": "Esperaba que las entradas valiesen menos.",
+      "es": "Esperaba que las entradas valieran menos.",
       "opts": [
         "Esperaba que las entradas valer menos.",
-        "Esperaba que las entradas valiesen menos.",
+        "Esperaba que las entradas valieran menos.",
         "Esperaba que las entradas valían menos."
       ],
       "answer": "B",
@@ -1697,13 +1697,13 @@
       "id": "SUBI-045",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "pedir",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Meine Schwester wollte, dass ich mich entschuldige.",
-      "es": "Mi hermana quería que yo pidiese perdón.",
+      "es": "Mi hermana quería que yo pidiera perdón.",
       "opts": [
         "Mi hermana quería que yo pedía perdón.",
         "Mi hermana quería que yo pedir perdón.",
-        "Mi hermana quería que yo pidiese perdón."
+        "Mi hermana quería que yo pidiera perdón."
       ],
       "answer": "C",
       "wrong1": "Mi hermana quería que yo pedía perdón.",
@@ -1715,11 +1715,11 @@
       "id": "SUBI-046",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "caber",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Wir glaubten nicht, dass alles in die Kiste passt.",
-      "es": "No creíamos que cupiese todo en la caja.",
+      "es": "No creíamos que cupiera todo en la caja.",
       "opts": [
-        "No creíamos que cupiese todo en la caja.",
+        "No creíamos que cupiera todo en la caja.",
         "No creíamos que cabía todo en la caja.",
         "No creíamos que caber todo en la caja."
       ],
@@ -1769,11 +1769,11 @@
       "id": "SUBI-049",
       "topic": "Imperfecto de subjuntivo",
       "lemma": "venir",
-      "phen": "Unregelmäßiger Stamm – -se",
+      "phen": "Unregelmäßiger Stamm – -ra",
       "de": "Wenn ihr doch früher kämt!",
-      "es": "Ojalá vinieseis antes.",
+      "es": "Ojalá vinierais antes.",
       "opts": [
-        "Ojalá vinieseis antes.",
+        "Ojalá vinierais antes.",
         "Ojalá veníais antes.",
         "Ojalá venir antes."
       ],
@@ -2759,17 +2759,17 @@
       "id": "SUBPLUS-004",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "ayudar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Hätten wir unseren Freunden doch geholfen!",
-      "es": "Ojalá hubiésemos ayudado a nuestros amigos.",
+      "es": "Ojalá hubiéramos ayudado a nuestros amigos.",
       "opts": [
-        "Ojalá hubiésemos ayudado a nuestros amigos.",
+        "Ojalá hubiéramos ayudado a nuestros amigos.",
         "Ojalá habíamos ayudado a nuestros amigos.",
-        "Ojalá hubiésemos ayudar a nuestros amigos."
+        "Ojalá hubiéramos ayudar a nuestros amigos."
       ],
       "answer": "A",
       "wrong1": "Ojalá habíamos ayudado a nuestros amigos.",
-      "wrong2": "Ojalá hubiésemos ayudar a nuestros amigos.",
+      "wrong2": "Ojalá hubiéramos ayudar a nuestros amigos.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -2813,17 +2813,17 @@
       "id": "SUBPLUS-007",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "ayudar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich war überrascht, dass mein Vater beim Umzug geholfen hatte.",
-      "es": "Me sorprendió que mi padre hubiese ayudado con la mudanza.",
+      "es": "Me sorprendió que mi padre hubiera ayudado con la mudanza.",
       "opts": [
-        "Me sorprendió que mi padre hubiese ayudado con la mudanza.",
+        "Me sorprendió que mi padre hubiera ayudado con la mudanza.",
         "Me sorprendió que mi padre había ayudado con la mudanza.",
-        "Me sorprendió que mi padre hubiese ayudar con la mudanza."
+        "Me sorprendió que mi padre hubiera ayudar con la mudanza."
       ],
       "answer": "A",
       "wrong1": "Me sorprendió que mi padre había ayudado con la mudanza.",
-      "wrong2": "Me sorprendió que mi padre hubiese ayudar con la mudanza.",
+      "wrong2": "Me sorprendió que mi padre hubiera ayudar con la mudanza.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -2831,17 +2831,17 @@
       "id": "SUBPLUS-008",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "ayudar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Meine Mutter hatte gehofft, dass du deiner Großmutter geholfen hättest.",
-      "es": "Mi madre esperaba que hubieses ayudado a tu abuela.",
+      "es": "Mi madre esperaba que hubieras ayudado a tu abuela.",
       "opts": [
-        "Mi madre esperaba que hubieses ayudar a tu abuela.",
-        "Mi madre esperaba que hubieses ayudado a tu abuela.",
+        "Mi madre esperaba que hubieras ayudar a tu abuela.",
+        "Mi madre esperaba que hubieras ayudado a tu abuela.",
         "Mi madre esperaba que habías ayudado a tu abuela."
       ],
       "answer": "B",
       "wrong1": "Mi madre esperaba que habías ayudado a tu abuela.",
-      "wrong2": "Mi madre esperaba que hubieses ayudar a tu abuela.",
+      "wrong2": "Mi madre esperaba que hubieras ayudar a tu abuela.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -2849,17 +2849,17 @@
       "id": "SUBPLUS-009",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "ayudar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Hätten an diesem Tag doch alle geholfen!",
-      "es": "Ojalá todos hubiesen ayudado aquel día.",
+      "es": "Ojalá todos hubieran ayudado aquel día.",
       "opts": [
         "Ojalá todos habían ayudado aquel día.",
-        "Ojalá todos hubiesen ayudar aquel día.",
-        "Ojalá todos hubiesen ayudado aquel día."
+        "Ojalá todos hubieran ayudar aquel día.",
+        "Ojalá todos hubieran ayudado aquel día."
       ],
       "answer": "C",
       "wrong1": "Ojalá todos habían ayudado aquel día.",
-      "wrong2": "Ojalá todos hubiesen ayudar aquel día.",
+      "wrong2": "Ojalá todos hubieran ayudar aquel día.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -2903,17 +2903,17 @@
       "id": "SUBPLUS-012",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "beber",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich hatte gehofft, dass du den Tee schon getrunken hättest.",
-      "es": "Esperaba que ya hubieses bebido el té.",
+      "es": "Esperaba que ya hubieras bebido el té.",
       "opts": [
         "Esperaba que ya habías bebido el té.",
-        "Esperaba que ya hubieses beber el té.",
-        "Esperaba que ya hubieses bebido el té."
+        "Esperaba que ya hubieras beber el té.",
+        "Esperaba que ya hubieras bebido el té."
       ],
       "answer": "C",
       "wrong1": "Esperaba que ya habías bebido el té.",
-      "wrong2": "Esperaba que ya hubieses beber el té.",
+      "wrong2": "Esperaba que ya hubieras beber el té.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -2993,17 +2993,17 @@
       "id": "SUBPLUS-017",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "beber",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich glaubte nicht, dass ihr den ganzen Saft getrunken hattet.",
-      "es": "No creía que hubieseis bebido todo el zumo.",
+      "es": "No creía que hubierais bebido todo el zumo.",
       "opts": [
-        "No creía que hubieseis beber todo el zumo.",
-        "No creía que hubieseis bebido todo el zumo.",
+        "No creía que hubierais beber todo el zumo.",
+        "No creía que hubierais bebido todo el zumo.",
         "No creía que habíais bebido todo el zumo."
       ],
       "answer": "B",
       "wrong1": "No creía que habíais bebido todo el zumo.",
-      "wrong2": "No creía que hubieseis beber todo el zumo.",
+      "wrong2": "No creía que hubierais beber todo el zumo.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3011,17 +3011,17 @@
       "id": "SUBPLUS-018",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "beber",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Hätten sie vor der Reise doch etwas getrunken!",
-      "es": "Ojalá hubiesen bebido algo antes del viaje.",
+      "es": "Ojalá hubieran bebido algo antes del viaje.",
       "opts": [
         "Ojalá habían bebido algo antes del viaje.",
-        "Ojalá hubiesen beber algo antes del viaje.",
-        "Ojalá hubiesen bebido algo antes del viaje."
+        "Ojalá hubieran beber algo antes del viaje.",
+        "Ojalá hubieran bebido algo antes del viaje."
       ],
       "answer": "C",
       "wrong1": "Ojalá habían bebido algo antes del viaje.",
-      "wrong2": "Ojalá hubiesen beber algo antes del viaje.",
+      "wrong2": "Ojalá hubieran beber algo antes del viaje.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3047,17 +3047,17 @@
       "id": "SUBPLUS-020",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "beber",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Wir hofften, dass wir vor dem Unterricht genug getrunken hatten.",
-      "es": "Esperábamos que hubiésemos bebido suficiente antes de clase.",
+      "es": "Esperábamos que hubiéramos bebido suficiente antes de clase.",
       "opts": [
-        "Esperábamos que hubiésemos beber suficiente antes de clase.",
-        "Esperábamos que hubiésemos bebido suficiente antes de clase.",
+        "Esperábamos que hubiéramos beber suficiente antes de clase.",
+        "Esperábamos que hubiéramos bebido suficiente antes de clase.",
         "Esperábamos que habíamos bebido suficiente antes de clase."
       ],
       "answer": "B",
       "wrong1": "Esperábamos que habíamos bebido suficiente antes de clase.",
-      "wrong2": "Esperábamos que hubiésemos beber suficiente antes de clase.",
+      "wrong2": "Esperábamos que hubiéramos beber suficiente antes de clase.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3083,17 +3083,17 @@
       "id": "SUBPLUS-022",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "abrir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich war überrascht, dass die Lehrerin den Raum geöffnet hatte.",
-      "es": "Me sorprendió que la profesora hubiese abierto el aula.",
+      "es": "Me sorprendió que la profesora hubiera abierto el aula.",
       "opts": [
-        "Me sorprendió que la profesora hubiese abierto el aula.",
+        "Me sorprendió que la profesora hubiera abierto el aula.",
         "Me sorprendió que la profesora había abierto el aula.",
-        "Me sorprendió que la profesora hubiese abrir el aula."
+        "Me sorprendió que la profesora hubiera abrir el aula."
       ],
       "answer": "A",
       "wrong1": "Me sorprendió que la profesora había abierto el aula.",
-      "wrong2": "Me sorprendió que la profesora hubiese abrir el aula.",
+      "wrong2": "Me sorprendió que la profesora hubiera abrir el aula.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3155,17 +3155,17 @@
       "id": "SUBPLUS-026",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "abrir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich hätte mir gewünscht, dass ihr den Brief geöffnet hättet.",
-      "es": "Me habría gustado que hubieseis abierto la carta.",
+      "es": "Me habría gustado que hubierais abierto la carta.",
       "opts": [
-        "Me habría gustado que hubieseis abrir la carta.",
-        "Me habría gustado que hubieseis abierto la carta.",
+        "Me habría gustado que hubierais abrir la carta.",
+        "Me habría gustado que hubierais abierto la carta.",
         "Me habría gustado que habíais abierto la carta."
       ],
       "answer": "B",
       "wrong1": "Me habría gustado que habíais abierto la carta.",
-      "wrong2": "Me habría gustado que hubieseis abrir la carta.",
+      "wrong2": "Me habría gustado que hubierais abrir la carta.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3191,17 +3191,17 @@
       "id": "SUBPLUS-028",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "abrir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich hätte mir gewünscht, dass du das Geschenk geöffnet hättest.",
-      "es": "Me habría gustado que hubieses abierto el regalo.",
+      "es": "Me habría gustado que hubieras abierto el regalo.",
       "opts": [
-        "Me habría gustado que hubieses abierto el regalo.",
+        "Me habría gustado que hubieras abierto el regalo.",
         "Me habría gustado que habías abierto el regalo.",
-        "Me habría gustado que hubieses abrir el regalo."
+        "Me habría gustado que hubieras abrir el regalo."
       ],
       "answer": "A",
       "wrong1": "Me habría gustado que habías abierto el regalo.",
-      "wrong2": "Me habría gustado que hubieses abrir el regalo.",
+      "wrong2": "Me habría gustado que hubieras abrir el regalo.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3209,17 +3209,17 @@
       "id": "SUBPLUS-029",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "abrir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Wir glaubten nicht, dass die Nachbarn das Fenster geöffnet hatten.",
-      "es": "No creíamos que los vecinos hubiesen abierto la ventana.",
+      "es": "No creíamos que los vecinos hubieran abierto la ventana.",
       "opts": [
-        "No creíamos que los vecinos hubiesen abrir la ventana.",
-        "No creíamos que los vecinos hubiesen abierto la ventana.",
+        "No creíamos que los vecinos hubieran abrir la ventana.",
+        "No creíamos que los vecinos hubieran abierto la ventana.",
         "No creíamos que los vecinos habían abierto la ventana."
       ],
       "answer": "B",
       "wrong1": "No creíamos que los vecinos habían abierto la ventana.",
-      "wrong2": "No creíamos que los vecinos hubiesen abrir la ventana.",
+      "wrong2": "No creíamos que los vecinos hubieran abrir la ventana.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3263,17 +3263,17 @@
       "id": "SUBPLUS-032",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "aprobar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich war überrascht, dass Marta die Prüfung bestanden hatte.",
-      "es": "Me sorprendió que Marta hubiese aprobado el examen.",
+      "es": "Me sorprendió que Marta hubiera aprobado el examen.",
       "opts": [
-        "Me sorprendió que Marta hubiese aprobar el examen.",
-        "Me sorprendió que Marta hubiese aprobado el examen.",
+        "Me sorprendió que Marta hubiera aprobar el examen.",
+        "Me sorprendió que Marta hubiera aprobado el examen.",
         "Me sorprendió que Marta había aprobado el examen."
       ],
       "answer": "B",
       "wrong1": "Me sorprendió que Marta había aprobado el examen.",
-      "wrong2": "Me sorprendió que Marta hubiese aprobar el examen.",
+      "wrong2": "Me sorprendió que Marta hubiera aprobar el examen.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3299,17 +3299,17 @@
       "id": "SUBPLUS-034",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "aprobar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich glaubte nicht, dass ihr das Schuljahr bestanden hattet.",
-      "es": "No creía que hubieseis aprobado el curso.",
+      "es": "No creía que hubierais aprobado el curso.",
       "opts": [
-        "No creía que hubieseis aprobado el curso.",
+        "No creía que hubierais aprobado el curso.",
         "No creía que habíais aprobado el curso.",
-        "No creía que hubieseis aprobar el curso."
+        "No creía que hubierais aprobar el curso."
       ],
       "answer": "A",
       "wrong1": "No creía que habíais aprobado el curso.",
-      "wrong2": "No creía que hubieseis aprobar el curso.",
+      "wrong2": "No creía que hubierais aprobar el curso.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3353,17 +3353,17 @@
       "id": "SUBPLUS-037",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "aprobar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich hätte mir gewünscht, dass mein Bruder die Fahrprüfung bestanden hätte.",
-      "es": "Me habría gustado que mi hermano hubiese aprobado el examen de conducir.",
+      "es": "Me habría gustado que mi hermano hubiera aprobado el examen de conducir.",
       "opts": [
-        "Me habría gustado que mi hermano hubiese aprobado el examen de conducir.",
+        "Me habría gustado que mi hermano hubiera aprobado el examen de conducir.",
         "Me habría gustado que mi hermano había aprobado el examen de conducir.",
-        "Me habría gustado que mi hermano hubiese aprobar el examen de conducir."
+        "Me habría gustado que mi hermano hubiera aprobar el examen de conducir."
       ],
       "answer": "A",
       "wrong1": "Me habría gustado que mi hermano había aprobado el examen de conducir.",
-      "wrong2": "Me habría gustado que mi hermano hubiese aprobar el examen de conducir.",
+      "wrong2": "Me habría gustado que mi hermano hubiera aprobar el examen de conducir.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3371,17 +3371,17 @@
       "id": "SUBPLUS-038",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "aprobar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Hättest du doch schon im Juni bestanden!",
-      "es": "Ojalá hubieses aprobado ya en junio.",
+      "es": "Ojalá hubieras aprobado ya en junio.",
       "opts": [
-        "Ojalá hubieses aprobar ya en junio.",
-        "Ojalá hubieses aprobado ya en junio.",
+        "Ojalá hubieras aprobar ya en junio.",
+        "Ojalá hubieras aprobado ya en junio.",
         "Ojalá habías aprobado ya en junio."
       ],
       "answer": "B",
       "wrong1": "Ojalá habías aprobado ya en junio.",
-      "wrong2": "Ojalá hubieses aprobar ya en junio.",
+      "wrong2": "Ojalá hubieras aprobar ya en junio.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3407,17 +3407,17 @@
       "id": "SUBPLUS-040",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "aprobar",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Es war überraschend, dass alle bestanden hatten.",
-      "es": "Fue sorprendente que todos hubiesen aprobado.",
+      "es": "Fue sorprendente que todos hubieran aprobado.",
       "opts": [
-        "Fue sorprendente que todos hubiesen aprobado.",
+        "Fue sorprendente que todos hubieran aprobado.",
         "Fue sorprendente que todos habían aprobado.",
-        "Fue sorprendente que todos hubiesen aprobar."
+        "Fue sorprendente que todos hubieran aprobar."
       ],
       "answer": "A",
       "wrong1": "Fue sorprendente que todos habían aprobado.",
-      "wrong2": "Fue sorprendente que todos hubiesen aprobar.",
+      "wrong2": "Fue sorprendente que todos hubieran aprobar.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3443,17 +3443,17 @@
       "id": "SUBPLUS-042",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "venir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich war überrascht, dass deine Eltern gestern gekommen waren.",
-      "es": "Me sorprendió que tus padres hubiesen venido ayer.",
+      "es": "Me sorprendió que tus padres hubieran venido ayer.",
       "opts": [
         "Me sorprendió que tus padres habían venido ayer.",
-        "Me sorprendió que tus padres hubiesen venir ayer.",
-        "Me sorprendió que tus padres hubiesen venido ayer."
+        "Me sorprendió que tus padres hubieran venir ayer.",
+        "Me sorprendió que tus padres hubieran venido ayer."
       ],
       "answer": "C",
       "wrong1": "Me sorprendió que tus padres habían venido ayer.",
-      "wrong2": "Me sorprendió que tus padres hubiesen venir ayer.",
+      "wrong2": "Me sorprendió que tus padres hubieran venir ayer.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3479,17 +3479,17 @@
       "id": "SUBPLUS-044",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "venir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich hatte gehofft, dass sie mit ihrem Bruder gekommen wäre.",
-      "es": "Esperaba que ella hubiese venido con su hermano.",
+      "es": "Esperaba que ella hubiera venido con su hermano.",
       "opts": [
-        "Esperaba que ella hubiese venir con su hermano.",
-        "Esperaba que ella hubiese venido con su hermano.",
+        "Esperaba que ella hubiera venir con su hermano.",
+        "Esperaba que ella hubiera venido con su hermano.",
         "Esperaba que ella había venido con su hermano."
       ],
       "answer": "B",
       "wrong1": "Esperaba que ella había venido con su hermano.",
-      "wrong2": "Esperaba que ella hubiese venir con su hermano.",
+      "wrong2": "Esperaba que ella hubiera venir con su hermano.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3515,17 +3515,17 @@
       "id": "SUBPLUS-046",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "venir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Wenn ihr doch früher zu uns gekommen wärt!",
-      "es": "Ojalá hubieseis venido antes a nuestra casa.",
+      "es": "Ojalá hubierais venido antes a nuestra casa.",
       "opts": [
-        "Ojalá hubieseis venido antes a nuestra casa.",
+        "Ojalá hubierais venido antes a nuestra casa.",
         "Ojalá habíais venido antes a nuestra casa.",
-        "Ojalá hubieseis venir antes a nuestra casa."
+        "Ojalá hubierais venir antes a nuestra casa."
       ],
       "answer": "A",
       "wrong1": "Ojalá habíais venido antes a nuestra casa.",
-      "wrong2": "Ojalá hubieseis venir antes a nuestra casa.",
+      "wrong2": "Ojalá hubierais venir antes a nuestra casa.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3551,17 +3551,17 @@
       "id": "SUBPLUS-048",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "venir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich hatte gehofft, dass meine Freunde zur Feier gekommen wären.",
-      "es": "Esperaba que mis amigos hubiesen venido a la fiesta.",
+      "es": "Esperaba que mis amigos hubieran venido a la fiesta.",
       "opts": [
         "Esperaba que mis amigos habían venido a la fiesta.",
-        "Esperaba que mis amigos hubiesen venir a la fiesta.",
-        "Esperaba que mis amigos hubiesen venido a la fiesta."
+        "Esperaba que mis amigos hubieran venir a la fiesta.",
+        "Esperaba que mis amigos hubieran venido a la fiesta."
       ],
       "answer": "C",
       "wrong1": "Esperaba que mis amigos habían venido a la fiesta.",
-      "wrong2": "Esperaba que mis amigos hubiesen venir a la fiesta.",
+      "wrong2": "Esperaba que mis amigos hubieran venir a la fiesta.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     },
@@ -3587,17 +3587,17 @@
       "id": "SUBPLUS-050",
       "topic": "Pluscuamperfecto de subjuntivo",
       "lemma": "venir",
-      "phen": "Plusquamperfekt – -se",
+      "phen": "Plusquamperfekt – -ra",
       "de": "Ich war überrascht, dass alle zur Feier gekommen waren.",
-      "es": "Me sorprendió que todos hubiesen venido a la fiesta.",
+      "es": "Me sorprendió que todos hubieran venido a la fiesta.",
       "opts": [
-        "Me sorprendió que todos hubiesen venir a la fiesta.",
-        "Me sorprendió que todos hubiesen venido a la fiesta.",
+        "Me sorprendió que todos hubieran venir a la fiesta.",
+        "Me sorprendió que todos hubieran venido a la fiesta.",
         "Me sorprendió que todos habían venido a la fiesta."
       ],
       "answer": "B",
       "wrong1": "Me sorprendió que todos habían venido a la fiesta.",
-      "wrong2": "Me sorprendió que todos hubiesen venir a la fiesta.",
+      "wrong2": "Me sorprendió que todos hubieran venir a la fiesta.",
       "reason1": "Indicativo von haber statt Subjuntivo in der zusammengesetzten Zeit.",
       "reason2": "Infinitiv statt Partizip nach haber."
     }
