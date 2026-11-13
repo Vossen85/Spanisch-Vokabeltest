@@ -1,0 +1,3605 @@
+{
+  "version": 1,
+  "sentences": [
+    {
+      "id": "PERF-001",
+      "topic": "Pretérito perfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Heute habe ich Obst auf dem Markt gekauft.",
+      "es": "Hoy he comprado fruta en el mercado.",
+      "opts": [
+        "Hoy he comprado fruta en el mercado.",
+        "Hoy has comprado fruta en el mercado.",
+        "Hoy he comprar fruta en el mercado."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy has comprado fruta en el mercado.",
+      "wrong2": "Hoy he comprar fruta en el mercado.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-002",
+      "topic": "Pretérito perfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Du hast heute nach dem Sport viel Wasser getrunken.",
+      "es": "Hoy has bebido mucha agua después del deporte.",
+      "opts": [
+        "Hoy has beber mucha agua después del deporte.",
+        "Hoy has bebido mucha agua después del deporte.",
+        "Hoy he bebido mucha agua después del deporte."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy he bebido mucha agua después del deporte.",
+      "wrong2": "Hoy has beber mucha agua después del deporte.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-003",
+      "topic": "Pretérito perfecto",
+      "lemma": "vivir",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Ich habe dieses Jahr in Madrid gelebt.",
+      "es": "Este año he vivido en Madrid.",
+      "opts": [
+        "Este año has vivido en Madrid.",
+        "Este año he vivir en Madrid.",
+        "Este año he vivido en Madrid."
+      ],
+      "answer": "C",
+      "wrong1": "Este año has vivido en Madrid.",
+      "wrong2": "Este año he vivir en Madrid.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-004",
+      "topic": "Pretérito perfecto",
+      "lemma": "llegar",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Meine Schwester ist heute früh angekommen.",
+      "es": "Mi hermana ha llegado temprano hoy.",
+      "opts": [
+        "Mi hermana ha llegado temprano hoy.",
+        "Mi hermana han llegado temprano hoy.",
+        "Mi hermana ha llegar temprano hoy."
+      ],
+      "answer": "A",
+      "wrong1": "Mi hermana han llegado temprano hoy.",
+      "wrong2": "Mi hermana ha llegar temprano hoy.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-005",
+      "topic": "Pretérito perfecto",
+      "lemma": "comer",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Wir haben diese Woche zweimal Pizza gegessen.",
+      "es": "Esta semana hemos comido pizza dos veces.",
+      "opts": [
+        "Esta semana hemos comer pizza dos veces.",
+        "Esta semana hemos comido pizza dos veces.",
+        "Esta semana habéis comido pizza dos veces."
+      ],
+      "answer": "B",
+      "wrong1": "Esta semana habéis comido pizza dos veces.",
+      "wrong2": "Esta semana hemos comer pizza dos veces.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-006",
+      "topic": "Pretérito perfecto",
+      "lemma": "lavarse",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Du hast dir heute vor der Schule die Hände gewaschen.",
+      "es": "Hoy te has lavado las manos antes de clase.",
+      "opts": [
+        "Hoy te he lavado las manos antes de clase.",
+        "Hoy te has lavar las manos antes de clase.",
+        "Hoy te has lavado las manos antes de clase."
+      ],
+      "answer": "C",
+      "wrong1": "Hoy te he lavado las manos antes de clase.",
+      "wrong2": "Hoy te has lavar las manos antes de clase.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-007",
+      "topic": "Pretérito perfecto",
+      "lemma": "abrir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Mein Vater hat heute das Fenster geöffnet.",
+      "es": "Mi padre ha abierto la ventana hoy.",
+      "opts": [
+        "Mi padre ha abierto la ventana hoy.",
+        "Mi padre han abierto la ventana hoy.",
+        "Mi padre ha abrido la ventana hoy."
+      ],
+      "answer": "A",
+      "wrong1": "Mi padre han abierto la ventana hoy.",
+      "wrong2": "Mi padre ha abrido la ventana hoy.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-008",
+      "topic": "Pretérito perfecto",
+      "lemma": "cubrir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Meine Mutter hat das Essen mit einem Deckel zugedeckt.",
+      "es": "Mi madre ha cubierto la comida con una tapa.",
+      "opts": [
+        "Mi madre ha cubrido la comida con una tapa.",
+        "Mi madre ha cubierto la comida con una tapa.",
+        "Mi madre han cubierto la comida con una tapa."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre han cubierto la comida con una tapa.",
+      "wrong2": "Mi madre ha cubrido la comida con una tapa.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-009",
+      "topic": "Pretérito perfecto",
+      "lemma": "decir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Die Kinder haben heute die Wahrheit gesagt.",
+      "es": "Los niños han dicho la verdad hoy.",
+      "opts": [
+        "Los niños ha dicho la verdad hoy.",
+        "Los niños han dicido la verdad hoy.",
+        "Los niños han dicho la verdad hoy."
+      ],
+      "answer": "C",
+      "wrong1": "Los niños ha dicho la verdad hoy.",
+      "wrong2": "Los niños han dicido la verdad hoy.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-010",
+      "topic": "Pretérito perfecto",
+      "lemma": "escribir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ihr habt heute eine Nachricht an eure Lehrerin geschrieben.",
+      "es": "Hoy habéis escrito un mensaje a vuestra profesora.",
+      "opts": [
+        "Hoy habéis escrito un mensaje a vuestra profesora.",
+        "Hoy hemos escrito un mensaje a vuestra profesora.",
+        "Hoy habéis escribido un mensaje a vuestra profesora."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy hemos escrito un mensaje a vuestra profesora.",
+      "wrong2": "Hoy habéis escribido un mensaje a vuestra profesora.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-011",
+      "topic": "Pretérito perfecto",
+      "lemma": "hacer",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ich habe heute meine Hausaufgaben gemacht.",
+      "es": "Hoy he hecho mis deberes.",
+      "opts": [
+        "Hoy he hacido mis deberes.",
+        "Hoy he hecho mis deberes.",
+        "Hoy has hecho mis deberes."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy has hecho mis deberes.",
+      "wrong2": "Hoy he hacido mis deberes.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-012",
+      "topic": "Pretérito perfecto",
+      "lemma": "ir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Wir sind dieses Jahr zweimal ins Kino gegangen.",
+      "es": "Este año hemos ido al cine dos veces.",
+      "opts": [
+        "Este año habéis ido al cine dos veces.",
+        "Este año hemos ir al cine dos veces.",
+        "Este año hemos ido al cine dos veces."
+      ],
+      "answer": "C",
+      "wrong1": "Este año habéis ido al cine dos veces.",
+      "wrong2": "Este año hemos ir al cine dos veces.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-013",
+      "topic": "Pretérito perfecto",
+      "lemma": "morir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Die Pflanze ist diesen Monat gestorben.",
+      "es": "La planta ha muerto este mes.",
+      "opts": [
+        "La planta ha muerto este mes.",
+        "La planta han muerto este mes.",
+        "La planta ha morido este mes."
+      ],
+      "answer": "A",
+      "wrong1": "La planta han muerto este mes.",
+      "wrong2": "La planta ha morido este mes.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-014",
+      "topic": "Pretérito perfecto",
+      "lemma": "poner",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Du hast deinen Rucksack neben die Tür gestellt.",
+      "es": "Has puesto tu mochila junto a la puerta.",
+      "opts": [
+        "Has ponido tu mochila junto a la puerta.",
+        "Has puesto tu mochila junto a la puerta.",
+        "He puesto tu mochila junto a la puerta."
+      ],
+      "answer": "B",
+      "wrong1": "He puesto tu mochila junto a la puerta.",
+      "wrong2": "Has ponido tu mochila junto a la puerta.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-015",
+      "topic": "Pretérito perfecto",
+      "lemma": "romper",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ich habe heute aus Versehen ein Glas zerbrochen.",
+      "es": "Hoy he roto un vaso por accidente.",
+      "opts": [
+        "Hoy has roto un vaso por accidente.",
+        "Hoy he rompido un vaso por accidente.",
+        "Hoy he roto un vaso por accidente."
+      ],
+      "answer": "C",
+      "wrong1": "Hoy has roto un vaso por accidente.",
+      "wrong2": "Hoy he rompido un vaso por accidente.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-016",
+      "topic": "Pretérito perfecto",
+      "lemma": "ser",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Meine Schwester ist diese Woche sehr geduldig gewesen.",
+      "es": "Mi hermana ha sido muy paciente esta semana.",
+      "opts": [
+        "Mi hermana ha sido muy paciente esta semana.",
+        "Mi hermana han sido muy paciente esta semana.",
+        "Mi hermana ha ser muy paciente esta semana."
+      ],
+      "answer": "A",
+      "wrong1": "Mi hermana han sido muy paciente esta semana.",
+      "wrong2": "Mi hermana ha ser muy paciente esta semana.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-017",
+      "topic": "Pretérito perfecto",
+      "lemma": "ver",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Meine Freunde haben diesen Monat einen neuen Film gesehen.",
+      "es": "Mis amigos han visto una película nueva este mes.",
+      "opts": [
+        "Mis amigos han vido una película nueva este mes.",
+        "Mis amigos han visto una película nueva este mes.",
+        "Mis amigos ha visto una película nueva este mes."
+      ],
+      "answer": "B",
+      "wrong1": "Mis amigos ha visto una película nueva este mes.",
+      "wrong2": "Mis amigos han vido una película nueva este mes.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-018",
+      "topic": "Pretérito perfecto",
+      "lemma": "volver",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Wir sind heute sehr spät nach Hause zurückgekommen.",
+      "es": "Hoy hemos vuelto a casa muy tarde.",
+      "opts": [
+        "Hoy habéis vuelto a casa muy tarde.",
+        "Hoy hemos volvido a casa muy tarde.",
+        "Hoy hemos vuelto a casa muy tarde."
+      ],
+      "answer": "C",
+      "wrong1": "Hoy habéis vuelto a casa muy tarde.",
+      "wrong2": "Hoy hemos volvido a casa muy tarde.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-019",
+      "topic": "Pretérito perfecto",
+      "lemma": "describir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Du hast heute das Foto sehr genau beschrieben.",
+      "es": "Hoy has descrito la foto con mucho detalle.",
+      "opts": [
+        "Hoy has descrito la foto con mucho detalle.",
+        "Hoy he descrito la foto con mucho detalle.",
+        "Hoy has describido la foto con mucho detalle."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy he descrito la foto con mucho detalle.",
+      "wrong2": "Hoy has describido la foto con mucho detalle.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-020",
+      "topic": "Pretérito perfecto",
+      "lemma": "descubrir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ich habe heute ein neues Café entdeckt.",
+      "es": "Hoy he descubierto una cafetería nueva.",
+      "opts": [
+        "Hoy he descubrido una cafetería nueva.",
+        "Hoy he descubierto una cafetería nueva.",
+        "Hoy has descubierto una cafetería nueva."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy has descubierto una cafetería nueva.",
+      "wrong2": "Hoy he descubrido una cafetería nueva.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-021",
+      "topic": "Pretérito perfecto",
+      "lemma": "revolver",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Meine Oma hat den Kaffee mit einem Löffel umgerührt.",
+      "es": "Mi abuela ha revuelto el café con una cuchara.",
+      "opts": [
+        "Mi abuela han revuelto el café con una cuchara.",
+        "Mi abuela ha revolvido el café con una cuchara.",
+        "Mi abuela ha revuelto el café con una cuchara."
+      ],
+      "answer": "C",
+      "wrong1": "Mi abuela han revuelto el café con una cuchara.",
+      "wrong2": "Mi abuela ha revolvido el café con una cuchara.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-022",
+      "topic": "Pretérito perfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Wir haben heute Fahrkarten für den Zug gekauft.",
+      "es": "Hoy hemos comprado billetes para el tren.",
+      "opts": [
+        "Hoy hemos comprado billetes para el tren.",
+        "Hoy habéis comprado billetes para el tren.",
+        "Hoy hemos comprar billetes para el tren."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy habéis comprado billetes para el tren.",
+      "wrong2": "Hoy hemos comprar billetes para el tren.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-023",
+      "topic": "Pretérito perfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Ihr habt heute im Park Limonade getrunken.",
+      "es": "Hoy habéis bebido limonada en el parque.",
+      "opts": [
+        "Hoy habéis beber limonada en el parque.",
+        "Hoy habéis bebido limonada en el parque.",
+        "Hoy hemos bebido limonada en el parque."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy hemos bebido limonada en el parque.",
+      "wrong2": "Hoy habéis beber limonada en el parque.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-024",
+      "topic": "Pretérito perfecto",
+      "lemma": "vivir",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Meine Tante hat dieses Jahr allein in einer Wohnung gelebt.",
+      "es": "Este año mi tía ha vivido sola en un piso.",
+      "opts": [
+        "Este año mi tía han vivido sola en un piso.",
+        "Este año mi tía ha vivir sola en un piso.",
+        "Este año mi tía ha vivido sola en un piso."
+      ],
+      "answer": "C",
+      "wrong1": "Este año mi tía han vivido sola en un piso.",
+      "wrong2": "Este año mi tía ha vivir sola en un piso.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-025",
+      "topic": "Pretérito perfecto",
+      "lemma": "llegar",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Wir sind heute pünktlich zur Schule gekommen.",
+      "es": "Hoy hemos llegado puntuales al colegio.",
+      "opts": [
+        "Hoy hemos llegado puntuales al colegio.",
+        "Hoy habéis llegado puntuales al colegio.",
+        "Hoy hemos llegar puntuales al colegio."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy habéis llegado puntuales al colegio.",
+      "wrong2": "Hoy hemos llegar puntuales al colegio.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-026",
+      "topic": "Pretérito perfecto",
+      "lemma": "comer",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Meine Freunde haben diese Woche in der Mensa gegessen.",
+      "es": "Mis amigos han comido en el comedor esta semana.",
+      "opts": [
+        "Mis amigos han comer en el comedor esta semana.",
+        "Mis amigos han comido en el comedor esta semana.",
+        "Mis amigos ha comido en el comedor esta semana."
+      ],
+      "answer": "B",
+      "wrong1": "Mis amigos ha comido en el comedor esta semana.",
+      "wrong2": "Mis amigos han comer en el comedor esta semana.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-027",
+      "topic": "Pretérito perfecto",
+      "lemma": "lavarse",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Wir haben uns nach dem Ausflug die Hände gewaschen.",
+      "es": "Nos hemos lavado las manos después de la excursión.",
+      "opts": [
+        "Nos habéis lavado las manos después de la excursión.",
+        "Nos hemos lavar las manos después de la excursión.",
+        "Nos hemos lavado las manos después de la excursión."
+      ],
+      "answer": "C",
+      "wrong1": "Nos habéis lavado las manos después de la excursión.",
+      "wrong2": "Nos hemos lavar las manos después de la excursión.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-028",
+      "topic": "Pretérito perfecto",
+      "lemma": "abrir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Du hast heute schon drei E-Mails geöffnet.",
+      "es": "Hoy has abierto tres correos electrónicos.",
+      "opts": [
+        "Hoy has abierto tres correos electrónicos.",
+        "Hoy he abierto tres correos electrónicos.",
+        "Hoy has abrido tres correos electrónicos."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy he abierto tres correos electrónicos.",
+      "wrong2": "Hoy has abrido tres correos electrónicos.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-029",
+      "topic": "Pretérito perfecto",
+      "lemma": "decir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ich habe heute die richtige Antwort gesagt.",
+      "es": "Hoy he dicho la respuesta correcta.",
+      "opts": [
+        "Hoy he dicido la respuesta correcta.",
+        "Hoy he dicho la respuesta correcta.",
+        "Hoy has dicho la respuesta correcta."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy has dicho la respuesta correcta.",
+      "wrong2": "Hoy he dicido la respuesta correcta.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-030",
+      "topic": "Pretérito perfecto",
+      "lemma": "escribir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Meine Freundin hat heute einen langen Brief geschrieben.",
+      "es": "Mi amiga ha escrito una carta larga hoy.",
+      "opts": [
+        "Mi amiga han escrito una carta larga hoy.",
+        "Mi amiga ha escribido una carta larga hoy.",
+        "Mi amiga ha escrito una carta larga hoy."
+      ],
+      "answer": "C",
+      "wrong1": "Mi amiga han escrito una carta larga hoy.",
+      "wrong2": "Mi amiga ha escribido una carta larga hoy.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-031",
+      "topic": "Pretérito perfecto",
+      "lemma": "hacer",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ihr habt heute viele Fotos gemacht.",
+      "es": "Hoy habéis hecho muchas fotos.",
+      "opts": [
+        "Hoy habéis hecho muchas fotos.",
+        "Hoy hemos hecho muchas fotos.",
+        "Hoy habéis hacido muchas fotos."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy hemos hecho muchas fotos.",
+      "wrong2": "Hoy habéis hacido muchas fotos.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-032",
+      "topic": "Pretérito perfecto",
+      "lemma": "ir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Du bist heute zu Fuß zur Bibliothek gegangen.",
+      "es": "Hoy has ido a pie a la biblioteca.",
+      "opts": [
+        "Hoy has ir a pie a la biblioteca.",
+        "Hoy has ido a pie a la biblioteca.",
+        "Hoy he ido a pie a la biblioteca."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy he ido a pie a la biblioteca.",
+      "wrong2": "Hoy has ir a pie a la biblioteca.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-033",
+      "topic": "Pretérito perfecto",
+      "lemma": "poner",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Die Schüler haben ihre Bücher auf den Tisch gelegt.",
+      "es": "Los alumnos han puesto sus libros sobre la mesa.",
+      "opts": [
+        "Los alumnos ha puesto sus libros sobre la mesa.",
+        "Los alumnos han ponido sus libros sobre la mesa.",
+        "Los alumnos han puesto sus libros sobre la mesa."
+      ],
+      "answer": "C",
+      "wrong1": "Los alumnos ha puesto sus libros sobre la mesa.",
+      "wrong2": "Los alumnos han ponido sus libros sobre la mesa.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-034",
+      "topic": "Pretérito perfecto",
+      "lemma": "romper",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Wir haben beim Umzug einen Stuhl kaputt gemacht.",
+      "es": "Hemos roto una silla durante la mudanza.",
+      "opts": [
+        "Hemos roto una silla durante la mudanza.",
+        "Habéis roto una silla durante la mudanza.",
+        "Hemos rompido una silla durante la mudanza."
+      ],
+      "answer": "A",
+      "wrong1": "Habéis roto una silla durante la mudanza.",
+      "wrong2": "Hemos rompido una silla durante la mudanza.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-035",
+      "topic": "Pretérito perfecto",
+      "lemma": "ser",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ihr seid heute sehr freundlich gewesen.",
+      "es": "Hoy habéis sido muy amables.",
+      "opts": [
+        "Hoy habéis ser muy amables.",
+        "Hoy habéis sido muy amables.",
+        "Hoy hemos sido muy amables."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy hemos sido muy amables.",
+      "wrong2": "Hoy habéis ser muy amables.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-036",
+      "topic": "Pretérito perfecto",
+      "lemma": "ver",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ich habe dieses Jahr viele Städte in Spanien gesehen.",
+      "es": "Este año he visto muchas ciudades de España.",
+      "opts": [
+        "Este año has visto muchas ciudades de España.",
+        "Este año he vido muchas ciudades de España.",
+        "Este año he visto muchas ciudades de España."
+      ],
+      "answer": "C",
+      "wrong1": "Este año has visto muchas ciudades de España.",
+      "wrong2": "Este año he vido muchas ciudades de España.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-037",
+      "topic": "Pretérito perfecto",
+      "lemma": "volver",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Du bist heute früh von der Schule zurückgekommen.",
+      "es": "Hoy has vuelto temprano del colegio.",
+      "opts": [
+        "Hoy has vuelto temprano del colegio.",
+        "Hoy he vuelto temprano del colegio.",
+        "Hoy has volvido temprano del colegio."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy he vuelto temprano del colegio.",
+      "wrong2": "Hoy has volvido temprano del colegio.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-038",
+      "topic": "Pretérito perfecto",
+      "lemma": "describir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Die Schüler haben heute ihre Stadt beschrieben.",
+      "es": "Los alumnos han descrito su ciudad hoy.",
+      "opts": [
+        "Los alumnos han describido su ciudad hoy.",
+        "Los alumnos han descrito su ciudad hoy.",
+        "Los alumnos ha descrito su ciudad hoy."
+      ],
+      "answer": "B",
+      "wrong1": "Los alumnos ha descrito su ciudad hoy.",
+      "wrong2": "Los alumnos han describido su ciudad hoy.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-039",
+      "topic": "Pretérito perfecto",
+      "lemma": "descubrir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Wir haben an diesem Wochenende einen schönen Park entdeckt.",
+      "es": "Este fin de semana hemos descubierto un parque bonito.",
+      "opts": [
+        "Este fin de semana habéis descubierto un parque bonito.",
+        "Este fin de semana hemos descubrido un parque bonito.",
+        "Este fin de semana hemos descubierto un parque bonito."
+      ],
+      "answer": "C",
+      "wrong1": "Este fin de semana habéis descubierto un parque bonito.",
+      "wrong2": "Este fin de semana hemos descubrido un parque bonito.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-040",
+      "topic": "Pretérito perfecto",
+      "lemma": "cubrir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ich habe das Baby heute mit einer Decke zugedeckt.",
+      "es": "Hoy he cubierto al bebé con una manta.",
+      "opts": [
+        "Hoy he cubierto al bebé con una manta.",
+        "Hoy has cubierto al bebé con una manta.",
+        "Hoy he cubrido al bebé con una manta."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy has cubierto al bebé con una manta.",
+      "wrong2": "Hoy he cubrido al bebé con una manta.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-041",
+      "topic": "Pretérito perfecto",
+      "lemma": "comer",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Ich habe heute zum Frühstück Brot mit Käse gegessen.",
+      "es": "Hoy he comido pan con queso en el desayuno.",
+      "opts": [
+        "Hoy he comer pan con queso en el desayuno.",
+        "Hoy he comido pan con queso en el desayuno.",
+        "Hoy has comido pan con queso en el desayuno."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy has comido pan con queso en el desayuno.",
+      "wrong2": "Hoy he comer pan con queso en el desayuno.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-042",
+      "topic": "Pretérito perfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Mein Bruder hat diese Woche ein gebrauchtes Fahrrad gekauft.",
+      "es": "Mi hermano ha comprado una bicicleta usada esta semana.",
+      "opts": [
+        "Mi hermano han comprado una bicicleta usada esta semana.",
+        "Mi hermano ha comprar una bicicleta usada esta semana.",
+        "Mi hermano ha comprado una bicicleta usada esta semana."
+      ],
+      "answer": "C",
+      "wrong1": "Mi hermano han comprado una bicicleta usada esta semana.",
+      "wrong2": "Mi hermano ha comprar una bicicleta usada esta semana.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-043",
+      "topic": "Pretérito perfecto",
+      "lemma": "llegar",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Die Gäste sind heute vor acht Uhr angekommen.",
+      "es": "Los invitados han llegado antes de las ocho hoy.",
+      "opts": [
+        "Los invitados han llegado antes de las ocho hoy.",
+        "Los invitados ha llegado antes de las ocho hoy.",
+        "Los invitados han llegar antes de las ocho hoy."
+      ],
+      "answer": "A",
+      "wrong1": "Los invitados ha llegado antes de las ocho hoy.",
+      "wrong2": "Los invitados han llegar antes de las ocho hoy.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-044",
+      "topic": "Pretérito perfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Ich habe heute noch keinen Kaffee getrunken.",
+      "es": "Hoy todavía no he bebido café.",
+      "opts": [
+        "Hoy todavía no he beber café.",
+        "Hoy todavía no he bebido café.",
+        "Hoy todavía no has bebido café."
+      ],
+      "answer": "B",
+      "wrong1": "Hoy todavía no has bebido café.",
+      "wrong2": "Hoy todavía no he beber café.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-045",
+      "topic": "Pretérito perfecto",
+      "lemma": "escribir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Wir haben heute zusammen eine Geschichte geschrieben.",
+      "es": "Hoy hemos escrito una historia juntos.",
+      "opts": [
+        "Hoy habéis escrito una historia juntos.",
+        "Hoy hemos escribido una historia juntos.",
+        "Hoy hemos escrito una historia juntos."
+      ],
+      "answer": "C",
+      "wrong1": "Hoy habéis escrito una historia juntos.",
+      "wrong2": "Hoy hemos escribido una historia juntos.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-046",
+      "topic": "Pretérito perfecto",
+      "lemma": "hacer",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Du hast heute ein leckeres Abendessen gemacht.",
+      "es": "Hoy has hecho una cena deliciosa.",
+      "opts": [
+        "Hoy has hecho una cena deliciosa.",
+        "Hoy he hecho una cena deliciosa.",
+        "Hoy has hacido una cena deliciosa."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy he hecho una cena deliciosa.",
+      "wrong2": "Hoy has hacido una cena deliciosa.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-047",
+      "topic": "Pretérito perfecto",
+      "lemma": "ir",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Meine Eltern sind dieses Jahr nach Sevilla gefahren.",
+      "es": "Mis padres han ido a Sevilla este año.",
+      "opts": [
+        "Mis padres han ir a Sevilla este año.",
+        "Mis padres han ido a Sevilla este año.",
+        "Mis padres ha ido a Sevilla este año."
+      ],
+      "answer": "B",
+      "wrong1": "Mis padres ha ido a Sevilla este año.",
+      "wrong2": "Mis padres han ir a Sevilla este año.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PERF-048",
+      "topic": "Pretérito perfecto",
+      "lemma": "ver",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ihr habt heute einen Regenbogen gesehen.",
+      "es": "Hoy habéis visto un arcoíris.",
+      "opts": [
+        "Hoy hemos visto un arcoíris.",
+        "Hoy habéis vido un arcoíris.",
+        "Hoy habéis visto un arcoíris."
+      ],
+      "answer": "C",
+      "wrong1": "Hoy hemos visto un arcoíris.",
+      "wrong2": "Hoy habéis vido un arcoíris.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-049",
+      "topic": "Pretérito perfecto",
+      "lemma": "poner",
+      "phen": "Unregelmäßiges Partizip",
+      "de": "Ich habe die Schlüssel heute auf den Tisch gelegt.",
+      "es": "Hoy he puesto las llaves sobre la mesa.",
+      "opts": [
+        "Hoy he puesto las llaves sobre la mesa.",
+        "Hoy has puesto las llaves sobre la mesa.",
+        "Hoy he ponido las llaves sobre la mesa."
+      ],
+      "answer": "A",
+      "wrong1": "Hoy has puesto las llaves sobre la mesa.",
+      "wrong2": "Hoy he ponido las llaves sobre la mesa.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Das unregelmäßige Partizip ist falsch gebildet."
+    },
+    {
+      "id": "PERF-050",
+      "topic": "Pretérito perfecto",
+      "lemma": "lavarse",
+      "phen": "Regelmäßiges Partizip",
+      "de": "Meine kleine Schwester hat sich heute allein gewaschen.",
+      "es": "Mi hermana pequeña se ha lavado sola hoy.",
+      "opts": [
+        "Mi hermana pequeña se ha lavar sola hoy.",
+        "Mi hermana pequeña se ha lavado sola hoy.",
+        "Mi hermana pequeña se han lavado sola hoy."
+      ],
+      "answer": "B",
+      "wrong1": "Mi hermana pequeña se han lavado sola hoy.",
+      "wrong2": "Mi hermana pequeña se ha lavar sola hoy.",
+      "reason1": "Die Form von haber passt nicht zur Person bzw. zum Subjekt.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "IND-001",
+      "topic": "Pretérito indefinido",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Die Eltern kauften gestern Gemüse auf dem Markt.",
+      "es": "Los padres compraron verduras ayer en el mercado.",
+      "opts": [
+        "Los padres comprar verduras ayer en el mercado.",
+        "Los padres compró verduras ayer en el mercado.",
+        "Los padres compraron verduras ayer en el mercado."
+      ],
+      "answer": "C",
+      "wrong1": "Los padres comprar verduras ayer en el mercado.",
+      "wrong2": "Los padres compró verduras ayer en el mercado.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die Verbform passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IND-002",
+      "topic": "Pretérito indefinido",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Wir tranken am Samstag viel Wasser.",
+      "es": "El sábado bebimos mucha agua.",
+      "opts": [
+        "El sábado bebimos mucha agua.",
+        "El sábado beber mucha agua.",
+        "El sábado bebí mucha agua."
+      ],
+      "answer": "A",
+      "wrong1": "El sábado beber mucha agua.",
+      "wrong2": "El sábado bebí mucha agua.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die Verbform passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IND-003",
+      "topic": "Pretérito indefinido",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Ihr habt gestern eine Postkarte geschrieben.",
+      "es": "Ayer escribisteis una postal.",
+      "opts": [
+        "Ayer escribieron una postal.",
+        "Ayer escribisteis una postal.",
+        "Ayer escribir una postal."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer escribir una postal.",
+      "wrong2": "Ayer escribieron una postal.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die Verbform passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IND-004",
+      "topic": "Pretérito indefinido",
+      "lemma": "llegar",
+      "phen": "Orthografie -gar → gu",
+      "de": "Ich kam gestern zehn Minuten zu spät.",
+      "es": "Ayer llegué diez minutos tarde.",
+      "opts": [
+        "Ayer llegar diez minutos tarde.",
+        "Ayer llegé diez minutos tarde.",
+        "Ayer llegué diez minutos tarde."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer llegar diez minutos tarde.",
+      "wrong2": "Ayer llegé diez minutos tarde.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-005",
+      "topic": "Pretérito indefinido",
+      "lemma": "jugar",
+      "phen": "Orthografie -gar → gu",
+      "de": "Ich spielte am Sonntag mit meinem Bruder Fußball.",
+      "es": "El domingo jugué al fútbol con mi hermano.",
+      "opts": [
+        "El domingo jugué al fútbol con mi hermano.",
+        "El domingo jugar al fútbol con mi hermano.",
+        "El domingo jugé al fútbol con mi hermano."
+      ],
+      "answer": "A",
+      "wrong1": "El domingo jugar al fútbol con mi hermano.",
+      "wrong2": "El domingo jugé al fútbol con mi hermano.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-006",
+      "topic": "Pretérito indefinido",
+      "lemma": "apagar",
+      "phen": "Orthografie -gar → gu",
+      "de": "Ich machte gestern vor Mitternacht das Licht aus.",
+      "es": "Ayer apagué la luz antes de medianoche.",
+      "opts": [
+        "Ayer apagé la luz antes de medianoche.",
+        "Ayer apagué la luz antes de medianoche.",
+        "Ayer apagar la luz antes de medianoche."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer apagar la luz antes de medianoche.",
+      "wrong2": "Ayer apagé la luz antes de medianoche.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-007",
+      "topic": "Pretérito indefinido",
+      "lemma": "negar",
+      "phen": "Orthografie -gar → gu",
+      "de": "Ich stritt gestern meine Schuld ab.",
+      "es": "Ayer negué mi culpa.",
+      "opts": [
+        "Ayer negar mi culpa.",
+        "Ayer negé mi culpa.",
+        "Ayer negué mi culpa."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer negar mi culpa.",
+      "wrong2": "Ayer negé mi culpa.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-008",
+      "topic": "Pretérito indefinido",
+      "lemma": "pagar",
+      "phen": "Orthografie -gar → gu",
+      "de": "Ich bezahlte letzte Woche die Rechnung im Café.",
+      "es": "La semana pasada pagué la cuenta en la cafetería.",
+      "opts": [
+        "La semana pasada pagué la cuenta en la cafetería.",
+        "La semana pasada pagar la cuenta en la cafetería.",
+        "La semana pasada pagé la cuenta en la cafetería."
+      ],
+      "answer": "A",
+      "wrong1": "La semana pasada pagar la cuenta en la cafetería.",
+      "wrong2": "La semana pasada pagé la cuenta en la cafetería.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-009",
+      "topic": "Pretérito indefinido",
+      "lemma": "rogar",
+      "phen": "Orthografie -gar → gu",
+      "de": "Gestern flehte ich um eine zweite Chance.",
+      "es": "Ayer rogué por una segunda oportunidad.",
+      "opts": [
+        "Ayer rogé por una segunda oportunidad.",
+        "Ayer rogué por una segunda oportunidad.",
+        "Ayer rogar por una segunda oportunidad."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer rogar por una segunda oportunidad.",
+      "wrong2": "Ayer rogé por una segunda oportunidad.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-010",
+      "topic": "Pretérito indefinido",
+      "lemma": "buscar",
+      "phen": "Orthografie -car → qu",
+      "de": "Gestern suchte ich meine Schlüssel im Zimmer.",
+      "es": "Ayer busqué mis llaves en la habitación.",
+      "opts": [
+        "Ayer buscar mis llaves en la habitación.",
+        "Ayer buscé mis llaves en la habitación.",
+        "Ayer busqué mis llaves en la habitación."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer buscar mis llaves en la habitación.",
+      "wrong2": "Ayer buscé mis llaves en la habitación.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-011",
+      "topic": "Pretérito indefinido",
+      "lemma": "tocar",
+      "phen": "Orthografie -car → qu",
+      "de": "Ich berührte gestern die kalte Wand.",
+      "es": "Ayer toqué la pared fría.",
+      "opts": [
+        "Ayer toqué la pared fría.",
+        "Ayer tocar la pared fría.",
+        "Ayer tocé la pared fría."
+      ],
+      "answer": "A",
+      "wrong1": "Ayer tocar la pared fría.",
+      "wrong2": "Ayer tocé la pared fría.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-012",
+      "topic": "Pretérito indefinido",
+      "lemma": "equivocarse",
+      "phen": "Orthografie -car → qu",
+      "de": "Ich irrte mich gestern bei der zweiten Frage.",
+      "es": "Ayer me equivoqué en la segunda pregunta.",
+      "opts": [
+        "Ayer me equivocé en la segunda pregunta.",
+        "Ayer me equivoqué en la segunda pregunta.",
+        "Ayer equivocarse en la segunda pregunta."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer equivocarse en la segunda pregunta.",
+      "wrong2": "Ayer me equivocé en la segunda pregunta.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-013",
+      "topic": "Pretérito indefinido",
+      "lemma": "explicar",
+      "phen": "Orthografie -car → qu",
+      "de": "Ich erklärte gestern den Weg zum Museum.",
+      "es": "Ayer expliqué el camino al museo.",
+      "opts": [
+        "Ayer explicar el camino al museo.",
+        "Ayer explicé el camino al museo.",
+        "Ayer expliqué el camino al museo."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer explicar el camino al museo.",
+      "wrong2": "Ayer explicé el camino al museo.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-014",
+      "topic": "Pretérito indefinido",
+      "lemma": "practicar",
+      "phen": "Orthografie -car → qu",
+      "de": "Ich übte gestern eine Stunde Spanisch.",
+      "es": "Ayer practiqué español durante una hora.",
+      "opts": [
+        "Ayer practiqué español durante una hora.",
+        "Ayer practicar español durante una hora.",
+        "Ayer practicé español durante una hora."
+      ],
+      "answer": "A",
+      "wrong1": "Ayer practicar español durante una hora.",
+      "wrong2": "Ayer practicé español durante una hora.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-015",
+      "topic": "Pretérito indefinido",
+      "lemma": "sacar",
+      "phen": "Orthografie -car → qu",
+      "de": "Ich holte gestern die Bücher aus der Tasche.",
+      "es": "Ayer saqué los libros de la mochila.",
+      "opts": [
+        "Ayer sacé los libros de la mochila.",
+        "Ayer saqué los libros de la mochila.",
+        "Ayer sacar los libros de la mochila."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer sacar los libros de la mochila.",
+      "wrong2": "Ayer sacé los libros de la mochila.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-016",
+      "topic": "Pretérito indefinido",
+      "lemma": "almorzar",
+      "phen": "Orthografie -zar → c",
+      "de": "Ich aß gestern mit meiner Tante zu Mittag.",
+      "es": "Ayer almorcé con mi tía.",
+      "opts": [
+        "Ayer almorzar con mi tía.",
+        "Ayer almorzé con mi tía.",
+        "Ayer almorcé con mi tía."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer almorzar con mi tía.",
+      "wrong2": "Ayer almorzé con mi tía.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-017",
+      "topic": "Pretérito indefinido",
+      "lemma": "empezar",
+      "phen": "Orthografie -zar → c",
+      "de": "Ich fing gestern um sieben Uhr mit der Arbeit an.",
+      "es": "Ayer empecé el trabajo a las siete.",
+      "opts": [
+        "Ayer empecé el trabajo a las siete.",
+        "Ayer empezar el trabajo a las siete.",
+        "Ayer empezé el trabajo a las siete."
+      ],
+      "answer": "A",
+      "wrong1": "Ayer empezar el trabajo a las siete.",
+      "wrong2": "Ayer empezé el trabajo a las siete.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-018",
+      "topic": "Pretérito indefinido",
+      "lemma": "comenzar",
+      "phen": "Orthografie -zar → c",
+      "de": "Ich begann gestern einen neuen Kurs.",
+      "es": "Ayer comencé un curso nuevo.",
+      "opts": [
+        "Ayer comenzé un curso nuevo.",
+        "Ayer comencé un curso nuevo.",
+        "Ayer comenzar un curso nuevo."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer comenzar un curso nuevo.",
+      "wrong2": "Ayer comenzé un curso nuevo.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-019",
+      "topic": "Pretérito indefinido",
+      "lemma": "cruzar",
+      "phen": "Orthografie -zar → c",
+      "de": "Ich überquerte gestern die Straße an der Ampel.",
+      "es": "Ayer crucé la calle en el semáforo.",
+      "opts": [
+        "Ayer cruzar la calle en el semáforo.",
+        "Ayer cruzé la calle en el semáforo.",
+        "Ayer crucé la calle en el semáforo."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer cruzar la calle en el semáforo.",
+      "wrong2": "Ayer cruzé la calle en el semáforo.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-020",
+      "topic": "Pretérito indefinido",
+      "lemma": "realizar",
+      "phen": "Orthografie -zar → c",
+      "de": "Ich führte letzten Monat ein Schulprojekt durch.",
+      "es": "El mes pasado realicé un proyecto escolar.",
+      "opts": [
+        "El mes pasado realicé un proyecto escolar.",
+        "El mes pasado realizar un proyecto escolar.",
+        "El mes pasado realizé un proyecto escolar."
+      ],
+      "answer": "A",
+      "wrong1": "El mes pasado realizar un proyecto escolar.",
+      "wrong2": "El mes pasado realizé un proyecto escolar.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die orthografische Veränderung in der yo-Form ist falsch."
+    },
+    {
+      "id": "IND-021",
+      "topic": "Pretérito indefinido",
+      "lemma": "creer",
+      "phen": "i → y in der 3. Person",
+      "de": "Meine Schwester glaubte gestern die Geschichte.",
+      "es": "Mi hermana creyó la historia ayer.",
+      "opts": [
+        "Mi hermana creió la historia ayer.",
+        "Mi hermana creyó la historia ayer.",
+        "Mi hermana creer la historia ayer."
+      ],
+      "answer": "B",
+      "wrong1": "Mi hermana creer la historia ayer.",
+      "wrong2": "Mi hermana creió la historia ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Bei dieser Verbgruppe muss in der 3. Person i zu y werden."
+    },
+    {
+      "id": "IND-022",
+      "topic": "Pretérito indefinido",
+      "lemma": "caer",
+      "phen": "i → y in der 3. Person",
+      "de": "Gestern fiel das Glas vom Tisch.",
+      "es": "Ayer el vaso cayó de la mesa.",
+      "opts": [
+        "Ayer el vaso caer de la mesa.",
+        "Ayer el vaso caió de la mesa.",
+        "Ayer el vaso cayó de la mesa."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer el vaso caer de la mesa.",
+      "wrong2": "Ayer el vaso caió de la mesa.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Bei dieser Verbgruppe muss in der 3. Person i zu y werden."
+    },
+    {
+      "id": "IND-023",
+      "topic": "Pretérito indefinido",
+      "lemma": "construir",
+      "phen": "i → y in der 3. Person",
+      "de": "Die Arbeiter bauten letztes Jahr eine neue Brücke.",
+      "es": "Los trabajadores construyeron un puente nuevo el año pasado.",
+      "opts": [
+        "Los trabajadores construyeron un puente nuevo el año pasado.",
+        "Los trabajadores construir un puente nuevo el año pasado.",
+        "Los trabajadores construieron un puente nuevo el año pasado."
+      ],
+      "answer": "A",
+      "wrong1": "Los trabajadores construir un puente nuevo el año pasado.",
+      "wrong2": "Los trabajadores construieron un puente nuevo el año pasado.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Bei dieser Verbgruppe muss in der 3. Person i zu y werden."
+    },
+    {
+      "id": "IND-024",
+      "topic": "Pretérito indefinido",
+      "lemma": "huir",
+      "phen": "i → y in der 3. Person",
+      "de": "Die Tiere flohen gestern vor dem Feuer.",
+      "es": "Ayer los animales huyeron del fuego.",
+      "opts": [
+        "Ayer los animales huieron del fuego.",
+        "Ayer los animales huyeron del fuego.",
+        "Ayer los animales huir del fuego."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer los animales huir del fuego.",
+      "wrong2": "Ayer los animales huieron del fuego.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Bei dieser Verbgruppe muss in der 3. Person i zu y werden."
+    },
+    {
+      "id": "IND-025",
+      "topic": "Pretérito indefinido",
+      "lemma": "leer",
+      "phen": "i → y in der 3. Person",
+      "de": "Meine Freundin las gestern einen Roman im Park.",
+      "es": "Mi amiga leyó una novela en el parque ayer.",
+      "opts": [
+        "Mi amiga leer una novela en el parque ayer.",
+        "Mi amiga leió una novela en el parque ayer.",
+        "Mi amiga leyó una novela en el parque ayer."
+      ],
+      "answer": "C",
+      "wrong1": "Mi amiga leer una novela en el parque ayer.",
+      "wrong2": "Mi amiga leió una novela en el parque ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Bei dieser Verbgruppe muss in der 3. Person i zu y werden."
+    },
+    {
+      "id": "IND-026",
+      "topic": "Pretérito indefinido",
+      "lemma": "oír",
+      "phen": "i → y in der 3. Person",
+      "de": "Meine Eltern hörten gestern ein seltsames Geräusch.",
+      "es": "Mis padres oyeron un ruido extraño ayer.",
+      "opts": [
+        "Mis padres oyeron un ruido extraño ayer.",
+        "Mis padres oír un ruido extraño ayer.",
+        "Mis padres oieron un ruido extraño ayer."
+      ],
+      "answer": "A",
+      "wrong1": "Mis padres oír un ruido extraño ayer.",
+      "wrong2": "Mis padres oieron un ruido extraño ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Bei dieser Verbgruppe muss in der 3. Person i zu y werden."
+    },
+    {
+      "id": "IND-027",
+      "topic": "Pretérito indefinido",
+      "lemma": "preferir",
+      "phen": "Stammwechsel e → i",
+      "de": "Mein Bruder zog gestern den Zug vor.",
+      "es": "Mi hermano prefirió el tren ayer.",
+      "opts": [
+        "Mi hermano preferió el tren ayer.",
+        "Mi hermano prefirió el tren ayer.",
+        "Mi hermano preferir el tren ayer."
+      ],
+      "answer": "B",
+      "wrong1": "Mi hermano preferir el tren ayer.",
+      "wrong2": "Mi hermano preferió el tren ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-028",
+      "topic": "Pretérito indefinido",
+      "lemma": "seguir",
+      "phen": "Stammwechsel e → i",
+      "de": "Die Schüler folgten gestern dem Lehrer.",
+      "es": "Los alumnos siguieron al profesor ayer.",
+      "opts": [
+        "Los alumnos seguir al profesor ayer.",
+        "Los alumnos seguieron al profesor ayer.",
+        "Los alumnos siguieron al profesor ayer."
+      ],
+      "answer": "C",
+      "wrong1": "Los alumnos seguir al profesor ayer.",
+      "wrong2": "Los alumnos seguieron al profesor ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-029",
+      "topic": "Pretérito indefinido",
+      "lemma": "despedirse",
+      "phen": "Stammwechsel e → i",
+      "de": "Meine Mutter verabschiedete sich gestern am Bahnhof.",
+      "es": "Mi madre se despidió en la estación ayer.",
+      "opts": [
+        "Mi madre se despidió en la estación ayer.",
+        "Mi madre despedirse en la estación ayer.",
+        "Mi madre se despedió en la estación ayer."
+      ],
+      "answer": "A",
+      "wrong1": "Mi madre despedirse en la estación ayer.",
+      "wrong2": "Mi madre se despedió en la estación ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-030",
+      "topic": "Pretérito indefinido",
+      "lemma": "elegir",
+      "phen": "Stammwechsel e → i",
+      "de": "Die Kinder wählten gestern den roten Ball.",
+      "es": "Los niños eligieron la pelota roja ayer.",
+      "opts": [
+        "Los niños elegieron la pelota roja ayer.",
+        "Los niños eligieron la pelota roja ayer.",
+        "Los niños elegir la pelota roja ayer."
+      ],
+      "answer": "B",
+      "wrong1": "Los niños elegir la pelota roja ayer.",
+      "wrong2": "Los niños elegieron la pelota roja ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-031",
+      "topic": "Pretérito indefinido",
+      "lemma": "mentir",
+      "phen": "Stammwechsel e → i",
+      "de": "Meine Freundin log gestern über ihr Alter.",
+      "es": "Mi amiga mintió sobre su edad ayer.",
+      "opts": [
+        "Mi amiga mentir sobre su edad ayer.",
+        "Mi amiga mentió sobre su edad ayer.",
+        "Mi amiga mintió sobre su edad ayer."
+      ],
+      "answer": "C",
+      "wrong1": "Mi amiga mentir sobre su edad ayer.",
+      "wrong2": "Mi amiga mentió sobre su edad ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-032",
+      "topic": "Pretérito indefinido",
+      "lemma": "pedir",
+      "phen": "Stammwechsel e → i",
+      "de": "Mein Bruder bat gestern um ein Glas Wasser.",
+      "es": "Mi hermano pidió un vaso de agua ayer.",
+      "opts": [
+        "Mi hermano pidió un vaso de agua ayer.",
+        "Mi hermano pedir un vaso de agua ayer.",
+        "Mi hermano pedió un vaso de agua ayer."
+      ],
+      "answer": "A",
+      "wrong1": "Mi hermano pedir un vaso de agua ayer.",
+      "wrong2": "Mi hermano pedió un vaso de agua ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-033",
+      "topic": "Pretérito indefinido",
+      "lemma": "reír",
+      "phen": "Stammwechsel e → i",
+      "de": "Die Kinder lachten gestern während des Films.",
+      "es": "Los niños rieron mucho durante la película ayer.",
+      "opts": [
+        "Los niños reieron mucho durante la película ayer.",
+        "Los niños rieron mucho durante la película ayer.",
+        "Los niños reír mucho durante la película ayer."
+      ],
+      "answer": "B",
+      "wrong1": "Los niños reír mucho durante la película ayer.",
+      "wrong2": "Los niños reieron mucho durante la película ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-034",
+      "topic": "Pretérito indefinido",
+      "lemma": "repetir",
+      "phen": "Stammwechsel e → i",
+      "de": "Mein Lehrer wiederholte gestern die Frage.",
+      "es": "Mi profesor repitió la pregunta ayer.",
+      "opts": [
+        "Mi profesor repetir la pregunta ayer.",
+        "Mi profesor repetió la pregunta ayer.",
+        "Mi profesor repitió la pregunta ayer."
+      ],
+      "answer": "C",
+      "wrong1": "Mi profesor repetir la pregunta ayer.",
+      "wrong2": "Mi profesor repetió la pregunta ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-035",
+      "topic": "Pretérito indefinido",
+      "lemma": "sentir",
+      "phen": "Stammwechsel e → i",
+      "de": "Meine Schwester empfand gestern große Freude.",
+      "es": "Mi hermana sintió mucha alegría ayer.",
+      "opts": [
+        "Mi hermana sintió mucha alegría ayer.",
+        "Mi hermana sentir mucha alegría ayer.",
+        "Mi hermana sentió mucha alegría ayer."
+      ],
+      "answer": "A",
+      "wrong1": "Mi hermana sentir mucha alegría ayer.",
+      "wrong2": "Mi hermana sentió mucha alegría ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-036",
+      "topic": "Pretérito indefinido",
+      "lemma": "sentirse",
+      "phen": "Stammwechsel e → i",
+      "de": "Meine Freunde fühlten sich gestern sehr müde.",
+      "es": "Mis amigos se sintieron muy cansados ayer.",
+      "opts": [
+        "Mis amigos se sentieron muy cansados ayer.",
+        "Mis amigos se sintieron muy cansados ayer.",
+        "Mis amigos sentirse muy cansados ayer."
+      ],
+      "answer": "B",
+      "wrong1": "Mis amigos sentirse muy cansados ayer.",
+      "wrong2": "Mis amigos se sentieron muy cansados ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-037",
+      "topic": "Pretérito indefinido",
+      "lemma": "servir",
+      "phen": "Stammwechsel e → i",
+      "de": "Der Kellner servierte gestern das Essen sehr schnell.",
+      "es": "El camarero sirvió la comida muy rápido ayer.",
+      "opts": [
+        "El camarero servir la comida muy rápido ayer.",
+        "El camarero servió la comida muy rápido ayer.",
+        "El camarero sirvió la comida muy rápido ayer."
+      ],
+      "answer": "C",
+      "wrong1": "El camarero servir la comida muy rápido ayer.",
+      "wrong2": "El camarero servió la comida muy rápido ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-038",
+      "topic": "Pretérito indefinido",
+      "lemma": "vestirse",
+      "phen": "Stammwechsel e → i",
+      "de": "Meine Schwester zog sich gestern sehr schnell an.",
+      "es": "Mi hermana se vistió muy rápido ayer.",
+      "opts": [
+        "Mi hermana se vistió muy rápido ayer.",
+        "Mi hermana vestirse muy rápido ayer.",
+        "Mi hermana se vestió muy rápido ayer."
+      ],
+      "answer": "A",
+      "wrong1": "Mi hermana vestirse muy rápido ayer.",
+      "wrong2": "Mi hermana se vestió muy rápido ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel e → i fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-039",
+      "topic": "Pretérito indefinido",
+      "lemma": "dormir",
+      "phen": "Stammwechsel o → u",
+      "de": "Die Babys schliefen gestern zehn Stunden.",
+      "es": "Los bebés durmieron diez horas ayer.",
+      "opts": [
+        "Los bebés dormieron diez horas ayer.",
+        "Los bebés durmieron diez horas ayer.",
+        "Los bebés dormir diez horas ayer."
+      ],
+      "answer": "B",
+      "wrong1": "Los bebés dormir diez horas ayer.",
+      "wrong2": "Los bebés dormieron diez horas ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel o → u fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-040",
+      "topic": "Pretérito indefinido",
+      "lemma": "morir",
+      "phen": "Stammwechsel o → u",
+      "de": "Der alte Hund starb letztes Jahr.",
+      "es": "El perro viejo murió el año pasado.",
+      "opts": [
+        "El perro viejo morir el año pasado.",
+        "El perro viejo morió el año pasado.",
+        "El perro viejo murió el año pasado."
+      ],
+      "answer": "C",
+      "wrong1": "El perro viejo morir el año pasado.",
+      "wrong2": "El perro viejo morió el año pasado.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Der Stammwechsel o → u fehlt in der 3. Person."
+    },
+    {
+      "id": "IND-041",
+      "topic": "Pretérito indefinido",
+      "lemma": "ser",
+      "phen": "Unregelmäßige Formen",
+      "de": "Ich war gestern Teil des Teams.",
+      "es": "Ayer fui parte del equipo.",
+      "opts": [
+        "Ayer fui parte del equipo.",
+        "Ayer ser parte del equipo.",
+        "Ayer fue parte del equipo."
+      ],
+      "answer": "A",
+      "wrong1": "Ayer ser parte del equipo.",
+      "wrong2": "Ayer fue parte del equipo.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-042",
+      "topic": "Pretérito indefinido",
+      "lemma": "ir",
+      "phen": "Unregelmäßige Formen",
+      "de": "Wir fuhren letzten Freitag nach Málaga.",
+      "es": "El viernes pasado fuimos a Málaga.",
+      "opts": [
+        "El viernes pasado fue a Málaga.",
+        "El viernes pasado fuimos a Málaga.",
+        "El viernes pasado ir a Málaga."
+      ],
+      "answer": "B",
+      "wrong1": "El viernes pasado ir a Málaga.",
+      "wrong2": "El viernes pasado fue a Málaga.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-043",
+      "topic": "Pretérito indefinido",
+      "lemma": "estar",
+      "phen": "Unregelmäßige Formen",
+      "de": "Du warst gestern den ganzen Nachmittag zu Hause.",
+      "es": "Ayer estuviste en casa toda la tarde.",
+      "opts": [
+        "Ayer estar en casa toda la tarde.",
+        "Ayer estaste en casa toda la tarde.",
+        "Ayer estuviste en casa toda la tarde."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer estar en casa toda la tarde.",
+      "wrong2": "Ayer estaste en casa toda la tarde.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-044",
+      "topic": "Pretérito indefinido",
+      "lemma": "tener",
+      "phen": "Unregelmäßige Formen",
+      "de": "Die Schüler hatten gestern eine schwierige Prüfung.",
+      "es": "Los alumnos tuvieron un examen difícil ayer.",
+      "opts": [
+        "Los alumnos tuvieron un examen difícil ayer.",
+        "Los alumnos tener un examen difícil ayer.",
+        "Los alumnos tenieron un examen difícil ayer."
+      ],
+      "answer": "A",
+      "wrong1": "Los alumnos tener un examen difícil ayer.",
+      "wrong2": "Los alumnos tenieron un examen difícil ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-045",
+      "topic": "Pretérito indefinido",
+      "lemma": "poder",
+      "phen": "Unregelmäßige Formen",
+      "de": "Ich konnte gestern nicht zum Konzert gehen.",
+      "es": "Ayer no pude ir al concierto.",
+      "opts": [
+        "Ayer no podí ir al concierto.",
+        "Ayer no pude ir al concierto.",
+        "Ayer no poder ir al concierto."
+      ],
+      "answer": "B",
+      "wrong1": "Ayer no poder ir al concierto.",
+      "wrong2": "Ayer no podí ir al concierto.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-046",
+      "topic": "Pretérito indefinido",
+      "lemma": "poner",
+      "phen": "Unregelmäßige Formen",
+      "de": "Meine Mutter stellte gestern den Stuhl ans Fenster.",
+      "es": "Mi madre puso la silla junto a la ventana ayer.",
+      "opts": [
+        "Mi madre poner la silla junto a la ventana ayer.",
+        "Mi madre ponió la silla junto a la ventana ayer.",
+        "Mi madre puso la silla junto a la ventana ayer."
+      ],
+      "answer": "C",
+      "wrong1": "Mi madre poner la silla junto a la ventana ayer.",
+      "wrong2": "Mi madre ponió la silla junto a la ventana ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-047",
+      "topic": "Pretérito indefinido",
+      "lemma": "hacer",
+      "phen": "Unregelmäßige Formen",
+      "de": "Ihr habt gestern einen großen Kuchen gemacht.",
+      "es": "Ayer hicisteis un pastel grande.",
+      "opts": [
+        "Ayer hicisteis un pastel grande.",
+        "Ayer hacer un pastel grande.",
+        "Ayer hacisteis un pastel grande."
+      ],
+      "answer": "A",
+      "wrong1": "Ayer hacer un pastel grande.",
+      "wrong2": "Ayer hacisteis un pastel grande.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-048",
+      "topic": "Pretérito indefinido",
+      "lemma": "venir",
+      "phen": "Unregelmäßige Formen",
+      "de": "Meine Cousins kamen letzten Samstag zu Besuch.",
+      "es": "Mis primos vinieron de visita el sábado pasado.",
+      "opts": [
+        "Mis primos venieron de visita el sábado pasado.",
+        "Mis primos vinieron de visita el sábado pasado.",
+        "Mis primos venir de visita el sábado pasado."
+      ],
+      "answer": "B",
+      "wrong1": "Mis primos venir de visita el sábado pasado.",
+      "wrong2": "Mis primos venieron de visita el sábado pasado.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-049",
+      "topic": "Pretérito indefinido",
+      "lemma": "decir",
+      "phen": "Unregelmäßige Formen",
+      "de": "Ich sagte gestern die Wahrheit.",
+      "es": "Ayer dije la verdad.",
+      "opts": [
+        "Ayer decir la verdad.",
+        "Ayer decí la verdad.",
+        "Ayer dije la verdad."
+      ],
+      "answer": "C",
+      "wrong1": "Ayer decir la verdad.",
+      "wrong2": "Ayer decí la verdad.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IND-050",
+      "topic": "Pretérito indefinido",
+      "lemma": "conducir",
+      "phen": "Unregelmäßige Formen",
+      "de": "Mein Vater fuhr gestern sechs Stunden Auto.",
+      "es": "Mi padre condujo seis horas ayer.",
+      "opts": [
+        "Mi padre condujo seis horas ayer.",
+        "Mi padre conducir seis horas ayer.",
+        "Mi padre condució seis horas ayer."
+      ],
+      "answer": "A",
+      "wrong1": "Mi padre conducir seis horas ayer.",
+      "wrong2": "Mi padre condució seis horas ayer.",
+      "reason1": "Infinitiv statt konjugierter Indefinido-Form.",
+      "reason2": "Die unregelmäßige Indefinido-Form bzw. die Person ist falsch."
+    },
+    {
+      "id": "IMPF-001",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Als Kind kaufte ich jeden Freitag Comics.",
+      "es": "En mi infancia compraba cómics todos los viernes.",
+      "opts": [
+        "En mi infancia comprabas cómics todos los viernes.",
+        "En mi infancia compraba cómics todos los viernes.",
+        "En mi infancia comprar cómics todos los viernes."
+      ],
+      "answer": "B",
+      "wrong1": "En mi infancia comprar cómics todos los viernes.",
+      "wrong2": "En mi infancia comprabas cómics todos los viernes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-002",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Früher kauftest du oft Obst auf dem Markt.",
+      "es": "Antes comprabas fruta a menudo en el mercado.",
+      "opts": [
+        "Antes comprar fruta a menudo en el mercado.",
+        "Antes compraba fruta a menudo en el mercado.",
+        "Antes comprabas fruta a menudo en el mercado."
+      ],
+      "answer": "C",
+      "wrong1": "Antes comprar fruta a menudo en el mercado.",
+      "wrong2": "Antes compraba fruta a menudo en el mercado.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-003",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Meine Schwester kaufte jeden Sommer neue Sandalen.",
+      "es": "Mi hermana compraba sandalias nuevas cada verano.",
+      "opts": [
+        "Mi hermana compraba sandalias nuevas cada verano.",
+        "Mi hermana comprar sandalias nuevas cada verano.",
+        "Mi hermana compraban sandalias nuevas cada verano."
+      ],
+      "answer": "A",
+      "wrong1": "Mi hermana comprar sandalias nuevas cada verano.",
+      "wrong2": "Mi hermana compraban sandalias nuevas cada verano.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-004",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Wir kauften früher unsere Bücher zusammen.",
+      "es": "Antes comprábamos nuestros libros juntos.",
+      "opts": [
+        "Antes comprabais nuestros libros juntos.",
+        "Antes comprábamos nuestros libros juntos.",
+        "Antes comprar nuestros libros juntos."
+      ],
+      "answer": "B",
+      "wrong1": "Antes comprar nuestros libros juntos.",
+      "wrong2": "Antes comprabais nuestros libros juntos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-005",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Ihr kauftet früher jeden Samstag Süßigkeiten.",
+      "es": "Antes comprabais dulces todos los sábados.",
+      "opts": [
+        "Antes comprar dulces todos los sábados.",
+        "Antes comprábamos dulces todos los sábados.",
+        "Antes comprabais dulces todos los sábados."
+      ],
+      "answer": "C",
+      "wrong1": "Antes comprar dulces todos los sábados.",
+      "wrong2": "Antes comprábamos dulces todos los sábados.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-006",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Meine Eltern kauften früher immer frisches Brot.",
+      "es": "Antes mis padres siempre compraban pan fresco.",
+      "opts": [
+        "Antes mis padres siempre compraban pan fresco.",
+        "Antes mis padres siempre comprar pan fresco.",
+        "Antes mis padres siempre compraba pan fresco."
+      ],
+      "answer": "A",
+      "wrong1": "Antes mis padres siempre comprar pan fresco.",
+      "wrong2": "Antes mis padres siempre compraba pan fresco.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-007",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Früher kaufte ich meine Kleidung im Zentrum.",
+      "es": "Antes compraba mi ropa en el centro.",
+      "opts": [
+        "Antes compramos mi ropa en el centro.",
+        "Antes compraba mi ropa en el centro.",
+        "Antes comprar mi ropa en el centro."
+      ],
+      "answer": "B",
+      "wrong1": "Antes comprar mi ropa en el centro.",
+      "wrong2": "Antes compramos mi ropa en el centro.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-008",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Als Kind kauftest du oft kleine Geschenke.",
+      "es": "En tu infancia comprabas regalos pequeños a menudo.",
+      "opts": [
+        "En tu infancia comprar regalos pequeños a menudo.",
+        "En tu infancia compraban regalos pequeños a menudo.",
+        "En tu infancia comprabas regalos pequeños a menudo."
+      ],
+      "answer": "C",
+      "wrong1": "En tu infancia comprar regalos pequeños a menudo.",
+      "wrong2": "En tu infancia compraban regalos pequeños a menudo.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-009",
+      "topic": "Pretérito imperfecto",
+      "lemma": "comprar",
+      "phen": "Regelmäßige Formen",
+      "de": "Meine Freunde kauften jeden Monat neue Bücher.",
+      "es": "Mis amigos compraban libros nuevos cada mes.",
+      "opts": [
+        "Mis amigos compraban libros nuevos cada mes.",
+        "Mis amigos comprar libros nuevos cada mes.",
+        "Mis amigos compraba libros nuevos cada mes."
+      ],
+      "answer": "A",
+      "wrong1": "Mis amigos comprar libros nuevos cada mes.",
+      "wrong2": "Mis amigos compraba libros nuevos cada mes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-010",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Im Sommer trank ich früher jeden Tag Limonade.",
+      "es": "Antes bebía limonada todos los días de verano.",
+      "opts": [
+        "Antes bebías limonada todos los días de verano.",
+        "Antes bebía limonada todos los días de verano.",
+        "Antes beber limonada todos los días de verano."
+      ],
+      "answer": "B",
+      "wrong1": "Antes beber limonada todos los días de verano.",
+      "wrong2": "Antes bebías limonada todos los días de verano.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-011",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Du trankst früher abends immer Tee.",
+      "es": "Antes bebías té todas las noches.",
+      "opts": [
+        "Antes beber té todas las noches.",
+        "Antes bebía té todas las noches.",
+        "Antes bebías té todas las noches."
+      ],
+      "answer": "C",
+      "wrong1": "Antes beber té todas las noches.",
+      "wrong2": "Antes bebía té todas las noches.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-012",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Meine Oma trank jeden Morgen einen Kaffee.",
+      "es": "Mi abuela bebía un café cada mañana.",
+      "opts": [
+        "Mi abuela bebía un café cada mañana.",
+        "Mi abuela beber un café cada mañana.",
+        "Mi abuela bebían un café cada mañana."
+      ],
+      "answer": "A",
+      "wrong1": "Mi abuela beber un café cada mañana.",
+      "wrong2": "Mi abuela bebían un café cada mañana.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-013",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Wir tranken als Kinder oft warmen Kakao.",
+      "es": "En nuestra infancia bebíamos chocolate caliente a menudo.",
+      "opts": [
+        "En nuestra infancia bebíais chocolate caliente a menudo.",
+        "En nuestra infancia bebíamos chocolate caliente a menudo.",
+        "En nuestra infancia beber chocolate caliente a menudo."
+      ],
+      "answer": "B",
+      "wrong1": "En nuestra infancia beber chocolate caliente a menudo.",
+      "wrong2": "En nuestra infancia bebíais chocolate caliente a menudo.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-014",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Ihr trankt früher am Wochenende Orangensaft.",
+      "es": "Antes bebíais zumo de naranja los fines de semana.",
+      "opts": [
+        "Antes beber zumo de naranja los fines de semana.",
+        "Antes bebíamos zumo de naranja los fines de semana.",
+        "Antes bebíais zumo de naranja los fines de semana."
+      ],
+      "answer": "C",
+      "wrong1": "Antes beber zumo de naranja los fines de semana.",
+      "wrong2": "Antes bebíamos zumo de naranja los fines de semana.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-015",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Die Kinder tranken im Winter gerne heiße Schokolade.",
+      "es": "Los niños bebían chocolate caliente en invierno.",
+      "opts": [
+        "Los niños bebían chocolate caliente en invierno.",
+        "Los niños beber chocolate caliente en invierno.",
+        "Los niños bebía chocolate caliente en invierno."
+      ],
+      "answer": "A",
+      "wrong1": "Los niños beber chocolate caliente en invierno.",
+      "wrong2": "Los niños bebía chocolate caliente en invierno.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-016",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Während der Prüfungen trank ich früher viel Wasser.",
+      "es": "Antes bebía mucha agua durante los exámenes.",
+      "opts": [
+        "Antes bebemos mucha agua durante los exámenes.",
+        "Antes bebía mucha agua durante los exámenes.",
+        "Antes beber mucha agua durante los exámenes."
+      ],
+      "answer": "B",
+      "wrong1": "Antes beber mucha agua durante los exámenes.",
+      "wrong2": "Antes bebemos mucha agua durante los exámenes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-017",
+      "topic": "Pretérito imperfecto",
+      "lemma": "beber",
+      "phen": "Regelmäßige Formen",
+      "de": "Mein Onkel trank früher nie Kaffee.",
+      "es": "Mi tío nunca bebía café antes.",
+      "opts": [
+        "Mi tío nunca beber café antes.",
+        "Mi tío nunca bebían café antes.",
+        "Mi tío nunca bebía café antes."
+      ],
+      "answer": "C",
+      "wrong1": "Mi tío nunca beber café antes.",
+      "wrong2": "Mi tío nunca bebían café antes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-018",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Früher schrieb ich jeden Sonntag meiner Oma einen Brief.",
+      "es": "Antes escribía una carta a mi abuela cada domingo.",
+      "opts": [
+        "Antes escribía una carta a mi abuela cada domingo.",
+        "Antes escribir una carta a mi abuela cada domingo.",
+        "Antes escribías una carta a mi abuela cada domingo."
+      ],
+      "answer": "A",
+      "wrong1": "Antes escribir una carta a mi abuela cada domingo.",
+      "wrong2": "Antes escribías una carta a mi abuela cada domingo.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-019",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "In der Schule schriebst du oft kleine Geschichten.",
+      "es": "En el colegio escribías historias cortas a menudo.",
+      "opts": [
+        "En el colegio escribía historias cortas a menudo.",
+        "En el colegio escribías historias cortas a menudo.",
+        "En el colegio escribir historias cortas a menudo."
+      ],
+      "answer": "B",
+      "wrong1": "En el colegio escribir historias cortas a menudo.",
+      "wrong2": "En el colegio escribía historias cortas a menudo.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-020",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Meine Schwester schrieb früher ein Tagebuch.",
+      "es": "Mi hermana escribía un diario antes.",
+      "opts": [
+        "Mi hermana escribir un diario antes.",
+        "Mi hermana escribían un diario antes.",
+        "Mi hermana escribía un diario antes."
+      ],
+      "answer": "C",
+      "wrong1": "Mi hermana escribir un diario antes.",
+      "wrong2": "Mi hermana escribían un diario antes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-021",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Wir schrieben als Kinder Briefe an unsere Freunde.",
+      "es": "En nuestra infancia escribíamos cartas a nuestros amigos.",
+      "opts": [
+        "En nuestra infancia escribíamos cartas a nuestros amigos.",
+        "En nuestra infancia escribir cartas a nuestros amigos.",
+        "En nuestra infancia escribíais cartas a nuestros amigos."
+      ],
+      "answer": "A",
+      "wrong1": "En nuestra infancia escribir cartas a nuestros amigos.",
+      "wrong2": "En nuestra infancia escribíais cartas a nuestros amigos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-022",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Ihr schriebt früher mit Bleistift.",
+      "es": "Antes escribíais con lápiz.",
+      "opts": [
+        "Antes escribíamos con lápiz.",
+        "Antes escribíais con lápiz.",
+        "Antes escribir con lápiz."
+      ],
+      "answer": "B",
+      "wrong1": "Antes escribir con lápiz.",
+      "wrong2": "Antes escribíamos con lápiz.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-023",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Die Schüler schrieben jeden Montag einen kurzen Text.",
+      "es": "Los alumnos escribían un texto corto cada lunes.",
+      "opts": [
+        "Los alumnos escribir un texto corto cada lunes.",
+        "Los alumnos escribía un texto corto cada lunes.",
+        "Los alumnos escribían un texto corto cada lunes."
+      ],
+      "answer": "C",
+      "wrong1": "Los alumnos escribir un texto corto cada lunes.",
+      "wrong2": "Los alumnos escribía un texto corto cada lunes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-024",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Während der Ferien schrieb ich oft Postkarten.",
+      "es": "Durante las vacaciones escribía postales a menudo.",
+      "opts": [
+        "Durante las vacaciones escribía postales a menudo.",
+        "Durante las vacaciones escribir postales a menudo.",
+        "Durante las vacaciones escribíamos postales a menudo."
+      ],
+      "answer": "A",
+      "wrong1": "Durante las vacaciones escribir postales a menudo.",
+      "wrong2": "Durante las vacaciones escribíamos postales a menudo.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-025",
+      "topic": "Pretérito imperfecto",
+      "lemma": "escribir",
+      "phen": "Regelmäßige Formen",
+      "de": "Mein Vater schrieb früher sehr lange E-Mails.",
+      "es": "Antes mi padre escribía correos muy largos.",
+      "opts": [
+        "Antes mi padre escribían correos muy largos.",
+        "Antes mi padre escribía correos muy largos.",
+        "Antes mi padre escribir correos muy largos."
+      ],
+      "answer": "B",
+      "wrong1": "Antes mi padre escribir correos muy largos.",
+      "wrong2": "Antes mi padre escribían correos muy largos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-026",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Als Kind war ich sehr schüchtern.",
+      "es": "En mi infancia era una persona muy tímida.",
+      "opts": [
+        "En mi infancia ser una persona muy tímida.",
+        "En mi infancia eras una persona muy tímida.",
+        "En mi infancia era una persona muy tímida."
+      ],
+      "answer": "C",
+      "wrong1": "En mi infancia ser una persona muy tímida.",
+      "wrong2": "En mi infancia eras una persona muy tímida.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-027",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Du warst früher immer sehr geduldig.",
+      "es": "Antes eras una persona muy paciente.",
+      "opts": [
+        "Antes eras una persona muy paciente.",
+        "Antes ser una persona muy paciente.",
+        "Antes era una persona muy paciente."
+      ],
+      "answer": "A",
+      "wrong1": "Antes ser una persona muy paciente.",
+      "wrong2": "Antes era una persona muy paciente.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-028",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Meine Lehrerin war früher sehr streng.",
+      "es": "Mi profesora era muy estricta antes.",
+      "opts": [
+        "Mi profesora eran muy estricta antes.",
+        "Mi profesora era muy estricta antes.",
+        "Mi profesora ser muy estricta antes."
+      ],
+      "answer": "B",
+      "wrong1": "Mi profesora ser muy estricta antes.",
+      "wrong2": "Mi profesora eran muy estricta antes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-029",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Wir waren als Kinder sehr neugierig.",
+      "es": "En nuestra infancia éramos muy curiosos.",
+      "opts": [
+        "En nuestra infancia ser muy curiosos.",
+        "En nuestra infancia erais muy curiosos.",
+        "En nuestra infancia éramos muy curiosos."
+      ],
+      "answer": "C",
+      "wrong1": "En nuestra infancia ser muy curiosos.",
+      "wrong2": "En nuestra infancia erais muy curiosos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-030",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Ihr wart früher sehr gute Freunde.",
+      "es": "Antes erais muy buenos amigos.",
+      "opts": [
+        "Antes erais muy buenos amigos.",
+        "Antes ser muy buenos amigos.",
+        "Antes éramos muy buenos amigos."
+      ],
+      "answer": "A",
+      "wrong1": "Antes ser muy buenos amigos.",
+      "wrong2": "Antes éramos muy buenos amigos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-031",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Die Straßen waren früher sehr ruhig.",
+      "es": "Las calles eran muy tranquilas antes.",
+      "opts": [
+        "Las calles era muy tranquilas antes.",
+        "Las calles eran muy tranquilas antes.",
+        "Las calles ser muy tranquilas antes."
+      ],
+      "answer": "B",
+      "wrong1": "Las calles ser muy tranquilas antes.",
+      "wrong2": "Las calles era muy tranquilas antes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-032",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Meine Stadt war vor zehn Jahren kleiner.",
+      "es": "Mi ciudad era más pequeña diez años atrás.",
+      "opts": [
+        "Mi ciudad ser más pequeña diez años atrás.",
+        "Mi ciudad eran más pequeña diez años atrás.",
+        "Mi ciudad era más pequeña diez años atrás."
+      ],
+      "answer": "C",
+      "wrong1": "Mi ciudad ser más pequeña diez años atrás.",
+      "wrong2": "Mi ciudad eran más pequeña diez años atrás.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-033",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Früher war mein Zimmer sehr klein.",
+      "es": "Antes mi habitación era muy pequeña.",
+      "opts": [
+        "Antes mi habitación era muy pequeña.",
+        "Antes mi habitación ser muy pequeña.",
+        "Antes mi habitación eras muy pequeña."
+      ],
+      "answer": "A",
+      "wrong1": "Antes mi habitación ser muy pequeña.",
+      "wrong2": "Antes mi habitación eras muy pequeña.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-034",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ser",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Mein Großvater war immer freundlich zu allen.",
+      "es": "Mi abuelo era siempre amable con todos.",
+      "opts": [
+        "Mi abuelo eran siempre amable con todos.",
+        "Mi abuelo era siempre amable con todos.",
+        "Mi abuelo ser siempre amable con todos."
+      ],
+      "answer": "B",
+      "wrong1": "Mi abuelo ser siempre amable con todos.",
+      "wrong2": "Mi abuelo eran siempre amable con todos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-035",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Früher ging ich jeden Montag ins Schwimmbad.",
+      "es": "Antes iba a la piscina todos los lunes.",
+      "opts": [
+        "Antes ir a la piscina todos los lunes.",
+        "Antes ibas a la piscina todos los lunes.",
+        "Antes iba a la piscina todos los lunes."
+      ],
+      "answer": "C",
+      "wrong1": "Antes ir a la piscina todos los lunes.",
+      "wrong2": "Antes ibas a la piscina todos los lunes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-036",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Du fuhrst früher mit dem Bus zur Schule.",
+      "es": "Antes ibas al colegio en autobús.",
+      "opts": [
+        "Antes ibas al colegio en autobús.",
+        "Antes ir al colegio en autobús.",
+        "Antes iba al colegio en autobús."
+      ],
+      "answer": "A",
+      "wrong1": "Antes ir al colegio en autobús.",
+      "wrong2": "Antes iba al colegio en autobús.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-037",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Meine Mutter ging jeden Freitag zum Markt.",
+      "es": "Mi madre iba al mercado todos los viernes.",
+      "opts": [
+        "Mi madre iban al mercado todos los viernes.",
+        "Mi madre iba al mercado todos los viernes.",
+        "Mi madre ir al mercado todos los viernes."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre ir al mercado todos los viernes.",
+      "wrong2": "Mi madre iban al mercado todos los viernes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-038",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Wir gingen im Sommer oft an den Strand.",
+      "es": "En verano íbamos a la playa a menudo.",
+      "opts": [
+        "En verano ir a la playa a menudo.",
+        "En verano ibais a la playa a menudo.",
+        "En verano íbamos a la playa a menudo."
+      ],
+      "answer": "C",
+      "wrong1": "En verano ir a la playa a menudo.",
+      "wrong2": "En verano ibais a la playa a menudo.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-039",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Ihr gingt früher jeden Sonntag ins Kino.",
+      "es": "Antes ibais al cine todos los domingos.",
+      "opts": [
+        "Antes ibais al cine todos los domingos.",
+        "Antes ir al cine todos los domingos.",
+        "Antes íbamos al cine todos los domingos."
+      ],
+      "answer": "A",
+      "wrong1": "Antes ir al cine todos los domingos.",
+      "wrong2": "Antes íbamos al cine todos los domingos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-040",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Die Kinder gingen früher zu Fuß zur Schule.",
+      "es": "Los niños iban al colegio a pie antes.",
+      "opts": [
+        "Los niños iba al colegio a pie antes.",
+        "Los niños iban al colegio a pie antes.",
+        "Los niños ir al colegio a pie antes."
+      ],
+      "answer": "B",
+      "wrong1": "Los niños ir al colegio a pie antes.",
+      "wrong2": "Los niños iba al colegio a pie antes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-041",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Als Kind fuhr ich jeden Sommer nach Spanien.",
+      "es": "En mi infancia iba a España cada verano.",
+      "opts": [
+        "En mi infancia ir a España cada verano.",
+        "En mi infancia íbamos a España cada verano.",
+        "En mi infancia iba a España cada verano."
+      ],
+      "answer": "C",
+      "wrong1": "En mi infancia ir a España cada verano.",
+      "wrong2": "En mi infancia íbamos a España cada verano.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-042",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ir",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Meine Eltern gingen früher selten ins Restaurant.",
+      "es": "Mis padres iban pocas veces al restaurante antes.",
+      "opts": [
+        "Mis padres iban pocas veces al restaurante antes.",
+        "Mis padres ir pocas veces al restaurante antes.",
+        "Mis padres ibas pocas veces al restaurante antes."
+      ],
+      "answer": "A",
+      "wrong1": "Mis padres ir pocas veces al restaurante antes.",
+      "wrong2": "Mis padres ibas pocas veces al restaurante antes.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-043",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Früher sah ich jeden Abend die Nachrichten.",
+      "es": "Antes veía las noticias todas las noches.",
+      "opts": [
+        "Antes veías las noticias todas las noches.",
+        "Antes veía las noticias todas las noches.",
+        "Antes ver las noticias todas las noches."
+      ],
+      "answer": "B",
+      "wrong1": "Antes ver las noticias todas las noches.",
+      "wrong2": "Antes veías las noticias todas las noches.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-044",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Du sahst früher oft Filme auf Spanisch.",
+      "es": "Antes veías películas en español a menudo.",
+      "opts": [
+        "Antes ver películas en español a menudo.",
+        "Antes veía películas en español a menudo.",
+        "Antes veías películas en español a menudo."
+      ],
+      "answer": "C",
+      "wrong1": "Antes ver películas en español a menudo.",
+      "wrong2": "Antes veía películas en español a menudo.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-045",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Meine Oma sah jeden Morgen die Berge.",
+      "es": "Mi abuela veía las montañas cada mañana.",
+      "opts": [
+        "Mi abuela veía las montañas cada mañana.",
+        "Mi abuela ver las montañas cada mañana.",
+        "Mi abuela veían las montañas cada mañana."
+      ],
+      "answer": "A",
+      "wrong1": "Mi abuela ver las montañas cada mañana.",
+      "wrong2": "Mi abuela veían las montañas cada mañana.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-046",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Wir sahen früher jeden Winter viel Schnee.",
+      "es": "Antes veíamos mucha nieve cada invierno.",
+      "opts": [
+        "Antes veíais mucha nieve cada invierno.",
+        "Antes veíamos mucha nieve cada invierno.",
+        "Antes ver mucha nieve cada invierno."
+      ],
+      "answer": "B",
+      "wrong1": "Antes ver mucha nieve cada invierno.",
+      "wrong2": "Antes veíais mucha nieve cada invierno.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-047",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Ihr saht früher jeden Tag eure Nachbarn.",
+      "es": "Antes veíais a vuestros vecinos todos los días.",
+      "opts": [
+        "Antes ver a vuestros vecinos todos los días.",
+        "Antes veíamos a vuestros vecinos todos los días.",
+        "Antes veíais a vuestros vecinos todos los días."
+      ],
+      "answer": "C",
+      "wrong1": "Antes ver a vuestros vecinos todos los días.",
+      "wrong2": "Antes veíamos a vuestros vecinos todos los días.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-048",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Die Kinder sahen abends oft die Sterne.",
+      "es": "Los niños veían las estrellas muchas noches.",
+      "opts": [
+        "Los niños veían las estrellas muchas noches.",
+        "Los niños ver las estrellas muchas noches.",
+        "Los niños veía las estrellas muchas noches."
+      ],
+      "answer": "A",
+      "wrong1": "Los niños ver las estrellas muchas noches.",
+      "wrong2": "Los niños veía las estrellas muchas noches.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-049",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Von meinem Fenster aus sah ich früher den Fluss.",
+      "es": "Antes veía el río desde mi ventana.",
+      "opts": [
+        "Antes veíamos el río desde mi ventana.",
+        "Antes veía el río desde mi ventana.",
+        "Antes ver el río desde mi ventana."
+      ],
+      "answer": "B",
+      "wrong1": "Antes ver el río desde mi ventana.",
+      "wrong2": "Antes veíamos el río desde mi ventana.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "IMPF-050",
+      "topic": "Pretérito imperfecto",
+      "lemma": "ver",
+      "phen": "Die drei unregelmäßigen Verben",
+      "de": "Meine Freundin sah früher jeden Sonntag ihre Cousins.",
+      "es": "Mi amiga veía a sus primos todos los domingos.",
+      "opts": [
+        "Mi amiga ver a sus primos todos los domingos.",
+        "Mi amiga veían a sus primos todos los domingos.",
+        "Mi amiga veía a sus primos todos los domingos."
+      ],
+      "answer": "C",
+      "wrong1": "Mi amiga ver a sus primos todos los domingos.",
+      "wrong2": "Mi amiga veían a sus primos todos los domingos.",
+      "reason1": "Infinitiv statt konjugierter Imperfecto-Form.",
+      "reason2": "Die Imperfecto-Form passt nicht zur Person bzw. zum Subjekt."
+    },
+    {
+      "id": "PLUSQ-001",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Urlaub hatte ich schon die Fahrkarten gekauft.",
+      "es": "Antes de las vacaciones ya había comprado los billetes.",
+      "opts": [
+        "Antes de las vacaciones ya había comprado los billetes.",
+        "Antes de las vacaciones ya habías comprado los billetes.",
+        "Antes de las vacaciones ya había comprar los billetes."
+      ],
+      "answer": "A",
+      "wrong1": "Antes de las vacaciones ya habías comprado los billetes.",
+      "wrong2": "Antes de las vacaciones ya había comprar los billetes.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-002",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Konzert hattest du schon die Eintrittskarte gekauft.",
+      "es": "Antes del concierto ya habías comprado la entrada.",
+      "opts": [
+        "Antes del concierto ya habías comprar la entrada.",
+        "Antes del concierto ya habías comprado la entrada.",
+        "Antes del concierto ya había comprado la entrada."
+      ],
+      "answer": "B",
+      "wrong1": "Antes del concierto ya había comprado la entrada.",
+      "wrong2": "Antes del concierto ya habías comprar la entrada.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-003",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Schwester hatte vor der Party ein Kleid gekauft.",
+      "es": "Mi hermana había comprado un vestido antes de la fiesta.",
+      "opts": [
+        "Mi hermana habías comprado un vestido antes de la fiesta.",
+        "Mi hermana había comprar un vestido antes de la fiesta.",
+        "Mi hermana había comprado un vestido antes de la fiesta."
+      ],
+      "answer": "C",
+      "wrong1": "Mi hermana habías comprado un vestido antes de la fiesta.",
+      "wrong2": "Mi hermana había comprar un vestido antes de la fiesta.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-004",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Ausflug hatten wir schon Wasser gekauft.",
+      "es": "Antes de la excursión ya habíamos comprado agua.",
+      "opts": [
+        "Antes de la excursión ya habíamos comprado agua.",
+        "Antes de la excursión ya habíais comprado agua.",
+        "Antes de la excursión ya habíamos comprar agua."
+      ],
+      "answer": "A",
+      "wrong1": "Antes de la excursión ya habíais comprado agua.",
+      "wrong2": "Antes de la excursión ya habíamos comprar agua.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-005",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Bis Freitag hattet ihr alle Bücher gekauft.",
+      "es": "Para el viernes ya habíais comprado todos los libros.",
+      "opts": [
+        "Para el viernes ya habíais comprar todos los libros.",
+        "Para el viernes ya habíais comprado todos los libros.",
+        "Para el viernes ya habíamos comprado todos los libros."
+      ],
+      "answer": "B",
+      "wrong1": "Para el viernes ya habíamos comprado todos los libros.",
+      "wrong2": "Para el viernes ya habíais comprar todos los libros.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-006",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Eltern hatten vor dem Sommer Fahrräder gekauft.",
+      "es": "Mis padres habían comprado bicicletas antes del verano.",
+      "opts": [
+        "Mis padres había comprado bicicletas antes del verano.",
+        "Mis padres habían comprar bicicletas antes del verano.",
+        "Mis padres habían comprado bicicletas antes del verano."
+      ],
+      "answer": "C",
+      "wrong1": "Mis padres había comprado bicicletas antes del verano.",
+      "wrong2": "Mis padres habían comprar bicicletas antes del verano.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-007",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Unterricht hatte ich schon ein Heft gekauft.",
+      "es": "Antes de clase ya había comprado un cuaderno.",
+      "opts": [
+        "Antes de clase ya había comprado un cuaderno.",
+        "Antes de clase ya habías comprado un cuaderno.",
+        "Antes de clase ya había comprar un cuaderno."
+      ],
+      "answer": "A",
+      "wrong1": "Antes de clase ya habías comprado un cuaderno.",
+      "wrong2": "Antes de clase ya había comprar un cuaderno.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-008",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Freundin hatte vor dem Geburtstag Blumen gekauft.",
+      "es": "Mi amiga había comprado flores antes del cumpleaños.",
+      "opts": [
+        "Mi amiga había comprar flores antes del cumpleaños.",
+        "Mi amiga había comprado flores antes del cumpleaños.",
+        "Mi amiga habías comprado flores antes del cumpleaños."
+      ],
+      "answer": "B",
+      "wrong1": "Mi amiga habías comprado flores antes del cumpleaños.",
+      "wrong2": "Mi amiga había comprar flores antes del cumpleaños.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-009",
+      "topic": "Pluscuamperfecto",
+      "lemma": "comprar",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Die Schüler hatten vor dem Kurs Wörterbücher gekauft.",
+      "es": "Los alumnos habían comprado diccionarios antes del curso.",
+      "opts": [
+        "Los alumnos había comprado diccionarios antes del curso.",
+        "Los alumnos habían comprar diccionarios antes del curso.",
+        "Los alumnos habían comprado diccionarios antes del curso."
+      ],
+      "answer": "C",
+      "wrong1": "Los alumnos había comprado diccionarios antes del curso.",
+      "wrong2": "Los alumnos habían comprar diccionarios antes del curso.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-010",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Training hatte ich schon viel Wasser getrunken.",
+      "es": "Antes del entrenamiento ya había bebido mucha agua.",
+      "opts": [
+        "Antes del entrenamiento ya había bebido mucha agua.",
+        "Antes del entrenamiento ya habías bebido mucha agua.",
+        "Antes del entrenamiento ya había beber mucha agua."
+      ],
+      "answer": "A",
+      "wrong1": "Antes del entrenamiento ya habías bebido mucha agua.",
+      "wrong2": "Antes del entrenamiento ya había beber mucha agua.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-011",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor der Prüfung hattest du zwei Tassen Tee getrunken.",
+      "es": "Antes del examen habías bebido dos tazas de té.",
+      "opts": [
+        "Antes del examen habías beber dos tazas de té.",
+        "Antes del examen habías bebido dos tazas de té.",
+        "Antes del examen había bebido dos tazas de té."
+      ],
+      "answer": "B",
+      "wrong1": "Antes del examen había bebido dos tazas de té.",
+      "wrong2": "Antes del examen habías beber dos tazas de té.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-012",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Mein Bruder hatte vor dem Spiel Limonade getrunken.",
+      "es": "Mi hermano había bebido limonada antes del partido.",
+      "opts": [
+        "Mi hermano habías bebido limonada antes del partido.",
+        "Mi hermano había beber limonada antes del partido.",
+        "Mi hermano había bebido limonada antes del partido."
+      ],
+      "answer": "C",
+      "wrong1": "Mi hermano habías bebido limonada antes del partido.",
+      "wrong2": "Mi hermano había beber limonada antes del partido.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-013",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor der Wanderung hatten wir genügend Wasser getrunken.",
+      "es": "Antes de la excursión habíamos bebido suficiente agua.",
+      "opts": [
+        "Antes de la excursión habíamos bebido suficiente agua.",
+        "Antes de la excursión habíais bebido suficiente agua.",
+        "Antes de la excursión habíamos beber suficiente agua."
+      ],
+      "answer": "A",
+      "wrong1": "Antes de la excursión habíais bebido suficiente agua.",
+      "wrong2": "Antes de la excursión habíamos beber suficiente agua.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-014",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Essen hattet ihr schon Saft getrunken.",
+      "es": "Antes de la comida ya habíais bebido zumo.",
+      "opts": [
+        "Antes de la comida ya habíais beber zumo.",
+        "Antes de la comida ya habíais bebido zumo.",
+        "Antes de la comida ya habíamos bebido zumo."
+      ],
+      "answer": "B",
+      "wrong1": "Antes de la comida ya habíamos bebido zumo.",
+      "wrong2": "Antes de la comida ya habíais beber zumo.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-015",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Freunde hatten vor dem Film Kaffee getrunken.",
+      "es": "Mis amigos habían bebido café antes de la película.",
+      "opts": [
+        "Mis amigos había bebido café antes de la película.",
+        "Mis amigos habían beber café antes de la película.",
+        "Mis amigos habían bebido café antes de la película."
+      ],
+      "answer": "C",
+      "wrong1": "Mis amigos había bebido café antes de la película.",
+      "wrong2": "Mis amigos habían beber café antes de la película.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-016",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor der Busfahrt hatte ich noch keinen Kaffee getrunken.",
+      "es": "Antes del viaje en autobús todavía no había bebido café.",
+      "opts": [
+        "Antes del viaje en autobús todavía no había bebido café.",
+        "Antes del viaje en autobús todavía no habías bebido café.",
+        "Antes del viaje en autobús todavía no había beber café."
+      ],
+      "answer": "A",
+      "wrong1": "Antes del viaje en autobús todavía no habías bebido café.",
+      "wrong2": "Antes del viaje en autobús todavía no había beber café.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-017",
+      "topic": "Pluscuamperfecto",
+      "lemma": "beber",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Oma hatte vor dem Frühstück Wasser getrunken.",
+      "es": "Mi abuela había bebido agua antes del desayuno.",
+      "opts": [
+        "Mi abuela había beber agua antes del desayuno.",
+        "Mi abuela había bebido agua antes del desayuno.",
+        "Mi abuela habías bebido agua antes del desayuno."
+      ],
+      "answer": "B",
+      "wrong1": "Mi abuela habías bebido agua antes del desayuno.",
+      "wrong2": "Mi abuela había beber agua antes del desayuno.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-018",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Umzug hatte ich drei Jahre in Berlin gelebt.",
+      "es": "Antes de la mudanza había vivido tres años en Berlín.",
+      "opts": [
+        "Antes de la mudanza habías vivido tres años en Berlín.",
+        "Antes de la mudanza había vivir tres años en Berlín.",
+        "Antes de la mudanza había vivido tres años en Berlín."
+      ],
+      "answer": "C",
+      "wrong1": "Antes de la mudanza habías vivido tres años en Berlín.",
+      "wrong2": "Antes de la mudanza había vivir tres años en Berlín.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-019",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor deiner Reise hattest du schon in Spanien gelebt.",
+      "es": "Antes de tu viaje ya habías vivido en España.",
+      "opts": [
+        "Antes de tu viaje ya habías vivido en España.",
+        "Antes de tu viaje ya había vivido en España.",
+        "Antes de tu viaje ya habías vivir en España."
+      ],
+      "answer": "A",
+      "wrong1": "Antes de tu viaje ya había vivido en España.",
+      "wrong2": "Antes de tu viaje ya habías vivir en España.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-020",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Tante hatte vor der Hochzeit in Valencia gelebt.",
+      "es": "Mi tía había vivido en Valencia antes de la boda.",
+      "opts": [
+        "Mi tía había vivir en Valencia antes de la boda.",
+        "Mi tía había vivido en Valencia antes de la boda.",
+        "Mi tía habías vivido en Valencia antes de la boda."
+      ],
+      "answer": "B",
+      "wrong1": "Mi tía habías vivido en Valencia antes de la boda.",
+      "wrong2": "Mi tía había vivir en Valencia antes de la boda.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-021",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Studium hatten wir in einer kleinen Stadt gelebt.",
+      "es": "Antes de la universidad habíamos vivido en una ciudad pequeña.",
+      "opts": [
+        "Antes de la universidad habíais vivido en una ciudad pequeña.",
+        "Antes de la universidad habíamos vivir en una ciudad pequeña.",
+        "Antes de la universidad habíamos vivido en una ciudad pequeña."
+      ],
+      "answer": "C",
+      "wrong1": "Antes de la universidad habíais vivido en una ciudad pequeña.",
+      "wrong2": "Antes de la universidad habíamos vivir en una ciudad pequeña.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-022",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor eurem Umzug hattet ihr in Málaga gelebt.",
+      "es": "Antes de vuestra mudanza habíais vivido en Málaga.",
+      "opts": [
+        "Antes de vuestra mudanza habíais vivido en Málaga.",
+        "Antes de vuestra mudanza habíamos vivido en Málaga.",
+        "Antes de vuestra mudanza habíais vivir en Málaga."
+      ],
+      "answer": "A",
+      "wrong1": "Antes de vuestra mudanza habíamos vivido en Málaga.",
+      "wrong2": "Antes de vuestra mudanza habíais vivir en Málaga.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-023",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Freunde hatten vor dem Sommer in Madrid gelebt.",
+      "es": "Mis amigos habían vivido en Madrid antes del verano.",
+      "opts": [
+        "Mis amigos habían vivir en Madrid antes del verano.",
+        "Mis amigos habían vivido en Madrid antes del verano.",
+        "Mis amigos había vivido en Madrid antes del verano."
+      ],
+      "answer": "B",
+      "wrong1": "Mis amigos había vivido en Madrid antes del verano.",
+      "wrong2": "Mis amigos habían vivir en Madrid antes del verano.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-024",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem neuen Job hatte ich bei meinen Eltern gewohnt.",
+      "es": "Antes del nuevo trabajo había vivido con mis padres.",
+      "opts": [
+        "Antes del nuevo trabajo habías vivido con mis padres.",
+        "Antes del nuevo trabajo había vivir con mis padres.",
+        "Antes del nuevo trabajo había vivido con mis padres."
+      ],
+      "answer": "C",
+      "wrong1": "Antes del nuevo trabajo habías vivido con mis padres.",
+      "wrong2": "Antes del nuevo trabajo había vivir con mis padres.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-025",
+      "topic": "Pluscuamperfecto",
+      "lemma": "vivir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Mein Onkel hatte vor dem Ruhestand am Meer gewohnt.",
+      "es": "Mi tío había vivido junto al mar antes de la jubilación.",
+      "opts": [
+        "Mi tío había vivido junto al mar antes de la jubilación.",
+        "Mi tío habías vivido junto al mar antes de la jubilación.",
+        "Mi tío había vivir junto al mar antes de la jubilación."
+      ],
+      "answer": "A",
+      "wrong1": "Mi tío habías vivido junto al mar antes de la jubilación.",
+      "wrong2": "Mi tío había vivir junto al mar antes de la jubilación.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-026",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Gewitter war ich schon aus dem Haus gegangen.",
+      "es": "Antes de la tormenta ya había salido de casa.",
+      "opts": [
+        "Antes de la tormenta ya había salir de casa.",
+        "Antes de la tormenta ya había salido de casa.",
+        "Antes de la tormenta ya habías salido de casa."
+      ],
+      "answer": "B",
+      "wrong1": "Antes de la tormenta ya habías salido de casa.",
+      "wrong2": "Antes de la tormenta ya había salir de casa.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-027",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Du warst vor sieben Uhr aus der Schule gegangen.",
+      "es": "Habías salido del colegio antes de las siete.",
+      "opts": [
+        "Había salido del colegio antes de las siete.",
+        "Habías salir del colegio antes de las siete.",
+        "Habías salido del colegio antes de las siete."
+      ],
+      "answer": "C",
+      "wrong1": "Había salido del colegio antes de las siete.",
+      "wrong2": "Habías salir del colegio antes de las siete.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-028",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Mutter war vor dem Regen zum Einkaufen gegangen.",
+      "es": "Mi madre había salido de compras antes de la lluvia.",
+      "opts": [
+        "Mi madre había salido de compras antes de la lluvia.",
+        "Mi madre habías salido de compras antes de la lluvia.",
+        "Mi madre había salir de compras antes de la lluvia."
+      ],
+      "answer": "A",
+      "wrong1": "Mi madre habías salido de compras antes de la lluvia.",
+      "wrong2": "Mi madre había salir de compras antes de la lluvia.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-029",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor Sonnenaufgang waren wir schon aus dem Hotel gegangen.",
+      "es": "Antes del amanecer ya habíamos salido del hotel.",
+      "opts": [
+        "Antes del amanecer ya habíamos salir del hotel.",
+        "Antes del amanecer ya habíamos salido del hotel.",
+        "Antes del amanecer ya habíais salido del hotel."
+      ],
+      "answer": "B",
+      "wrong1": "Antes del amanecer ya habíais salido del hotel.",
+      "wrong2": "Antes del amanecer ya habíamos salir del hotel.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-030",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Ihr wart vor dem Abendessen aus der Stadt gefahren.",
+      "es": "Habíais salido de la ciudad antes de la cena.",
+      "opts": [
+        "Habíamos salido de la ciudad antes de la cena.",
+        "Habíais salir de la ciudad antes de la cena.",
+        "Habíais salido de la ciudad antes de la cena."
+      ],
+      "answer": "C",
+      "wrong1": "Habíamos salido de la ciudad antes de la cena.",
+      "wrong2": "Habíais salir de la ciudad antes de la cena.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-031",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Freunde waren vor Mitternacht aus dem Kino gegangen.",
+      "es": "Mis amigos habían salido del cine antes de medianoche.",
+      "opts": [
+        "Mis amigos habían salido del cine antes de medianoche.",
+        "Mis amigos había salido del cine antes de medianoche.",
+        "Mis amigos habían salir del cine antes de medianoche."
+      ],
+      "answer": "A",
+      "wrong1": "Mis amigos había salido del cine antes de medianoche.",
+      "wrong2": "Mis amigos habían salir del cine antes de medianoche.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-032",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Schwester war vor acht Uhr aus dem Büro gegangen.",
+      "es": "Mi hermana había salido de la oficina antes de las ocho.",
+      "opts": [
+        "Mi hermana había salir de la oficina antes de las ocho.",
+        "Mi hermana había salido de la oficina antes de las ocho.",
+        "Mi hermana habías salido de la oficina antes de las ocho."
+      ],
+      "answer": "B",
+      "wrong1": "Mi hermana habías salido de la oficina antes de las ocho.",
+      "wrong2": "Mi hermana había salir de la oficina antes de las ocho.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-033",
+      "topic": "Pluscuamperfecto",
+      "lemma": "salir",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Unterricht war ich schon aus der Bibliothek gegangen.",
+      "es": "Antes de clase ya había salido de la biblioteca.",
+      "opts": [
+        "Antes de clase ya habías salido de la biblioteca.",
+        "Antes de clase ya había salir de la biblioteca.",
+        "Antes de clase ya había salido de la biblioteca."
+      ],
+      "answer": "C",
+      "wrong1": "Antes de clase ya habías salido de la biblioteca.",
+      "wrong2": "Antes de clase ya había salir de la biblioteca.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-034",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor der Prüfung hatte ich wenig Zeit gehabt.",
+      "es": "Antes del examen había tenido poco tiempo.",
+      "opts": [
+        "Antes del examen había tenido poco tiempo.",
+        "Antes del examen habías tenido poco tiempo.",
+        "Antes del examen había tener poco tiempo."
+      ],
+      "answer": "A",
+      "wrong1": "Antes del examen habías tenido poco tiempo.",
+      "wrong2": "Antes del examen había tener poco tiempo.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-035",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor der Reise hattest du große Angst gehabt.",
+      "es": "Antes del viaje habías tenido mucho miedo.",
+      "opts": [
+        "Antes del viaje habías tener mucho miedo.",
+        "Antes del viaje habías tenido mucho miedo.",
+        "Antes del viaje había tenido mucho miedo."
+      ],
+      "answer": "B",
+      "wrong1": "Antes del viaje había tenido mucho miedo.",
+      "wrong2": "Antes del viaje habías tener mucho miedo.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-036",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Mein Bruder hatte vor der Pause Hunger gehabt.",
+      "es": "Mi hermano había tenido hambre antes del descanso.",
+      "opts": [
+        "Mi hermano habías tenido hambre antes del descanso.",
+        "Mi hermano había tener hambre antes del descanso.",
+        "Mi hermano había tenido hambre antes del descanso."
+      ],
+      "answer": "C",
+      "wrong1": "Mi hermano habías tenido hambre antes del descanso.",
+      "wrong2": "Mi hermano había tener hambre antes del descanso.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-037",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Wir hatten vor dem Sommer viele Probleme gehabt.",
+      "es": "Habíamos tenido muchos problemas antes del verano.",
+      "opts": [
+        "Habíamos tenido muchos problemas antes del verano.",
+        "Habíais tenido muchos problemas antes del verano.",
+        "Habíamos tener muchos problemas antes del verano."
+      ],
+      "answer": "A",
+      "wrong1": "Habíais tenido muchos problemas antes del verano.",
+      "wrong2": "Habíamos tener muchos problemas antes del verano.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-038",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor der Besprechung hattet ihr schon eine gute Idee gehabt.",
+      "es": "Antes de la reunión ya habíais tenido una buena idea.",
+      "opts": [
+        "Antes de la reunión ya habíais tener una buena idea.",
+        "Antes de la reunión ya habíais tenido una buena idea.",
+        "Antes de la reunión ya habíamos tenido una buena idea."
+      ],
+      "answer": "B",
+      "wrong1": "Antes de la reunión ya habíamos tenido una buena idea.",
+      "wrong2": "Antes de la reunión ya habíais tener una buena idea.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-039",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Freunde hatten vor dem Spiel großes Glück gehabt.",
+      "es": "Mis amigos habían tenido mucha suerte antes del partido.",
+      "opts": [
+        "Mis amigos había tenido mucha suerte antes del partido.",
+        "Mis amigos habían tener mucha suerte antes del partido.",
+        "Mis amigos habían tenido mucha suerte antes del partido."
+      ],
+      "answer": "C",
+      "wrong1": "Mis amigos había tenido mucha suerte antes del partido.",
+      "wrong2": "Mis amigos habían tener mucha suerte antes del partido.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-040",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Gespräch hatte ich Zweifel gehabt.",
+      "es": "Antes de la conversación había tenido dudas.",
+      "opts": [
+        "Antes de la conversación había tenido dudas.",
+        "Antes de la conversación habías tenido dudas.",
+        "Antes de la conversación había tener dudas."
+      ],
+      "answer": "A",
+      "wrong1": "Antes de la conversación habías tenido dudas.",
+      "wrong2": "Antes de la conversación había tener dudas.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-041",
+      "topic": "Pluscuamperfecto",
+      "lemma": "tener",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Mutter hatte vor dem Urlaub viel Stress gehabt.",
+      "es": "Mi madre había tenido mucho estrés antes de las vacaciones.",
+      "opts": [
+        "Mi madre había tener mucho estrés antes de las vacaciones.",
+        "Mi madre había tenido mucho estrés antes de las vacaciones.",
+        "Mi madre habías tenido mucho estrés antes de las vacaciones."
+      ],
+      "answer": "B",
+      "wrong1": "Mi madre habías tenido mucho estrés antes de las vacaciones.",
+      "wrong2": "Mi madre había tener mucho estrés antes de las vacaciones.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-042",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Ich hatte mich vor dem Sommer in einen Freund verliebt.",
+      "es": "Me había enamorado de un amigo antes del verano.",
+      "opts": [
+        "Me habías enamorado de un amigo antes del verano.",
+        "Me había enamorar de un amigo antes del verano.",
+        "Me había enamorado de un amigo antes del verano."
+      ],
+      "answer": "C",
+      "wrong1": "Me habías enamorado de un amigo antes del verano.",
+      "wrong2": "Me había enamorar de un amigo antes del verano.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-043",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Du hattest dich vor der Reise in deine Nachbarin verliebt.",
+      "es": "Te habías enamorado de tu vecina antes del viaje.",
+      "opts": [
+        "Te habías enamorado de tu vecina antes del viaje.",
+        "Te había enamorado de tu vecina antes del viaje.",
+        "Te habías enamorar de tu vecina antes del viaje."
+      ],
+      "answer": "A",
+      "wrong1": "Te había enamorado de tu vecina antes del viaje.",
+      "wrong2": "Te habías enamorar de tu vecina antes del viaje.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-044",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Freundin hatte sich vor dem Schuljahresende verliebt.",
+      "es": "Mi amiga se había enamorado antes del final del curso.",
+      "opts": [
+        "Mi amiga se había enamorar antes del final del curso.",
+        "Mi amiga se había enamorado antes del final del curso.",
+        "Mi amiga se habías enamorado antes del final del curso."
+      ],
+      "answer": "B",
+      "wrong1": "Mi amiga se habías enamorado antes del final del curso.",
+      "wrong2": "Mi amiga se había enamorar antes del final del curso.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-045",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Wir hatten uns vor dem Urlaub verliebt.",
+      "es": "Nos habíamos enamorado antes de las vacaciones.",
+      "opts": [
+        "Nos habíais enamorado antes de las vacaciones.",
+        "Nos habíamos enamorar antes de las vacaciones.",
+        "Nos habíamos enamorado antes de las vacaciones."
+      ],
+      "answer": "C",
+      "wrong1": "Nos habíais enamorado antes de las vacaciones.",
+      "wrong2": "Nos habíamos enamorar antes de las vacaciones.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-046",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Ihr hattet euch schon vor dem Sommer verliebt.",
+      "es": "Os habíais enamorado antes del verano.",
+      "opts": [
+        "Os habíais enamorado antes del verano.",
+        "Os habíamos enamorado antes del verano.",
+        "Os habíais enamorar antes del verano."
+      ],
+      "answer": "A",
+      "wrong1": "Os habíamos enamorado antes del verano.",
+      "wrong2": "Os habíais enamorar antes del verano.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-047",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Meine Freunde hatten sich vor dem Schulabschluss verliebt.",
+      "es": "Mis amigos se habían enamorado antes de la graduación.",
+      "opts": [
+        "Mis amigos se habían enamorar antes de la graduación.",
+        "Mis amigos se habían enamorado antes de la graduación.",
+        "Mis amigos se había enamorado antes de la graduación."
+      ],
+      "answer": "B",
+      "wrong1": "Mis amigos se había enamorado antes de la graduación.",
+      "wrong2": "Mis amigos se habían enamorar antes de la graduación.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-048",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Mein Bruder hatte sich vor dem Urlaub in eine Kollegin verliebt.",
+      "es": "Mi hermano se había enamorado de una compañera antes de las vacaciones.",
+      "opts": [
+        "Mi hermano se habías enamorado de una compañera antes de las vacaciones.",
+        "Mi hermano se había enamorar de una compañera antes de las vacaciones.",
+        "Mi hermano se había enamorado de una compañera antes de las vacaciones."
+      ],
+      "answer": "C",
+      "wrong1": "Mi hermano se habías enamorado de una compañera antes de las vacaciones.",
+      "wrong2": "Mi hermano se había enamorar de una compañera antes de las vacaciones.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-049",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Bis zum Sommer hatte sich meine Cousine schon verliebt.",
+      "es": "Para el verano mi prima ya se había enamorado.",
+      "opts": [
+        "Para el verano mi prima ya se había enamorado.",
+        "Para el verano mi prima ya se habías enamorado.",
+        "Para el verano mi prima ya se había enamorar."
+      ],
+      "answer": "A",
+      "wrong1": "Para el verano mi prima ya se habías enamorado.",
+      "wrong2": "Para el verano mi prima ya se había enamorar.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    },
+    {
+      "id": "PLUSQ-050",
+      "topic": "Pluscuamperfecto",
+      "lemma": "enamorarse",
+      "phen": "Imperfecto von haber + Partizip",
+      "de": "Vor dem Schulwechsel hatte ich mich in eine Person aus meiner Klasse verliebt.",
+      "es": "Antes del cambio de colegio me había enamorado de una persona de mi clase.",
+      "opts": [
+        "Antes del cambio de colegio me había enamorar de una persona de mi clase.",
+        "Antes del cambio de colegio me había enamorado de una persona de mi clase.",
+        "Antes del cambio de colegio me habías enamorado de una persona de mi clase."
+      ],
+      "answer": "B",
+      "wrong1": "Antes del cambio de colegio me habías enamorado de una persona de mi clase.",
+      "wrong2": "Antes del cambio de colegio me había enamorar de una persona de mi clase.",
+      "reason1": "Die Imperfecto-Form von haber passt nicht zur Person.",
+      "reason2": "Nach haber muss das Partizip statt des Infinitivs stehen."
+    }
+  ]
+}
