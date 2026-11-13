@@ -357,6 +357,26 @@
   .avanza-home-link:hover img{transform:translateY(-1px)}
   .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
   @media print{.avanza-home-header{display:none!important}}
+
+    /* Motivation des Tages: ausschließlich im geschützten Lehrerbereich. */
+    .teacher-motivation{margin:15px 0 20px}
+    #motivationToggleBtn{display:block;width:100%;min-height:70px;padding:15px 20px;border:2px solid #f5b62f;border-radius:17px;background:linear-gradient(135deg,#ffed78,#ffca3a);color:#493005;font-size:1.2rem;font-weight:850;text-align:center;box-shadow:0 7px 19px rgba(172,115,8,.16);cursor:pointer;color-scheme:light}
+    #motivationToggleBtn:hover{filter:brightness(1.04)}
+    #motivationToggleBtn:focus-visible{outline:3px solid #ad6e00;outline-offset:3px}
+    .motivation-daily{margin:0 0 13px;padding:18px 17px;border:1px solid #f4d77b;border-radius:17px;background:#fffdf3;text-align:center;box-shadow:0 5px 18px rgba(90,65,9,.07)}
+    .motivation-daily-text{font-size:clamp(1.17rem,3.5vw,1.7rem);font-weight:850;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+    .motivation-daily-reference{margin-top:11px;font-size:.9rem;font-weight:650;color:#795800}
+    .motivation-controls{margin-top:10px;padding:18px;border:1px solid #f4d77b;border-radius:15px;background:#fffefa}
+    .motivation-controls fieldset{margin:0;padding:0;border:0}
+    .motivation-controls legend{margin-bottom:10px;font-weight:850}
+    .motivation-modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    .motivation-modes label{margin:0;display:flex;align-items:center;gap:9px;padding:12px 11px;border:1px solid #e2cc87;border-radius:10px;background:#fff;color:#493005;font-weight:700;cursor:pointer}
+    .motivation-modes input{accent-color:#bc8000;width:19px;height:19px;flex:0 0 auto}
+    #motivationSettingsStatus{margin:12px 0 0;font-size:.87rem;color:#7b5b13}
+    .teacher-logout-bottom{display:flex;justify-content:center;margin:30px 0 15px}
+    .teacher-logout-bottom #logoutBtn{min-width:170px}
+    @media(max-width:390px){.motivation-modes{grid-template-columns:1fr}}
+    @media print{.teacher-motivation{display:none!important}}
   </style>
 </head>
 <body>
@@ -424,12 +444,31 @@
   </section>
 
   <section id="teacherArea" class="hidden">
+
+    <section id="teacherMotivation" class="teacher-motivation" aria-label="Motivation des Tages">
+      <div id="motivationDailyDisplay" class="motivation-daily hidden" aria-live="polite">
+        <div id="motivationRainbowText" class="motivation-daily-text"></div>
+        <div id="motivationDailyReference" class="motivation-daily-reference"></div>
+      </div>
+      <button id="motivationToggleBtn" type="button" aria-controls="motivationSettings" aria-expanded="false">🌞 Motivation des Tages</button>
+      <div id="motivationSettings" class="motivation-controls hidden">
+        <fieldset>
+          <legend>Welche Motivation möchtest du sehen?</legend>
+          <div class="motivation-modes">
+            <label><input type="radio" name="teacherMotivationMode" value="off" checked>Aus</label>
+            <label><input type="radio" name="teacherMotivationMode" value="neutral">Neutrale Sprüche</label>
+            <label><input type="radio" name="teacherMotivationMode" value="bible">Bibelverse</label>
+            <label><input type="radio" name="teacherMotivationMode" value="mixed">Gemischt</label>
+          </div>
+        </fieldset>
+        <p id="motivationSettingsStatus" role="status">Die Einstellung gilt nur für dein Lehrerkonto, nicht für Schülerinnen und Schüler.</p>
+      </div>
+    </section>
     <div class="topline">
       <div>
         <strong id="welcome"></strong>
         <div class="tiny">Gemeinsames Material · eigene Tests und Ergebnisse</div>
       </div>
-      <button id="logoutBtn" class="secondary">Abmelden</button>
     </div>
 
     <nav class="nav" aria-label="Lehrer-Hauptmenü">
@@ -747,6 +786,7 @@
         <div id="teachersList"></div>
       </div>
     </section>
+    <div class="teacher-logout-bottom"><button id="logoutBtn" class="secondary" type="button">Abmelden</button></div>
   </section>
 </div>
 
@@ -764,6 +804,114 @@
   let submissionsCache = [];
   let testUnitsCache = [];
   let currentView = null;
+
+  // Motivation im Lehrerbereich: Nur genehmigte Lehrer können ihre persönliche
+  // Einstellung lesen/speichern. Auf Schülerseiten wird nichts eingebaut.
+  let teacherMotivationMode="off";
+  let teacherMotivationUserId=null;
+  let motivationRequestId=0;
+  const motivationDocuments={};
+  const motivationPalette=["#ea4b65","#008a88","#3367d6","#a343bd","#cc6f08","#178748","#d63388","#675bd1"];
+  function setTeacherMotivationMode(mode){
+    teacherMotivationMode=["off","neutral","bible","mixed"].includes(mode)?mode:"off";
+    document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.checked=input.value===teacherMotivationMode);
+  }
+  function rainbowMotivationText(message){
+    const el=$("motivationRainbowText");
+    el.replaceChildren();
+    el.setAttribute("aria-label",message);
+    const frag=document.createDocumentFragment();
+    Array.from(message).forEach((character,index)=>{
+      const letter=document.createElement("span");
+      letter.textContent=character;
+      letter.style.color=motivationPalette[index%motivationPalette.length];
+      letter.setAttribute("aria-hidden","true");
+      frag.appendChild(letter);
+    });
+    el.appendChild(frag);
+  }
+  function teacherMotivationDayIndex(){
+    const now=new Date();
+    return Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())-Date.UTC(now.getFullYear(),0,1))/86400000);
+  }
+  async function getMotivationDocument(type){
+    if(!motivationDocuments[type]){
+      const file=type==="bible"?"./motivation-bibel.json":"./motivation-neutral.json";
+      motivationDocuments[type]=fetch(file,{cache:"no-store"}).then(response=>{
+        if(!response.ok)throw new Error("Die Motivation konnte nicht geladen werden.");
+        return response.json();
+      }).catch(error=>{delete motivationDocuments[type];throw error});
+    }
+    return motivationDocuments[type];
+  }
+  async function renderTeacherMotivation(){
+    const seq=++motivationRequestId;
+    const card=$("motivationDailyDisplay"),reference=$("motivationDailyReference");
+    if(teacherMotivationMode==="off"||$("motivationSettings").classList.contains("hidden")){
+      card.classList.add("hidden");return;
+    }
+    const day=teacherMotivationDayIndex();
+    const type=teacherMotivationMode==="mixed"?(day%2===0?"bible":"neutral"):teacherMotivationMode;
+    try{
+      const data=await getMotivationDocument(type);
+      if(seq!==motivationRequestId||$("teacherArea").classList.contains("hidden"))return;
+      const list=type==="bible"?data.verses:data.sayings;
+      if(!Array.isArray(list)||!list.length)throw new Error("Für diese Auswahl sind noch keine Texte verfügbar.");
+      const item=list[day%list.length];
+      const message=type==="bible"?item?.text:item;
+      if(typeof message!=="string"||!message.trim())throw new Error("Der Tagestext ist unvollständig.");
+      rainbowMotivationText(message);
+      reference.textContent=type==="bible"?(item.reference+" · "+(data.translation||"Menge-Bibel 1939")):"Motivation des Tages";
+      card.classList.remove("hidden");
+      $("motivationSettingsStatus").textContent="Gespeichert: "+({neutral:"Neutrale Sprüche",bible:"Bibelverse (Menge 1939)",mixed:"Gemischt"}[teacherMotivationMode])+". Nur im Lehrerbereich.";
+    }catch(error){
+      if(seq!==motivationRequestId)return;
+      card.classList.add("hidden");
+      $("motivationSettingsStatus").textContent=error.message||"Die Motivation konnte nicht geladen werden.";
+    }
+  }
+  async function loadTeacherMotivationSetting(userId){
+    if(teacherMotivationUserId===userId)return;
+    teacherMotivationUserId=userId;
+    setTeacherMotivationMode("off");
+    $("motivationSettings").classList.add("hidden");
+    $("motivationDailyDisplay").classList.add("hidden");
+    $("motivationToggleBtn").setAttribute("aria-expanded","false");
+    ++motivationRequestId;
+    const {data,error}=await supabase.from("teacher_motivation_preferences")
+      .select("mode").eq("user_id",userId).maybeSingle();
+    if(teacherMotivationUserId!==userId)return;
+    if(error){
+      $("motivationSettingsStatus").textContent="Die Einstellung konnte nicht geladen werden. Bitte erneut versuchen.";
+      return;
+    }
+    setTeacherMotivationMode(data?.mode||"off");
+  }
+  $("motivationToggleBtn").addEventListener("click",()=>{
+    const panel=$("motivationSettings");
+    const opens=panel.classList.contains("hidden");
+    panel.classList.toggle("hidden",!opens);
+    $("motivationToggleBtn").setAttribute("aria-expanded",String(opens));
+    if(opens){
+      $("motivationSettingsStatus").textContent=teacherMotivationMode==="off"?"Aktuell ausgeschaltet. Wähle eine Motivation.":"Diese Auswahl wird nur für dein Lehrerkonto gespeichert.";
+    }
+    void renderTeacherMotivation();
+  });
+  document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.addEventListener("change",async()=>{
+    if(!input.checked||!teacherMotivationUserId)return;
+    const requested=input.value;
+    setTeacherMotivationMode(requested);
+    $("motivationSettingsStatus").textContent="Einstellung wird gespeichert …";
+    void renderTeacherMotivation();
+    const {error}=await supabase.from("teacher_motivation_preferences")
+      .upsert({user_id:teacherMotivationUserId,mode:requested,updated_at:new Date().toISOString()},{onConflict:"user_id"});
+    if(error){
+      $("motivationSettingsStatus").textContent="Konnte nicht gespeichert werden: "+error.message;
+    }else if(teacherMotivationMode===requested){
+      $("motivationSettingsStatus").textContent=requested==="off"?"Die Motivation ist ausgeschaltet.":"Gespeichert. Nur auf deiner Lehrerseite.";
+    }
+  }));
+
 
   // Samsung Internet kann CSS-Verläufe durch seinen erzwungenen Dunkelmodus stark abdunkeln.
   // Ein Canvas-Farbgrund erhält die ursprünglichen Regenbogenfarben auf betroffenen Geräten besser.
@@ -1459,6 +1607,11 @@
     const {data:{session}}=await supabase.auth.getSession();
     if(!session){
       currentView=null;
+      teacherMotivationUserId=null;
+      setTeacherMotivationMode("off");
+      $("motivationSettings").classList.add("hidden");
+      $("motivationDailyDisplay").classList.add("hidden");
+      ++motivationRequestId;
       $("authCard").classList.remove("hidden");
       $("pendingCard").classList.add("hidden");
       $("teacherArea").classList.add("hidden");
@@ -1489,6 +1642,7 @@
     $("adminNavBtn").classList.toggle("hidden",currentUserRole!=="admin");
     if(currentView==="admin" && currentUserRole!=="admin") currentView=null;
     $("welcome").textContent="Angemeldet als "+(profile.display_name||session.user.email);
+    await loadTeacherMotivationSetting(session.user.id);
     await loadUnits();
     await loadGrammarCatalog();
     await loadTestCourseOptions();
