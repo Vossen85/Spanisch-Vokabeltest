@@ -2746,7 +2746,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
         }
       }
       const token=sessionStorage.getItem("spanischPracticeToken");
-      if(token)await resume(token);
+      if(token&&!searchFolder)await resume(token);
     }catch(e){
       $("unitsBox").innerHTML="";
       showMsg($("setupMsg"),"Die Vokabelbereiche konnten nicht geladen werden: "+e.message,"err");
