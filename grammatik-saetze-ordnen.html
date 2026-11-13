@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#18c6b1"><title>Wörter ordnen – ¡Avanza!</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb;color-scheme:light}*{box-sizing:border-box}body{margin:0;padding:18px}main{max-width:900px;margin:auto}header{min-height:64px;margin-bottom:16px}header img{width:50px;height:50px;border-radius:12px}.panel{background:#fff;border:1px solid #dbe2ea;border-radius:20px;padding:24px;box-shadow:0 6px 20px #1720330c}[hidden]{display:none!important}h1{font-size:clamp(1.7rem,5vw,2.5rem);font-weight:900;line-height:1.15;margin:18px 0 12px}h2{font-size:1.08rem;margin:20px 0 11px}p{line-height:1.5}.muted{color:#64748b}.small{font-size:.93rem}button,select{font:inherit}button,a.back{border:0;border-radius:12px;padding:12px 16px;font-weight:750;cursor:pointer;line-height:1.3}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #2563eb;outline-offset:3px}button:disabled{opacity:.52;cursor:not-allowed}.back,.secondary{background:#e2e8f0;color:#172033}.back{display:inline-block;text-decoration:none}.primary{background:#18c6b1;color:#063d36}.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.topic{border:2px solid #cbd5e1;border-radius:12px;padding:14px 12px;cursor:pointer;display:flex;gap:9px;align-items:center;font-weight:700}.topic:has(input:checked){background:#d6faf4;border-color:#10ad9d}.topic input{width:20px;height:20px;accent-color:#0f9e8f;flex-shrink:0}.settings{display:flex;gap:12px;align-items:center;margin:22px 0}select{padding:10px;border:1px solid #94a3b8;border-radius:10px;background:transparent;color:inherit}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.prompt{font-size:clamp(1.35rem,4.5vw,1.85rem);font-weight:800;margin:26px 0}.stats{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#64748b}progress{width:100%;height:8px;accent-color:#e6007e;margin:14px 0 0}.sentence-area{border:2px solid #94ddd3;border-radius:18px;padding:15px;min-height:100px;background:#f2fffc}.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:46px}.slot{min-width:56px;min-height:42px;padding:9px 13px;border:2px dashed #a8c9c4;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;color:#73868c;background:#fff;user-select:none}.slot.filled{background:#d6faf4;border:2px solid #0f9e8f;color:#064e46;cursor:pointer;box-shadow:0 2px 5px #092f2312}.slot.filled:disabled{opacity:1;cursor:default}.words{display:flex;flex-wrap:wrap;gap:10px;min-height:68px;align-items:flex-start}.word{background:#ffe033;color:#302600;border:2px solid #e9c200;border-radius:12px;min-height:44px;padding:10px 15px;font-size:1.04rem;font-weight:800}.word:hover:not(:disabled){background:#fff195}.feedback{margin-top:18px;line-height:1.55;font-weight:650;min-height:1em}.feedback.good,.good-text{color:#14733b}.feedback.bad,.bad-text{color:#b91c1c}.save{font-size:.85rem;color:#64748b;min-height:1.3em;margin:16px 0 0}.score{font-size:1.5rem;font-weight:800}.review{margin-top:24px}.review summary{cursor:pointer;font-weight:750;padding:12px 0}.review article{padding:16px 0;border-top:1px solid #cbd5e1}.review article p{margin:5px 0}.error{color:#b91c1c}.selection-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}.selection-actions button{padding:8px 12px;font-size:.9rem}.hint{margin:10px 0;color:#526a70}
+@media(max-width:650px){body{padding:12px}.panel{padding:18px}.topics{grid-template-columns:1fr}.topic{padding:12px}.settings{flex-wrap:wrap}.word{padding:11px 13px}.slot{min-width:48px;padding:9px}}
+@media(prefers-color-scheme:dark){:root{background:#15151a;color:#eef0fa;color-scheme:dark}.panel{background:#202024;border-color:#50515a}.back,.secondary{background:#414650;color:#eef0fa}.muted,.stats,.save,.hint{color:#bdc5d3}.topic{border-color:#636875}.topic:has(input:checked){background:#10473f;border-color:#18c6b1}.sentence-area{background:#18302c;border-color:#247e73}.slot{background:#2c3838;color:#b5c9c7;border-color:#647e7a}.slot.filled{background:#135b51;color:#fff;border-color:#18c6b1}.primary{color-scheme:only light}.word{color-scheme:only light}}
+</style>
+</head>
+<body><main>
+<header><a id="homeLink" href="grammatik-saetze.html" aria-label="Zurück zu den Satzübungen"><img src="icons/avanza-schueler.svg" alt="¡Avanza!"></a></header>
+<section id="setup" class="panel">
+<a id="backLink" class="back" href="grammatik-saetze.html">← Zurück zu den Satzübungen</a>
+<h1>Wörter ordnen</h1>
+<p class="muted">Aus gemischten spanischen Wörtern einen vollständigen Satz bilden – passend zum deutschen Satz.</p>
+<h2>Grammatikthemen</h2>
+<div class="selection-actions"><button type="button" class="secondary" id="selectAllBtn">Alle auswählen</button><button type="button" class="secondary" id="clearAllBtn">Auswahl löschen</button></div>
+<div class="topics" id="topics" role="group" aria-label="Grammatikthemen"></div>
+<div class="settings"><label for="amount"><strong>Aufgaben</strong></label><select id="amount"><option value="10" selected>10</option><option value="20">20</option><option value="30">30</option><option value="all">Alle ausgewählten Sätze</option></select></div>
+<button type="button" id="startBtn" class="primary" disabled>Übung starten</button>
+<p id="loadStatus" class="muted" role="status">Sätze werden geladen …</p>
+</section>
+<section id="exercise" class="panel" hidden>
+<button id="finishBtn" class="back" type="button">Runde beenden</button>
+<h1 id="topicHeading" tabindex="-1"></h1>
+<p class="muted small" id="phenomenon"></p>
+<div class="stats"><span id="position"></span><span id="correctCount"></span></div><progress id="progress" value="0" max="10" aria-label="Bearbeitete Aufgaben"></progress>
+<p id="prompt" class="prompt" lang="de"></p>
+<h2>Dein spanischer Satz</h2>
+<div class="sentence-area"><div id="slots" class="slots" role="group" aria-label="Deine gewählte Wortreihenfolge"></div></div>
+<p class="hint small">Tippe auf ein Wort, um es einzusetzen. Tippe oben auf ein eingesetztes Wort, um es zurückzunehmen. Großschreibung und Satzzeichen musst du nicht setzen.</p>
+<h2>Gemischte Wörter</h2>
+<div id="wordBank" class="words" role="group" aria-label="Verfügbare spanische Wörter" lang="es"></div>
+<div class="actions"><button id="checkBtn" class="primary" type="button" disabled>Prüfen</button><button id="resetBtn" class="secondary" type="button" disabled>Zurücksetzen</button><button id="nextBtn" class="primary" type="button" hidden>Weiter</button></div>
+<div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+</section>
+<section id="result" class="panel" hidden>
+<button id="selectionBtn" class="back" type="button">← Zurück zur Auswahl</button>
+<h1>Dein Ergebnis</h1><p id="score" class="score"></p>
+<div class="actions"><button id="repeatBtn" class="primary" type="button">Fehler wiederholen</button><button id="againBtn" class="secondary" type="button">Neue Runde</button></div>
+<details class="review"><summary>Antworten ansehen</summary><div id="reviewList"></div></details>
+</section>
+<p id="saveStatus" class="save" role="status"></p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="grammatik-saetze-ordnen.js?v=20261113-1"></script>
+<script src="student-progress-widget.js"></script>
+</body></html>
