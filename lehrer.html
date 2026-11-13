@@ -49,6 +49,41 @@
     .primary{background:#2563eb;color:#fff}
     .secondary{background:#e2e8f0;color:#172033}
     .nav button.active{background:#172033;color:#fff}
+    /* Farbiger Regenbogen für die Lehrer-Navigation. Die Funktionen bleiben unverändert. */
+    .nav .navBtn{
+      --rainbow-from:#d94683;--rainbow-to:#ac2259;--rainbow-text:#fff;
+      border:2px solid rgba(255,255,255,.25);
+      border-radius:13px;
+      padding:12px 17px;
+      background:linear-gradient(135deg,var(--rainbow-from),var(--rainbow-to));
+      color:var(--rainbow-text);
+      font-weight:850;
+      letter-spacing:.01em;
+      box-shadow:0 4px 10px rgba(15,23,42,.18);
+      transition:transform .15s ease,filter .15s ease,box-shadow .15s ease;
+    }
+    .nav .navBtn[data-view="tests"]{--rainbow-from:#ef4662;--rainbow-to:#c62a52}
+    .nav .navBtn[data-view="analog-import"]{--rainbow-from:#f58a26;--rainbow-to:#d15a12}
+    .nav .navBtn[data-view="students"]{--rainbow-from:#ffdd54;--rainbow-to:#edb82b;--rainbow-text:#382700}
+    .nav .navBtn[data-view="create"]{--rainbow-from:#37ba69;--rainbow-to:#16834d}
+    .nav .navBtn[data-view="practice"]{--rainbow-from:#12b8b3;--rainbow-to:#087c8d}
+    .nav .navBtn[data-view="courses"]{--rainbow-from:#4a96f4;--rainbow-to:#2461cf}
+    .nav .navBtn[data-view="activity"]{--rainbow-from:#7571ee;--rainbow-to:#5349c5}
+    .nav .navBtn[data-view="reports"]{--rainbow-from:#ab54e8;--rainbow-to:#8434c7}
+    .nav .navBtn[data-view="admin"]{--rainbow-from:#f05cb0;--rainbow-to:#c53388}
+    .nav .navBtn.active{
+      background:linear-gradient(135deg,var(--rainbow-from),var(--rainbow-to));
+      color:var(--rainbow-text);
+      box-shadow:0 0 0 2px #fff,0 0 0 5px var(--rainbow-to),0 6px 16px rgba(15,23,42,.24);
+      filter:saturate(1.16);
+    }
+    .nav .navBtn:hover{filter:brightness(1.08);transform:translateY(-2px)}
+    .nav .navBtn.active:hover{filter:brightness(1.08) saturate(1.16)}
+    .nav .navBtn:active{transform:translateY(0)}
+    .nav .navBtn:focus-visible,#logoutBtn:focus-visible,#logoutPendingBtn:focus-visible{outline:3px solid #152d48;outline-offset:4px}
+    #logoutBtn,#logoutPendingBtn{background:linear-gradient(135deg,#f2717c,#cd3d5b);color:#fff;border:2px solid rgba(255,255,255,.3);font-weight:850;border-radius:12px;box-shadow:0 4px 11px rgba(127,29,29,.16)}
+    #logoutBtn:hover,#logoutPendingBtn:hover{filter:brightness(1.07)}
+    @media(prefers-reduced-motion:reduce){.nav .navBtn{transition:none}.nav .navBtn:hover{transform:none}}
     .goodbtn{background:#dcfce7;color:#166534}
     .badbtn{background:#fee2e2;color:#991b1b}
     .autobtn{background:#e2e8f0;color:#334155}
