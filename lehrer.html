@@ -382,7 +382,7 @@
     .motivation-controls{margin-top:10px;padding:18px;border:1px solid #f4d77b;border-radius:15px;background:#fffefa}
     .motivation-controls fieldset{margin:0;padding:0;border:0}
     .motivation-controls legend{margin-bottom:10px;font-weight:850}
-    .motivation-modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    .motivation-modes{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}
     .motivation-modes label{margin:0;display:flex;align-items:center;gap:9px;padding:12px 11px;border:1px solid #e2cc87;border-radius:10px;background:#fff;color:#493005;font-weight:700;cursor:pointer}
     .motivation-modes input{accent-color:#bc8000;width:19px;height:19px;flex:0 0 auto}
     #motivationSettingsStatus{margin:12px 0 0;font-size:.87rem;color:#7b5b13}
@@ -512,15 +512,16 @@
       <section id="view-motivation" class="view hidden" aria-label="Motivation des Tages">
       <div id="motivationSettings" class="motivation-controls">
         <fieldset>
-          <legend>Welche Motivation möchtest du sehen?</legend>
+          <legend>Welche Motivation möchtest du sehen? Mehrfachauswahl möglich.</legend>
           <div class="motivation-modes">
-            <label><input type="radio" name="teacherMotivationMode" value="off" checked>Aus</label>
-            <label><input type="radio" name="teacherMotivationMode" value="neutral">Neutrale Sprüche</label>
-            <label><input type="radio" name="teacherMotivationMode" value="bible">Bibelverse</label>
-            <label><input type="radio" name="teacherMotivationMode" value="mixed">Gemischt</label>
+            <label><input type="checkbox" name="teacherMotivationMode" value="off" checked>Keine Motivation anzeigen</label>
+            <label><input type="checkbox" name="teacherMotivationMode" value="neutral">Neutrale Sprüche</label>
+            <label><input type="checkbox" name="teacherMotivationMode" value="bible">Bibelverse</label>
+            <label><input type="checkbox" name="teacherMotivationMode" value="quran">Koranverse</label>
           </div>
         </fieldset>
-        <p class="tiny" style="margin:13px 0 0">Wähle hier deine bevorzugte Motivation. Auf der Startseite erscheint der Tagesvers weiterhin in bunten Buchstaben über dem gelben Button.</p>
+        <p class="tiny" style="margin:13px 0 0">Du kannst mehrere Arten gleichzeitig auswählen. Sie wechseln sich tageweise ab. Die Auswahl gilt nur für dein Lehrerkonto; der Tagesvers erscheint weiter auf der Startseite.</p>
+        <p class="tiny" id="motivationQuranNotice">Für Koranverse ist die von dir freigegebene Auswahl noch nicht übertragen. Bis dahin werden keine ungeprüften Koranverse angezeigt.</p>
         <p id="motivationSettingsStatus" role="status">Die Einstellung gilt nur für dein Lehrerkonto, nicht für Schülerinnen und Schüler.</p>
       </div>
       </section>
@@ -852,15 +853,28 @@
 
   // Motivation im Lehrerbereich: Nur genehmigte Lehrer können ihre persönliche
   // Einstellung lesen/speichern. Auf Schülerseiten wird nichts eingebaut.
-  let teacherMotivationMode="off";
+  const teacherMotivationSourceOrder=["neutral","bible","quran"];
+  const teacherMotivationSourceNames={neutral:"Neutrale Sprüche",bible:"Bibelverse",quran:"Koranverse"};
+  let teacherMotivationModes=[];
   let teacherMotivationUserId=null;
   let motivationRequestId=0;
+  let motivationSaveGeneration=0;
+  let motivationSaveTask=Promise.resolve();
   let motivationDisplayedDay=null;
   const motivationDocuments={};
   const motivationPalette=["#ea4b65","#008a88","#3367d6","#a343bd","#cc6f08","#178748","#d63388","#675bd1"];
-  function setTeacherMotivationMode(mode){
-    teacherMotivationMode=["off","neutral","bible","mixed"].includes(mode)?mode:"off";
-    document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.checked=input.value===teacherMotivationMode);
+  function setTeacherMotivationModes(value){
+    const requested=Array.isArray(value)?value:(value==="mixed"?["neutral","bible"]:(value==="off"||!value?[]:String(value).split(",")));
+    teacherMotivationModes=teacherMotivationSourceOrder.filter(type=>requested.includes(type));
+    document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>{
+      input.checked=input.value==="off"?teacherMotivationModes.length===0:teacherMotivationModes.includes(input.value);
+    });
+  }
+  function storedTeacherMotivationMode(){
+    return teacherMotivationModes.length?teacherMotivationModes.join(","):"off";
+  }
+  function teacherMotivationSummary(){
+    return teacherMotivationModes.length?teacherMotivationModes.map(type=>teacherMotivationSourceNames[type]).join(" · "):"Keine Motivation";
   }
   function rainbowMotivationText(message){
     const el=$("motivationRainbowText");
@@ -882,8 +896,13 @@
   }
   async function getMotivationDocument(type){
     if(!motivationDocuments[type]){
-      const file=type==="bible"?"./motivation-bibel.json":"./motivation-neutral.json";
-      motivationDocuments[type]=fetch(file,{cache:"no-store"}).then(response=>{
+      const files={
+        neutral:"./motivation-neutral.json",
+        bible:"./motivation-bibel.json",
+        quran:"./motivation-koran.json"
+      };
+      if(!files[type])throw new Error("Unbekannte Motivationsquelle.");
+      motivationDocuments[type]=fetch(files[type],{cache:"no-store"}).then(response=>{
         if(!response.ok)throw new Error("Die Motivation konnte nicht geladen werden.");
         return response.json();
       }).catch(error=>{delete motivationDocuments[type];throw error});
@@ -893,25 +912,54 @@
   async function renderTeacherMotivation(){
     const seq=++motivationRequestId;
     const card=$("motivationDailyDisplay"),reference=$("motivationDailyReference");
-    if(teacherMotivationMode==="off"){
+    const modes=[...teacherMotivationModes];
+    if(!modes.length){
       motivationDisplayedDay=null;
-      card.classList.add("hidden");return;
+      card.classList.add("hidden");
+      $("motivationSettingsStatus").textContent="Die Motivation ist ausgeschaltet.";
+      return;
     }
     const day=teacherMotivationDayIndex();
-    const type=teacherMotivationMode==="mixed"?(day%2===0?"bible":"neutral"):teacherMotivationMode;
     try{
-      const data=await getMotivationDocument(type);
+      const results=await Promise.all(modes.map(async type=>{
+        try{
+          const documentData=await getMotivationDocument(type);
+          const list=type==="neutral"?documentData.sayings:documentData.verses;
+          return Array.isArray(list)&&list.length?{type,list,data:documentData}:null;
+        }catch(error){
+          console.warn("Motivationsquelle nicht verfügbar:",type,error);
+          return null;
+        }
+      }));
       if(seq!==motivationRequestId||$("teacherArea").classList.contains("hidden"))return;
-      const list=type==="bible"?data.verses:data.sayings;
-      if(!Array.isArray(list)||!list.length)throw new Error("Für diese Auswahl sind noch keine Texte verfügbar.");
-      const item=list[day%list.length];
+      const sources=results.filter(Boolean);
+      const missing=modes.filter(type=>!sources.some(source=>source.type===type));
+      if(!sources.length){
+        card.classList.add("hidden");
+        motivationDisplayedDay=day;
+        $("motivationSettingsStatus").textContent=
+          missing.includes("quran")
+          ?"Koranverse sind ausgewählt. Die von dir freigegebene Verssammlung fehlt noch; es werden keine ungeprüften Texte angezeigt."
+          :"Die gewählte Motivation konnte nicht geladen werden.";
+        return;
+      }
+      const source=sources[day%sources.length];
+      const item=source.list[Math.floor(day/sources.length)%source.list.length];
       const message=typeof item==="string"?item:item?.text;
       if(typeof message!=="string"||!message.trim())throw new Error("Der Tagestext ist unvollständig.");
       rainbowMotivationText(message);
-      reference.textContent=type==="bible"?(item.reference+" · "+(data.translation||"Menge-Bibel 1939")):(item?.author?(item.author+(item.work?" · "+item.work:"")):"Ein Gedanke für heute");
+      if(source.type==="bible"){
+        reference.textContent=(item.reference||"Bibel")+" · "+(source.data.translation||"Menge-Bibel 1939");
+      }else if(source.type==="quran"){
+        reference.textContent=(item.reference||"Koran")+" · "+(source.data.translation||"Max Henning (1901)");
+      }else{
+        reference.textContent=item?.author?(item.author+(item.work?" · "+item.work:"")):"Ein Gedanke für heute";
+      }
       card.classList.remove("hidden");
       motivationDisplayedDay=day;
-      $("motivationSettingsStatus").textContent="Gespeichert: "+({neutral:"Neutrale Sprüche",bible:"Bibelverse (Menge 1939)",mixed:"Gemischt"}[teacherMotivationMode])+". Nur im Lehrerbereich.";
+      $("motivationSettingsStatus").textContent="Ausgewählt: "+teacherMotivationSummary()+". "
+        +(missing.length?"Noch nicht verfügbar: "+missing.map(type=>teacherMotivationSourceNames[type]).join(", ")+". ":"")
+        +"Nur im Lehrerbereich.";
     }catch(error){
       if(seq!==motivationRequestId)return;
       card.classList.add("hidden");
@@ -921,7 +969,7 @@
   async function loadTeacherMotivationSetting(userId){
     if(teacherMotivationUserId===userId)return;
     teacherMotivationUserId=userId;
-    setTeacherMotivationMode("off");
+    setTeacherMotivationModes([]);
     $("motivationDailyDisplay").classList.add("hidden");
     ++motivationRequestId;
     const {data,error}=await supabase.from("teacher_motivation_preferences")
@@ -931,29 +979,40 @@
       $("motivationSettingsStatus").textContent="Die Einstellung konnte nicht geladen werden. Bitte erneut versuchen.";
       return;
     }
-    setTeacherMotivationMode(data?.mode||"off");
-    // Der Tagesvers wird auf der Startseite angezeigt; die Einstellungen liegen in einer eigenen Ansicht.
+    setTeacherMotivationModes(data?.mode||"off");
     await renderTeacherMotivation();
   }
   $("motivationToggleBtn").addEventListener("click",()=>navigateTeacherView("motivation"));
-  document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.addEventListener("change",async()=>{
-    if(!input.checked||!teacherMotivationUserId)return;
-    const requested=input.value;
-    setTeacherMotivationMode(requested);
-    $("motivationSettingsStatus").textContent="Einstellung wird gespeichert …";
-    void renderTeacherMotivation();
-    const {error}=await supabase.from("teacher_motivation_preferences")
-      .upsert({user_id:teacherMotivationUserId,mode:requested,updated_at:new Date().toISOString()},{onConflict:"user_id"});
-    if(error){
-      $("motivationSettingsStatus").textContent="Konnte nicht gespeichert werden: "+error.message;
-    }else if(teacherMotivationMode===requested){
-      $("motivationSettingsStatus").textContent=requested==="off"?"Die Motivation ist ausgeschaltet.":"Gespeichert. Nur auf deiner Lehrerseite.";
+  document.querySelectorAll('input[name="teacherMotivationMode"]').forEach(input=>input.addEventListener("change",()=>{
+    if(!teacherMotivationUserId)return;
+    if(input.value==="off"){
+      setTeacherMotivationModes([]);
+    }else{
+      const selected=new Set(teacherMotivationModes);
+      if(input.checked)selected.add(input.value);
+      else selected.delete(input.value);
+      setTeacherMotivationModes([...selected]);
     }
+    void renderTeacherMotivation();
+    const stored=storedTeacherMotivationMode();
+    const userId=teacherMotivationUserId;
+    const generation=++motivationSaveGeneration;
+    motivationSaveTask=motivationSaveTask.catch(()=>{}).then(async()=>{
+      if(teacherMotivationUserId!==userId)return;
+      const {error}=await supabase.from("teacher_motivation_preferences")
+        .upsert({user_id:userId,mode:stored,updated_at:new Date().toISOString()},{onConflict:"user_id"});
+      if(teacherMotivationUserId!==userId||generation!==motivationSaveGeneration)return;
+      if(error)$("motivationSettingsStatus").textContent="Einstellung konnte nicht gespeichert werden: "+error.message;
+      else if(stored!=="off"&&teacherMotivationModes.includes("quran")){
+        $("motivationSettingsStatus").textContent="Auswahl gespeichert. Koranverse werden angezeigt, sobald die freigegebene Verssammlung vorliegt.";
+      }else if(stored==="off")$("motivationSettingsStatus").textContent="Die Motivation ist ausgeschaltet.";
+      else $("motivationSettingsStatus").textContent="Gespeichert: "+teacherMotivationSummary()+". Nur auf deinem Lehrerkonto.";
+    });
   }));
 
   // Bleibt die Lehrerseite über Mitternacht geöffnet, wechselt der Vers am neuen Tag.
   function updateMotivationAtDayChange(){
-    if(teacherMotivationUserId && teacherMotivationMode!=="off" &&
+    if(teacherMotivationUserId && teacherMotivationModes.length>0 &&
        !$("teacherArea").classList.contains("hidden") &&
        motivationDisplayedDay!==teacherMotivationDayIndex()){
       void renderTeacherMotivation();
@@ -1712,7 +1771,7 @@
       currentView=null;
       $("appIntro").classList.remove("hidden");
       teacherMotivationUserId=null;
-      setTeacherMotivationMode("off");
+      setTeacherMotivationModes([]);
         $("motivationDailyDisplay").classList.add("hidden");
       ++motivationRequestId;
       $("authCard").classList.remove("hidden");
