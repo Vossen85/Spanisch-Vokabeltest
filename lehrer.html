@@ -1283,13 +1283,16 @@
     if(target==="admin"&&currentUserRole!=="admin")return;
     const url=window.location.pathname+window.location.search+(target?"#lehrer/"+target:"");
     if(window.location.pathname+window.location.search+window.location.hash!==url){
-      window.history.pushState({teacherView:target},"",url);
+      window.history.pushState({teacherView:target,parentView:currentView},"",url);
     }
     setView(target);
     window.scrollTo(0,0);
   }
   window.addEventListener("popstate",()=>{
-    if(!$("teacherArea").classList.contains("hidden"))setView(readTeacherView());
+    if(!$("teacherArea").classList.contains("hidden")){
+      setView(readTeacherView());
+      window.scrollTo(0,0);
+    }
   });
   function setView(name){
     if(!Object.prototype.hasOwnProperty.call(teacherViewTitles,name||""))name=null;
@@ -3115,7 +3118,19 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><title>Ko
   $("logoutPendingBtn").addEventListener("click",logout);
 
   document.querySelectorAll(".navBtn,.test-sub-btn").forEach(btn=>btn.addEventListener("click",()=>navigateTeacherView(btn.dataset.view)));
-  $("workspaceBackBtn").addEventListener("click",()=>navigateTeacherView($("workspaceBackBtn").dataset.target||null));
+  $("workspaceBackBtn").addEventListener("click",()=>{
+    const target=$("workspaceBackBtn").dataset.target||null;
+    const state=window.history.state;
+    // Den echten Browser-Verlauf benutzen, damit Android-Zurück nicht erneut in die Unteransicht springt.
+    if(state&&Object.prototype.hasOwnProperty.call(state,"parentView")&&state.parentView===target){
+      window.history.back();
+    }else{
+      const url=window.location.pathname+window.location.search+(target?"#lehrer/"+target:"");
+      window.history.replaceState({teacherView:target,parentView:null},"",url);
+      setView(target);
+      window.scrollTo(0,0);
+    }
+  });
   $("refreshTestsBtn").addEventListener("click",loadDashboard);
   $("analogTestSelect").addEventListener("change",()=>{
     const selected=testsCache.find(t=>String(t.id)===$("analogTestSelect").value);
