@@ -125,12 +125,24 @@ function build(raw){
     else if(v.startsWith(q)||tokens(v).some(t=>t.startsWith(q)))rank=Math.min(rank,2);
     else if(v.includes(q))rank=Math.min(rank,3);
    }
-   if(rank>3)for(const form of sing)if(e.spanish.some(v=>tokens(v).includes(form))){
-    rank=4;reason="Mögliche Singularform: "+form;break;
-   }
-   if(rank>4){
+   // Eine erkannte flektierte Form ist genauer als ein zufälliger Wortanfang:
+   // "compré" → comprar muss vor "comprender" erscheinen.
+   // Nur ein vollständiger Wörterbucheintrag (Rang 0) hat Vorrang.
+   if(rank>0){
     const lemma=e.lemmas.find(v=>morph.has(v));
-    if(lemma){rank=5;reason="Mögliche Grundform: "+lemma+" · "+morph.get(lemma);}
+    if(lemma){
+     rank=0.5;
+     let formInfo=morph.get(lemma);
+     if(/é$/i.test(String(search).trim())&&lemma.replace(/se$/,"").endsWith("ar")&&formInfo==="Pretérito indefinido"){
+      formInfo+=" · yo-Form";
+     }
+     reason="Erkannte Verbform von "+lemma+" · "+formInfo;
+    }else{
+     for(const form of sing)if(e.spanish.some(v=>tokens(v).includes(form))){
+      if(rank>0.75){rank=0.75;reason="Mögliche Singularform: "+form;}
+      break;
+     }
+    }
    }
    if(rank<99)results.push({...e,rank,reason});
   }
