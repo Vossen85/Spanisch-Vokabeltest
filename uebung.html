@@ -131,12 +131,14 @@
     .choice-progress:focus-visible{outline:3px solid #f9a8d4;outline-offset:3px}
     .choice-learn{background:#0f766e;color:#fff}
     .choice-test{background:#c2410c;color:#fff}
-    .grammar-card-conjugations,.grammar-card-tests,.grammar-card-flashcards,.grammar-card-pairs,.grammar-card-fall{position:relative;isolation:isolate;overflow:hidden;color-scheme:light;color-scheme:only light;forced-color-adjust:none;border:2px solid rgba(255,255,255,.72);box-shadow:0 8px 20px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.35)}
+    .grammar-card-conjugations,.grammar-card-tests,.grammar-card-flashcards,.grammar-card-pairs,.grammar-card-fall,.grammar-card-sentences{position:relative;isolation:isolate;overflow:hidden;color-scheme:light;color-scheme:only light;forced-color-adjust:none;border:2px solid rgba(255,255,255,.72);box-shadow:0 8px 20px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.35)}
     .grammar-card-conjugations{background:#00c9c8!important;background-image:none!important;color:#073b4c}
     .grammar-card-tests{background:#ff8a00!important;background-image:none!important;color:#3c1b00}
     .grammar-card-flashcards{background:#e6007e!important;background-image:none!important;color:#fff}
     .grammar-card-pairs{background:#7b2cff!important;background-image:none!important;color:#fff}
     .grammar-card-fall{background:#00b050!important;background-image:none!important;color:#062b17}
+    .grammar-card-sentences{background:#ffe033!important;background-image:none!important;color:#302600;grid-column:1/-1}
+    .grammar-card-sentences .grammar-choice-icon{background:#51e5ff}
     .grammar-choice-title{display:flex;align-items:center;gap:12px;font-size:1.25rem;font-weight:800;line-height:1.2}
     .grammar-choice-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;width:52px;height:52px;border:2px solid rgba(255,255,255,.8);border-radius:16px;background:#fff45c;color:#172033;box-shadow:0 3px 10px rgba(0,0,0,.16);font-size:1.7rem!important;opacity:1!important}
     .grammar-card-tests .grammar-choice-icon{background:#51e5ff}
@@ -325,6 +327,10 @@
       <button id="openGrammarTestsBtn" class="choice-btn choice-test grammar-card-tests" type="button">
         <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">✅</span><span class="grammar-choice-label">Grammatiktests</span></span>
         <span class="grammar-choice-copy">Konjugationen selbst eingeben und überprüfen</span>
+      </button>
+      <button id="openGrammarSentencesBtn" class="choice-btn grammar-card-sentences" type="button">
+        <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">💬</span><span class="grammar-choice-label">Grammatik in Sätzen üben</span></span>
+        <span class="grammar-choice-copy">Verbformen in einfachen Alltagssätzen anwenden</span>
       </button>
     </div>
     <div id="grammarChoiceMsg" class="msg"></div>
@@ -2478,7 +2484,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
       "<p class='legend'><strong style='color:#087a37'>Grün:</strong> richtig &nbsp; <strong style='color:#a95800'>Orange:</strong> teilweise richtig &nbsp; <strong style='color:#b42318'>Rot:</strong> falsch</p>"+
       "<div class='question-grid'>"+content+"</div>"+
       scaleTableHtml+
-      "<script>function returnToTests(){var target='uebung.html?personalisiert=1#tests';try{if(window.opener&&!window.opener.closed){target=window.opener.location.href;window.opener.focus();window.close();setTimeout(function(){if(!window.closed)window.location.replace(target)},300);return}}catch(e){}if(history.length>1)history.back();else window.location.href=target}window.addEventListener('load',function(){setTimeout(function(){window.focus();window.print()},300)});<\/script></body></html>";
+      "<script>function returnToTests(){var target='uebung.html?personalisiert=1#tests';try{if(window.opener&&!window.opener.closed){target=window.opener.location.href;window.opener.focus();window.close();setTimeout(function(){if(!window.closed)window.location.replace(target)},300);return}}catch(e){}if(history.length>1)history.back();else window.location.href=target}window.addEventListener('load',function(){setTimeout(function(){window.focus();window.print()},300)});<\/script></bo"+"dy></html>";
     printWindow.document.open();printWindow.document.write(html);printWindow.document.close();
   }
   function renderStudentTestResults(results){
@@ -2560,6 +2566,8 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
+  $("openGrammarSentencesBtn").addEventListener("click",()=>{location.href="grammatik-saetze.html"+(PERSONALIZED_MODE?"?personalisiert=1":"")});
+  if(location.hash==="#grammatik")$("openGrammarBtn").click();
   $("openGrammarPairsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-paare.html?personalisiert=1":"grammatik-paare.html"; });
   $("openGrammarFangBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-zeitenfaenger.html?personalisiert=1":"grammatik-zeitenfaenger.html"; });
   renderWeeklyPlanner();
