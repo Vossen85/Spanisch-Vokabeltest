@@ -2569,7 +2569,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("openGrammarSentencesBtn").addEventListener("click",()=>{location.href="grammatik-saetze.html"+(PERSONALIZED_MODE?"?personalisiert=1":"")});
   if(location.hash==="#grammatik")$("openGrammarBtn").click();
   $("openGrammarPairsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-paare.html?personalisiert=1":"grammatik-paare.html"; });
-  $("openGrammarFangBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-zeitenfaenger.html?personalisiert=1":"grammatik-zeitenfaenger.html"; });
+  $("openGrammarFangBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-zeitenfaenger.html?personalisiert=1&v=center-20261113b":"grammatik-zeitenfaenger.html?v=center-20261113b"; });
   renderWeeklyPlanner();
   refreshStudentAccount();
   if(location.hash==="#tests"){ $("portalCard").classList.add("hidden");$("testsChoiceCard").classList.remove("hidden");$("openTestsBtn").setAttribute("aria-expanded","true");setTimeout(openTestsView,0); }
