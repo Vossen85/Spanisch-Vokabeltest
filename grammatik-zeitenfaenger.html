@@ -80,7 +80,7 @@ const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const PERSONALIZED_MODE=new URLSearchParams(location.search).get("personalisiert")==="1";
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 const $=id=>document.getElementById(id);
-let catalog=[],groups=[],selected=[],candidateLists={},durationSeconds=60,deadline=0,timerHandle=null,activityId=null,active=false,answerLocked=false,roundTimer=null,nextTimer=null,correct=0,wrong=0,total=0;
+let catalog=[],groups=[],selected=[],candidateLists={},durationSeconds=60,deadline=0,timerHandle=null,activityId=null,activityHeartbeat=null,activityGeneration=0,active=false,answerLocked=false,roundTimer=null,nextTimer=null,correct=0,wrong=0,total=0;
 const DEFAULT_GROUPS=["Presente","Pretérito indefinido","Pretérito imperfecto"];
 const FALL_MS=6900;
 const PERSONS=["yo","tú","él / ella / usted","nosotros / nosotras","vosotros / vosotras","ellos / ellas / ustedes"];
@@ -433,14 +433,29 @@ function tick(){
  if(left<=0)finishGame();
 }
 async function startActivity(){
+ const generation=++activityGeneration;
  const {data:{session}}=await client.auth.getSession();if(!session)return;
  const {data,error}=await client.functions.invoke("learning-activity",{body:{action:"start",activityType:"grammar",mode:"extra",groupKey:"tense-classifier"}});
- if(!error&&!data?.error)activityId=data.sessionId;
+ if(error||data?.error||!data?.sessionId)return;
+ if(generation!==activityGeneration){if(document.visibilityState==="hidden")await pingActivity(data.sessionId);await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:data.sessionId,active:document.visibilityState==="visible"}});return}
+ activityId=data.sessionId;
+ const id=activityId;
+ if(activityHeartbeat)clearInterval(activityHeartbeat);
+ activityHeartbeat=setInterval(()=>{if(activityId===id&&document.visibilityState==="visible")void pingActivity(id)},30000);
+}
+async function pingActivity(id){
+ const {error}=await client.functions.invoke("learning-activity",{body:{action:"ping",sessionId:id}});
+ if(error)console.warn("Lernzeit-Heartbeat fehlgeschlagen:",error.message);
 }
 async function stopActivity(){
- if(!activityId)return;const id=activityId;activityId=null;
+ activityGeneration++;
+ if(activityHeartbeat){clearInterval(activityHeartbeat);activityHeartbeat=null}
+ const id=activityId;activityId=null;
+ if(!id)return;
+ if(document.visibilityState==="hidden")await pingActivity(id);
  await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"}});
 }
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden")void stopActivity();else if(active)void startActivity()});
 function startGame(){
  selected=selectedInputs();durationSeconds=Number($("duration").value)||60;
  if(selected.length<2||selected.length>3){$("setupMsg").textContent="Wähle genau zwei oder drei Zeitformen.";return}

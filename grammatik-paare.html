@@ -77,7 +77,7 @@ const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const PERSONALIZED_MODE=new URLSearchParams(location.search).get("personalisiert")==="1";
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 const $=id=>document.getElementById(id);
-let catalog=[],pool=[],boardPairs=[],chosenCards=[],score=0,bestScore=0,durationSeconds=60,pairsPerBoard=6,deadline=0,timerHandle=null,locked=false,usedIds=new Set(),activityId=null;
+let catalog=[],pool=[],boardPairs=[],chosenCards=[],score=0,bestScore=0,durationSeconds=60,pairsPerBoard=6,deadline=0,timerHandle=null,locked=false,usedIds=new Set(),activityId=null,activityHeartbeat=null,activityGeneration=0;
 const escapeHtml=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
 function normalizeGerman(raw){
  let text=String(raw||"").split(",")[0].trim();
@@ -352,14 +352,29 @@ function tick(){
  if(left<=0){clearInterval(timerHandle);timerHandle=null;void stopActivity();void saveRecord()}
 }
 async function startActivity(){
+ const generation=++activityGeneration;
  const {data:{session}}=await client.auth.getSession();if(!session)return;
  const {data,error}=await client.functions.invoke("learning-activity",{body:{action:"start",activityType:"grammar",mode:"extra",groupKey:"matching"}});
- if(!error&&!data?.error){activityId=data.sessionId}
+ if(error||data?.error||!data?.sessionId)return;
+ if(generation!==activityGeneration){if(document.visibilityState==="hidden")await pingActivity(data.sessionId);await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:data.sessionId,active:document.visibilityState==="visible"}});return}
+ activityId=data.sessionId;
+ const id=activityId;
+ if(activityHeartbeat)clearInterval(activityHeartbeat);
+ activityHeartbeat=setInterval(()=>{if(activityId===id&&document.visibilityState==="visible")void pingActivity(id)},30000);
+}
+async function pingActivity(id){
+ const {error}=await client.functions.invoke("learning-activity",{body:{action:"ping",sessionId:id}});
+ if(error)console.warn("Lernzeit-Heartbeat fehlgeschlagen:",error.message);
 }
 async function stopActivity(){
- if(!activityId)return;const id=activityId;activityId=null;
+ activityGeneration++;
+ if(activityHeartbeat){clearInterval(activityHeartbeat);activityHeartbeat=null}
+ const id=activityId;activityId=null;
+ if(!id)return;
+ if(document.visibilityState==="hidden")await pingActivity(id);
  await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"}});
 }
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")void stopActivity();else if(timerHandle)void startActivity()});
 async function startGame(){
  const chosen=selectedTopics();durationSeconds=Number($("duration").value)||60;pairsPerBoard=Number($("pairs").value)||6;
  pool=makePool(chosen);
