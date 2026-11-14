@@ -57,6 +57,7 @@ select,input[type=number]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;
 <div id="setupMsg" class="tiny" aria-live="polite"></div>
 </section>
 <section id="gameCard" class="card hidden">
+<div class="backline"><button id="gameBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
 <div class="game-top">
 <div><h1 id="activeTimes" class="active-times" aria-live="polite"></h1><p id="activeSettings" class="tiny"></p></div>
 <div class="game-stats"><div class="stat">Paare: <span id="score">0</span></div><div class="stat">Rekord: <span id="best">0</span></div></div>
@@ -374,9 +375,19 @@ function goBack(){
  if(timerHandle){clearInterval(timerHandle);timerHandle=null;void stopActivity()}
  const url=PERSONALIZED_MODE?"uebung.html?personalisiert=1":"uebung.html";location.href=url;
 }
+function returnToSelection(){
+ if(timerHandle){clearInterval(timerHandle);timerHandle=null;}
+ deadline=0;locked=false;chosenCards=[];
+ void stopActivity();
+ $("gameCard").classList.add("hidden");
+ $("resultCard").classList.add("hidden");
+ $("setupCard").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"instant"});
+}
 $("startBtn").addEventListener("click",()=>{ $("setupMsg").textContent="";void startGame() });
-$("againBtn").addEventListener("click",()=>{ $("setupCard").classList.remove("hidden");$("gameCard").classList.add("hidden");$("resultCard").classList.add("hidden") });
-$("resultBackBtn").addEventListener("click",()=>{ $("setupCard").classList.remove("hidden");$("gameCard").classList.add("hidden");$("resultCard").classList.add("hidden") });
+$("gameBackBtn").addEventListener("click",returnToSelection);
+$("againBtn").addEventListener("click",returnToSelection);
+$("resultBackBtn").addEventListener("click",returnToSelection);
 $("backBtn").addEventListener("click",goBack);
 window.addEventListener("pagehide",()=>{if(timerHandle){clearInterval(timerHandle);void stopActivity()}});
 async function init(){
