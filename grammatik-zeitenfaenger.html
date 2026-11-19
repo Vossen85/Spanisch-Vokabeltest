@@ -80,7 +80,7 @@ const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
 const PERSONALIZED_MODE=new URLSearchParams(location.search).get("personalisiert")==="1";
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 const $=id=>document.getElementById(id);
-let catalog=[],groups=[],selected=[],candidateLists={},durationSeconds=60,deadline=0,timerHandle=null,activityId=null,active=false,answerLocked=false,roundTimer=null,nextTimer=null,correct=0,wrong=0,total=0;
+let catalog=[],groups=[],selected=[],candidateLists={},durationSeconds=60,deadline=0,timerHandle=null,activityRun=null,active=false,answerLocked=false,roundTimer=null,nextTimer=null,correct=0,wrong=0,total=0;
 const DEFAULT_GROUPS=["Presente","Pretérito indefinido","Pretérito imperfecto"];
 const FALL_MS=6900;
 const PERSONS=["yo","tú","él / ella / usted","nosotros / nosotras","vosotros / vosotras","ellos / ellas / ustedes"];
@@ -433,19 +433,51 @@ function tick(){
  if(left<=0)finishGame();
 }
 async function startActivity(){
- const {data:{session}}=await client.auth.getSession();if(!session)return;
- const {data,error}=await client.functions.invoke("learning-activity",{body:{action:"start",activityType:"grammar",mode:"extra",groupKey:"tense-classifier"}});
- if(!error&&!data?.error)activityId=data.sessionId;
+ const run={id:null,starting:null,heartbeat:null,pingTask:null,closed:false};
+ activityRun=run;
+ run.starting=(async()=>{
+  try{
+   const {data:{session}}=await client.auth.getSession();
+   if(!session)return;
+   const {data,error}=await client.functions.invoke("learning-activity",{body:{action:"start",activityType:"grammar",mode:"extra",groupKey:"tense-classifier"}});
+   if(error||data?.error){console.warn("Lernzeitstart fehlgeschlagen:",error?.message||data?.error);return}
+   run.id=data.sessionId||null;
+   if(run.id&&!run.closed){
+    run.heartbeat=setInterval(()=>{
+     if(run.closed||run.pingTask||document.visibilityState!=="visible")return;
+     run.pingTask=client.functions.invoke("learning-activity",{body:{action:"ping",sessionId:run.id}})
+      .then(({error,data})=>{if(error||data?.error)console.warn("Lernzeit-Signal fehlgeschlagen:",error?.message||data?.error)})
+      .catch(error=>console.warn("Lernzeit-Signal fehlgeschlagen:",error))
+      .finally(()=>{run.pingTask=null});
+    },15000);
+   }
+  }catch(error){console.warn("Lernzeitstart fehlgeschlagen:",error)}
+ })();
+ await run.starting;
 }
 async function stopActivity(){
- if(!activityId)return;const id=activityId;activityId=null;
- await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"}});
+ const run=activityRun;
+ if(!run||run.closed)return;
+ run.closed=true;
+ if(run.heartbeat){clearInterval(run.heartbeat);run.heartbeat=null}
+ if(run.starting)await run.starting;
+ if(run.pingTask)await run.pingTask;
+ if(!run.id)return;
+ const id=run.id;run.id=null;
+ try{
+  const {data,error}=await client.functions.invoke("learning-activity",{body:{action:"end",sessionId:id,active:document.visibilityState==="visible"}});
+  if(error||data?.error)console.warn("Lernzeitende fehlgeschlagen:",error?.message||data?.error);
+ }catch(error){console.warn("Lernzeitende fehlgeschlagen:",error)}
 }
-function startGame(){
+async function startGame(){
  selected=selectedInputs();durationSeconds=Number($("duration").value)||60;
  if(selected.length<2||selected.length>3){$("setupMsg").textContent="Wähle genau zwei oder drei Zeitformen.";return}
  if(!prepareCandidates()){ $("setupMsg").textContent="Für diese Kombination gibt es keine ausreichend eindeutigen Verbformen. Bitte wähle andere Zeitformen.";return}
- correct=0;wrong=0;total=0;active=true;answerLocked=false;
+ correct=0;wrong=0;total=0;answerLocked=false;
+ $("startBtn").disabled=true;
+ await startActivity();
+ $("startBtn").disabled=false;
+ active=true;
  $("correctCount").textContent="0";$("wrongCount").textContent="0";$("feedback").textContent="";
  $("activeHeading").textContent=selected.map(gameLabel).join(" · ");
  $("answerButtons").replaceChildren();
@@ -454,7 +486,7 @@ function startGame(){
   button.addEventListener("click",function(){answer(group)});$("answerButtons").append(button);
  });
  $("setupCard").classList.add("hidden");$("resultCard").classList.add("hidden");$("gameCard").classList.remove("hidden");
- deadline=Date.now()+durationSeconds*1000;tick();timerHandle=setInterval(tick,250);void startActivity();showRound();
+ deadline=Date.now()+durationSeconds*1000;tick();timerHandle=setInterval(tick,250);showRound();
 }
 async function finishGame(){
  if(!active)return;
@@ -468,6 +500,7 @@ async function finishGame(){
  $("gameCard").classList.add("hidden");$("resultCard").classList.remove("hidden");
 }
 function back(){
+ if(active){active=false;clearInterval(timerHandle);timerHandle=null;clearTimeout(roundTimer);clearTimeout(nextTimer);void stopActivity();}
  if(PERSONALIZED_MODE){location.href="uebung.html?personalisiert=1";return}
  location.href="uebung.html";
 }
@@ -475,7 +508,11 @@ $("startBtn").addEventListener("click",startGame);
 $("backBtn").addEventListener("click",back);
 $("resultBackBtn").addEventListener("click",function(){$("resultCard").classList.add("hidden");$("setupCard").classList.remove("hidden")});
 $("againBtn").addEventListener("click",function(){$("resultCard").classList.add("hidden");$("setupCard").classList.remove("hidden")});
-window.addEventListener("pagehide",function(){if(timerHandle){clearInterval(timerHandle);void stopActivity()}});
+document.addEventListener("visibilitychange",function(){
+ if(document.hidden){void stopActivity()}
+ else if(active&&timerHandle&&deadline>Date.now()&&(!activityRun||activityRun.closed))void startActivity();
+});
+window.addEventListener("pagehide",function(){if(timerHandle){clearInterval(timerHandle);timerHandle=null;}void stopActivity()});
 async function init(){
  try{
   const response=await fetch("grammatik-themen.json",{cache:"no-store"});if(!response.ok)throw new Error("topics");
