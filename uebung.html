@@ -361,6 +361,10 @@
         <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">🃏</span><span class="grammar-choice-label">Grammatik-Karteikarten</span></span>
         <span class="grammar-choice-copy">Übe einen Grammatikunterteil in Sechserstapeln</span>
       </button>
+      <button id="openGrammarQuickBtn" class="choice-btn choice-learn grammar-card-flashcards" type="button">
+        <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">⚡</span><span class="grammar-choice-label">Schnellwiederholung</span></span>
+        <span class="grammar-choice-copy">Eine Konjugation nach der anderen wiederholen – Richtig oder Wiederholen</span>
+      </button>
       <button id="openGrammarPairsBtn" class="choice-btn choice-learn grammar-card-pairs" type="button">
         <span class="grammar-choice-title"><span class="grammar-choice-icon" aria-hidden="true">🧩</span><span class="grammar-choice-label">Konjugations-Paare</span></span>
         <span class="grammar-choice-copy">Verbinde spanische und deutsche Formen in einem Spiel auf Zeit</span>
@@ -2869,6 +2873,9 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"+(PERSONALIZED_MODE?"?personalisiert=1&v=grammatik-kompakt-20261119":"?v=grammatik-kompakt-20261119"); });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"+(PERSONALIZED_MODE?"?personalisiert=1&v=grammatik-kompakt-20261119":"?v=grammatik-kompakt-20261119"); });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1&v=grammatik-kompakt-20261119":"grammatik-karten.html?v=grammatik-kompakt-20261119"; });
+  $("openGrammarQuickBtn").addEventListener("click",()=>{
+    location.href="grammatik-karten.html?"+(PERSONALIZED_MODE?"personalisiert=1&":"")+"schnell=1&v=grammatik-schnell-20261119";
+  });
   $("openGrammarSentencesBtn").addEventListener("click",()=>{location.href="grammatik-saetze.html"+(PERSONALIZED_MODE?"?personalisiert=1&v=grammatik-kompakt-20261119":"?v=grammatik-kompakt-20261119")});
   if(location.hash==="#grammatik")$("openGrammarBtn").click();
   $("openGrammarPairsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-paare.html?personalisiert=1&v=grammatik-kompakt-20261119":"grammatik-paare.html?v=grammatik-kompakt-20261119"; });
