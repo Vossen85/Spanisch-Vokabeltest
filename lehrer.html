@@ -2712,9 +2712,12 @@
 
   function grammarReviewNormalize(value){
     return String(value??"").normalize("NFC").trim()
-      .replace(/[(){}\[\]]/g," ")
+      .replace(/[(){}\[\],]/g," ")
       .replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g,"")
       .replace(/\s+/g," ").trim();
+  }
+  function grammarReviewComparisonKey(value){
+    return grammarReviewNormalize(value).replace(/\s+/g,"");
   }
 
   function grammarReviewFold(value){
@@ -2729,9 +2732,9 @@
   }
 
   function grammarReviewAutoPoint(typed,expected){
-    const t=grammarReviewNormalize(typed);
+    const t=grammarReviewComparisonKey(typed);
     if(!t)return 0;
-    const variants=String(expected??"").split(/\s*\/\s*/).map(grammarReviewNormalize).filter(Boolean);
+    const variants=String(expected??"").split(/\s*\/\s*/).map(grammarReviewComparisonKey).filter(Boolean);
     if(variants.includes(t))return 1;
     const folded=grammarReviewFold(t);
     return variants.some(v=>grammarReviewFold(v)===folded)?0.5:0;
