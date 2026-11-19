@@ -3,10 +3,23 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 const corsHeaders={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization, x-client-info, apikey, content-type","Access-Control-Allow-Methods":"POST, OPTIONS"};
 function response(body:unknown,status=200){return new Response(JSON.stringify(body),{status,headers:{...corsHeaders,"Content-Type":"application/json"}})}
 function getAdmin(){const url=Deno.env.get("SUPABASE_URL")!;const secret=JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS")||"{}").default||Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");if(!url||!secret)throw new Error("Server configuration missing");return createClient(url,secret,{auth:{persistSession:false}})}
-function normalize(s:unknown){return String(s??"").normalize("NFC").trim().replace(/[(){}\[\]]/g," ").replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g,"").replace(/\s+/g," ").trim()}
+function normalize(s:unknown){
+ return String(s??"").normalize("NFC").trim()
+ .replace(/[(){}\[\],]/g," ")
+ .replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g,"")
+ .replace(/\s+/g," ").trim();
+}
+function comparisonKey(s:unknown){return normalize(s).replace(/\s+/g,"")}
 function accentCaseFold(s:string){return s.replace(/[áÁ]/g,m=>m==="Á"?"A":"a").replace(/[éÉ]/g,m=>m==="É"?"E":"e").replace(/[íÍ]/g,m=>m==="Í"?"I":"i").replace(/[óÓ]/g,m=>m==="Ó"?"O":"o").replace(/[úÚ]/g,m=>m==="Ú"?"U":"u").replace(/[üÜ]/g,m=>m==="Ü"?"U":"u").toLocaleLowerCase("es")}
 function variants(expected:string){return expected.split(/\s*\/\s*/).map(normalize).filter(Boolean)}
-function scoreField(typed:string,expected:string){const t=normalize(typed);if(!t)return 0;const vs=variants(expected);if(vs.includes(t))return 1;const ft=accentCaseFold(t);for(const v of vs)if(accentCaseFold(v)===ft)return .5;return 0}
+function scoreField(typed:string,expected:string){
+ const t=comparisonKey(typed);if(!t)return 0;
+ const vs=variants(expected).map(comparisonKey);
+ if(vs.includes(t))return 1;
+ const ft=accentCaseFold(t);
+ for(const v of vs)if(accentCaseFold(v)===ft)return .5;
+ return 0;
+}
 function pointsForPercent(p:number){if(p>=95)return 15;if(p>=90)return 14;if(p>=85)return 13;if(p>=80)return 12;if(p>=75)return 11;if(p>=70)return 10;if(p>=65)return 9;if(p>=60)return 8;if(p>=55)return 7;if(p>=50)return 6;if(p>=45)return 5;if(p>=39)return 4;if(p>=33)return 3;if(p>=27)return 2;if(p>=20)return 1;return 0}
 function gradeForPoints(p:number){return ["6","5-","5","5+","4-","4","4+","3-","3","3+","2-","2","2+","1-","1","1+"][p]||"6"}
 async function getTestByCode(admin:any,code:string){const {data,error}=await admin.from("tests").select("id,public_code,title,test_date,question_count,duration_minutes,status,test_type,course_id,quarter_number").eq("public_code",code).maybeSingle();if(error)throw error;return data}
