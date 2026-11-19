@@ -511,8 +511,8 @@
     <div id="vocabSpeechSettings" class="vocab-speech-settings">
       <label for="vocabSpeechRate">🔊 Aussprachetempo</label>
       <select id="vocabSpeechRate" aria-label="Aussprachetempo">
-        <option value="0.85" selected>Langsam</option>
-        <option value="1">Normal</option>
+        <option value="1" selected>Normal</option>
+        <option value="0.85">Langsam</option>
       </select>
     </div>
     <p id="vocabSpeechStatus" class="vocab-speech-status" role="status" aria-live="polite"></p>
@@ -549,8 +549,8 @@
     <div class="vocab-speech-settings">
       <label for="quickReviewSpeechRate">🔊 Aussprachetempo</label>
       <select id="quickReviewSpeechRate" aria-label="Aussprachetempo Schnellwiederholung">
-        <option value="0.85" selected>Langsam</option>
-        <option value="1">Normal</option>
+        <option value="1" selected>Normal</option>
+        <option value="0.85">Langsam</option>
       </select>
     </div>
     <p id="quickReviewSpeechStatus" class="vocab-speech-status" role="status" aria-live="polite"></p>
@@ -2030,7 +2030,7 @@
     const voices=window.speechSynthesis.getVoices();
     const voice=voices.find(v=>v.lang.toLowerCase().replace("_","-")==="es-es")
       ||voices.find(v=>/^es(?:-|_)/i.test(v.lang));
-    const rate=Number($(rateId).value)===1?1:0.85;
+    const rate=Number($(rateId).value)===0.85?0.85:1;
     status.textContent="";
     parts.forEach((part,index)=>{
       const utterance=new window.SpeechSynthesisUtterance(part);
