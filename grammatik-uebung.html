@@ -41,7 +41,11 @@ a.btn{text-decoration:none;display:inline-block;border-radius:10px;padding:12px 
   .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
   @media print{.avanza-home-header{display:none!important}}
   .tense-heading{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:900;line-height:1.1;color:#4f46e5;margin:0 0 6px}
-  </style>
+  
+.group-head .group-title{flex:1;min-width:0}
+.group-fold{flex:0 0 auto;margin-left:auto;min-width:43px;height:42px;padding:7px 11px;font-size:1.3rem;line-height:1;cursor:pointer}
+.group-fold:focus-visible{outline:3px solid #0f766e;outline-offset:2px}
+</style>
 </head>
 <body><div class="wrap">
   <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
@@ -140,8 +144,13 @@ function renderCatalog(){
  const root=$("groups");root.innerHTML="";const groups=new Map();
  for(const t of catalog){if(!groups.has(t.group))groups.set(t.group,[]);groups.get(t.group).push(t)}
  for(const [name,topics] of groups){
-  const g=document.createElement("div");g.className="group";g.innerHTML='<div class="group-head"><input type="checkbox" class="group-select-all" title="Alle Unterthemen auswählen" aria-label="Alle Unterthemen auswählen"><h3 class="group-title">'+esc(name)+'</h3></div><div class="topics"></div>';const holder=g.querySelector(".topics");
+  const g=document.createElement("div");g.className="group";g.innerHTML='<div class="group-head"><input type="checkbox" class="group-select-all" title="Alle Unterthemen auswählen" aria-label="Alle Unterthemen auswählen"><h3 class="group-title">'+esc(name)+'</h3><button type="button" class="group-fold secondary" aria-expanded="false" title="Unterthemen anzeigen">▾</button></div><div class="topics hidden"></div>';const holder=g.querySelector(".topics");
   const groupButton=g.querySelector(".group-select-all");
+  const fold=g.querySelector(".group-fold");
+  holder.id="grammar-test-children-"+root.children.length;
+  fold.setAttribute("aria-controls",holder.id);
+  fold.setAttribute("aria-label","Unterthemen von "+name+" anzeigen");
+  fold.addEventListener("click",()=>{const expanded=!holder.classList.toggle("hidden");fold.textContent=expanded?"▴":"▾";fold.title=expanded?"Unterthemen ausblenden":"Unterthemen anzeigen";fold.setAttribute("aria-label","Unterthemen von "+name+(expanded?" ausblenden":" anzeigen"));fold.setAttribute("aria-expanded",String(expanded))});
   const refreshGroup=()=>{const checks=[...holder.querySelectorAll(".topic-check")],all=checks.length>0&&checks.every(x=>x.checked),some=checks.some(x=>x.checked);groupButton.checked=all;groupButton.indeterminate=some&&!all;groupButton.title=all?"Auswahl aufheben":"Alle Unterthemen auswählen";groupButton.setAttribute("aria-label",all?"Auswahl aufheben":"Alle Unterthemen auswählen")};
   groupButton.addEventListener("change",()=>{const boxes=[...holder.querySelectorAll(".topic")];boxes.forEach(box=>{box.querySelector(".topic-check").checked=groupButton.checked;if(!groupButton.checked){box.querySelectorAll(".verb-check").forEach(x=>x.checked=false);box.querySelector(".fixed-count").textContent="0 fest ausgewählt"}});updateSummary();refreshGroup()});
   for(const topic of topics){
