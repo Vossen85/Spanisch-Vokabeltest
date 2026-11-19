@@ -41,12 +41,25 @@
 .grammar-speak-btn:disabled{opacity:.5;cursor:not-allowed}
 .grammar-quiz-spoken-card{width:100%;max-width:760px;margin:18px auto}
 .grammar-quiz-spoken-card>.quiz-card{margin:0;max-width:none}
+.grammar-quick-stack{width:100%;max-width:560px;margin:18px auto;position:relative}
+.grammar-quick-stack>.grammar-quick-card{width:100%;min-height:265px;max-width:none;margin:0;font-size:1rem;cursor:pointer}
+.grammar-quick-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:560px;margin:12px auto}
+.grammar-quick-actions button{min-height:54px;font-size:1.1rem}
+.grammar-quick-actions .good{background:#16a34a;color:#fff}
+.grammar-quick-actions .bad{background:#dc2626;color:#fff}
+#quickGrammarOptions .actions{gap:16px}#quickGrammarOptions label{display:inline-flex;align-items:center;gap:7px}
+@media(max-width:650px){.grammar-quick-stack>.grammar-quick-card{min-height:220px}.grammar-quick-actions button{font-size:1rem}}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><main class="wrap">
   <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
 <section id="selectPanel" class="panel"><div class="backline"><button id="backBtn" class="secondary">← Zurück zu Grammatik</button></div>
-<h1>Grammatik-Karteikarten</h1><p class="sub">Wähle einen oder mehrere Grammatikbereiche aus. Die ausgewählten Verben werden gemeinsam gelernt und abgefragt.</p>
+<h1 id="grammarCardsHeading">Grammatik-Karteikarten</h1><p id="grammarCardsIntro" class="sub">Wähle einen oder mehrere Grammatikbereiche aus. Die ausgewählten Verben werden gemeinsam gelernt und abgefragt.</p>
 <div class="student-account-box"><div id="guestAccountLink"><p class="tiny">Diese allgemeine Grammatikübung funktioniert ohne Konto und speichert keine persönlichen Lernfortschritte. Für gespeicherte Wiederholungen:</p><a class="button secondary" href="konto.html?next=grammar&v=20261107-2">Zum persönlichen Lernbereich</a></div><div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Grammatik-Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div><div id="studentAccountMsg" class="account-msg"></div></div>
 <h2 class="selection-heading">Grammatikbereiche</h2><div class="topic-toolbar"><button id="selectAllTopics" class="secondary" type="button" disabled>Alle auswählen</button><button id="clearTopics" class="secondary" type="button" disabled>Auswahl leeren</button></div><div id="topicOptions" class="topic-groups"><p class="tiny">Grammatikbereiche werden geladen …</p></div>
+<div id="quickGrammarOptions" class="hidden">
+<p class="sub">Welche Sprache soll zuerst auf der Karte stehen?</p>
+<div class="actions"><label><input type="radio" name="grammarQuickSide" value="de" checked> Deutsch zuerst</label>
+<label><input type="radio" name="grammarQuickSide" value="es"> Spanisch zuerst</label></div>
+</div>
 <div id="selectionSummary" class="tiny"></div><div class="actions"><button id="beginBtn" class="primary" disabled>Lerneinheit starten</button></div><div id="error" class="tiny"></div></section>
 <section id="studyPanel" class="panel hidden"><button id="studyBackBtn" class="secondary">← Zurück zur Auswahl</button><h1 id="topicHeading"></h1><div id="studyProgress" class="tiny"></div><p class="sub">Tippe eine Karte an, um zwischen Spanisch und Deutsch zu wechseln.</p>
 <div class="grammar-speech-settings"><label for="grammarSpeechRateStudy">🔊 Aussprachetempo</label><select id="grammarSpeechRateStudy"><option value="1" selected>Normal</option><option value="0.85">Langsam</option></select></div>
@@ -59,10 +72,34 @@
 <button id="quizCard" class="flashcard quiz-card"></button>
 <button id="quizSpeakBtn" class="grammar-speak-btn hidden" type="button" aria-label="Spanische Verbformen anhören" title="Spanische Verbformen anhören">🔊</button>
 </div><div class="actions"><button id="flipBtn" class="secondary">Spanische Lösung aufdecken</button></div><div id="markBtns" class="actions hidden"><button id="correctBtn" class="good">Richtig</button><button id="wrongBtn" class="bad">Falsch</button></div><div id="feedback" class="tiny"></div><div id="saveStatus" class="tiny"></div></section>
+<section id="grammarQuickPanel" class="panel hidden">
+<div class="backline"><button id="grammarQuickBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
+<h1>Schnellwiederholung</h1>
+<p id="grammarQuickSubtitle" class="sub"></p>
+<div class="grammar-speech-settings"><label for="grammarSpeechRateQuick">🔊 Aussprachetempo</label>
+<select id="grammarSpeechRateQuick"><option value="1" selected>Normal</option><option value="0.85">Langsam</option></select></div>
+<p id="grammarSpeechStatusQuick" class="grammar-speech-status" role="status" aria-live="polite"></p>
+<p id="grammarQuickProgress" class="progress" aria-live="polite"></p>
+<p class="tiny" id="grammarQuickInstruction">Tippe die Karte zum Umdrehen an. Danach kannst du Richtig oder Wiederholen wählen.</p>
+<div id="grammarQuickCardZone" class="grammar-spoken-card grammar-quick-stack">
+<button id="grammarQuickCard" class="flashcard grammar-quick-card" type="button" aria-label="Konjugationskarte umdrehen" aria-pressed="false"></button>
+<button id="grammarQuickSpeakBtn" class="grammar-speak-btn hidden" type="button" aria-label="Spanische Verbformen anhören" title="Spanische Verbformen anhören">🔊</button>
+</div>
+<div id="grammarQuickActions" class="actions grammar-quick-actions">
+<button id="grammarQuickCorrectBtn" class="good" type="button">Richtig</button>
+<button id="grammarQuickRepeatBtn" class="bad" type="button">Wiederholen</button>
+</div>
+<p id="grammarQuickSaveStatus" class="tiny" aria-live="polite"></p>
+<div id="grammarQuickDone" class="hidden">
+<p id="grammarQuickDoneText" class="selection-summary"></p>
+<div class="actions"><button id="grammarQuickDoneBackBtn" class="primary" type="button">Weitere Grammatikthemen auswählen</button></div>
+</div>
+</section>
 <section id="donePanel" class="panel hidden"><h1>Geschafft!</h1><p id="doneText"></p><button id="doneBackBtn" class="primary">← Zurück zur Auswahl</button></section>
 </main><script>
 const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
 const SUPABASE_KEY="sb_publishable_AGUrdmy8nEQZJlPfgd9qbw_J6xkojrj";
+const QUICK_MODE=new URLSearchParams(location.search).get("schnell")==="1";
 let PERSONALIZED_MODE=new URLSearchParams(location.search).get("personalisiert")==="1";
 const studentClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storageKey:"avanza-student-auth-token",persistSession:true,autoRefreshToken:true}});
 window.avanzaStudentClient=studentClient;
@@ -250,7 +287,14 @@ function germanDisplay(de,sourceVerb=""){const info=germanInfo(de,sourceVerb);re
 function renderForms(verb,forms,language,mode){const labels=language==="es"?forms.map(x=>x[0]):dePronouns;const vals=language==="es"?forms.map(x=>x[1]):forms;const imperative=["impTu","impVos","impUsted","impNeg"].includes(mode);return '<strong>'+esc(verb)+'</strong><div class="form-lines'+(imperative?" imperative-lines":"")+'">'+vals.map((x,i)=>imperative?'<div class="form-value">'+esc(x)+'</div>':'<div class="form-line"><span class="form-person">'+esc(labels[i]||"")+'</span><span class="form-value">'+esc(x)+'</span></div>').join("")+'</div>'}
 const topicOptions=document.getElementById("topicOptions");let topics=[];
 function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
-let session=null;
+let session=null,grammarQuickSession=null;
+if(QUICK_MODE){
+ document.title="Grammatik – Schnellwiederholung";
+ document.getElementById("grammarCardsHeading").textContent="Grammatik – Schnellwiederholung";
+ document.getElementById("grammarCardsIntro").textContent="Wähle beliebig viele Grammatikbereiche aus. Anschließend wiederholst du die Konjugationen eine Karte nach der anderen.";
+ document.getElementById("quickGrammarOptions").classList.remove("hidden");
+ document.getElementById("beginBtn").textContent="Schnellwiederholung starten";
+}
 function renderTopicOptions(){const groups=new Map();for(const t of topics){if(!groups.has(t.group))groups.set(t.group,[]);groups.get(t.group).push(t)}topicOptions.innerHTML="";for(const [group,list] of groups){const section=document.createElement("section");section.className="topic-group";const head=document.createElement("div");head.className="topic-group-head";const groupCheck=document.createElement("input");groupCheck.type="checkbox";groupCheck.className="topic-group-select";groupCheck.setAttribute("aria-label","Alle Unterthemen auswählen");groupCheck.title="Alle Unterthemen auswählen";const heading=document.createElement("h2");heading.textContent=group;const options=document.createElement("div");options.className="topic-option-list hidden";options.id="grammar-card-children-"+topicOptions.children.length;const fold=document.createElement("button");fold.type="button";fold.className="topic-group-fold";fold.textContent="▾";fold.title="Unterthemen anzeigen";fold.setAttribute("aria-label","Unterthemen von "+group+" anzeigen");fold.setAttribute("aria-expanded","false");fold.setAttribute("aria-controls",options.id);fold.addEventListener("click",()=>{const expanded=!options.classList.toggle("hidden");fold.textContent=expanded?"▴":"▾";fold.title=expanded?"Unterthemen ausblenden":"Unterthemen anzeigen";fold.setAttribute("aria-label","Unterthemen von "+group+(expanded?" ausblenden":" anzeigen"));fold.setAttribute("aria-expanded",String(expanded))});head.append(groupCheck,heading,fold);section.appendChild(head);groupCheck.addEventListener("change",()=>{options.querySelectorAll('input[name="grammar-topic"]').forEach(x=>x.checked=groupCheck.checked);updateTopicSelection()});for(const t of list){const label=document.createElement("label");label.className="topic-option";label.innerHTML='<input type="checkbox" name="grammar-topic" value="'+esc(t.id)+'"><span><strong>'+esc(t.title)+'</strong><small>'+t.verbs.length+' Verben</small></span>';label.querySelector("input").addEventListener("change",updateTopicSelection);options.appendChild(label)}section.appendChild(options);topicOptions.appendChild(section)}document.getElementById("selectAllTopics").disabled=false;document.getElementById("clearTopics").disabled=false;updateTopicSelection()}
 function updateTopicSelection(){const checked=[...document.querySelectorAll('input[name="grammar-topic"]:checked')];const chosen=topics.filter(t=>checked.some(x=>x.value===t.id));document.querySelectorAll(".topic-group").forEach(section=>{const boxes=[...section.querySelectorAll('input[name="grammar-topic"]')],all=boxes.length>0&&boxes.every(x=>x.checked),some=boxes.some(x=>x.checked),groupCheck=section.querySelector(".topic-group-select");groupCheck.checked=all;groupCheck.indeterminate=some&&!all;groupCheck.title=all?"Auswahl aufheben":"Alle Unterthemen auswählen";groupCheck.setAttribute("aria-label",all?"Auswahl aufheben":"Alle Unterthemen auswählen")});document.getElementById("beginBtn").disabled=!chosen.length;document.getElementById("selectionSummary").className="tiny"+(chosen.length?" selection-summary":"");document.getElementById("selectionSummary").textContent=chosen.length?chosen.length+" Grammatikbereiche · "+chosen.reduce((n,t)=>n+t.verbs.length,0)+" Verben · gemeinsame Lerneinheit":""}
 document.getElementById("selectAllTopics").addEventListener("click",()=>{document.querySelectorAll('input[name="grammar-topic"]').forEach(x=>x.checked=true);updateTopicSelection()});document.getElementById("clearTopics").addEventListener("click",()=>{document.querySelectorAll('input[name="grammar-topic"]').forEach(x=>x.checked=false);updateTopicSelection()});
@@ -276,7 +320,7 @@ function grammarSpeechStatus(id,text){
  const element=document.getElementById(id);
  if(element)element.textContent=text;
 }
-function speakGrammarForms(forms,statusId){
+function speakGrammarForms(forms,statusId,rateId="grammarSpeechRateStudy"){
  if(!grammarSpeechAvailable()){
   grammarSpeechStatus(statusId,"Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.");
   return;
@@ -289,7 +333,7 @@ function speakGrammarForms(forms,statusId){
  const voices=synthesizer.getVoices();
  const voice=voices.find(v=>String(v.lang).replace("_","-").toLowerCase()==="es-es")||
    voices.find(v=>/^es(?:-|_)/i.test(v.lang));
- const rate=Number(document.getElementById("grammarSpeechRateStudy").value)===0.85?0.85:1;
+ const rate=Number(document.getElementById(rateId).value)===0.85?0.85:1;
  grammarSpeechStatus(statusId,"");
  for(const [index,form] of phrases.entries()){
   const spoken=new window.SpeechSynthesisUtterance(form);
@@ -306,14 +350,15 @@ function speakGrammarForms(forms,statusId){
   synthesizer.speak(spoken);
  }
 }
-for(const id of ["grammarSpeechRateStudy","grammarSpeechRateQuiz"]){
+for(const id of ["grammarSpeechRateStudy","grammarSpeechRateQuiz","grammarSpeechRateQuick"]){
  document.getElementById(id).addEventListener("change",event=>{
-  document.getElementById(id==="grammarSpeechRateStudy"?"grammarSpeechRateQuiz":"grammarSpeechRateStudy").value=event.target.value;
+  for(const otherId of ["grammarSpeechRateStudy","grammarSpeechRateQuiz","grammarSpeechRateQuick"])
+   document.getElementById(otherId).value=event.target.value;
   stopGrammarSpeech();
  });
 }
 function revealCard(card,front,back,speaker){card.classList.toggle("is-flipped");const germanSide=card.classList.contains("is-flipped");card.innerHTML=germanSide?back:front;if(speaker)speaker.classList.toggle("hidden",germanSide);stopGrammarSpeech()}
-async function startTopic(){if(!studentAccountProfile)await refreshStudentAccount();if(PERSONALIZED_MODE&&!studentAccountProfile)return;const selectedIds=new Set([...document.querySelectorAll('input[name="grammar-topic"]:checked')].map(x=>x.value));const selectedTopics=topics.filter(t=>selectedIds.has(t.id));if(!selectedTopics.length)return;let rows=[],reviewCount=0;for(const topic of selectedTopics){const topicRows=makeRows(topic);if(PERSONALIZED_MODE&&studentAccountProfile){try{const due=await studentProgress({action:"due",itemType:"grammar",groupKey:String(topic.id)});const order=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));topicRows.sort((a,b)=>{const ka=String(topic.id)+":"+a.verb,kb=String(topic.id)+":"+b.verb;return(order.has(ka)?order.get(ka):Infinity)-(order.has(kb)?order.get(kb):Infinity)});reviewCount+=order.size}catch(error){console.warn("Wiederholung konnte nicht geladen werden:",error)}}rows.push(...topicRows)}const modes=[...new Set(selectedTopics.map(t=>t.mode))];session={topics:selectedTopics,topic:selectedTopics[0],rows,group:0,learned:[],current:[],quiz:[],index:0,wrong:[],phase:"study",reviewCount};await startTrackedActivity("grammar","extra",selectedTopics.map(t=>t.id).join(","));document.getElementById("selectPanel").classList.add("hidden");document.getElementById("studyPanel").classList.remove("hidden");renderStudy()}
+async function startTopic(){if(!studentAccountProfile)await refreshStudentAccount();if(PERSONALIZED_MODE&&!studentAccountProfile)return;const selectedIds=new Set([...document.querySelectorAll('input[name="grammar-topic"]:checked')].map(x=>x.value));const selectedTopics=topics.filter(t=>selectedIds.has(t.id));if(!selectedTopics.length)return;let rows=[],reviewCount=0;for(const topic of selectedTopics){const topicRows=makeRows(topic);if(PERSONALIZED_MODE&&studentAccountProfile){try{const due=await studentProgress({action:"due",itemType:"grammar",groupKey:String(topic.id)});const order=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));topicRows.sort((a,b)=>{const ka=String(topic.id)+":"+a.verb,kb=String(topic.id)+":"+b.verb;return(order.has(ka)?order.get(ka):Infinity)-(order.has(kb)?order.get(kb):Infinity)});reviewCount+=order.size}catch(error){console.warn("Wiederholung konnte nicht geladen werden:",error)}}rows.push(...topicRows)}const modes=[...new Set(selectedTopics.map(t=>t.mode))];session={topics:selectedTopics,topic:selectedTopics[0],rows,group:0,learned:[],current:[],quiz:[],index:0,wrong:[],phase:"study",reviewCount};await startTrackedActivity("grammar","extra",selectedTopics.map(t=>t.id).join(","));document.getElementById("selectPanel").classList.add("hidden");if(QUICK_MODE){startGrammarQuick(rows);return}document.getElementById("studyPanel").classList.remove("hidden");renderStudy()}
 function renderStudy(){
  stopGrammarSpeech();
  const s=session,start=s.group*6,rows=s.rows.slice(start,start+6);
