@@ -97,6 +97,14 @@ function finish(){
 }
 $('selectAllBtn').onclick=()=>$('topics').querySelectorAll('input').forEach(el=>el.checked=true);
 $('clearAllBtn').onclick=()=>$('topics').querySelectorAll('input').forEach(el=>el.checked=false);
+function backToSentenceSelection(){
+ if(running){
+  running=false;
+  void stopTracking(document.visibilityState==='visible'&&Date.now()-lastInteraction<=90000);
+ }
+ show('setup');
+}
+$('exerciseBackBtn').onclick=backToSentenceSelection;
 $('startBtn').onclick=()=>begin(selection());$('finishBtn').onclick=finish;$('selectionBtn').onclick=()=>show('setup');$('againBtn').onclick=()=>begin(selection());$('repeatBtn').onclick=()=>begin(shuffle(history.filter(x=>!x.correct).map(x=>x.row)));
 $('checkBtn').onclick=submit;$('resetBtn').onclick=()=>{if(locked)return;$('correctionInput').value='';updateButtons();$('correctionInput').focus()};$('nextBtn').onclick=()=>{if(!locked)return;if(++position===round.length)finish();else render()};
 $('correctionInput').addEventListener('input',updateButtons);$('correctionInput').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&!$('checkBtn').disabled){e.preventDefault();submit()}});
