@@ -36,6 +36,10 @@ select,input[type=number]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;
 .end-score{font-size:1.45rem;font-weight:900;margin:12px 0}
 @media(max-width:700px){body{padding:11px}.card{padding:15px}.field-row{grid-template-columns:1fr}.board{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.match-card{min-height:74px}.game-top{padding-right:100px}}
 .active-times{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:900;line-height:1.1;color:#d946ef;margin:0 0 8px}
+
+.group-head h2{flex:1;min-width:0}
+.group-fold{flex:0 0 auto;margin-left:auto;width:43px;height:42px;padding:7px 9px;font-size:1.3rem;line-height:1;background:#e2e8f0;color:#172033;border:1px solid #cbd5e1}
+.group-fold:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -242,8 +246,10 @@ function renderCatalog(){
   const section=document.createElement("section");section.className="group";
   const head=document.createElement("div");head.className="group-head";
   const groupCheck=document.createElement("input");groupCheck.type="checkbox";groupCheck.className="group-check";groupCheck.setAttribute("aria-label","Alle Unterthemen von "+name+" auswählen");
-  const title=document.createElement("h2");title.textContent=name;head.append(groupCheck,title);section.appendChild(head);
-  const grid=document.createElement("div");grid.className="topic-grid";
+  const title=document.createElement("h2");title.textContent=name;const grid=document.createElement("div");grid.className="topic-grid hidden";grid.id="grammar-pairs-children-"+root.children.length;
+  const fold=document.createElement("button");fold.type="button";fold.className="group-fold";fold.textContent="▾";fold.title="Unterthemen anzeigen";fold.setAttribute("aria-label","Unterthemen von "+name+" anzeigen");fold.setAttribute("aria-expanded","false");fold.setAttribute("aria-controls",grid.id);
+  fold.addEventListener("click",()=>{const expanded=!grid.classList.toggle("hidden");fold.textContent=expanded?"▴":"▾";fold.title=expanded?"Unterthemen ausblenden":"Unterthemen anzeigen";fold.setAttribute("aria-label","Unterthemen von "+name+(expanded?" ausblenden":" anzeigen"));fold.setAttribute("aria-expanded",String(expanded))});
+  head.append(groupCheck,title,fold);section.appendChild(head);
   groupCheck.addEventListener("change",()=>{grid.querySelectorAll(".topic-check").forEach(x=>x.checked=groupCheck.checked);updateSelection()});
   for(const topic of topics){
    const label=document.createElement("label");label.className="topic";
