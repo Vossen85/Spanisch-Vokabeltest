@@ -359,6 +359,122 @@ for(const id of ["grammarSpeechRateStudy","grammarSpeechRateQuiz","grammarSpeech
 }
 function revealCard(card,front,back,speaker){card.classList.toggle("is-flipped");const germanSide=card.classList.contains("is-flipped");card.innerHTML=germanSide?back:front;if(speaker)speaker.classList.toggle("hidden",germanSide);stopGrammarSpeech()}
 async function startTopic(){if(!studentAccountProfile)await refreshStudentAccount();if(PERSONALIZED_MODE&&!studentAccountProfile)return;const selectedIds=new Set([...document.querySelectorAll('input[name="grammar-topic"]:checked')].map(x=>x.value));const selectedTopics=topics.filter(t=>selectedIds.has(t.id));if(!selectedTopics.length)return;let rows=[],reviewCount=0;for(const topic of selectedTopics){const topicRows=makeRows(topic);if(PERSONALIZED_MODE&&studentAccountProfile){try{const due=await studentProgress({action:"due",itemType:"grammar",groupKey:String(topic.id)});const order=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));topicRows.sort((a,b)=>{const ka=String(topic.id)+":"+a.verb,kb=String(topic.id)+":"+b.verb;return(order.has(ka)?order.get(ka):Infinity)-(order.has(kb)?order.get(kb):Infinity)});reviewCount+=order.size}catch(error){console.warn("Wiederholung konnte nicht geladen werden:",error)}}rows.push(...topicRows)}const modes=[...new Set(selectedTopics.map(t=>t.mode))];session={topics:selectedTopics,topic:selectedTopics[0],rows,group:0,learned:[],current:[],quiz:[],index:0,wrong:[],phase:"study",reviewCount};await startTrackedActivity("grammar","extra",selectedTopics.map(t=>t.id).join(","));document.getElementById("selectPanel").classList.add("hidden");if(QUICK_MODE){startGrammarQuick(rows);return}document.getElementById("studyPanel").classList.remove("hidden");renderStudy()}
+
+function startGrammarQuick(rows){
+ const side=document.querySelector('input[name="grammarQuickSide"]:checked')?.value==="es"?"es":"de";
+ grammarQuickSession={side,queue:shuffle(rows),total:rows.length,current:null,correct:0,wrongIds:new Set(),grading:false,closed:false};
+ session.phase="quick";
+ document.getElementById("grammarQuickSubtitle").textContent=rows.length+" Konjugationen · "+(side==="de"?"Deutsch":"Spanisch")+" zuerst";
+ document.getElementById("grammarQuickDone").classList.add("hidden");
+ document.getElementById("grammarQuickPanel").classList.remove("hidden");
+ document.getElementById("grammarQuickSaveStatus").textContent="";
+ renderGrammarQuick();
+ window.scrollTo({top:0,behavior:"instant"});
+}
+function grammarQuickSides(row,side){
+ const spanish=renderForms(row.verb,row.es,"es",row.mode);
+ const german=renderForms(germanDisplay(row.de,row.verb),row.deForms,"de",row.mode);
+ return side==="es"?[spanish,german]:[german,spanish];
+}
+function renderGrammarQuick(){
+ const state=grammarQuickSession;
+ if(!state||state.closed)return;
+ stopGrammarSpeech();
+ const speaker=document.getElementById("grammarQuickSpeakBtn");
+ speaker.classList.add("hidden");
+ grammarSpeechStatus("grammarSpeechStatusQuick",grammarSpeechAvailable()?"":"Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.");
+ if(!state.queue.length){
+  state.current=null;
+  state.closed=true;
+  activityContext=null;
+  void stopTrackedActivity();
+  document.getElementById("grammarQuickCardZone").classList.add("hidden");
+  document.getElementById("grammarQuickActions").classList.add("hidden");
+  document.getElementById("grammarQuickInstruction").classList.add("hidden");
+  document.getElementById("grammarQuickProgress").textContent=state.correct+" von "+state.total+" Konjugationen sicher";
+  const repeats=state.wrongIds.size;
+  document.getElementById("grammarQuickDoneText").textContent="Geschafft! Alle "+state.total+" Konjugationen richtig wiederholt."+(repeats?" "+repeats+" "+(repeats===1?"Konjugation wurde":"Konjugationen wurden")+" zusätzlich wiederholt.":"");
+  document.getElementById("grammarQuickDone").classList.remove("hidden");
+  return;
+ }
+ state.current=state.queue.shift();
+ const card=document.getElementById("grammarQuickCard");
+ card.classList.remove("is-flipped");
+ card.setAttribute("aria-pressed","false");
+ card.setAttribute("aria-label","Konjugationskarte umdrehen");
+ card.innerHTML=grammarQuickSides(state.current,state.side)[0];
+ document.getElementById("grammarQuickCardZone").classList.remove("hidden");
+ document.getElementById("grammarQuickActions").classList.remove("hidden");
+ document.getElementById("grammarQuickInstruction").classList.remove("hidden");
+ document.getElementById("grammarQuickCorrectBtn").disabled=false;
+ document.getElementById("grammarQuickRepeatBtn").disabled=false;
+ speaker.disabled=!grammarSpeechAvailable();
+ speaker.classList.toggle("hidden",state.side!=="es");
+ document.getElementById("grammarQuickProgress").textContent="Noch "+(state.queue.length+1)+" im Stapel · "+state.correct+" richtig · "+state.wrongIds.size+" kommen zurück";
+}
+function flipGrammarQuick(){
+ const state=grammarQuickSession;
+ if(!state?.current||state.closed||state.grading)return;
+ const card=document.getElementById("grammarQuickCard");
+ const flipped=card.classList.toggle("is-flipped");
+ card.setAttribute("aria-pressed",String(flipped));
+ card.setAttribute("aria-label",flipped?"Rückseite aufgedeckt; zum Zurückdrehen tippen":"Konjugationskarte umdrehen");
+ card.innerHTML=grammarQuickSides(state.current,state.side)[flipped?1:0];
+ const showSpanish=state.side==="de"?flipped:!flipped;
+ document.getElementById("grammarQuickSpeakBtn").classList.toggle("hidden",!showSpanish);
+ if(!showSpanish)stopGrammarSpeech();
+}
+async function gradeGrammarQuick(correct){
+ const state=grammarQuickSession;
+ if(!state?.current||state.grading||state.closed)return;
+ state.grading=true;
+ stopGrammarSpeech();
+ document.getElementById("grammarQuickCorrectBtn").disabled=true;
+ document.getElementById("grammarQuickRepeatBtn").disabled=true;
+ const row=state.current;
+ if(PERSONALIZED_MODE&&studentAccountProfile){
+  try{
+   await studentProgress({action:"record",itemType:"grammar",groupKey:String(row.topicId),
+    itemKey:String(row.topicId)+":"+row.verb,itemLabel:row.verb,correct,
+    sessionId:currentActivitySessionId||undefined});
+   if(!state.closed)document.getElementById("grammarQuickSaveStatus").textContent="Lernfortschritt gespeichert.";
+  }catch(error){
+   console.warn("Grammatik-Lernfortschritt:",error);
+   if(!state.closed)document.getElementById("grammarQuickSaveStatus").textContent="Der Lernfortschritt konnte gerade nicht gespeichert werden.";
+  }
+ }
+ if(state.closed)return;
+ if(correct)state.correct++;
+ else{
+  state.wrongIds.add(String(row.topicId)+":"+row.verb);
+  state.queue.push(row);
+ }
+ state.current=null;
+ state.grading=false;
+ renderGrammarQuick();
+}
+function backFromGrammarQuick(){
+ stopGrammarSpeech();
+ if(grammarQuickSession)grammarQuickSession.closed=true;
+ grammarQuickSession=null;
+ activityContext=null;
+ void stopTrackedActivity();
+ document.getElementById("grammarQuickPanel").classList.add("hidden");
+ document.getElementById("selectPanel").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"instant"});
+}
+document.getElementById("grammarQuickCard").addEventListener("click",flipGrammarQuick);
+document.getElementById("grammarQuickSpeakBtn").addEventListener("click",()=>{
+ const state=grammarQuickSession;
+ if(!state?.current||state.closed||state.grading)return;
+ const flipped=document.getElementById("grammarQuickCard").classList.contains("is-flipped");
+ if(state.side==="es"?!flipped:flipped)
+  speakGrammarForms(state.current.es,"grammarSpeechStatusQuick","grammarSpeechRateQuick");
+});
+document.getElementById("grammarQuickCorrectBtn").addEventListener("click",()=>void gradeGrammarQuick(true));
+document.getElementById("grammarQuickRepeatBtn").addEventListener("click",()=>void gradeGrammarQuick(false));
+document.getElementById("grammarQuickBackBtn").addEventListener("click",backFromGrammarQuick);
+document.getElementById("grammarQuickDoneBackBtn").addEventListener("click",backFromGrammarQuick);
 function renderStudy(){
  stopGrammarSpeech();
  const s=session,start=s.group*6,rows=s.rows.slice(start,start+6);
