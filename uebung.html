@@ -2695,7 +2695,7 @@
     $("testsChoiceCard").classList.add("hidden");
     $("openTestsBtn").setAttribute("aria-expanded","false");
     if(studentTestHistoryRefresh){clearInterval(studentTestHistoryRefresh);studentTestHistoryRefresh=null;}
-    if(location.hash==="#tests")history.replaceState(null,"",location.pathname+location.search);
+    if(location.hash==="#tests"||location.hash==="#grammatik")history.replaceState(null,"",location.pathname+location.search);
     setVocabMode("menu");
     $("setupCard").classList.add("hidden");
     $("testArea").classList.add("hidden");
@@ -2714,6 +2714,7 @@
   $("openGrammarBtn").addEventListener("click",()=>{
     $("portalCard").classList.add("hidden");
     $("grammarChoiceCard").classList.remove("hidden");
+    if(location.hash!=="#grammatik")history.replaceState(null,"",location.pathname+location.search+"#grammatik");
     window.scrollTo({top:0,behavior:"instant"});
   });
   $("openTestsBtn").addEventListener("click",openTestsView);
@@ -2865,8 +2866,8 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
     hideMsg($("vocabListMsg"));
   });
   $("vocabHomeBtn").addEventListener("click",backVocabOneLevel);
-  $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
-  $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
+  $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"+(PERSONALIZED_MODE?"?personalisiert=1":""); });
+  $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"+(PERSONALIZED_MODE?"?personalisiert=1":""); });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
   $("openGrammarSentencesBtn").addEventListener("click",()=>{location.href="grammatik-saetze.html"+(PERSONALIZED_MODE?"?personalisiert=1":"")});
   if(location.hash==="#grammatik")$("openGrammarBtn").click();
