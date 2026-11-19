@@ -541,7 +541,7 @@
         <div><h1>Vokabel-Paare</h1><p id="vocabPairsActiveSettings" class="tiny"></p></div>
         <div class="vocab-pairs-stats"><div class="vocab-pairs-stat">Paare: <span id="vocabPairsScore">0</span></div><div class="vocab-pairs-stat">Rekord: <span id="vocabPairsBest">0</span></div></div>
       </div>
-      <div id="vocabPairsTimer" class="vocab-pairs-timer">01:00</div>
+      <div id="vocabPairsTimer" class="vocab-pairs-timer" role="timer" aria-label="Verbleibende Spielzeit">01:00</div>
       <p class="sub">Tippe ein spanisches und das passende deutsche Wort an.</p>
       <div id="vocabPairsBoard" class="vocab-pairs-board"></div>
     </div>
@@ -1726,7 +1726,8 @@
         usedIds:new Set(),
         score:0,
         bestScore:0,
-        locked:false
+        locked:false,
+        finished:false
       };
       vocabPairsSession.boardPairs.forEach(pair=>vocabPairsSession.usedIds.add(pair.id));
       const localKey=vocabPairsRecordKey();
@@ -1745,8 +1746,10 @@
       $("vocabPairsArea").classList.remove("hidden");
       renderVocabPairsBoard();
       vocabPairsDeadline=Date.now()+durationSeconds*1000;
+      // Den sichtbaren Countdown sofort und anschließend fortlaufend aktualisieren.
+      // Die verbleibende Zeit wird stets aus der absoluten Endzeit berechnet.
+      vocabPairsTimerHandle=setInterval(tickVocabPairs,200);
       tickVocabPairs();
-      vocabPairsTimerHandle=setInterval(tickVocabPairs,250);
     }catch(error){
       showMsg($("vocabPairsSetupMsg"),error.message||"Das Paare-Spiel konnte nicht gestartet werden.","err");
     }finally{
@@ -1756,19 +1759,27 @@
   }
 
   function tickVocabPairs(){
-    if(!vocabPairsSession||!vocabPairsTimerHandle&&Date.now()<vocabPairsDeadline)return;
+    const session=vocabPairsSession;
+    if(!session||vocabPairsTimerHandle===null||session.finished)return;
     const left=Math.max(0,Math.ceil((vocabPairsDeadline-Date.now())/1000));
     const timer=$("vocabPairsTimer");
     timer.textContent=String(Math.floor(left/60)).padStart(2,"0")+":"+String(left%60).padStart(2,"0");
     timer.classList.toggle("warn",left<=15&&left>5);
     timer.classList.toggle("danger",left<=5);
-    if(left<=0){
+    if(left===0){
+      session.finished=true;
       clearInterval(vocabPairsTimerHandle);
       vocabPairsTimerHandle=null;
       void finishTrackedActivity();
       finishVocabPairs();
     }
   }
+  // Auch nach einem Gerätewechsel oder kurzzeitiger Browserpause wieder synchronisieren.
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible")tickVocabPairs();
+  });
+  window.addEventListener("focus",tickVocabPairs);
+  window.addEventListener("pageshow",tickVocabPairs);
 
   function finishVocabPairs(){
     const session=vocabPairsSession;
