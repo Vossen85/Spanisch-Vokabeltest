@@ -1667,7 +1667,12 @@
 
   function selectVocabPairTile(button){
     const session=vocabPairsSession;
-    if(!session||!vocabPairsTimerHandle||session.locked||button.classList.contains("matched")||button.classList.contains("selected"))return;
+    if(!session||!vocabPairsTimerHandle||session.locked||button.classList.contains("matched"))return;
+    if(button.classList.contains("selected")){
+      button.classList.remove("selected");
+      session.chosenTiles=session.chosenTiles.filter(tile=>tile!==button);
+      return;
+    }
     if(session.chosenTiles.length&&session.chosenTiles[0].dataset.lang===button.dataset.lang)return;
     button.classList.add("selected");
     session.chosenTiles.push(button);
@@ -1731,6 +1736,9 @@
       $("vocabPairsActiveSettings").textContent=pairsPerBoard+" Paare gleichzeitig";
       $("vocabPairsTimer").textContent=String(Math.floor(durationSeconds/60)).padStart(2,"0")+":"+String(durationSeconds%60).padStart(2,"0");
       $("vocabPairsTimer").classList.remove("warn","danger");
+      // Zuerst die Lernzeitsitzung anlegen, dann erst die Spielzeit starten.
+      // So kann eine langsame Netzwerkantwort keine Spielsekunden verschlucken.
+      await startTrackedActivity("vocab","matching",selectionKey);
       $("setupCard").classList.add("hidden");
       $("vocabPairsResultView").classList.add("hidden");
       $("vocabPairsGameView").classList.remove("hidden");
@@ -1739,7 +1747,6 @@
       vocabPairsDeadline=Date.now()+durationSeconds*1000;
       tickVocabPairs();
       vocabPairsTimerHandle=setInterval(tickVocabPairs,250);
-      await startTrackedActivity("vocab","matching",selectionKey);
     }catch(error){
       showMsg($("vocabPairsSetupMsg"),error.message||"Das Paare-Spiel konnte nicht gestartet werden.","err");
     }finally{
