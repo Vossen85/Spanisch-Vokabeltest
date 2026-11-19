@@ -31,23 +31,56 @@ function selection(){const topics=selectedTopics();if(!topics.length){$('loadSta
 function remember(row){try{let items=JSON.parse(localStorage.getItem(seenKey)||'[]');if(!Array.isArray(items))items=[];const set=new Set(items);const topicRows=bank.filter(x=>x.topic===row.topic);if(topicRows.every(x=>set.has(x.id)))for(const x of topicRows)set.delete(x.id);set.add(row.id);localStorage.setItem(seenKey,JSON.stringify([...set]))}catch{}}
 function begin(rows){if(!rows?.length)return;round=rows;position=0;history=[];running=true;locked=false;$('saveStatus').textContent='';note();show('exercise');void startTracking();render()}
 function makeButton(text,css,label,onclick){const b=document.createElement('button');b.type='button';b.className=css;b.lang='es';b.textContent=text;if(label)b.setAttribute('aria-label',label);b.disabled=locked;b.addEventListener('click',onclick);return b}
+function clearAttemptFeedback(){if(locked)return;$('feedback').textContent='';$('feedback').className='feedback'}
 function renderBuilder(){const slots=$('slots'),wordBank=$('wordBank');slots.replaceChildren();wordBank.replaceChildren();const used=new Set(selected);
 for(let i=0;i<pieces.length;i++){
- if(i<selected.length){const token=pieces[selected[i]];slots.append(makeButton(token.word,'slot filled',`Wort ${i+1}: ${token.word} – zurücknehmen`,()=>{selected.splice(i,1);renderBuilder()}))}
+ if(i<selected.length){const token=pieces[selected[i]];slots.append(makeButton(token.word,'slot filled',`Wort ${i+1}: ${token.word} – zurücknehmen`,()=>{selected.splice(i,1);clearAttemptFeedback();renderBuilder()}))}
  else{const placeholder=document.createElement('span');placeholder.className='slot';placeholder.textContent=String(i+1);placeholder.setAttribute('aria-label',`Platz ${i+1} noch leer`);slots.append(placeholder)}
 }
-for(const token of mixed){if(used.has(token.id))continue;wordBank.append(makeButton(token.word,'word',token.word+' einsetzen',()=>{selected.push(token.id);renderBuilder()}))}
+for(const token of mixed){if(used.has(token.id))continue;wordBank.append(makeButton(token.word,'word',token.word+' einsetzen',()=>{selected.push(token.id);clearAttemptFeedback();renderBuilder()}))}
 $('checkBtn').disabled=locked||selected.length!==pieces.length;
 $('resetBtn').disabled=locked||selected.length===0;
 }
-function render(){const row=round[position];locked=false;selected=[];const words=tokens(row.es);pieces=words.map((word,id)=>({id,word}));mixed=scrambled(pieces);$('topicHeading').textContent=row.topic;$('phenomenon').textContent=row.phen||'';$('position').textContent='Aufgabe '+(position+1)+' von '+round.length;$('correctCount').textContent=history.filter(x=>x.correct).length+' richtig';$('progress').value=history.length;$('progress').max=round.length;$('prompt').textContent=row.de;$('feedback').textContent='';$('feedback').className='feedback';$('checkBtn').hidden=false;$('resetBtn').hidden=false;$('nextBtn').hidden=true;$('nextBtn').textContent=position===round.length-1?'Ergebnisse ansehen':'Weiter';renderBuilder();$('topicHeading').focus({preventScroll:true})}
-function submit(){if(!running||locked||selected.length!==pieces.length)return;locked=true;const row=round[position],order=selected.map(id=>pieces[id].word),attempt=signature(order),answer=signature(tokens(row.es)),others=(alternatives[row.id]||[]).map(s=>signature(tokens(s))),correct=attempt===answer||others.includes(attempt);history.push({row,correct,answer:order.join(' ')});remember(row);$('progress').value=history.length;$('correctCount').textContent=history.filter(x=>x.correct).length+' richtig';$('feedback').className='feedback '+(correct?'good':'bad');$('feedback').textContent=correct?(attempt===answer?'✓ Richtig!':'✓ Richtig! Diese Satzstellung ist ebenfalls möglich.'):'✕ Die Reihenfolge stimmt noch nicht. Richtiger Satz: '+row.es;$('checkBtn').hidden=true;$('resetBtn').hidden=true;$('nextBtn').hidden=false;renderBuilder();record(row,correct)}
+function render(){const row=round[position];locked=false;selected=[];const words=tokens(row.es);pieces=words.map((word,id)=>({id,word}));mixed=scrambled(pieces);$('topicHeading').textContent=row.topic;$('phenomenon').textContent=row.phen||'';$('position').textContent='Aufgabe '+(position+1)+' von '+round.length;$('correctCount').textContent=history.filter(x=>x.correct).length+' richtig';$('progress').value=history.length;$('progress').max=round.length;$('prompt').textContent=row.de;$('feedback').textContent='';$('feedback').className='feedback';$('checkBtn').hidden=false;$('resetBtn').hidden=false;$('nextBtn').hidden=true;$('revealBtn').hidden=false;$('nextBtn').textContent=position===round.length-1?'Ergebnisse ansehen':'Weiter';renderBuilder();$('topicHeading').focus({preventScroll:true})}
+function completeSentence(correct,attemptText,message){
+ if(!running||locked)return;
+ locked=true;
+ const row=round[position];
+ history.push({row,correct,answer:attemptText||'(keine Antwort)'});
+ remember(row);
+ $('progress').value=history.length;
+ $('correctCount').textContent=history.filter(x=>x.correct).length+' richtig';
+ $('feedback').className='feedback '+(correct?'good':'bad');
+ $('feedback').textContent=message;
+ $('checkBtn').hidden=true;
+ $('resetBtn').hidden=true;
+ $('revealBtn').hidden=true;
+ $('nextBtn').hidden=false;
+ renderBuilder();
+ record(row,correct);
+}
+function submit(){
+ if(!running||locked||selected.length!==pieces.length)return;
+ const row=round[position],order=selected.map(id=>pieces[id].word),attempt=signature(order),answer=signature(tokens(row.es));
+ const others=(alternatives[row.id]||[]).map(s=>signature(tokens(s)));
+ if(attempt!==answer&&!others.includes(attempt)){
+  $('feedback').className='feedback bad';
+  $('feedback').textContent='✕ Die Reihenfolge stimmt noch nicht. Du kannst die Wörter ändern und erneut auf „Prüfen“ tippen.';
+  return;
+ }
+ completeSentence(true,order.join(' '),attempt===answer?'✓ Richtig!':'✓ Richtig! Diese Satzstellung ist ebenfalls möglich.');
+}
+function revealAnswer(){
+ if(!running||locked)return;
+ const row=round[position],attemptText=selected.map(id=>pieces[id].word).join(' ');
+ completeSentence(false,attemptText,'Antwort: '+row.es);
+}
 function finish(){if(!running)return;running=false;void stopTracking(document.visibilityState==='visible'&&Date.now()-lastInteraction<=90000);show('result');const n=history.length,correct=history.filter(x=>x.correct).length;$('score').textContent=n?correct+' von '+n+' richtig · '+Math.round(100*correct/n)+' %':'Noch keine Aufgabe beantwortet.';$('repeatBtn').hidden=!history.some(x=>!x.correct);$('reviewList').replaceChildren();document.querySelector('.review').open=false;
 for(const item of history){const block=document.createElement('article'),question=document.createElement('strong'),given=document.createElement('p');question.textContent=item.row.de;given.lang='es';given.className=item.correct?'good-text':'bad-text';given.textContent=(item.correct?'✓ ':'✕ ')+item.answer;block.append(question,given);if(!item.correct){const right=document.createElement('p');right.lang='es';right.className='good-text';right.textContent='✓ '+item.row.es;block.append(right)}$('reviewList').append(block)}}
 $('selectAllBtn').onclick=()=>$('topics').querySelectorAll('input').forEach(el=>el.checked=true);
 $('clearAllBtn').onclick=()=>$('topics').querySelectorAll('input').forEach(el=>el.checked=false);
 $('startBtn').onclick=()=>begin(selection());$('finishBtn').onclick=finish;$('selectionBtn').onclick=()=>show('setup');$('againBtn').onclick=()=>begin(selection());$('repeatBtn').onclick=()=>begin(shuffle(history.filter(x=>!x.correct).map(x=>x.row)));
-$('checkBtn').onclick=submit;$('resetBtn').onclick=()=>{if(locked)return;selected=[];renderBuilder()};$('nextBtn').onclick=()=>{if(!locked)return;if(++position===round.length)finish();else render()};
+$('checkBtn').onclick=submit;$('resetBtn').onclick=()=>{if(locked)return;selected=[];clearAttemptFeedback();renderBuilder()};$('revealBtn').onclick=revealAnswer;$('nextBtn').onclick=()=>{if(!locked)return;if(++position===round.length)finish();else render()};
 const paths=['grammatik-saetze-daten.json','grammatik-saetze-a2.json','grammatik-saetze-subjuntivo.json','grammatik-saetze-rest.json','grammatik-saetze-varianten.json'];
 Promise.all(paths.map(path=>fetch(path,{cache:'no-store'}).then(response=>{if(!response.ok)throw Error(path);return response.json()}))).then(all=>{
  bank=all.slice(0,4).flatMap(x=>x.sentences||[]);alternatives=all[4].alternatives||{};
