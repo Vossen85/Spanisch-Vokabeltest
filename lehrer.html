@@ -2506,17 +2506,16 @@
       return b.localeCompare(a);
     });
 
-    dates.forEach((dateKey,dateIndex)=>{
+    dates.forEach((dateKey)=>{
       const tests=[...groups.get(dateKey)].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
       const dateFolder=document.createElement("div");
       dateFolder.className="date-folder";
       dateFolder.innerHTML=
         '<div class="date-folder-head">'+
-          '<div><div class="date-folder-title">'+(dateKey==="ohne-datum"?"Ohne Datum":fmtDate(dateKey))+'</div>'+
-          '<div class="date-folder-count">'+tests.length+' Test'+(tests.length===1?"":"s")+'</div></div>'+
-          '<button class="secondary toggleDateBtn">'+(dateIndex===0?"Zuklappen":"Aufklappen")+'</button>'+
+          '<div><div class="date-folder-title">'+(dateKey==="ohne-datum"?"Ohne Datum":fmtDate(dateKey))+'</div></div>'+
+          '<button class="secondary toggleDateBtn" type="button" aria-expanded="false">Aufklappen</button>'+
         '</div>'+
-        '<div class="date-tests'+(dateIndex===0?"":" hidden")+'"></div>';
+        '<div class="date-tests hidden"></div>';
 
       const dateTests=dateFolder.querySelector(".date-tests");
       for(const t of tests){
@@ -2552,7 +2551,9 @@
 
       const toggle=()=>{
         const isHidden=dateTests.classList.toggle("hidden");
-        dateFolder.querySelector(".toggleDateBtn").textContent=isHidden?"Aufklappen":"Zuklappen";
+        const toggleButton=dateFolder.querySelector(".toggleDateBtn");
+        toggleButton.textContent=isHidden?"Aufklappen":"Zuklappen";
+        toggleButton.setAttribute("aria-expanded",String(!isHidden));
       };
       dateFolder.querySelector(".date-folder-head").addEventListener("click",e=>{
         if(e.target.closest(".toggleDateBtn"))return;
@@ -2599,7 +2600,10 @@
       if(dateTests?.classList.contains("hidden")){
         dateTests.classList.remove("hidden");
         const toggle=dateTests.previousElementSibling?.querySelector(".toggleDateBtn");
-        if(toggle)toggle.textContent="Zuklappen";
+        if(toggle){
+          toggle.textContent="Zuklappen";
+          toggle.setAttribute("aria-expanded","true");
+        }
       }
       toggleTestFolder(t,folder);
     }
