@@ -45,12 +45,20 @@ a.btn{text-decoration:none;display:inline-block;border-radius:10px;padding:12px 
 .group-head .group-title{flex:1;min-width:0}
 .group-fold{flex:0 0 auto;margin-left:auto;min-width:43px;height:42px;padding:7px 11px;font-size:1.3rem;line-height:1;cursor:pointer}
 .group-fold:focus-visible{outline:3px solid #0f766e;outline-offset:2px}
+
+.groups{gap:0;margin:12px 0}
+.group{border:1px solid #50515a;border-radius:12px;margin:7px 0;padding:0;overflow:hidden}
+.group-head{min-height:62px;margin:0;padding:8px 12px;gap:10px}
+.group-title{font-size:1.15rem;line-height:1.25}
+.group-fold{min-width:36px;width:36px;height:36px;padding:5px;border-radius:9px;font-size:1.1rem}
+.group>.topics{padding:9px 11px 12px;border-top:1px solid #50515a}
+@media(max-width:650px){.group-head{min-height:59px;padding:8px 10px;align-items:center;flex-direction:row}.group-fold{align-self:center}}
 </style>
 </head>
 <body><div class="wrap">
   <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
 <section id="setupCard" class="card">
-<div class="backline"><button id="backBtn" class="secondary" type="button">← Zurück zum Schülerbereich</button></div>
+<div class="backline"><button id="backBtn" class="secondary" type="button">← Zurück zu Grammatik</button></div>
 <h1>Spanisch – Grammatiktraining</h1>
 <p class="sub">Stelle dir selbst eine Grammatik-Testsimulation zusammen und überprüfe deine Konjugationen.</p>
 
@@ -276,7 +284,7 @@ async function resume(t){try{const d=await api({action:"session",accessToken:t})
 $("chars").addEventListener("click",e=>{if(e.target.tagName!=="BUTTON"||!lastFocusedInput)return;const ch=e.target.textContent,start=lastFocusedInput.selectionStart??lastFocusedInput.value.length,end=lastFocusedInput.selectionEnd??start;lastFocusedInput.setRangeText(ch,start,end,"end");lastFocusedInput.focus();lastFocusedInput.dispatchEvent(new Event("input",{bubbles:true}))});
 $("questionCount").addEventListener("input",updateSummary);$("startBtn").addEventListener("click",()=>startPractice());$("submitBtn").addEventListener("click",()=>submit(false));
 $("repeatBtn").addEventListener("click",async()=>{if(!lastConfig)return;$("repeatBtn").disabled=true;try{await startPractice(lastConfig)}finally{$("repeatBtn").disabled=false}});
-$("newSelectionBtn").addEventListener("click",showSetup);$("backBtn").addEventListener("click",()=>location.href="uebung.html");
+$("newSelectionBtn").addEventListener("click",showSetup);$("backBtn").addEventListener("click",()=>location.href=(new URLSearchParams(location.search).get("personalisiert")==="1"?"uebung.html?personalisiert=1":"uebung.html")+"#grammatik");
 (async()=>{try{const res=await fetch(new URL("grammatik-themen.json",location.href),{cache:"no-store"});if(!res.ok)throw new Error();const data=await res.json();catalog=Array.isArray(data.topics)?data.topics:[];renderCatalog();const old=sessionStorage.getItem(storageKey);if(old)await resume(old)}catch{showMsg($("setupMsg"),"Die Grammatikbereiche konnten nicht geladen werden.","err");$("startBtn").disabled=true}})();
 </script>
 <script src="./student-progress-widget.js"></script>
