@@ -85,6 +85,7 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
 </section>
 
 <section id="previewCard" class="card hidden">
+  <div class="actions no-print" style="margin-top:0;margin-bottom:12px"><button id="previewBackBtn" class="secondary" type="button">← Zurück zur Themenauswahl</button></div>
   <div class="preview-head">
     <div>
       <h1 id="timeHeading" class="tense-heading"></h1>
@@ -559,6 +560,10 @@ document.getElementById("showBtn").addEventListener("click",render);
 document.getElementById("pdfBtn").addEventListener("click",downloadPdf);
 document.getElementById("allBtn").addEventListener("click",()=>{document.querySelectorAll(".topic input").forEach(x=>x.checked=true);document.querySelectorAll(".topic-group-check").forEach(x=>{x.checked=true;x.indeterminate=false})});
 document.getElementById("noneBtn").addEventListener("click",()=>{document.querySelectorAll(".topic input").forEach(x=>x.checked=false);document.querySelectorAll(".topic-group-check").forEach(x=>{x.checked=false;x.indeterminate=false})});
+document.getElementById("previewBackBtn").addEventListener("click",()=>{
+ document.getElementById("previewCard").classList.add("hidden");
+ document.getElementById("topicList").scrollIntoView({behavior:"instant",block:"start"});
+});
 document.getElementById("backBtn").addEventListener("click",()=>location.href=(new URLSearchParams(location.search).get("personalisiert")==="1"?"uebung.html?personalisiert=1":"uebung.html")+"#grammatik");
 </script>
 <script src="./student-progress-widget.js"></script>
