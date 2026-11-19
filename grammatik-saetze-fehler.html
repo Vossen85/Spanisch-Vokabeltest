@@ -36,6 +36,7 @@ button,input,select,textarea{font:inherit}button,a.back{border:0;border-radius:1
 <button type="button" id="startBtn" class="primary" disabled>Übung starten</button><p id="loadStatus" class="muted" role="status">Aufgaben werden geladen …</p>
 </section>
 <section id="exercise" class="panel" hidden>
+<button id="exerciseBackBtn" class="back" type="button">← Zurück zur Auswahl</button>
 <button id="finishBtn" class="back" type="button">Runde beenden</button>
 <p id="prompt" class="prompt" lang="de" tabindex="-1"></p>
 <p id="spanishSentence" class="sentence-area" aria-label="Spanischer Satz mit einem Verbfehler" lang="es"></p>
@@ -65,6 +66,6 @@ button,input,select,textarea{font:inherit}button,a.back{border:0;border-radius:1
 <p id="saveStatus" class="save" role="status"></p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="grammatik-saetze-fehler.js?v=20261113-simple-layout"></script>
+<script src="grammatik-saetze-fehler.js?v=back-navigation-20261119"></script>
 <script src="student-progress-widget.js"></script>
 </body></html>
