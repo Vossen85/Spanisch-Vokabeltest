@@ -22,12 +22,13 @@ function pointsForPercent(p: number) {
 function gradeForPoints(p: number) {
   return ["6","5-","5","5+","4-","4","4+","3-","3","3+","2-","2","2+","1-","1","1+"][p] || "6";
 }
-function normalize(s: unknown) {
-  return String(s ?? "").normalize("NFC").trim()
-    .replace(/[(){}\[\]]/g, " ")
-    .replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g, "")
-    .replace(/\s+/g, " ").trim();
+function normalize(s:unknown){
+ return String(s??"").normalize("NFC").trim()
+ .replace(/[(){}\[\],]/g," ")
+ .replace(/^[¿¡!"'“”‘’\s]+|[?!.,!"'“”‘’\s]+$/g,"")
+ .replace(/\s+/g," ").trim();
 }
+function comparisonKey(s:unknown){return normalize(s).replace(/\s+/g,"")}
 function accentCaseFold(s: string) {
   return s.replace(/[áÁ]/g,m=>m==="Á"?"A":"a").replace(/[éÉ]/g,m=>m==="É"?"E":"e")
     .replace(/[íÍ]/g,m=>m==="Í"?"I":"i").replace(/[óÓ]/g,m=>m==="Ó"?"O":"o")
@@ -35,9 +36,13 @@ function accentCaseFold(s: string) {
     .toLocaleLowerCase("es");
 }
 function variants(expected: string) { return expected.split(/\s*\/\s*/).map(normalize).filter(Boolean); }
-function scoreField(typed: string, expected: string) {
-  const t=normalize(typed); if(!t) return 0; const vs=variants(expected); if(vs.includes(t)) return 1;
-  const ft=accentCaseFold(t); for(const v of vs) if(accentCaseFold(v)===ft) return .5; return 0;
+function scoreField(typed:string,expected:string){
+ const t=comparisonKey(typed);if(!t)return 0;
+ const vs=variants(expected).map(comparisonKey);
+ if(vs.includes(t))return 1;
+ const ft=accentCaseFold(t);
+ for(const v of vs)if(accentCaseFold(v)===ft)return .5;
+ return 0;
 }
 function responseParts(responseText: string, count: number) {
   let payload:any={translation:"",forms:[]}; try{payload=JSON.parse(responseText||"{}")}catch{}
