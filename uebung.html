@@ -369,10 +369,11 @@
   </section>
 
   <section id="setupCard" class="card hidden">
-    <div class="backline"><button id="vocabHomeBtn" class="secondary" type="button">← Zurück</button></div>
-    <h1>Spanisch – Vokabeltraining</h1>
-    <p class="sub">Wähle eine Übungsform für deine Vokabeln.</p>
-    <div class="choice-grid" style="margin-top:16px">
+    <div class="backline"><button id="vocabHomeBtn" class="secondary" type="button">← Zur Startseite</button></div>
+    <div id="vocabModeMenu">
+      <h1>Vokabeln</h1>
+      <p class="sub">Wähle zuerst das Übungsformat aus.</p>
+      <div class="choice-grid" style="margin-top:16px">
       <button id="chooseVocabListBtn" class="choice-btn mode-btn grammar-card-conjugations" type="button" aria-pressed="false">
         📄 Vokabelliste als PDF
         <span>Wähle ganze Unidades oder einzelne Unterordner und lade die Liste herunter.</span>
@@ -389,18 +390,18 @@
         🧩 Vokabel-Paare
         <span>Finde in der gewählten Zeit möglichst viele passende spanische und deutsche Wörter.</span>
       </button>
-      <button id="chooseVocabTestBtn" class="choice-btn mode-btn grammar-card-tests" type="button" aria-pressed="true">
+      <button id="chooseVocabTestBtn" class="choice-btn mode-btn grammar-card-tests" type="button" aria-pressed="false">
         📝 Testsimulation
         <span>Wähle deine Vokabelbereiche, Aufgabenanzahl und Bearbeitungszeit.</span>
       </button>
+      </div>
     </div>
-
-    <h2 id="selectionHeading" style="margin-top:24px">1. Vokabelbereiche auswählen</h2>
-    <p id="selectionHelp" class="tiny">Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.</p>
-    <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
-
-    <div id="cardPracticeOptions" class="hidden">
-      <h2 style="margin-top:24px">2. Karteikarten üben</h2>
+    <div id="vocabModeDetail" class="hidden">
+      <h1 id="vocabModeTitle"></h1>
+      <p id="vocabModeIntro" class="sub"></p>
+      <div id="cardPracticeOptions" class="hidden">
+        <div id="cardPracticeChoices">
+          <h2 style="margin-top:18px">Karteikarten üben</h2>
       <p class="tiny">Wähle, was du heute üben möchtest.</p>
       <div class="choice-grid" style="margin-top:16px">
         <button id="cardModeTopicBtn" class="choice-btn choice-learn mode-btn" type="button">
@@ -416,16 +417,21 @@
           <span>Übe fällige Wörter gemischt mit älteren bekannten Vokabeln.</span>
         </button>
       </div>
-      <p id="cardPersonalNote" class="tiny hidden">Die persönlichen Wiederholungen funktionieren mit deinem Schülerkonto. <a href="konto.html">Mit Schülercode anmelden</a></p>
+          <p id="cardPersonalNote" class="tiny hidden">Die persönlichen Wiederholungen funktionieren mit deinem Schülerkonto. <a href="konto.html">Mit Schülercode anmelden</a></p>
+        </div>
+        <div id="cardPracticeMsg" class="msg"></div>
+      </div>
+      <div id="vocabSelectionBlock" class="hidden">
+        <h2 id="selectionHeading" style="margin-top:24px">Vokabelbereiche auswählen</h2>
+        <p id="selectionHelp" class="tiny">Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.</p>
+        <div id="unitsBox" class="units"><div class="muted">Vokabelbereiche werden geladen …</div></div>
+      </div>
       <div id="cardTopicSelection" class="hidden">
         <p class="tiny">Wähle im Ordnerbaum genau einen Lernordner aus.</p>
         <div class="actions">
           <button id="startCardPracticeBtn" class="primary" type="button">Thema üben</button>
         </div>
       </div>
-      <div id="cardPracticeMsg" class="msg"></div>
-    </div>
-
     <div id="quickReviewSetup" class="hidden">
       <h2 style="margin-top:24px">2. Schnellwiederholung</h2>
       <p class="tiny">Wähle einen oder mehrere Bereiche. Richtige Karten scheiden aus dem Stapel aus; falsche kommen hinten wieder hinein.</p>
@@ -462,8 +468,8 @@
       </section>
     </div>
 
-    <div id="testOptions">
-    <h2 style="margin-top:26px">2. Test festlegen</h2>
+    <div id="testOptions" class="hidden">
+    <h2 style="margin-top:26px">Test festlegen</h2>
     <div class="row">
       <div>
         <label class="field" for="questionCount">Anzahl der Vokabeln</label>
@@ -483,6 +489,7 @@
       <button id="startBtn" class="primary">Testsimulation starten</button>
     </div>
     <div id="setupMsg" class="msg"></div>
+    </div>
     </div>
   </section>
 
@@ -1255,31 +1262,54 @@
     }
   }
 
+  const vocabModeInfo={
+    list:{title:"Vokabelliste als PDF",intro:"Wähle deine Vokabelbereiche und lade die Liste als PDF herunter."},
+    cards:{title:"Karteikarten-Training",intro:"Wähle, wie du heute mit den Karteikarten lernen möchtest."},
+    quick:{title:"Schnellwiederholung",intro:"Wähle deine Vokabelbereiche und die Vorderseite deiner Karten."},
+    pairs:{title:"Vokabel-Paare",intro:"Wähle deine Vokabelbereiche und die Spielzeit."},
+    test:{title:"Testsimulation",intro:"Wähle deine Vokabelbereiche, Aufgabenanzahl und Bearbeitungszeit."}
+  };
   function setVocabMode(mode){
+    if(mode!=="cards")vocabTopicSelectionOpen=false;
+    if(mode!=="menu"&&!Object.prototype.hasOwnProperty.call(vocabModeInfo,mode))mode="menu";
     vocabMode=mode;
+    const menu=mode==="menu",topicMode=mode==="cards"&&vocabTopicSelectionOpen;
+    $("vocabModeMenu").classList.toggle("hidden",!menu);
+    $("vocabModeDetail").classList.toggle("hidden",menu);
+    const info=vocabModeInfo[mode];
+    $("vocabModeTitle").textContent=topicMode?"Thema selbst wählen":(info?.title||"");
+    $("vocabModeIntro").textContent=topicMode?"Wähle genau einen Lernordner für deine Karteikarten.":(info?.intro||"");
+    $("vocabHomeBtn").textContent=menu?"← Zur Startseite":topicMode?"← Karteikarten-Training":"← Zu den Übungsformen";
     $("testOptions").classList.toggle("hidden",mode!=="test");
     $("vocabListActions").classList.toggle("hidden",mode!=="list");
     $("cardPracticeOptions").classList.toggle("hidden",mode!=="cards");
+    $("cardPracticeChoices").classList.toggle("hidden",topicMode);
     $("quickReviewSetup").classList.toggle("hidden",mode!=="quick");
     $("vocabPairsSetup").classList.toggle("hidden",mode!=="pairs");
-    const showTopicTree=mode!=="cards"||vocabTopicSelectionOpen;
-    $("selectionHeading").classList.toggle("hidden",!showTopicTree);
-    $("selectionHelp").classList.toggle("hidden",!showTopicTree);
-    $("unitsBox").classList.toggle("hidden",!showTopicTree);
-    $("cardTopicSelection").classList.toggle("hidden",!vocabTopicSelectionOpen||mode!=="cards");
-    $("chooseVocabTestBtn").setAttribute("aria-pressed",String(mode==="test"));
-    $("chooseVocabListBtn").setAttribute("aria-pressed",String(mode==="list"));
-    $("chooseCardPracticeBtn").setAttribute("aria-pressed",String(mode==="cards"));
-    $("chooseQuickReviewBtn").setAttribute("aria-pressed",String(mode==="quick"));
-    $("chooseVocabPairsBtn").setAttribute("aria-pressed",String(mode==="pairs"));
+    const showTopicTree=!menu&&(mode!=="cards"||topicMode);
+    $("vocabSelectionBlock").classList.toggle("hidden",!showTopicTree);
+    $("selectionHeading").textContent=topicMode?"Lernordner auswählen":"Vokabelbereiche auswählen";
+    $("selectionHelp").textContent=topicMode
+      ?"Wähle genau einen Lernordner aus der passenden Unidad oder dem Quartal."
+      :"Du kannst ganze Unidades oder nur einzelne Unterordner auswählen. Mehrere Bereiche lassen sich kombinieren.";
+    $("cardTopicSelection").classList.toggle("hidden",!topicMode);
+    for(const [id,value] of [["chooseVocabTestBtn","test"],["chooseVocabListBtn","list"],
+      ["chooseCardPracticeBtn","cards"],["chooseQuickReviewBtn","quick"],["chooseVocabPairsBtn","pairs"]]){
+      $(id).setAttribute("aria-pressed",String(mode===value));
+    }
     $("cardModeErrorsBtn").disabled=!PERSONALIZED_MODE;
     $("cardModeMixBtn").disabled=!PERSONALIZED_MODE;
     $("cardPersonalNote").classList.toggle("hidden",PERSONALIZED_MODE);
-    hideMsg($("setupMsg"));
-    hideMsg($("vocabListMsg"));
-    hideMsg($("cardPracticeMsg"));
-    hideMsg($("quickReviewSetupMsg"));
+    for(const id of ["setupMsg","vocabListMsg","cardPracticeMsg","quickReviewSetupMsg","vocabPairsSetupMsg"])hideMsg($(id));
     $("vocabPreview").classList.add("hidden");
+  }
+  function backVocabOneLevel(){
+    if(vocabMode==="menu"){showPortal();return}
+    if(vocabMode==="cards"&&vocabTopicSelectionOpen){
+      vocabTopicSelectionOpen=false;
+      setVocabMode("cards");
+    }else setVocabMode("menu");
+    window.scrollTo({top:0,behavior:"instant"});
   }
 
   function selectionSignature(selection){
@@ -1836,7 +1866,7 @@
     if(mode==="topic"&&!vocabTopicSelectionOpen){
       vocabTopicSelectionOpen=true;
       setVocabMode("cards");
-      $("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});
+      window.scrollTo({top:0,behavior:"instant"});
       return;
     }
     if(mode!=="topic"&&!PERSONALIZED_MODE){
@@ -2523,6 +2553,7 @@
     $("testArea").classList.add("hidden");
     $("doneCard").classList.add("hidden");
     $("fatalCard").classList.add("hidden");
+    setVocabMode("test");
     $("setupCard").classList.remove("hidden");
     hideMsg($("setupMsg"));
     if(config)applyConfig(config);
@@ -2554,6 +2585,7 @@
     $("openTestsBtn").setAttribute("aria-expanded","false");
     if(studentTestHistoryRefresh){clearInterval(studentTestHistoryRefresh);studentTestHistoryRefresh=null;}
     if(location.hash==="#tests")history.replaceState(null,"",location.pathname+location.search);
+    setVocabMode("menu");
     $("setupCard").classList.add("hidden");
     $("testArea").classList.add("hidden");
     $("doneCard").classList.add("hidden");
@@ -2564,6 +2596,7 @@
   $("openVocabBtn").addEventListener("click",()=>{
     $("portalCard").classList.add("hidden");
     $("grammarChoiceCard").classList.add("hidden");
+    setVocabMode("menu");
     $("setupCard").classList.remove("hidden");
     window.scrollTo({top:0,behavior:"instant"});
   });
@@ -2688,7 +2721,10 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("quickReviewWrongBtn").addEventListener("click",()=>{void gradeQuickReview(false)});
   $("quickReviewBackBtn").addEventListener("click",closeQuickReview);
   $("quickReviewDoneBackBtn").addEventListener("click",closeQuickReview);
-  $("cardModeTopicBtn").addEventListener("click",()=>{vocabTopicSelectionOpen=true;setVocabMode("cards");$("selectionHeading").scrollIntoView({behavior:"smooth",block:"start"});});
+  $("cardModeTopicBtn").addEventListener("click",()=>{
+    vocabTopicSelectionOpen=true;setVocabMode("cards");
+    window.scrollTo({top:0,behavior:"instant"});
+  });
   $("cardModeErrorsBtn").addEventListener("click",()=>startCardPractice("errors"));
   $("cardModeMixBtn").addEventListener("click",()=>startCardPractice("mix"));
   $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
@@ -2705,7 +2741,7 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
     $("vocabPreview").classList.add("hidden");
     hideMsg($("vocabListMsg"));
   });
-  $("vocabHomeBtn").addEventListener("click",showPortal);
+  $("vocabHomeBtn").addEventListener("click",backVocabOneLevel);
   $("openConjugationsBtn").addEventListener("click",()=>{ location.href="grammatik.html"; });
   $("openGrammarTestsBtn").addEventListener("click",()=>{ location.href="grammatik-uebung.html"; });
   $("openGrammarCardsBtn").addEventListener("click",()=>{ location.href=PERSONALIZED_MODE?"grammatik-karten.html?personalisiert=1":"grammatik-karten.html"; });
@@ -2747,6 +2783,8 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
         const target=$("unitsBox").querySelector('.folder-check[value="'+searchFolder+'"]');
         if(target){
           $("openVocabBtn").click();
+          vocabTopicSelectionOpen=true;
+          setVocabMode("cards");
           // Den genauen Lernordner aus dem Wörterbuch anzeigen.
           let current=target.parentElement;
           while(current&&current!==$("unitsBox")){
