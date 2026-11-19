@@ -117,6 +117,8 @@
     .quick-review-stack::after{transform:rotate(-2deg) translateY(6px)}
     .quick-review-card{position:relative;z-index:1;width:100%;min-height:112px;margin:0 auto;display:flex;flex-direction:column;gap:8px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.1rem}
     .quick-review-card.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+    .quick-review-stack>.vocab-speak-btn{position:absolute;right:8px;bottom:8px;z-index:3}
+    .quick-review-stack>.quick-review-card{padding-bottom:48px}
     #quizFlashcard{width:100%;min-height:112px;margin:0;padding:16px 16px 44px;font-size:1.1rem}
     .vocab-spoken-card{position:relative;min-width:0}
     .vocab-spoken-card>.flashcard{width:100%;height:100%;padding-bottom:44px;cursor:pointer}
@@ -544,12 +546,21 @@
     <div class="backline"><button id="quickReviewBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
     <h1 id="quickReviewTitle">Schnellwiederholung</h1>
     <p id="quickReviewSubtitle" class="sub"></p>
+    <div class="vocab-speech-settings">
+      <label for="quickReviewSpeechRate">🔊 Aussprachetempo</label>
+      <select id="quickReviewSpeechRate" aria-label="Aussprachetempo Schnellwiederholung">
+        <option value="0.85" selected>Langsam</option>
+        <option value="1">Normal</option>
+      </select>
+    </div>
+    <p id="quickReviewSpeechStatus" class="vocab-speech-status" role="status" aria-live="polite"></p>
     <div id="quickReviewProgress" class="tiny" aria-live="polite"></div>
     <p id="quickReviewInstruction" class="tiny">Tippe die Karte an, um sie umzudrehen. Danach wählst du Richtig oder Wiederholen.</p>
     <div id="quickReviewStack" class="quick-review-stack">
       <button id="quickReviewFlashcard" class="flashcard quick-review-card" type="button" aria-label="Karte umdrehen" aria-pressed="false">
         <span id="quickReviewCardText" class="quick-review-card-text"></span>
       </button>
+      <button id="quickReviewSpeakBtn" class="vocab-speak-btn hidden" type="button" aria-label="Spanische Vokabel anhören" title="Spanische Vokabel anhören">🔊</button>
     </div>
     <div id="quickReviewControls" class="actions vocab-self-check">
       <button id="quickReviewCorrectBtn" class="good" type="button">Richtig</button>
@@ -1574,6 +1585,9 @@
   function renderQuickReviewCard(){
     const session=quickReviewSession;
     if(!session)return;
+    stopVocabSpeech();
+    $("quickReviewSpeakBtn").classList.add("hidden");
+    $("quickReviewSpeechStatus").textContent=spanishSpeechSupported()?"":"Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.";
     if(!session.queue.length){
       session.current=null;
       finishTrackedActivity();
@@ -1602,6 +1616,8 @@
     $("quickReviewCardText").textContent=session.side==="de"
       ?String(session.current.sourceText||"")
       :(session.current.acceptedAnswers||[]).join(" / ");
+    $("quickReviewSpeakBtn").disabled=!spanishSpeechSupported();
+    $("quickReviewSpeakBtn").classList.toggle("hidden",session.side!=="es");
     $("quickReviewProgress").textContent="Noch "+(session.queue.length+1)+" im Stapel · "+session.correct+" richtig · "+session.wrongIds.size+" kommen zurück";
   }
 
@@ -1613,6 +1629,9 @@
     $("quickReviewCardText").textContent=flipped
       ?(quickReviewSession.side==="de"?(quickReviewSession.current.acceptedAnswers||[]).join(" / "):String(quickReviewSession.current.sourceText||""))
       :(quickReviewSession.side==="de"?String(quickReviewSession.current.sourceText||""):(quickReviewSession.current.acceptedAnswers||[]).join(" / "));
+    const spanishVisible=quickReviewSession.side==="de"?flipped:!flipped;
+    $("quickReviewSpeakBtn").classList.toggle("hidden",!spanishVisible);
+    if(!spanishVisible)stopVocabSpeech();
     card.setAttribute("aria-label",flipped?"Antwort aufgedeckt; Karte erneut antippen zum Zurückdrehen":"Karte antippen zum Umdrehen");
     $("quickReviewInstruction").textContent="Tippe die Karte an, um sie umzudrehen. Danach wählst du Richtig oder Wiederholen.";
   }
@@ -1620,6 +1639,7 @@
   async function gradeQuickReview(correct){
     const session=quickReviewSession;
     if(!session?.current||session.isGrading)return;
+    stopVocabSpeech();
     session.isGrading=true;
     $("quickReviewCorrectBtn").disabled=true;
     $("quickReviewWrongBtn").disabled=true;
@@ -1873,6 +1893,7 @@
   }
 
   function closeQuickReview(){
+    stopVocabSpeech();
     void finishTrackedActivity();
     quickReviewSession=null;
     $("quickReviewArea").classList.add("hidden");
@@ -1996,9 +2017,10 @@
     vocabSpeechRequest++;
     if("speechSynthesis" in window)window.speechSynthesis.cancel();
   }
-  function speakSpanishAnswers(answers){
+  function speakSpanishAnswers(answers,rateId="vocabSpeechRate",statusId="vocabSpeechStatus"){
+    const status=$(statusId);
     if(!spanishSpeechSupported()){
-      $("vocabSpeechStatus").textContent="Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.";
+      status.textContent="Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.";
       return;
     }
     const parts=spanishSpeechParts(answers);
@@ -2008,19 +2030,19 @@
     const voices=window.speechSynthesis.getVoices();
     const voice=voices.find(v=>v.lang.toLowerCase().replace("_","-")==="es-es")
       ||voices.find(v=>/^es(?:-|_)/i.test(v.lang));
-    const rate=Number($("vocabSpeechRate").value)===1?1:0.85;
-    $("vocabSpeechStatus").textContent="";
+    const rate=Number($(rateId).value)===1?1:0.85;
+    status.textContent="";
     parts.forEach((part,index)=>{
       const utterance=new window.SpeechSynthesisUtterance(part);
       utterance.lang=voice?.lang||"es-ES";
       if(voice)utterance.voice=voice;
       utterance.rate=rate;
       utterance.onend=()=>{
-        if(request===vocabSpeechRequest&&index===parts.length-1)$("vocabSpeechStatus").textContent="";
+        if(request===vocabSpeechRequest&&index===parts.length-1)status.textContent="";
       };
       utterance.onerror=event=>{
         if(request===vocabSpeechRequest&&!["canceled","interrupted"].includes(event.error))
-          $("vocabSpeechStatus").textContent="Die Aussprache konnte nicht abgespielt werden. Prüfe die spanische Sprachausgabe deines Geräts.";
+          status.textContent="Die Aussprache konnte nicht abgespielt werden. Prüfe die spanische Sprachausgabe deines Geräts.";
       };
       window.speechSynthesis.speak(utterance);
     });
@@ -2806,6 +2828,13 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
 
   $("startQuickReviewBtn").addEventListener("click",()=>startQuickReview());
   $("quickReviewFlashcard").addEventListener("click",flipQuickReviewCard);
+  $("quickReviewSpeakBtn").addEventListener("click",()=>{
+    const session=quickReviewSession;
+    if(!session?.current)return;
+    const flipped=$("quickReviewFlashcard").classList.contains("is-flipped");
+    const spanishVisible=session.side==="de"?flipped:!flipped;
+    if(spanishVisible)speakSpanishAnswers(session.current.acceptedAnswers||[],"quickReviewSpeechRate","quickReviewSpeechStatus");
+  });
   $("quickReviewCorrectBtn").addEventListener("click",()=>{void gradeQuickReview(true)});
   $("quickReviewWrongBtn").addEventListener("click",()=>{void gradeQuickReview(false)});
   $("quickReviewBackBtn").addEventListener("click",closeQuickReview);
