@@ -117,7 +117,18 @@
     .quick-review-stack::after{transform:rotate(-2deg) translateY(6px)}
     .quick-review-card{position:relative;z-index:1;width:100%;min-height:112px;margin:0 auto;display:flex;flex-direction:column;gap:8px;background:#f0fdfa;color:#134e4a;border-color:#5eead4;font-size:1.1rem}
     .quick-review-card.is-flipped{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
-    #quizFlashcard{width:calc((100% - 12px)/2);min-height:112px;margin:18px auto;padding:16px;font-size:1.1rem}
+    #quizFlashcard{width:100%;min-height:112px;margin:0;padding:16px 16px 44px;font-size:1.1rem}
+    .vocab-spoken-card{position:relative;min-width:0}
+    .vocab-spoken-card>.flashcard{width:100%;height:100%;padding-bottom:44px;cursor:pointer}
+    .vocab-speak-btn{display:inline-flex;justify-content:center;align-items:center;width:38px;height:38px;min-height:38px;padding:0;border-radius:999px;background:#d1fae5;color:#115e59;border:1px solid #0f766e;font-size:1.2rem;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+    .vocab-speak-btn:hover:not(:disabled){background:#a7f3d0}
+    .vocab-speak-btn:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+    .vocab-spoken-card>.vocab-speak-btn{position:absolute;right:8px;bottom:8px;z-index:2}
+    .vocab-speech-settings{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:12px 0 0;font-size:.9rem}
+    .vocab-speech-settings select{font:inherit;padding:7px 9px;border:1px solid #94a3b8;border-radius:9px;background:#fff;color:#172033}
+    .vocab-speech-status{min-height:1.2em;margin:5px 0 0;color:#64748b;font-size:.86rem}
+    .vocab-quiz-card-wrap{position:relative;width:calc((100% - 12px)/2);margin:18px auto}
+    .vocab-quiz-card-wrap>.vocab-speak-btn{position:absolute;right:8px;bottom:8px;z-index:2}
     #quizFlashcard,#quickReviewFlashcard{user-select:none;-webkit-user-select:none;cursor:pointer}
     .vocab-self-check{display:flex;justify-content:center;gap:12px;margin-top:12px}
     .vocab-self-check button{flex:1;max-width:230px;min-height:52px;font-size:1rem}
@@ -495,7 +506,15 @@
     <div class="backline"><button id="cardsBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
     <h1 id="cardsTitle">Vokabelkarten</h1>
     <p id="cardsDescription" class="sub"></p>
-  <div id="cardsSaveStatus" class="tiny" aria-live="polite"></div>
+    <div id="vocabSpeechSettings" class="vocab-speech-settings">
+      <label for="vocabSpeechRate">🔊 Aussprachetempo</label>
+      <select id="vocabSpeechRate" aria-label="Aussprachetempo">
+        <option value="0.85" selected>Langsam</option>
+        <option value="1">Normal</option>
+      </select>
+    </div>
+    <p id="vocabSpeechStatus" class="vocab-speech-status" role="status" aria-live="polite"></p>
+    <div id="cardsSaveStatus" class="tiny" aria-live="polite"></div>
     <div id="cardsStudyArea" class="hidden">
       <div id="studyCards" class="flashcard-grid"></div>
       <div class="actions">
@@ -505,7 +524,10 @@
     <div id="cardsQuizArea" class="hidden">
       <div id="quizProgress" class="tiny"></div>
       <p id="cardFlipInstruction" class="tiny">Tippe die Karte an, um sie jederzeit umzudrehen.</p>
-      <button id="quizFlashcard" class="flashcard quiz-flashcard" type="button" aria-label="Vokabelkarte umdrehen" aria-pressed="false"></button>
+      <div class="vocab-quiz-card-wrap">
+        <button id="quizFlashcard" class="flashcard quiz-flashcard" type="button" aria-label="Vokabelkarte umdrehen" aria-pressed="false"></button>
+        <button id="quizSpeakBtn" class="vocab-speak-btn hidden" type="button" aria-label="Spanische Antwort anhören" title="Spanische Antwort anhören">🔊</button>
+      </div>
       <div id="selfCheckControls" class="actions vocab-self-check">
         <button id="cardCorrectBtn" class="good" type="button">Richtig</button>
         <button id="cardWrongBtn" class="bad" type="button">Wiederholen</button>
