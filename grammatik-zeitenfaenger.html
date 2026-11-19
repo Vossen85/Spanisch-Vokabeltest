@@ -60,6 +60,7 @@ label.field{display:block;font-weight:800;margin:14px 0 7px}
 <div id="setupMsg" class="message" role="status" aria-live="polite"></div>
 </section>
 <section id="gameCard" class="card hidden">
+<div class="backline"><button id="gameBackBtn" class="secondary" type="button">← Zurück zur Auswahl</button></div>
 <div class="game-top"><div style="width:100%;text-align:center"><h1 id="activeHeading" class="active-heading" style="text-align:center;width:100%;margin-inline:auto"></h1><p class="tiny" style="text-align:center">Tippe auf die passende Zeitform.</p></div>
 <div class="stats" style="display:flex;justify-content:center;align-items:center;width:100%"><div class="stat">Richtig: <span id="correctCount">0</span></div><div class="stat">Falsch: <span id="wrongCount">0</span></div></div></div>
 <div id="timer" class="timer">01:00</div>
@@ -501,9 +502,20 @@ async function finishGame(){
 }
 function back(){
  if(active){active=false;clearInterval(timerHandle);timerHandle=null;clearTimeout(roundTimer);clearTimeout(nextTimer);void stopActivity();}
- if(PERSONALIZED_MODE){location.href="uebung.html?personalisiert=1";return}
- location.href="uebung.html";
+ if(PERSONALIZED_MODE){location.href="uebung.html?personalisiert=1#grammatik";return}
+ location.href="uebung.html#grammatik";
 }
+$("gameBackBtn").addEventListener("click",()=>{
+ active=false;answerLocked=false;deadline=0;
+ if(timerHandle){clearInterval(timerHandle);timerHandle=null}
+ if(roundTimer){clearTimeout(roundTimer);roundTimer=null}
+ if(nextTimer){clearTimeout(nextTimer);nextTimer=null}
+ void stopActivity();
+ $("gameCard").classList.add("hidden");
+ $("resultCard").classList.add("hidden");
+ $("setupCard").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"instant"});
+});
 $("startBtn").addEventListener("click",startGame);
 $("backBtn").addEventListener("click",back);
 $("resultBackBtn").addEventListener("click",function(){$("resultCard").classList.add("hidden");$("setupCard").classList.remove("hidden")});
