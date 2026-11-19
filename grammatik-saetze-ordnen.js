@@ -79,6 +79,14 @@ function finish(){if(!running)return;running=false;void stopTracking(document.vi
 for(const item of history){const block=document.createElement('article'),question=document.createElement('strong'),given=document.createElement('p');question.textContent=item.row.de;given.lang='es';given.className=item.correct?'good-text':'bad-text';given.textContent=(item.correct?'✓ ':'✕ ')+item.answer;block.append(question,given);if(!item.correct){const right=document.createElement('p');right.lang='es';right.className='good-text';right.textContent='✓ '+item.row.es;block.append(right)}$('reviewList').append(block)}}
 $('selectAllBtn').onclick=()=>$('topics').querySelectorAll('input').forEach(el=>el.checked=true);
 $('clearAllBtn').onclick=()=>$('topics').querySelectorAll('input').forEach(el=>el.checked=false);
+function backToSentenceSelection(){
+ if(running){
+  running=false;
+  void stopTracking(document.visibilityState==='visible'&&Date.now()-lastInteraction<=90000);
+ }
+ show('setup');
+}
+$('exerciseBackBtn').onclick=backToSentenceSelection;
 $('startBtn').onclick=()=>begin(selection());$('finishBtn').onclick=finish;$('selectionBtn').onclick=()=>show('setup');$('againBtn').onclick=()=>begin(selection());$('repeatBtn').onclick=()=>begin(shuffle(history.filter(x=>!x.correct).map(x=>x.row)));
 $('checkBtn').onclick=submit;$('resetBtn').onclick=()=>{if(locked)return;selected=[];clearAttemptFeedback();renderBuilder()};$('revealBtn').onclick=revealAnswer;$('nextBtn').onclick=()=>{if(!locked)return;if(++position===round.length)finish();else render()};
 const paths=['grammatik-saetze-daten.json','grammatik-saetze-a2.json','grammatik-saetze-subjuntivo.json','grammatik-saetze-rest.json','grammatik-saetze-varianten.json'];
