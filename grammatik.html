@@ -52,6 +52,10 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
   .avanza-home-link.is-locked{opacity:.68;pointer-events:none;cursor:default}
   @media print{.avanza-home-header{display:none!important}}
   .tense-heading{margin:0 0 8px;color:#4f46e5;font-size:clamp(1.8rem,5vw,2.5rem);font-weight:900;line-height:1.1}
+
+.topic-group-head h2{flex:1;min-width:0}
+.topic-group-fold{flex:0 0 auto;margin-left:auto;width:43px;height:42px;padding:7px 9px;font-size:1.3rem;line-height:1;background:#e2e8f0;color:#172033;border:1px solid #cbd5e1}
+.topic-group-fold:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -450,9 +454,14 @@ for(const t of TOPICS){if(!byGroup.has(t.group))byGroup.set(t.group,[]);byGroup.
 const list=document.getElementById("topicList");
 for(const [group,topics] of byGroup){
   const sec=document.createElement("div");sec.className="topic-group";
-  sec.innerHTML="<div class='topic-group-head'><input type='checkbox' class='topic-group-check' aria-label='Alle Unterthemen auswählen'><h2>"+group+"</h2></div><div class='topic-grid'></div>";
+  sec.innerHTML="<div class='topic-group-head'><input type='checkbox' class='topic-group-check' aria-label='Alle Unterthemen auswählen'><h2>"+group+"</h2><button type='button' class='topic-group-fold' title='Unterthemen anzeigen' aria-expanded='false'>▾</button></div><div class='topic-grid hidden'></div>";
   const grid=sec.querySelector(".topic-grid");
   const groupCheck=sec.querySelector(".topic-group-check");
+  const fold=sec.querySelector(".topic-group-fold");
+  grid.id="grammar-conjugations-children-"+list.children.length;
+  fold.setAttribute("aria-controls",grid.id);
+  fold.setAttribute("aria-label","Unterthemen von "+group+" anzeigen");
+  fold.addEventListener("click",()=>{const expanded=!grid.classList.toggle("hidden");fold.textContent=expanded?"▴":"▾";fold.title=expanded?"Unterthemen ausblenden":"Unterthemen anzeigen";fold.setAttribute("aria-label","Unterthemen von "+group+(expanded?" ausblenden":" anzeigen"));fold.setAttribute("aria-expanded",String(expanded))});
   const refreshGroup=()=>{
     const checks=[...grid.querySelectorAll(".topic input")];
     const all=checks.length>0&&checks.every(x=>x.checked),some=checks.some(x=>x.checked);
