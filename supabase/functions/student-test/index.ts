@@ -23,17 +23,15 @@ function getAdmin() {
 }
 
 function normalize(s: unknown) {
-  return String(s ?? "")
-    .normalize("NFC")
-    .trim()
-    .replace(/[(){}\[\]]/g, " ")
-    .replace(/,/g, " ")
-    .replace(/\s*\/\s*/g, " ")
-    .replace(/\s+/g, " ")
-    .replace(/^[¿¡"'“”‘’\s]+|[?!.,"'“”‘’\s]+$/g, "")
-    .trim();
+ return String(s ?? "").normalize("NFC").trim()
+ .replace(/[(){}\[\],]/g," ")
+ .replace(/\s*\/\s*/g," ")
+ .replace(/\s+/g," ")
+ .replace(/^[¿¡"'“”‘’\s]+|[?!.,"'“”‘’\s]+$/g,"").trim();
 }
-
+function comparisonKey(value: unknown): string {
+ return normalize(value).replace(/\s+/g,"");
+}
 function accentCaseFold(s: string) {
   return s
     .replace(/[áÁ]/g, m => m === "Á" ? "A" : "a")
@@ -58,41 +56,19 @@ function genderShorthandMatches(typed: string, expected: string) {
 }
 
 function scoreAgainstExpected(typed: string, expectedVariants: Set<string>) {
-  const typedNorm = normalize(typed);
-  if (!typedNorm) return 0;
-  if (expectedVariants.has(typedNorm)) return 1;
-
-  for (const expected of expectedVariants) {
-    if (genderShorthandMatches(typedNorm, expected)) return 1;
-  }
-
-  const tolerant = accentCaseFold(typedNorm);
-  for (const expected of expectedVariants) {
-    const expectedTolerant = accentCaseFold(expected);
-    if (expectedTolerant === tolerant) return 0.5;
-    if (genderShorthandMatches(tolerant, expectedTolerant)) return 0.5;
-  }
-  return 0;
+ const typedNorm=normalize(typed), key=comparisonKey(typedNorm);
+ if(!key)return 0;
+ for(const expected of expectedVariants){
+  if(comparisonKey(expected)===key)return 1;
+  if(genderShorthandMatches(typedNorm,expected))return 1;
+ }
+ const tolerant=accentCaseFold(key);
+ for(const expected of expectedVariants){
+  if(accentCaseFold(comparisonKey(expected))===tolerant)return .5;
+  if(genderShorthandMatches(accentCaseFold(typedNorm),accentCaseFold(expected)))return .5;
+ }
+ return 0;
 }
-
-function splitTopLevelCommas(s: string) {
-  const parts: string[] = [];
-  let cur = "";
-  let depth = 0;
-  for (const ch of s) {
-    if (ch === "(") depth++;
-    if (ch === ")") depth = Math.max(0, depth - 1);
-    if (ch === "," && depth === 0) {
-      if (cur.trim()) parts.push(cur.trim());
-      cur = "";
-    } else {
-      cur += ch;
-    }
-  }
-  if (cur.trim()) parts.push(cur.trim());
-  return parts;
-}
-
 function variantsFromExpected(expected: string) {
   const set = new Set<string>();
   const slashParts = expected.includes(" / ") ? expected.split(/\s+\/\s+/) : [expected];
