@@ -28,6 +28,19 @@
 .topic-group-fold{width:36px;height:36px;padding:5px 7px;border-radius:9px;font-size:1.1rem}
 .topic-option-list{padding:9px 11px 12px;border-top:1px solid #4b5563}
 @media(max-width:650px){.topic-group-head{min-height:59px;padding:8px 10px}.topic-group-head h2{font-size:1.1rem}}
+
+/* Browser-Sprachausgabe für spanische Verbformen, ohne Personalpronomen. */
+.grammar-speech-settings{display:flex;gap:8px 12px;align-items:center;flex-wrap:wrap;margin:13px 0 5px;font-size:.92rem}
+.grammar-speech-settings select{font:inherit;border:1px solid #94a3b8;border-radius:9px;padding:7px 9px;background:#fff;color:#172033}
+.grammar-speech-status{min-height:1.2em;margin:5px 0;color:#64748b;font-size:.85rem}
+.grammar-spoken-card{position:relative;min-width:0}
+.grammar-spoken-card>.flashcard{width:100%;height:100%;padding-bottom:47px}
+.grammar-speak-btn{position:absolute;right:9px;bottom:9px;display:inline-flex;justify-content:center;align-items:center;width:39px;height:39px;padding:0;border:1px solid #0f766e;border-radius:100px;background:#d1fae5;color:#115e59;font-size:1.2rem;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.12);z-index:2}
+.grammar-speak-btn:hover:not(:disabled){background:#a7f3d0}
+.grammar-speak-btn:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+.grammar-speak-btn:disabled{opacity:.5;cursor:not-allowed}
+.grammar-quiz-spoken-card{width:100%;max-width:760px;margin:18px auto}
+.grammar-quiz-spoken-card>.quiz-card{margin:0;max-width:none}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><main class="wrap">
   <header class="avanza-home-header"><a class="avanza-home-link" href="uebung.html" data-home-target="uebung.html" aria-label="Zur Startseite ¡Avanza!" title="Zur Startseite"><img src="./icons/avanza-schueler.svg" alt="¡Avanza! Startseite"></a></header>
 <section id="selectPanel" class="panel"><div class="backline"><button id="backBtn" class="secondary">← Zurück zu Grammatik</button></div>
@@ -35,8 +48,17 @@
 <div class="student-account-box"><div id="guestAccountLink"><p class="tiny">Diese allgemeine Grammatikübung funktioniert ohne Konto und speichert keine persönlichen Lernfortschritte. Für gespeicherte Wiederholungen:</p><a class="button secondary" href="konto.html?next=grammar&v=20261107-2">Zum persönlichen Lernbereich</a></div><div id="studentLoggedIn" class="hidden"><strong id="studentAccountName"></strong><p class="tiny">Deine Grammatik-Kartenfortschritte werden diesem Schülerkonto zugeordnet.</p><button id="studentLogoutBtn" class="secondary" type="button">Abmelden</button></div><div id="studentAccountMsg" class="account-msg"></div></div>
 <h2 class="selection-heading">Grammatikbereiche</h2><div class="topic-toolbar"><button id="selectAllTopics" class="secondary" type="button" disabled>Alle auswählen</button><button id="clearTopics" class="secondary" type="button" disabled>Auswahl leeren</button></div><div id="topicOptions" class="topic-groups"><p class="tiny">Grammatikbereiche werden geladen …</p></div>
 <div id="selectionSummary" class="tiny"></div><div class="actions"><button id="beginBtn" class="primary" disabled>Lerneinheit starten</button></div><div id="error" class="tiny"></div></section>
-<section id="studyPanel" class="panel hidden"><button id="studyBackBtn" class="secondary">← Zurück zur Auswahl</button><h1 id="topicHeading"></h1><div id="studyProgress" class="tiny"></div><p class="sub">Tippe eine Karte an, um zwischen Spanisch und Deutsch zu wechseln.</p><div id="studyCards" class="flashcard-grid"></div><div class="actions"><button id="quizBtn" class="primary">Karten mischen und abfragen</button></div></section>
-<section id="quizPanel" class="panel hidden"><h1 id="quizTenseHeading" class="tense-heading"></h1><div id="quizProgress" class="progress"></div><div class="backline"><button id="quizBackBtn" class="secondary" type="button">← Zurück zu den Lernkarten</button></div><button id="quizCard" class="flashcard quiz-card"></button><div class="actions"><button id="flipBtn" class="secondary">Spanische Lösung aufdecken</button></div><div id="markBtns" class="actions hidden"><button id="correctBtn" class="good">Richtig</button><button id="wrongBtn" class="bad">Falsch</button></div><div id="feedback" class="tiny"></div><div id="saveStatus" class="tiny"></div></section>
+<section id="studyPanel" class="panel hidden"><button id="studyBackBtn" class="secondary">← Zurück zur Auswahl</button><h1 id="topicHeading"></h1><div id="studyProgress" class="tiny"></div><p class="sub">Tippe eine Karte an, um zwischen Spanisch und Deutsch zu wechseln.</p>
+<div class="grammar-speech-settings"><label for="grammarSpeechRateStudy">🔊 Aussprachetempo</label><select id="grammarSpeechRateStudy"><option value="1" selected>Normal</option><option value="0.85">Langsam</option></select></div>
+<p id="grammarSpeechStatusStudy" class="grammar-speech-status" role="status" aria-live="polite"></p>
+<div id="studyCards" class="flashcard-grid"></div><div class="actions"><button id="quizBtn" class="primary">Karten mischen und abfragen</button></div></section>
+<section id="quizPanel" class="panel hidden"><h1 id="quizTenseHeading" class="tense-heading"></h1><div id="quizProgress" class="progress"></div><div class="backline"><button id="quizBackBtn" class="secondary" type="button">← Zurück zu den Lernkarten</button></div>
+<div class="grammar-speech-settings"><label for="grammarSpeechRateQuiz">🔊 Aussprachetempo</label><select id="grammarSpeechRateQuiz"><option value="1" selected>Normal</option><option value="0.85">Langsam</option></select></div>
+<p id="grammarSpeechStatusQuiz" class="grammar-speech-status" role="status" aria-live="polite"></p>
+<div class="grammar-spoken-card grammar-quiz-spoken-card">
+<button id="quizCard" class="flashcard quiz-card"></button>
+<button id="quizSpeakBtn" class="grammar-speak-btn hidden" type="button" aria-label="Spanische Verbformen anhören" title="Spanische Verbformen anhören">🔊</button>
+</div><div class="actions"><button id="flipBtn" class="secondary">Spanische Lösung aufdecken</button></div><div id="markBtns" class="actions hidden"><button id="correctBtn" class="good">Richtig</button><button id="wrongBtn" class="bad">Falsch</button></div><div id="feedback" class="tiny"></div><div id="saveStatus" class="tiny"></div></section>
 <section id="donePanel" class="panel hidden"><h1>Geschafft!</h1><p id="doneText"></p><button id="doneBackBtn" class="primary">← Zurück zur Auswahl</button></section>
 </main><script>
 const SUPABASE_URL="https://jzolxrqrrljwpmjbdxmo.supabase.co";
@@ -234,17 +256,100 @@ function updateTopicSelection(){const checked=[...document.querySelectorAll('inp
 document.getElementById("selectAllTopics").addEventListener("click",()=>{document.querySelectorAll('input[name="grammar-topic"]').forEach(x=>x.checked=true);updateTopicSelection()});document.getElementById("clearTopics").addEventListener("click",()=>{document.querySelectorAll('input[name="grammar-topic"]').forEach(x=>x.checked=false);updateTopicSelection()});
 async function init(){try{const r=await fetch("grammatik-themen.json",{cache:"no-store"});const d=await r.json();topics=d.topics||[];if(!topics.length)throw new Error("Keine Grammatikbereiche vorhanden.");renderTopicOptions()}catch{topicOptions.innerHTML="";document.getElementById("error").textContent="Die Grammatikbereiche konnten nicht geladen werden. Bitte lade die Seite erneut."}}
 function makeRows(topic){return topic.verbs.map(v=>({topicId:topic.id,topicTitle:topic.title,topicGroup:topic.group,verb:v.verb,de:v.de,mode:topic.mode,es:formsFor(v.verb,topic.mode),deForms:germanForms(v.de,topic.mode,v.verb)}))}
-function revealCard(card,front,back){card.classList.toggle("is-flipped");card.innerHTML=card.classList.contains("is-flipped")?back:front}
+let grammarSpeechSerial=0;
+function grammarSpeechAvailable(){
+ return "speechSynthesis" in window&&typeof window.SpeechSynthesisUtterance==="function";
+}
+function grammarSpeechForms(forms){
+ // Nur der spanische Formenwert, nie das Personalpronomen/Label.
+ // Reflexivteilchen und Hilfsverben gehören dagegen zur Form.
+ return (Array.isArray(forms)?forms:[]).flatMap(pair=>{
+  const value=Array.isArray(pair)?pair[1]:pair;
+  return String(value??"").normalize("NFC").split(/\s+\/\s+|[,;|]+/);
+ }).map(form=>form.replace(/[()[\]{}.,;:!?¡¿"“”«»…·•]/g," ").replace(/\s+/g," ").trim()).filter(Boolean);
+}
+function stopGrammarSpeech(){
+ grammarSpeechSerial++;
+ if("speechSynthesis" in window)window.speechSynthesis.cancel();
+}
+function grammarSpeechStatus(id,text){
+ const element=document.getElementById(id);
+ if(element)element.textContent=text;
+}
+function speakGrammarForms(forms,statusId){
+ if(!grammarSpeechAvailable()){
+  grammarSpeechStatus(statusId,"Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.");
+  return;
+ }
+ const phrases=grammarSpeechForms(forms);
+ if(!phrases.length)return;
+ stopGrammarSpeech();
+ const serial=grammarSpeechSerial;
+ const synthesizer=window.speechSynthesis;
+ const voices=synthesizer.getVoices();
+ const voice=voices.find(v=>String(v.lang).replace("_","-").toLowerCase()==="es-es")||
+   voices.find(v=>/^es(?:-|_)/i.test(v.lang));
+ const rate=Number(document.getElementById("grammarSpeechRateStudy").value)===0.85?0.85:1;
+ grammarSpeechStatus(statusId,"");
+ for(const [index,form] of phrases.entries()){
+  const spoken=new window.SpeechSynthesisUtterance(form);
+  spoken.lang=voice?.lang||"es-ES";
+  if(voice)spoken.voice=voice;
+  spoken.rate=rate;
+  spoken.onend=()=>{
+    if(serial===grammarSpeechSerial&&index===phrases.length-1)grammarSpeechStatus(statusId,"");
+  };
+  spoken.onerror=event=>{
+    if(serial===grammarSpeechSerial&&!["canceled","interrupted"].includes(event.error))
+      grammarSpeechStatus(statusId,"Die Aussprache konnte nicht abgespielt werden. Prüfe die spanische Stimme deines Geräts.");
+  };
+  synthesizer.speak(spoken);
+ }
+}
+for(const id of ["grammarSpeechRateStudy","grammarSpeechRateQuiz"]){
+ document.getElementById(id).addEventListener("change",event=>{
+  document.getElementById(id==="grammarSpeechRateStudy"?"grammarSpeechRateQuiz":"grammarSpeechRateStudy").value=event.target.value;
+  stopGrammarSpeech();
+ });
+}
+function revealCard(card,front,back,speaker){card.classList.toggle("is-flipped");const germanSide=card.classList.contains("is-flipped");card.innerHTML=germanSide?back:front;if(speaker)speaker.classList.toggle("hidden",germanSide);stopGrammarSpeech()}
 async function startTopic(){if(!studentAccountProfile)await refreshStudentAccount();if(PERSONALIZED_MODE&&!studentAccountProfile)return;const selectedIds=new Set([...document.querySelectorAll('input[name="grammar-topic"]:checked')].map(x=>x.value));const selectedTopics=topics.filter(t=>selectedIds.has(t.id));if(!selectedTopics.length)return;let rows=[],reviewCount=0;for(const topic of selectedTopics){const topicRows=makeRows(topic);if(PERSONALIZED_MODE&&studentAccountProfile){try{const due=await studentProgress({action:"due",itemType:"grammar",groupKey:String(topic.id)});const order=new Map((due.due||[]).map((item,index)=>[item.item_key,index]));topicRows.sort((a,b)=>{const ka=String(topic.id)+":"+a.verb,kb=String(topic.id)+":"+b.verb;return(order.has(ka)?order.get(ka):Infinity)-(order.has(kb)?order.get(kb):Infinity)});reviewCount+=order.size}catch(error){console.warn("Wiederholung konnte nicht geladen werden:",error)}}rows.push(...topicRows)}const modes=[...new Set(selectedTopics.map(t=>t.mode))];session={topics:selectedTopics,topic:selectedTopics[0],rows,group:0,learned:[],current:[],quiz:[],index:0,wrong:[],phase:"study",reviewCount};await startTrackedActivity("grammar","extra",selectedTopics.map(t=>t.id).join(","));document.getElementById("selectPanel").classList.add("hidden");document.getElementById("studyPanel").classList.remove("hidden");renderStudy()}
-function renderStudy(){const s=session,start=s.group*6,rows=s.rows.slice(start,start+6);s.current=rows;const tenseNames=[...new Set(s.topics.map(t=>t.group))],tenseHeading=tenseNames.join(" · ");document.getElementById("topicHeading").textContent=tenseHeading;document.getElementById("quizTenseHeading").textContent=tenseHeading;document.getElementById("studyProgress").textContent=(s.group===0&&s.reviewCount?"Fällige Wiederholungen: "+s.reviewCount+" · ":"")+"Stapel "+(s.group+1)+" von "+Math.ceil(s.rows.length/6)+" · "+rows.length+" Karten";const root=document.getElementById("studyCards");root.innerHTML="";for(const r of rows){const b=document.createElement("button");b.className="flashcard";const es=renderForms(r.verb,r.es,"es",r.mode),de=renderForms(germanDisplay(r.de,r.verb),r.deForms,"de",r.mode);b.innerHTML=es;b.addEventListener("click",()=>revealCard(b,es,de));root.appendChild(b)}}
-function startQuiz(rows,phase){session.phase=phase;session.quiz=shuffle(rows);session.index=0;session.wrong=[];document.getElementById("studyPanel").classList.add("hidden");document.getElementById("quizPanel").classList.remove("hidden");renderQuiz()}
-function renderQuiz(){const r=session.quiz[session.index];if(!r){roundEnd();return}const card=document.getElementById("quizCard");card.classList.remove("is-flipped");card.dataset.flipped="false";card.dataset.es=renderForms(r.verb,r.es,"es",r.mode);card.dataset.de=renderForms(germanDisplay(r.de),r.deForms,"de",r.mode);card.innerHTML=card.dataset.de;document.getElementById("quizProgress").textContent=(session.phase==="cumulative"?"Gemischte Wiederholung":"Abfrage des Sechserstapels")+" · Karte "+(session.index+1)+" von "+session.quiz.length;document.getElementById("markBtns").classList.add("hidden");document.getElementById("flipBtn").classList.remove("hidden");document.getElementById("flipBtn").textContent="Spanische Lösung aufdecken";document.getElementById("feedback").textContent=""}
-function flipQuiz(){const c=document.getElementById("quizCard");const showSpanish=c.dataset.flipped!=="true";c.dataset.flipped=String(showSpanish);c.classList.toggle("is-flipped",showSpanish);c.innerHTML=showSpanish?c.dataset.es:c.dataset.de;document.getElementById("flipBtn").textContent=showSpanish?"Zur deutschen Seite zurück":"Spanische Lösung aufdecken";document.getElementById("markBtns").classList.toggle("hidden",!showSpanish)}
+function renderStudy(){
+ stopGrammarSpeech();
+ const s=session,start=s.group*6,rows=s.rows.slice(start,start+6);
+ s.current=rows;
+ const tenseNames=[...new Set(s.topics.map(t=>t.group))],tenseHeading=tenseNames.join(" · ");
+ document.getElementById("topicHeading").textContent=tenseHeading;
+ document.getElementById("quizTenseHeading").textContent=tenseHeading;
+ document.getElementById("studyProgress").textContent=(s.group===0&&s.reviewCount?"Fällige Wiederholungen: "+s.reviewCount+" · ":"")+"Stapel "+(s.group+1)+" von "+Math.ceil(s.rows.length/6)+" · "+rows.length+" Karten";
+ grammarSpeechStatus("grammarSpeechStatusStudy",grammarSpeechAvailable()?"":"Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.");
+ const root=document.getElementById("studyCards");root.replaceChildren();
+ for(const r of rows){
+  const wrap=document.createElement("div");wrap.className="grammar-spoken-card";
+  const card=document.createElement("button");card.type="button";card.className="flashcard";
+  const es=renderForms(r.verb,r.es,"es",r.mode),de=renderForms(germanDisplay(r.de,r.verb),r.deForms,"de",r.mode);
+  card.innerHTML=es;
+  const speaker=document.createElement("button");speaker.type="button";speaker.className="grammar-speak-btn";
+  speaker.textContent="🔊";speaker.setAttribute("aria-label","Spanische Verbformen von "+r.verb+" anhören");
+  speaker.title="Spanische Verbformen anhören";speaker.disabled=!grammarSpeechAvailable();
+  speaker.addEventListener("click",()=>speakGrammarForms(r.es,"grammarSpeechStatusStudy"));
+  card.addEventListener("click",()=>revealCard(card,es,de,speaker));
+  wrap.append(card,speaker);root.appendChild(wrap);
+ }
+}
+function startQuiz(rows,phase){stopGrammarSpeech();session.phase=phase;session.quiz=shuffle(rows);session.index=0;session.wrong=[];document.getElementById("studyPanel").classList.add("hidden");document.getElementById("quizPanel").classList.remove("hidden");renderQuiz()}
+function renderQuiz(){stopGrammarSpeech();document.getElementById("quizSpeakBtn").classList.add("hidden");const r=session.quiz[session.index];if(!r){roundEnd();return}const card=document.getElementById("quizCard");card.classList.remove("is-flipped");card.dataset.flipped="false";card.dataset.es=renderForms(r.verb,r.es,"es",r.mode);card.dataset.de=renderForms(germanDisplay(r.de),r.deForms,"de",r.mode);card.innerHTML=card.dataset.de;document.getElementById("quizProgress").textContent=(session.phase==="cumulative"?"Gemischte Wiederholung":"Abfrage des Sechserstapels")+" · Karte "+(session.index+1)+" von "+session.quiz.length;document.getElementById("markBtns").classList.add("hidden");document.getElementById("flipBtn").classList.remove("hidden");document.getElementById("flipBtn").textContent="Spanische Lösung aufdecken";document.getElementById("feedback").textContent=""}
+function flipQuiz(){const c=document.getElementById("quizCard");const showSpanish=c.dataset.flipped!=="true";c.dataset.flipped=String(showSpanish);c.classList.toggle("is-flipped",showSpanish);c.innerHTML=showSpanish?c.dataset.es:c.dataset.de;document.getElementById("flipBtn").textContent=showSpanish?"Zur deutschen Seite zurück":"Spanische Lösung aufdecken";document.getElementById("quizSpeakBtn").classList.toggle("hidden",!showSpanish);if(!showSpanish)stopGrammarSpeech();document.getElementById("markBtns").classList.toggle("hidden",!showSpanish)}
 function roundEnd(){if(session.wrong.length){const count=session.wrong.length;document.getElementById("feedback").textContent="Noch "+count+" unsichere Karte"+(count===1?"":"n")+" – nur diese werden gemischt wiederholt.";session.quiz=shuffle(session.wrong);session.index=0;session.wrong=[];setTimeout(renderQuiz,900);return}if(session.phase==="cumulative"){if(session.learned.length<session.rows.length){session.group++;document.getElementById("quizPanel").classList.add("hidden");document.getElementById("studyPanel").classList.remove("hidden");renderStudy()}else finish()}else{session.learned.push(...session.current);if(session.group>0)startQuiz(session.learned,"cumulative");else if(session.learned.length<session.rows.length){session.group++;document.getElementById("quizPanel").classList.add("hidden");document.getElementById("studyPanel").classList.remove("hidden");renderStudy()}else finish()}}
-function finish(){void stopTrackedActivity();document.getElementById("quizPanel").classList.add("hidden");document.getElementById("donePanel").classList.remove("hidden");document.getElementById("doneText").textContent="Alle "+session.rows.length+" Verben aus "+(session.topics.length===1?"„"+session.topic.title+"“":"den "+session.topics.length+" ausgewählten Grammatikbereichen")+" wurden abgefragt."}
+function finish(){stopGrammarSpeech();void stopTrackedActivity();document.getElementById("quizPanel").classList.add("hidden");document.getElementById("donePanel").classList.remove("hidden");document.getElementById("doneText").textContent="Alle "+session.rows.length+" Verben aus "+(session.topics.length===1?"„"+session.topic.title+"“":"den "+session.topics.length+" ausgewählten Grammatikbereichen")+" wurden abgefragt."}
 document.getElementById("beginBtn").addEventListener("click",startTopic);document.getElementById("quizBtn").addEventListener("click",()=>startQuiz(session.current,"group"));document.getElementById("flipBtn").addEventListener("click",flipQuiz);document.getElementById("quizCard").addEventListener("click",flipQuiz);async function recordGrammarAnswer(correct){const r=session?.quiz[session.index];if(!PERSONALIZED_MODE||!r||!studentAccountProfile)return;try{await studentProgress({action:"record",itemType:"grammar",groupKey:String(r.topicId),itemKey:String(r.topicId)+":"+r.verb,itemLabel:r.verb,correct,sessionId:currentActivitySessionId||undefined});document.getElementById("saveStatus").textContent="Lernfortschritt gespeichert."}catch(error){document.getElementById("saveStatus").textContent="Lernfortschritt konnte gerade nicht gespeichert werden.";console.warn(error)}}
-document.getElementById("correctBtn").addEventListener("click",async()=>{await recordGrammarAnswer(true);session.index++;renderQuiz()});document.getElementById("wrongBtn").addEventListener("click",async()=>{session.wrong.push(session.quiz[session.index]);await recordGrammarAnswer(false);session.index++;renderQuiz()});document.getElementById("studyBackBtn").addEventListener("click",()=>{void stopTrackedActivity();document.getElementById("studyPanel").classList.add("hidden");document.getElementById("selectPanel").classList.remove("hidden")});document.getElementById("doneBackBtn").addEventListener("click",()=>{document.getElementById("donePanel").classList.add("hidden");document.getElementById("selectPanel").classList.remove("hidden")});document.getElementById("backBtn").addEventListener("click",()=>location.href=(PERSONALIZED_MODE?"uebung.html?personalisiert=1":"uebung.html")+"#grammatik");
-document.getElementById("quizBackBtn").addEventListener("click",()=>{
+document.getElementById("correctBtn").addEventListener("click",async()=>{await recordGrammarAnswer(true);session.index++;renderQuiz()});document.getElementById("wrongBtn").addEventListener("click",async()=>{session.wrong.push(session.quiz[session.index]);await recordGrammarAnswer(false);session.index++;renderQuiz()});document.getElementById("studyBackBtn").addEventListener("click",()=>{stopGrammarSpeech();void stopTrackedActivity();document.getElementById("studyPanel").classList.add("hidden");document.getElementById("selectPanel").classList.remove("hidden")});document.getElementById("doneBackBtn").addEventListener("click",()=>{document.getElementById("donePanel").classList.add("hidden");document.getElementById("selectPanel").classList.remove("hidden")});document.getElementById("backBtn").addEventListener("click",()=>{stopGrammarSpeech();location.href=(PERSONALIZED_MODE?"uebung.html?personalisiert=1":"uebung.html")+"#grammatik"});
+document.getElementById("quizSpeakBtn").addEventListener("click",()=>{
+ const row=session?.quiz?.[session.index];
+ if(row&&document.getElementById("quizCard").dataset.flipped==="true")
+   speakGrammarForms(row.es,"grammarSpeechStatusQuiz");
+});
+document.getElementById("quizBackBtn").addEventListener("click",()=>{stopGrammarSpeech();
   document.getElementById("quizPanel").classList.add("hidden");
   document.getElementById("studyPanel").classList.remove("hidden");
   renderStudy();
