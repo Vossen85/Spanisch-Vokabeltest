@@ -1,0 +1,63 @@
+/* Einheitliche Schülerkorrektur für Vokabel- und Grammatik-Testsimulationen.
+   An die rot/grün markierte Korrektur der regulären Lehrertests angelehnt. */
+.report-legend{display:flex;gap:10px 18px;flex-wrap:wrap;margin:10px 0 18px;font-size:.88rem;color:#475569}
+.report-legend span{display:inline-flex;align-items:center;gap:6px}
+.report-key{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid #cbd5e1}
+.report-key.correct{background:#e7f8ed;border-color:#9bd7b3}
+.report-key.half{background:#fff2d8;border-color:#f4d28b}
+.report-key.wrong{background:#fdebea;border-color:#efb5b0}
+.report-download-msg{min-height:1.1em;margin:3px 0 8px;color:#475569;font-size:.9rem}
+.report-summary{margin:6px 0 15px;color:#334155}
+.report-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:.91rem}
+.report-table th{background:#eef2f7;color:#334155;border:1px solid #cbd5e1;padding:8px 7px;text-align:left}
+.report-table td{border:1px solid #cbd5e1;padding:8px 7px;vertical-align:top;overflow-wrap:anywhere;word-break:normal}
+.report-table tbody tr.correct td{background:#e7f8ed;color:#155e39}
+.report-table tbody tr.half td{background:#fff2d8;color:#92400e}
+.report-table tbody tr.wrong td{background:#fdebea;color:#991b1b}
+.report-table td.student-answer,.report-table td.pts{font-weight:750}
+.report-table td.status{font-size:.83rem;font-weight:750}
+.report-table td.pts{white-space:nowrap}
+.report-table .answer-good{background:#e7f8ed!important;color:#087a37;font-weight:750}
+.report-table .answer-partial{background:#fff2d8!important;color:#a95800;font-weight:750}
+.report-table .answer-bad{background:#fdebea!important;color:#b42318;font-weight:750}
+.report-table tbody tr{break-inside:avoid;page-break-inside:avoid}
+.report-questions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,390px),1fr));gap:14px}
+.report-questions .question{margin:0;min-width:0;break-inside:avoid;page-break-inside:avoid}
+.report-questions .question .report-table{font-size:.83rem}
+.report-questions .question .report-table th,.report-questions .question .report-table td{padding:6px 5px}
+.report-questions .question .qscore{font-weight:850}
+.report-vocab-table th:nth-child(1){width:6%}
+.report-vocab-table th:nth-child(2){width:24%}
+.report-vocab-table th:nth-child(3){width:26%}
+.report-vocab-table th:nth-child(4){width:32%}
+.report-vocab-table th:nth-child(5){width:12%}
+.report-grade-scale{margin-top:24px;break-inside:avoid;page-break-inside:avoid}
+.report-grade-scale h2{font-size:1.04rem;margin:0 0 7px}
+.report-grade-scale .report-scale-table{width:100%;table-layout:fixed;font-size:.83rem;margin-top:0}
+.report-grade-scale .report-scale-table th,.report-grade-scale .report-scale-table td{border:1px solid #cbd5e1;padding:5px;text-align:center}
+.report-grade-scale .report-scale-table th{background:#eef2f7}
+@media(max-width:650px){
+ .report-vocab-table{min-width:570px}
+ .report-questions{grid-template-columns:1fr}
+ .report-questions .question .report-table{font-size:.78rem}
+ .report-grade-scale .report-scale-table{font-size:.72rem}
+}
+@media print{
+ @page{size:A4;margin:10mm}
+ html,body,.card,.wrap,.report-table,.report-table th,.report-table td{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ body{font:9pt/1.35 Arial,sans-serif}
+ .report-legend{font-size:8pt}
+ .report-table{font-size:8pt}
+ .report-table th,.report-table td{padding:1.4mm 1.2mm}
+ .report-vocab-table{min-width:0;table-layout:fixed}
+ .report-table thead{display:table-header-group}
+ .report-questions{grid-template-columns:repeat(2,minmax(0,1fr));gap:3mm 4mm}
+ .report-questions .question{margin:0;padding:2.2mm;border-radius:2mm}
+ .report-questions .question .qhead{margin-bottom:2mm}
+ .report-questions .question .verb{font-size:10pt}
+ .report-questions .question .tense{font-size:7pt}
+ .report-questions .question .report-table{font-size:7.3pt}
+ .report-questions .question .report-table th,.report-questions .question .report-table td{padding:1mm}
+ .report-grade-scale .report-scale-table{font-size:7pt}
+ .report-grade-scale .report-scale-table th,.report-grade-scale .report-scale-table td{padding:1mm}
+}
