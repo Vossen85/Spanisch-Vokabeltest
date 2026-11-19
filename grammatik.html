@@ -56,6 +56,13 @@ button{font:inherit;border:0;border-radius:10px;padding:12px 16px;font-weight:75
 .topic-group-head h2{flex:1;min-width:0}
 .topic-group-fold{flex:0 0 auto;margin-left:auto;width:43px;height:42px;padding:7px 9px;font-size:1.3rem;line-height:1;background:#e2e8f0;color:#172033;border:1px solid #cbd5e1}
 .topic-group-fold:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+
+.topic-group{border:1px solid #dbe2ea;border-radius:12px;padding:0;margin:7px 0;overflow:hidden}
+.topic-group-head{min-height:62px;margin:0;padding:8px 12px;gap:10px}
+.topic-group-head h2{font-size:1.15rem;line-height:1.25}
+.topic-group-fold{width:36px;height:36px;padding:5px 7px;border-radius:9px;font-size:1.1rem}
+.topic-grid{padding:9px 11px 12px;border-top:1px solid #dbe2ea}
+@media(max-width:650px){.topic-group-head{min-height:59px;padding:8px 10px}}
 </style>
 </head>
 <body>
@@ -552,7 +559,7 @@ document.getElementById("showBtn").addEventListener("click",render);
 document.getElementById("pdfBtn").addEventListener("click",downloadPdf);
 document.getElementById("allBtn").addEventListener("click",()=>{document.querySelectorAll(".topic input").forEach(x=>x.checked=true);document.querySelectorAll(".topic-group-check").forEach(x=>{x.checked=true;x.indeterminate=false})});
 document.getElementById("noneBtn").addEventListener("click",()=>{document.querySelectorAll(".topic input").forEach(x=>x.checked=false);document.querySelectorAll(".topic-group-check").forEach(x=>{x.checked=false;x.indeterminate=false})});
-document.getElementById("backBtn").addEventListener("click",()=>location.href="uebung.html");
+document.getElementById("backBtn").addEventListener("click",()=>location.href=(new URLSearchParams(location.search).get("personalisiert")==="1"?"uebung.html?personalisiert=1":"uebung.html")+"#grammatik");
 </script>
 <script src="./student-progress-widget.js"></script>
 </body>
