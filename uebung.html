@@ -1981,8 +1981,54 @@
     }
   }
 
+  // Die spanischen Formen werden per Browser-TTS gesprochen (ohne Satzzeichen).
+  let vocabSpeechRequest=0;
+  function spanishSpeechSupported(){
+    return "speechSynthesis" in window&&typeof window.SpeechSynthesisUtterance==="function";
+  }
+  function spanishSpeechParts(answers){
+    const source=Array.isArray(answers)?answers:[answers];
+    return [...new Set(source.flatMap(value=>String(value??"").normalize("NFC").split(/[,;/|]+/))
+      .map(value=>value.replace(/[()[\]{}.,;:!?¡¿"“”«»…·•]/g," ").replace(/\s+/g," ").trim())
+      .filter(Boolean))];
+  }
+  function stopVocabSpeech(){
+    vocabSpeechRequest++;
+    if("speechSynthesis" in window)window.speechSynthesis.cancel();
+  }
+  function speakSpanishAnswers(answers){
+    if(!spanishSpeechSupported()){
+      $("vocabSpeechStatus").textContent="Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.";
+      return;
+    }
+    const parts=spanishSpeechParts(answers);
+    if(!parts.length)return;
+    stopVocabSpeech();
+    const request=vocabSpeechRequest;
+    const voices=window.speechSynthesis.getVoices();
+    const voice=voices.find(v=>v.lang.toLowerCase().replace("_","-")==="es-es")
+      ||voices.find(v=>/^es(?:-|_)/i.test(v.lang));
+    const rate=Number($("vocabSpeechRate").value)===1?1:0.85;
+    $("vocabSpeechStatus").textContent="";
+    parts.forEach((part,index)=>{
+      const utterance=new window.SpeechSynthesisUtterance(part);
+      utterance.lang=voice?.lang||"es-ES";
+      if(voice)utterance.voice=voice;
+      utterance.rate=rate;
+      utterance.onend=()=>{
+        if(request===vocabSpeechRequest&&index===parts.length-1)$("vocabSpeechStatus").textContent="";
+      };
+      utterance.onerror=event=>{
+        if(request===vocabSpeechRequest&&!["canceled","interrupted"].includes(event.error))
+          $("vocabSpeechStatus").textContent="Die Aussprache konnte nicht abgespielt werden. Prüfe die spanische Sprachausgabe deines Geräts.";
+      };
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+
   function renderCardStudy(){
     if(!cardSession)return;
+    stopVocabSpeech();
     const start=cardSession.groupIndex*6;
     const rows=cardSession.allRows.slice(start,start+6);
     if(!rows.length){finishCardPractice();return}
@@ -1996,26 +2042,42 @@
     const grid=$("studyCards");
     grid.innerHTML="";
     grid.style.gridTemplateRows="repeat("+Math.ceil(rows.length/2)+",minmax(95px,auto))";
+    $("vocabSpeechStatus").textContent=spanishSpeechSupported()?"":"Die Browser-Sprachausgabe ist auf diesem Gerät nicht verfügbar.";
     rows.forEach(row=>{
+      // Lautsprecher und Umdrehkarte sind getrennte Buttons, damit Anhören nicht umdreht.
+      const wrapper=document.createElement("div");
+      wrapper.className="vocab-spoken-card";
       const card=document.createElement("button");
       card.type="button";
       card.className="flashcard";
       card.setAttribute("aria-pressed","false");
       card.textContent=(row.acceptedAnswers||[]).join(" / ");
+      const speaker=document.createElement("button");
+      speaker.type="button";
+      speaker.className="vocab-speak-btn";
+      speaker.textContent="🔊";
+      speaker.setAttribute("aria-label","Spanische Vokabel anhören");
+      speaker.title="Spanische Vokabel anhören";
+      speaker.disabled=!spanishSpeechSupported();
+      speaker.addEventListener("click",()=>speakSpanishAnswers(row.acceptedAnswers||[]));
       card.addEventListener("click",()=>{
         const showingSpanish=card.dataset.side!=="de";
         card.dataset.side=showingSpanish?"de":"es";
         card.classList.toggle("is-flipped",showingSpanish);
         card.setAttribute("aria-pressed",String(showingSpanish));
         card.textContent=showingSpanish?String(row.sourceText||""):(row.acceptedAnswers||[]).join(" / ");
+        speaker.classList.toggle("hidden",showingSpanish);
+        if(showingSpanish)stopVocabSpeech();
       });
-      grid.appendChild(card);
+      wrapper.append(card,speaker);
+      grid.appendChild(wrapper);
     });
     $("startCardQuizBtn").textContent="Karten mischen und abfragen";
   }
 
   function startCardQuiz(rows,phase){
     if(!cardSession||!rows?.length)return;
+    stopVocabSpeech();
     cardSession.phase=phase==="cumulative"?"cumulativeQuiz":"groupQuiz";
     cardSession.quizRows=shuffleItems(rows);
     cardSession.quizIndex=0;
@@ -2025,6 +2087,8 @@
 
   function renderCardQuizQuestion(){
     if(!cardSession)return;
+    stopVocabSpeech();
+    $("quizSpeakBtn").classList.add("hidden");
     $("cardsStudyArea").classList.add("hidden");
     $("cardsQuizArea").classList.remove("hidden");
     $("cardsDoneArea").classList.add("hidden");
@@ -2045,6 +2109,7 @@
     $("quizFlashcard").dataset.german=String(row.sourceText||"");
     $("quizFlashcard").dataset.spanish=(row.acceptedAnswers||[]).join(" / ");
     $("quizFlashcard").textContent=$("quizFlashcard").dataset.german;
+    $("quizSpeakBtn").disabled=!spanishSpeechSupported();
   }
 
   function flipCardAnswer(){
@@ -2053,6 +2118,8 @@
     const flipped=card.classList.toggle("is-flipped");
     card.setAttribute("aria-pressed",String(flipped));
     card.textContent=flipped?card.dataset.spanish:card.dataset.german;
+    $("quizSpeakBtn").classList.toggle("hidden",!flipped);
+    if(!flipped)stopVocabSpeech();
     card.setAttribute("aria-label",flipped?"Antwort aufgedeckt; Karte erneut antippen zum Zurückdrehen":"Karte antippen zum Umdrehen");
   }
 
@@ -2117,6 +2184,7 @@
 
   function finishCardPractice(){
     if(!cardSession)return;
+    stopVocabSpeech();
     void finishTrackedActivity();
     $("cardsStudyArea").classList.add("hidden");
     $("cardsQuizArea").classList.add("hidden");
@@ -2127,6 +2195,7 @@
   }
 
   function closeCardPractice(){
+    stopVocabSpeech();
     void finishTrackedActivity();
     cardSession=null;
     $("cardPracticeArea").classList.add("hidden");
@@ -2750,6 +2819,11 @@ const html="<!doctype html><html lang='de'><head><meta charset='utf-8'><meta nam
   $("startCardPracticeBtn").addEventListener("click",()=>startCardPractice("topic"));
   $("startCardQuizBtn").addEventListener("click",()=>startCardQuiz(cardSession?.currentGroup,"group"));
   $("quizFlashcard").addEventListener("click",flipCardAnswer);
+  $("quizSpeakBtn").addEventListener("click",()=>{
+    if(!cardSession||!$("quizFlashcard").classList.contains("is-flipped"))return;
+    const row=cardSession.quizRows[cardSession.quizIndex];
+    if(row)speakSpanishAnswers(row.acceptedAnswers||[]);
+  });
   $("cardCorrectBtn").addEventListener("click",()=>{void answerCard(true)});
   $("cardWrongBtn").addEventListener("click",()=>{void answerCard(false)});
   $("cardsBackBtn").addEventListener("click",closeCardPractice);
